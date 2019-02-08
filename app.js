@@ -11,6 +11,7 @@ mongoose.connect("mongodb://localhost:27017/admin");
 
 // routes
 var routes = require("./routes/routes");
+var user = require("./routes/user")
 var setUpPassport = require("./routes/setuppassport");
 
 
@@ -33,13 +34,16 @@ app.use(flash());
 
 
 //using folder views 
+app.use(express.static(__dirname + '/public'));
 app.engine('ejs', require('ejs').renderFile);
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 
 
+
 // using routes 
+app.use(user);
 app.use(routes);
 
 app.listen(3000, () => {
