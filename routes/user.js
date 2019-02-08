@@ -2,6 +2,8 @@ var express = require("express");
 var user = express.Router();
 var async =  require("async");
 var nodemailer = require('nodemailer');
+var User = require("../models/user")
+var crypto = require("crypto")
 user.use(function(req, res, next) {
     res.locals.currentUser = req.user;
     res.locals.errors = req.flash("error");
