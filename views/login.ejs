@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <!-- Add icon library -->
+  <title>تسجيل الدخول</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="css/login.css">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body>
+    <div class="mobile">
+  <div class="container" style="padding-top: 2%;width: 310px;">
+  <h2 style="text-align: center ">Login</h2><br><br>
+
+  <% errors.forEach(function(error) { %>
+  <div class="alert alert-danger" role="alert">
+  <%= error %>
+  </div>
+  <% }) %>
+  <% infos.forEach(function(info) { %>
+  <div class="alert alert-info" role="alert">
+  <%= info %>
+  </div>
+  <% }) %>
+  
+<form action="/login" method="post">
+  <div class="input-container">
+    <i class="fa fa-email icon"></i>
+    <input class="input-field" type="text" placeholder="Email" name="email">
+  </div>
+  
+  <div class="input-container">
+    <i class="fa fa-key icon"></i>
+    <input  class="input-field" type="password" placeholder="Password" id="password" name="password" required>
+  </div>
+ 
+
+  <button type="submit" class="btn">Login</button>
+</form>
+
+<a href="/forgot">forgot password
+</a>
+
+</div>
+</div>
+
+</body></html>
