@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>نسجيل الادمن</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="http://seu32.com/img/favIcon.png" type="image/gif">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="css/signup.css">
+<style>
+</style>
+</head>
+<body>
+        <div class="mobile">
+                <div class="container" style="padding-top: 2%;width: 350px;">
+                <h2 style="text-align: center ">Register</h2><br><br>
+              
+                <% errors.forEach(function(error) { %>
+                <div class="alert alert-danger" role="alert">
+                <%= error %>
+                </div>
+                <% }) %>
+                <% infos.forEach(function(info) { %>
+                <div class="alert alert-info" role="alert">
+                <%= info %>
+                </div>
+                <% }) %>
+  <form action="/signup" method="post">
+ 
+
+  <div class="input-container">
+        <input class="form-control" style="margin-right: 5px;text-align: right" type="text"  placeholder="Firstname" name="Firstname">
+        <input class="form-control" type="text" style="text-align: right" placeholder="Birthday" name="Firstname">
+        <i class="fa fa-user icon""></i>
+    </div>
+  <div class="input-container">
+        <input class="form-control"  type="text" style="text-align: right" placeholder="Email" name="email">
+    <i class="fa fa-envelope icon"></i>
+     </div>
+     <div class="input-container">
+            <input class="form-control" dir="rtl" style="text-align: right" type="date" placeholder="Birthday" name="Birthday">
+        <i class="fa fa-calendar icon"></i>
+         </div>
+         <div class="input-container">
+               
+                <select class="form-control" dir="rtl" id="exampleFormControlSelect1" >
+                  <option>femme</option>
+                  <option>homme</option>
+                
+                </select>
+                <i class="fa fa-gitl icon"></i>
+              </div>   
+
+
+
+     <div class="input-container">
+          <input class="form-control" style="text-align: right"  type="text" placeholder="Phone" name="Phone">
+          <i class="fas fa-phone icon"></i>
+     </div>
+
+
+
+     <div class="input-container">
+          <input class="form-control" style="text-align: right"  type="text" placeholder="Address" name="Address">
+          <i class="fas fa-map-marker-alt icon"></i>
+     </div>               
+  <div class="input-container">
+        <input class="form-control" style="text-align: right" type="password" placeholder="Password" id="password" name="password" required>
+       <i class="fa fa-key icon"></i>
+    </div>
+
+
+
+
+
+
+   <div class="input-container">
+        <input class="form-control" style="text-align: right"  type="password" placeholder="Confirm Password" id="confirm_password" required>
+        <i class="fa fa-key icon"></i>  
+</div>
+
+  <button type="submit" class="btn">Register</button>
+</form>
+<script type="text/javascript">
+  var password = document.getElementById("password")
+  , confirm_password = document.getElementById("confirm_password");
+
+function validatePassword(){
+  if(password.value != confirm_password.value) {
+    confirm_password.setCustomValidity("Passwords Don't Match");
+  } else {
+    confirm_password.setCustomValidity('');
+  }
+}
+
+password.onchange = validatePassword;
+confirm_password.onkeyup = validatePassword;
+</script>
+</body>
+</html>

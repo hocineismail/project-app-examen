@@ -3,11 +3,12 @@ var mongoose = require("mongoose");
 var SALT_FACTOR = 10;
 
 var userSchema = mongoose.Schema({
-   Firstname: {type: String, required: true,},
-   Lastname: {type: String, required: true,},
+    Firstname: {type: String, required: true,},
+    Lastname: {type: String, required: true,},
     Birthday: {type: Date,required: true, },
+    Sexe: {type: string ,required: true},
     Address: {type: String, required: true,},
-    Phone: {type: Number, required: true,},
+    Phone: {type: Number},
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     resetPasswordToken: String,

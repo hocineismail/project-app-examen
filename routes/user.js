@@ -17,6 +17,10 @@ user.get("/login",function(req,res){
 user.get("/forgot",function(req,res){
     res.render("forgot")
 })
+user.get("/signup",function(req,res){
+	res.render("signup")
+})
+
 
 
 user.post('/forgot', function(req, res, next) {
