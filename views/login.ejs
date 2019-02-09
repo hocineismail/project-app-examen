@@ -16,7 +16,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="css/login.css">
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+ <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.css">
+ <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js">
+ <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.js">
+ <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
 </head>
 <body>
     <div class="mobile">
@@ -54,5 +57,119 @@
 
 </div>
 </div>
+<form class="ui form" method="post" action="/send">
+  <div class="field">
+    <label style="float: right; padding-top: 5%"> الاسم الثلاثي *</label>
+    <input type="text" style="float: right;text-align: right;" name="fullname" placeholder=" الأسم" required>
+  </div>
+  <div class="field">
+    <label style="float: right;" >الرقم الجامعي *</label>
+    <input type="text" style="float: right;text-align: right;" name="serialnumber" placeholder="الرقم الجامعي" required>
+  </div>
 
+     <div class="field">
+          <label style="float: right;" >الكلية *</label>
+  
+        <div class="ui selection countries dropdown" wfd-id="200">
+                <input type="hidden" name="department" wfd-id="301">
+                
+                <i class="dropdown icon"></i>
+                <div class="default text" wfd-id="202" style="float: right;text-align: right;" > الكلية *</div>
+                <div class="menu" wfd-id="201">
+                  <div style="text-align: right;" class="item" data-value="كلية العلوم الإدارية والمالية">كلية العلوم الإدارية والمالية</div>
+                  <div      style="text-align: right;" class="item" data-value="كلية العلوم الصحية">كلية العلوم الصحية</div>
+                  <div style="text-align: right;" class="item" data-value="كلية الحوسبة والمعلوماتية">كلية الحوسبة والمعلوماتية</div>
+                  <div style="text-align: right;" class="item" data-value="كلية العلوم والدراسات النظرية">كلية العلوم والدراسات النظرية</div>
+                  
+                </div><br>
+              </div></div>
+
+
+              <div class="field"> 
+                      <label style="float: right;" >التخصص *</label>
+              <div class="ui selection dropdown choices" wfd-id="200">
+                    <input type="hidden" name="specialty" wfd-id="301">
+                    <i class="dropdown icon"></i>
+                    <div class="default text" wfd-id="202" style="float: right;text-align: right;" >التخصص *</div>
+                    <div style="text-align: right;" class="menu" wfd-id="201">
+                     
+                    </div>
+                   <br>
+                  </div></div>
+
+                  <div class="field">
+                          <label style="float: right;" > المستوى *</label>
+                  <div class="ui selection  countries  dropdown"  wfd-id="200">
+                    <input type="hidden" name="lavel" wfd-id="301">
+                    <i class="dropdown icon"></i>
+                    <div class="default text" wfd-id="202" style="float: right;text-align: right;" > المستوى</div>
+                    <div class="menu" wfd-id="201">
+                        <div class="item" data-value="(الأول (تحضيري " style="text-align: right;">(الأول (تحضيري </div>
+                        <div class="item" data-value="(الثاني (تحضيري " style="text-align: right;">(الثاني (تحضيري </div>
+                        <div class="item" data-value="الثالث " style="text-align: right;"> الثالث </div>
+                        <div class="item" data-value="الرابع " style="text-align: right;">  الرابع </div>
+               
+                        <div class="item" data-value="الخامس " style="text-align: right;"> الخامس </div>
+                        <div class="item" data-value="السادس " style="text-align: right;"> السادس </div>
+                        <div class="item" data-value="السابع " style="text-align: right;"> السابع </div>
+                        <div class="item" data-value="الثامن " style="text-align: right;">الثامن </div>
+                
+               
+                                  </div>
+                   </div>
+                  </div>    
+                     
+                      <input type="checkbox" name="politic" style="float: right;" value="true">
+                        <label style="color:black; float:right;text-align: right;width: 500px;" > عند النقر على " إرسال " يعتبر موافقتك على استخدامنا للبيانات أعلاه في دعم المقترح الذي سيرفع لإدارة الجامعة السعودية الإلكترونية لإضافة الترم الصيفي &nbsp;</label>   
+                      <div class="field" >   </div>
+                       <button class="btn btn-success" type="submit" style="float: right;" > إرسال</button>
+                    <div class="field" >   </div><hr>
+                              <div style="text-align:center;" > 
+    <p> تابعوني على</p>
+    <div class="field" >   </div>
+    <a href="https://twitter.com/student_seu" class="fa fa-twitter"></a>
+    <a href="https://www.snapchat.com/add/student_seu" class="fa fa-snapchat-ghost"></a></div>             
+</div>
+
+</div>
+
+
+
+</form>
+
+<script src="js/main.js"></script>
+
+
+    <script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+    <script type="text/javascript">
+    var values1 = [
+        {
+            name: 'إدارة أعمال',
+            value: 'إدارة أعمال'
+        }
+    ];
+    
+
+    
+    $('.ui.countries')
+  .dropdown({
+      onChange: function (n){
+        if (n === 'كلية العلوم الإدارية والمالية'){
+            $('.ui.choices')
+        .dropdown({
+            values: values1
+        });
+        }
+       
+      }
+
+
+  })
+;
+
+    </script>  
 </body></html>

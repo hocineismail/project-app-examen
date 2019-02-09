@@ -5,9 +5,9 @@ var semsterSchema = Schema({
  Semster: { type: String, required: true },
  NumberOfSemster: { type: Number, required: true },
  createdAt: { type: Date, default: Date.now },
- phase: [{
+ level: [{
     type: Schema.Types.ObjectId,
-    ref: 'Phase'
+    ref: 'Level'
   }]
 });
 

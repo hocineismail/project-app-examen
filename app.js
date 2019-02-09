@@ -11,7 +11,8 @@ mongoose.connect("mongodb://localhost:27017/admin");
 
 // routes
 var routes = require("./routes/routes");
-var user = require("./routes/user")
+var user = require("./routes/user");
+var admin = require("./routes/admin")
 var setUpPassport = require("./routes/setuppassport");
 
 
@@ -45,7 +46,7 @@ app.set("view engine", "ejs");
 // using routes 
 app.use(user);
 app.use(routes);
-
+app.use(admin);
 app.listen(3000, () => {
     console.log('Server listing on 3000');
 })

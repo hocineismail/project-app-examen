@@ -3,14 +3,22 @@ var user = express.Router();
 var async =  require("async");
 var nodemailer = require('nodemailer');
 var User = require("../models/user")
-var crypto = require("crypto")
+var Phase = require("../models/phase");
+ var Semster = require("../models/semster");
+ var Level = require("../models/level");
+ var Module = require("../models/module");
+ var Exam = require("../models/exam");
+var crypto = require("crypto");
 user.use(function(req, res, next) {
     res.locals.currentUser = req.user;
     res.locals.errors = req.flash("error");
     res.locals.infos = req.flash("info");
     next();
    });
-   
+	 
+	
+
+
 user.get("/login",function(req,res){
     res.render("login")
 })
@@ -132,6 +140,105 @@ user.post('/forgot', function(req, res, next) {
 	], function(err) {
 	  res.redirect('/');
 	});
-  });
+	});
+	
 
+
+	user.get("/admin", function(req,res){
+
+    Phase.find({},function(err,phase){
+     
+        
+          res.render("admin",{phases: phase}) 
+        
+      
+    })
+ 
+});
+
+
+
+
+user.get("/admin/deletephase/:_id",   function(req, res, next) {
+ 
+	Phase.findOneAndRemove( { _id: req.params._id } , function(err, phase) {
+			if (err) { return next(err); }
+			if (!phase) { return next(404); }
+	 
+			req.flash("error", "تم الحدف");
+			res.redirect("/admin")
+			
+		 
+		})});
+		user.get("/admin/:phase", function(req,res){
+
+			Phase.findOne({Phase: req.params.phase},function(err,onephase){
+				if (!onephase) {return res.redirect("/admin")}
+			 console.log(onephase)
+				Level.find({phase: onephase._id},function(err,level){
+					console.log(level)
+						res.render("level",{levels: level,onephases: onephase}) 
+					
+				
+					})			})
+	 
+	});
+
+	user.get("/admin/phase/:level", function(req,res){
+
+		Level.findOne({Level: req.params.level},function(err,onelevel){
+			if (!onelevel) {return res.redirect("/admin")}
+		 console.log(onelevel)
+			Semster.find({level: onelevel._id},function(err,semster){
+				console.log(semster)
+					res.render("semster",{semsters: semster,onelevels: onelevel}) 
+				
+			
+				})			})
+ 
+});
+
+user.get("/admin/laevel/:id", function(req,res){
+console.log("dakhel hena ya namiiii")
+	Semster.findOne({_id: req.params.id},function(err,onesemster){
+		if (!onesemster) {return res.redirect("/admin")}
+	 console.log(onesemster)
+		Module.find({semster: onesemster._id},function(err,module){
+			console.log(module)
+				res.render("module",{modules: module,onesemsters: onesemster}) 
+			
+		
+			})			})
+
+});
+
+	
+
+
+user.get("/admin/exam/:id", function(req,res){
+	console.log("dakhel hena ya namiiii")
+		Module.findOne({_id: req.params.id},function(err,onemodule){
+			if (!onemodule) {return res.redirect("/admin")}
+		 console.log(onemodule)
+			Exam.find({module: onemodule._id},function(err,exam){
+				console.log(exam)
+					res.render("exam",{exams: exam,onemodules: onemodule}) 
+				
+			
+				})			})
+	
+	});
+	
+		
+  user.get("/admin/deletesemster/:_id",   function(req, res, next) {
+ 
+		Semster.findOneAndRemove( { _id: req.params._id } , function(err, semster) {
+				if (err) { return next(err); }
+				if (!semster) { return next(404); }
+		 
+				req.flash("error", "تم الحدف");
+				res.redirect("/admin")
+				
+			 
+			})});
 module.exports = user;
