@@ -145,14 +145,54 @@ user.post('/forgot', function(req, res, next) {
 
 
 	user.get("/admin", function(req,res){
+		var phases;
+    var levels;
+    var semsters;
+    var modules;
+    var usrs;
+    var comts;
 
-    Phase.find({},function(err,phase){
+    async.series([function(callback){
+      
+        Phase.find({},function(err,phase){
+            if(err) return callback(err);
+            phases = phase;
+            callback(null,phases);
+        })
+    },function(callback){
+        Level.find({},function(err,level){
+            if(err) return callback(err);
+            levels = level;
+            callback(null,levels);
+        })
+    },function(callback){
+        Semster.find({},function(err,semster){
+            if(err) return callback(err);
+            semsters = semster;
+            callback(null,semsters);
+        })
+    },function(callback){
+        Module.find({},function(err,module){
+            if(err) return callback(err);
+            modules = module;
+            callback(null,modules);
+        })
+    }
+    ],function(err){
+			
+  
+        res.render("admin",{phases: phases, levels: levels,semsters: semsters , modules: modules});
+    });
+
+   
+		
+
      
         
-          res.render("admin",{phases: phase}) 
+         
         
       
-    })
+
  
 });
 
@@ -170,6 +210,89 @@ user.get("/admin/deletephase/:_id",   function(req, res, next) {
 			
 		 
 		})});
+		user.post("/admin/updatephase/:_id",   function(req, res, next) {
+ 
+			Phase.findOne({ _id: req.params._id } , function(err, phase) {
+					if (err) { return next(err); }
+					if (!phase) { return next(404); }
+					
+					phase.Phase = req.body.Phase
+					phase.save();
+
+					req.flash("error", "update ");
+					res.redirect("/admin")
+					
+				 
+				})});
+		
+				user.post("/admin/updatelevel/:_id",   function(req, res, next) {
+ 
+					Level.findOne({ _id: req.params._id } , function(err, level) {
+							if (err) { return next(err); }
+							if (!level) { return next(404); }
+							
+							level.Level = req.body.Level
+							level.save();
+		
+							req.flash("error", "update ");
+							res.redirect("/admin")
+							
+						 
+						})});
+		user.get("/admin/deletelevel/:_id",   function(req, res, next) {
+ 
+			Level.findOneAndRemove( { _id: req.params._id } , function(err, level) {
+					if (err) { return next(err); }
+					if (!level) { return next(404); }
+			 
+					req.flash("error", "تم الحدف");
+					res.redirect("/admin")
+					
+				 
+				})});
+
+
+
+				user.post("/admin/updatesemster/:_id",   function(req, res, next) {
+ 
+					Semster.findOne({ _id: req.params._id } , function(err, semster) {
+							if (err) { return next(err); }
+							if (!semster) { return next(404); }
+							
+							semster.Semster = req.body.Semster
+							semster.save();
+		
+							req.flash("error", "update ");
+							res.redirect("/admin")
+							
+						 
+						})});
+
+
+		user.get("/admin/deletesemster/:_id",   function(req, res, next) {
+			Module.find( { semster: req.params._id } , function(err, one) {
+		  one.forEach(function(delet){
+				console.log(delet._id)
+				Module.findOneAndRemove( { semster: delet._id } , function(err, del) {
+					if (err) { return next(err); }
+					if (del) { return next(404); }
+					console.log("deleted")
+				})
+			})
+			
+			})
+			 
+		
+			Semster.findOneAndRemove( { _id: req.params._id } , function(err, semster) {
+					if (err) { return next(err); }
+					if (!semster) { return next(404); }
+			 
+					req.flash("error", "تم الحدف");
+					res.redirect("/admin")
+					
+				})
+			});
+
 		user.get("/admin/:phase", function(req,res){
 
 			Phase.findOne({Phase: req.params.phase},function(err,onephase){
@@ -184,19 +307,30 @@ user.get("/admin/deletephase/:_id",   function(req, res, next) {
 	 
 	});
 
-	user.get("/admin/phase/:level", function(req,res){
+	user.get("/admin/phase/:level",async function(req,res){
+		try{
+			const onelevel = await Level.findOne({_id: req.params.level});
+			const semster = await Semster.find({level: onelevel._id});
+			let modules = [];
 
-		Level.findOne({Level: req.params.level},function(err,onelevel){
-			if (!onelevel) {return res.redirect("/admin")}
-		 console.log(onelevel)
-			Semster.find({level: onelevel._id},function(err,semster){
-				console.log(semster)
-					res.render("semster",{semsters: semster,onelevels: onelevel}) 
-				
+
+			for(let i = 0; i < semster.length; i++){
+				let module = await Module.find({semster: semster[i]._id });
+				modules.push(...module)
+			};
+	
+					res.render("semster",{
+							onelevels: onelevel,
+							semsters: semster,
+							modules: modules})
 			
-				})			})
- 
-});
+		}
+		catch(err){
+			res.status(500).render("/uhOhPage",{
+					message: err.message
+			})
+}} );
+
 
 user.get("/admin/laevel/:id", function(req,res){
 console.log("dakhel hena ya namiiii")

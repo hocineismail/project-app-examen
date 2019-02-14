@@ -8,7 +8,8 @@ var User = require("../models/user");
 var Phase = require("../models/phase");
 var Semster = require("../models/semster");
 var Level = require("../models/level");
-var Module = require("../models/module")
+var Module = require("../models/module");
+var Exam = require("../models/exam")
 
 var crypto = require("crypto");
 admin.use(function(req, res, next) {
@@ -157,16 +158,13 @@ admin.post("/admin/addphase", function(req,res,next){
                     console.log(done)
                     console.log("pas d errror")
                 req.flash("info", "تم التسجيل  ");
-                req.flash("error", "لم يتم ادخال كل البيانات");
-                Level.findOne({Level: req.params.level},function(err,onelevel){
-                  if (!onelevel) {return res.redirect("/admin")}
-                 console.log(onelevel)
-                  Semster.find({level: onelevel._id},function(err,semster){
-                    console.log(semster)
-                     return  res.render("semster",{semsters: semster,onelevels: onelavel}) 
+               
+                
+                 
+                     return  res.redirect('/admin/phase/' + req.params._id ) 
                     
                   
-                    })			})
+                    		
                   }
                 });
             
@@ -180,12 +178,12 @@ admin.post("/admin/addphase", function(req,res,next){
   
                 var  module = req.body.Module;
                 var  numberOfModule = req.body.NumberOfModule;
-                var smester = req.params._id;
+                var semster = req.params._id;
                 console.log(req.params._id)
             
                  var newModule = new Module({
                  Module:  module,
-                 NumberOfmodule:  numberOfmodule, 
+                 NumberOfmodule:  numberOfModule, 
                  semster: semster,
                
                 });
@@ -214,4 +212,63 @@ admin.post("/admin/addphase", function(req,res,next){
                 });
             
                  }); 
+
+
+
+
+
+
+                 admin.post("/admin/:_id/:module/addexam", function(req,res,next){
+                  console.log(req.body.Exam)
+                  console.log("-----")
+                  console.log(req.body.NumberOfExam)
+                  console.log("-----")
+                  console.log(req.body.Date)
+                  console.log("-----")
+                  console.log(req.body.Time)
+                  console.log("-----")
+                  var  exam = req.body.Exam;
+                  var  numberOfExam = req.body.NumberOfExam;
+                  var etat =  req.body.Etat;
+                  var isOfficial = req.body.IsOfficial;
+                  var time = req.body.Time;
+                  var date = req.body.Date;
+                  var modulee = req.params._id;
+                  console.log(req.params._id)
+              
+                   var newExam = new Exam({
+                   Exam:  exam,
+                   NumberOfExam:  numberOfExam, 
+                   IsOfficial: isOfficial,
+                   Date: date,
+                   Time: time,
+                   Etat: etat,
+                   module: modulee,
+                 
+                  });
+                  newExam.save(function(err,done){
+                    if (err){
+                       
+                        console.log("error")
+                      req.flash("error", "لم يتم ادخال كل البيانات");
+                      
+                  return res.redirect("/admin/");
+                    } else {
+                      console.log(done)
+                      console.log("pas d errror")
+                  req.flash("info", "تم التسجيل  ");
+                  req.flash("error", "لم يتم ادخال كل البيانات");
+                  Module.findOne({_id: req.params._id},function(err,onemodule){
+                    if (!onemodule) {return res.redirect("/admin")}
+                   console.log(onemodule)
+                    Exam.find({module: onemodule._id},function(err,exam){
+                      console.log(exam)
+                       return  res.render("exam",{exams: exam,onemodules: onemodule}) 
+                      
+                    
+                      })			})
+                    }
+                  });
+              
+                   });               
 module.exports = admin;

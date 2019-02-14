@@ -140,15 +140,23 @@ li a:hover {
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-        </div><form action="/admin/<%= onemodules._id %>/<%= onemodules.Semster %>/addexam" method="post">
+        </div><form action="/admin/<%= onemodules._id %>/<%= onemodules.Module %>/addexam" method="post">
         <div class="modal-body">
           
         
          
               <div class="input-container">
-                  <input class="form-control" style="margin-right: 5px;text-align: right" type="text"  placeholder="Module" name="Module">
-                  <input class="form-control" type="number" style="text-align: right" placeholder="NumberOfModule" name="NumberOfModule">
-                  
+                  <input class="form-control" style="margin-right: 5px;text-align: right" type="text"  placeholder="Exam" name="Exam">
+                  <input class="form-control" type="number" style="text-align: right" placeholder="NumberOfExam" name="NumberOfExam">
+                  <div class="radio">
+                    <label><input type="radio" name="Etat" value="true" >true</label>
+                  </div>
+                  <div class="radio">
+                    <label><input type="radio" name="Etat">false</label>
+                  </div>
+                  <label class="checkbox-inline"><input type="checkbox" value="true" name="IsOfficial">Option 1</label>
+                  <input class="form-control" type="Time" style="text-align: right" placeholder="Time" name="Time">
+                  <input class="form-control" type="Date" style="text-align: right" placeholder="Date" name="Date">
               </div>
          
     
