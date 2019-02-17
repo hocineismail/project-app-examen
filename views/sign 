@@ -69,7 +69,14 @@ user.post("/signup", function(req, res) {
 	var Phone = req.body.Phone;
 
 	var password = req.body.password;
-
+	console.log(Firstname)
+	console.log(Lastname)
+	console.log(email)
+	console.log(Birthday)
+	console.log(Sexe)
+	console.log(Role)
+	console.log(Address)
+	console.log(Phone)
 	User.findOne({ email: email }, function(err, user) {
 	if (err) { return next(err); }
 	if (user) {
@@ -110,6 +117,7 @@ user.post("/signup", function(req, res) {
 			}
 		 }
 	});
+	
 	});
  }, passport.authenticate("login", {
 	 
@@ -315,7 +323,8 @@ user.post('/forgot', function(req, res, next) {
 		 Teacher.find({}).
 		 populate("user"). 
 		 exec(function(err,teacher){
-      res.render("teacher",{teahcers: teacher})
+			 console.log(teacher)
+      res.render("teacher",{teachers: teacher})
 		 })
 		 
 	 })
@@ -337,14 +346,12 @@ user.get("/list/demande",async  function(req,res){
 		populate("user"). 
 		exec(function(err,teacher){
 			console.log(teacher)
-				res.render("listDemande",{
-					
-					
-						teachers: teacher})
-		
-	
-					})	});
+					res.render("listDemande",{teachers: teacher})
+		 
+				});
+			
 
+});
 user.get("/list/students",async  function(req,res){
 	try{
 	
@@ -377,9 +384,8 @@ user.get("/list/students",async  function(req,res){
 
 
 user.get("/list/Admins",  function(req,res){
-User.find({},function(err, admin){
+User.find({Role: "Admin"},function(err, admin){
 	if (err) {return res.redirect("/admin")}
-	console.log(admin)
 	res.render("listAdmins",{admins: admin})
 })
 });

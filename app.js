@@ -7,7 +7,7 @@ var cookieParser = require("cookie-parser");
 var session = require("express-session");
 var flash = require("connect-flash"); 
 var passport = require("passport");
-mongoose.connect("mongodb://localhost:27017/admin");
+mongoose.connect("mongodb://localhost:27017/databasejedida");
 
 // routes
 var routes = require("./routes/routes");
@@ -47,6 +47,16 @@ app.set("view engine", "ejs");
 app.use(user);
 app.use(routes);
 app.use(admin);
+
+app.post("/login", passport.authenticate("login", {
+    successRedirect: "/",
+    failureRedirect: "/login",
+    failureFlash: true
+   }));
+app.get("/",function(req,res){
+    res.render("login")
+})
+
 app.listen(3000, () => {
     console.log('Server listing on 3000');
 })

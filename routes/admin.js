@@ -6,6 +6,7 @@ var async =  require("async");
 var nodemailer = require('nodemailer');
 var User = require("../models/user");
 var Phase = require("../models/phase");
+var Teacher = require("../models/teacher");
 var Semster = require("../models/semster");
 var Level = require("../models/level");
 var Module = require("../models/module");
@@ -20,7 +21,21 @@ admin.use(function(req, res, next) {
    });
 	 
 
-
+admin.get("/teacherValidation/:_id", function(req,res){
+  console.log(req.params._id)
+  Teacher.findOne({_id: req.params._id},function(err , success){
+    if(err) {return res.redirect("/admin")}
+    if (success) {
+      success.Actif = true;
+      success.save(function (err, update) {
+        if (err) return handleError(err);
+        if (update) { return res.redirect("/admin")}
+    });
+    
+    
+  }
+})
+})
 
 
 admin.post("/admin/addphase", function(req,res,next){
@@ -158,14 +173,9 @@ admin.post("/admin/addphase", function(req,res,next){
                     console.log(done)
                     console.log("pas d errror")
                 req.flash("info", "تم التسجيل  ");
-               
-                
-                 
+
                      return  res.redirect('/admin/phase/' + req.params._id ) 
-                    
-                  
-                    		
-                  }
+          }
                 });
             
                  });

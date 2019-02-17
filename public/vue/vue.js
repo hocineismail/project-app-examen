@@ -3,30 +3,28 @@
   el: '#app',
   data: {
 
-   input1: false,
-   input2: false,
+   input: false,
+   student: false,
+   teacher: false,
+  
   },
 
 methods: {
   
-  add1:  function () { console.log("add")
-    if (this.input1 === false ) { 
-      this.input1 = true
-    } else {
-
-      this.input1 = false
-    }
-   
+  add1:  function () 
+  {
+     
+      this.input = true;
+      this.teacher = true;
+      this.student = false;
+      console.log(this.student,this.input)
   },
-  add2:  function () {
-  if (this.input2 === false ) { 
-    this.input2 = true
-  } else {
+ add2: function(){
 
-    this.input2 = false
-  }
-
-}
+  this.input = true;
+  this.teacher = false;
+  this.student = true;
+ }
   
 },
 

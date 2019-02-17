@@ -6,14 +6,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="http://seu32.com/img/favIcon.png" type="image/gif">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
-<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+
+<script
+src="https://code.jquery.com/jquery-3.2.1.min.js"
+integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+crossorigin="anonymous"></script>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="css/signup.css">
@@ -35,47 +36,70 @@
                 <%= info %>
                 </div>
                 <% }) %>
+
+                
+                <div id="app"> 
   <form action="/signup" method="post">
  
 
   <div class="input-container">
-        <input class="form-control" style="margin-right: 5px;text-align: right" type="text"  placeholder="Firstname" name="Firstname">
-        <input class="form-control" type="text" style="text-align: right" placeholder="Birthday" name="Firstname">
-        <i class="fa fa-user icon""></i>
+        <input class="form-control" style="margin-right: 5px;text-align: right" type="text"  placeholder="الاسم" name="Firstname" required>
+        <input class="form-control" type="text" style="text-align: right" placeholder="اللقب" name="Lastname" required> 
+        <i class="fa fa-user icon"></i>
     </div>
   <div class="input-container">
-        <input class="form-control"  type="text" style="text-align: right" placeholder="Email" name="email">
+        <input class="form-control"  type="text" style="text-align: right" placeholder="البريد الالكتروني" name="username" required>
     <i class="fa fa-envelope icon"></i>
      </div>
      <div class="input-container">
-            <input class="form-control" dir="rtl" style="text-align: right" type="date" placeholder="Birthday" name="Birthday">
+            <input class="form-control" dir="rtl" style="text-align: right" type="date" placeholder="تاريخ الميلاد" name="Birthday" required>
         <i class="fa fa-calendar icon"></i>
          </div>
          <div class="input-container">
                
-                <select class="form-control" dir="rtl" id="exampleFormControlSelect1" >
-                  <option>femme</option>
-                  <option>homme</option>
+                <select class="form-control" dir="rtl"  name="Sexe" required>
+                  <option >ذكر</option>
+                  <option >انثى</option>
                 
                 </select>
                 <i class="fa fa-gitl icon"></i>
               </div>   
 
+             
 
-
-     <div class="input-container">
-          <input class="form-control" style="text-align: right"  type="text" placeholder="Phone" name="Phone">
+     <div class="input-container" >
+          <input class="form-control" style="text-align: right"  type="text" placeholder="رقم الهاتف" name="Phone">
           <i class="fas fa-phone icon"></i>
      </div>
 
+     <div class="input-container" dir="rtl" required>
+      <label > <input type="radio" value="Teacher" name="Role" @click="add1">&nbsp;معلم  &nbsp; &nbsp;&nbsp; </label>
+      <label> <input type="radio" value="Student"  name="Role" @click="add2">  طالب&nbsp;&nbsp;  </label>
+      
+    </div>
+  
+    <div class="input-container" >
+        
+      <select class="form-control" id="target" dir="rtl" name="Phase">
+        <% phases.forEach(function(phase) {%>
+         <option> <%= phase.Phase %> </option> 
+        <% })%>
+      </select>
+      <i class="fas  icon"> الطور</i>
+   </div>  
+  
+     <div id="level"  v-show="student"  class="input-container" >
+
+     </div>
+   
 
 
      <div class="input-container">
-          <input class="form-control" style="text-align: right"  type="text" placeholder="Address" name="Address">
+          <input class="form-control" style="text-align: right"  type="text" placeholder="العنوان" name="Address">
           <i class="fas fa-map-marker-alt icon"></i>
      </div>               
   <div class="input-container">
-        <input class="form-control" style="text-align: right" type="password" placeholder="Password" id="password" name="password" required>
+        <input class="form-control" style="text-align: right" type="password" placeholder="كلمة السر" id="password" name="password" required>
        <i class="fa fa-key icon"></i>
     </div>
 
@@ -85,12 +109,26 @@
 
 
    <div class="input-container">
-        <input class="form-control" style="text-align: right"  type="password" placeholder="Confirm Password" id="confirm_password" required>
+        <input class="form-control" style="text-align: right"  type="password" placeholder="اعادة كتابة كلمة السر" id="confirm_password" required>
         <i class="fa fa-key icon"></i>  
 </div>
+ <div v-if="input">
+    <button type="submit" class="btn">Register</button>
+ </div>
+ <div v-else>
+    <a href="#" class="btn btn-secondary btn-lg disabled" role="button" aria-disabled="true">Link</a>
+ 
+</div> 
 
-  <button type="submit" class="btn">Register</button>
 </form>
+
+
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.22/vue.js"></script>
+<script src="vue/vue.js"></script>
+
 <script type="text/javascript">
   var password = document.getElementById("password")
   , confirm_password = document.getElementById("confirm_password");
@@ -105,6 +143,58 @@ function validatePassword(){
 
 password.onchange = validatePassword;
 confirm_password.onkeyup = validatePassword;
+</script>
+
+
+<script>
+    $(function() {
+        $("#target").on("click", function () {
+          console.log( $("#target").val());
+          var Phase = $('#target').val();
+          $.ajax({
+            type: 'post',
+            url: '/searchlevel',
+            dataType: "text",  
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+              Phase: Phase
+            }),
+                   
+              cache: false,
+                timeout: 5000,
+                complete: function() {
+                 
+                  console.log('process complete');
+                  console.log(data.Phase)
+                },
+                success: function(res) {
+                  
+                  var resu = JSON.parse(res)
+         var html;
+         
+        
+         html = '<select name="Level" id="data"  class="form-control"  dir="rtl" >'
+          
+         for (var i = 0; i< resu.length; i++) {
+          
+            html += '<option >' + resu[i].Level +  '</option>';
+          
+        }
+        html += '</select><i class="fas  icon"> mostawa</i>'
+         
+         $('#level').html(html);
+       },
+
+                error: function() {
+                 
+                  console.log('process error');
+                },
+          
+          });
+        });
+      });
+     
+
 </script>
 </body>
 </html>

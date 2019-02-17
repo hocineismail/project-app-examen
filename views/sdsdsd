@@ -1,4 +1,30 @@
-           
+  	user.get("/list/teachers",async  function(req,res){
+		try{
+		
+			const user = await User.find({Role: "Teacher"});
+			let teacher = [];
+
+	for(let i = 0; i < user.length; i++){
+				let teacher = await Teacher.find({user: user[i]._id });
+				teacher.push(...teacher)
+			};
+	
+					res.render("listTeacher",{
+							users: user,
+						
+							teachers: teacher})
+			
+		}
+		catch(err){
+			res.status(500).render("/uhOhPage",{
+					message: err.message
+			})
+}
+ 
+});
+
+
+
 <div style="overflow-x:auto;" class="container">
     <table>
       <tr>

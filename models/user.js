@@ -3,14 +3,15 @@ var mongoose = require("mongoose");
 var SALT_FACTOR = 10;
 
 var userSchema = mongoose.Schema({
-    Firstname: {type: String, required: true,},
-    Lastname: {type: String, required: true,},
-    Birthday: {type: Date,required: true, },
-    Sexe: {type: String ,required: true},
-    Address: {type: String, required: true,},
+    Firstname: {type: String, },
+    Lastname: {type: String, },
+    Birthday: {type: Date , },
+    Sexe: {type: String  },
+    Role: {type: String  },
+    Address: {type: String, },
     Phone: {type: Number},
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    email: { type: String,  unique: true },
+    password: { type: String,  },
     resetPasswordToken: String,
     resetPasswordExpires: Date,
      createdAt: { type: Date, default: Date.now },
@@ -39,7 +40,7 @@ userSchema.methods.checkPassword = function(guess, done) {
     });
    };
    userSchema.methods.name = function() {
-    return this.displayName || this.username;
+    return this.displayName || this.email;
    };
 
 
