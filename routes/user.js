@@ -9,7 +9,7 @@ var Phase = require("../models/phase");
  var Module = require("../models/module");
  var Exam = require("../models/exam");
  var passport = require("passport");
- var Admin = require("../models/admin");
+
  var Question = require("../models/question");
  var Teacher = require("../models/teacher");
  var Student = require("../models/student");
@@ -98,7 +98,7 @@ user.post("/signup", function(req, res) {
 		
 				});
 				newStudent.save();
-				console.log(newTeacher)
+				console.log(newStudent)
 			} else  {
 				var newTeacher = new Teacher({
 					Speciality: req.body.Speciality,
@@ -107,11 +107,12 @@ user.post("/signup", function(req, res) {
 				 });
 				 newTeacher.save();
 				 console.log(newTeacher)
+				 res.redirect("/login")
 			}
 		 }
 	});
 	});
- }, passport.authenticate("login", {
+ },passport.authenticate("login", {
 	 
 	successRedirect: "/",
 	failureRedirect: "/signup",
@@ -124,6 +125,11 @@ user.post("/signup", function(req, res) {
  });
 
 
+user.post("/login", passport.authenticate("login", {
+	successRedirect: "/admin",
+	failureRedirect: "/login",
+	failureFlash: true
+ }));
 
 
 user.post('/forgot', function(req, res, next) {

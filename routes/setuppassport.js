@@ -1,5 +1,6 @@
 var passport = require("passport");
 var User = require("../models/user");
+var Student = require("../models/teacher");
 var LocalStrategy = require("passport-local").Strategy;
 
 module.exports = function() {
@@ -25,6 +26,7 @@ passport.use("login", new LocalStrategy(
      user.checkPassword(password, function(err, isMatch) {
      if (err) { return done(err); }
      if (isMatch) {
+          
      return done(null, user);
      } else {
      return done(null, false,

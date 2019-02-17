@@ -17,14 +17,14 @@ var questionSchema = Schema({
  TeacherFinale:  { type: String,  },
  ErrorMessage:  { type: String, },
  createdAt: { type: Date, default: Date.now },
- exam: [{
+ exam: {
     type: Schema.Types.ObjectId,
     ref: 'Exam'
-  }],
-  user: [{
+  },
+  user: {
     type: Schema.Types.ObjectId,
     ref: 'User'
-  }]
+  }
 });
 
 var Question = mongoose.model("Question", questionSchema);

@@ -5,10 +5,10 @@ var moduleSchema = Schema({
  Module: { type: String, required: true },
  NumberOfModule: { type: Number, required: true },
  createdAt: { type: Date, default: Date.now },
- semster: [{
+ semster: {
     type: Schema.Types.ObjectId,
     ref: 'Semster'
-  }]
+  }
 });
 
 var Module = mongoose.model("Module", moduleSchema);

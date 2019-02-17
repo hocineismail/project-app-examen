@@ -5,10 +5,10 @@ var levelSchema = Schema({
  Level: { type: String, required: true },
  NumberOfLevel: { type: Number, required: true },
  createdAt: { type: Date, default: Date.now },
- phase: [{
+ phase: {
     type: Schema.Types.ObjectId,
     ref: 'Phase'
-  }]
+  }
 });
 
 var Level = mongoose.model("Level", levelSchema);

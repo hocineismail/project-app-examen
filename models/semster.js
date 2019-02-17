@@ -5,10 +5,10 @@ var semsterSchema = Schema({
  Semster: { type: String, required: true },
  NumberOfSemster: { type: Number, required: true },
  createdAt: { type: Date, default: Date.now },
- level: [{
+ level: {
     type: Schema.Types.ObjectId,
     ref: 'Level'
-  }]
+  }
 });
 
 var Semster = mongoose.model("Semster", semsterSchema);

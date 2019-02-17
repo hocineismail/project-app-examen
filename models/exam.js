@@ -9,10 +9,10 @@ var examSchema = Schema({
  Time: {type: String, required: true},
  Date: {type: Date, required: true},
  createdAt: { type: Date, default: Date.now },
- module: [{
+ module: {
     type: Schema.Types.ObjectId,
     ref: 'Module'
-  }]
+  }
 });
 
 var Exam = mongoose.model("Exam", examSchema);
