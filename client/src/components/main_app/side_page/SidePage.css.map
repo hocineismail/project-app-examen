@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,SAAS,CAAC;EACN,UAAU,EAAE,GAAG;CAAG",
+    "sources": [
+        "SidePage.sass"
+    ],
+    "names": [],
+    "file": "SidePage.css"
+}

@@ -1,0 +1,27 @@
+.nav {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 2fr;
+      grid-template-columns: 1fr 2fr;
+  background: black;
+  color: white;
+}
+
+.nav h2 {
+  padding: 5px 40px;
+}
+
+.nav .menu {
+  direction: ltr;
+  float: left;
+}
+
+.nav .menu ul {
+  list-style: none;
+}
+
+.nav .menu ul li {
+  float: left;
+  padding: 10px 40px;
+}
+/*# sourceMappingURL=Header.css.map */

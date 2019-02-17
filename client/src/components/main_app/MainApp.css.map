@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,KAAK,CAAC;EACF,KAAK,EAAE,IAAI;CAAG",
+    "sources": [
+        "MainApp.sass"
+    ],
+    "names": [],
+    "file": "MainApp.css"
+}
