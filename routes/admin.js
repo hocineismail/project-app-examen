@@ -87,21 +87,17 @@ admin.post("/admin/addphase", function(req,res,next){
                     console.log("error")
                   req.flash("error", "لم يتم ادخال كل البيانات");
                   
-              return res.redirect("/admin/");
+              return res.redirect("/admin");
                 } else {
                   console.log(done)
                   console.log("pas d errror")
               req.flash("info", "تم التسجيل  ");
-              req.flash("error", "لم يتم ادخال كل البيانات");
-              Phase.findOne({Phase: req.params.phase},function(err,onephase){
-                if (!onephase) {return res.redirect("/admin")}
-               console.log(onephase)
-                Level.find({phase: onephase._id},function(err,level){
-                  console.log(level)
-                   return  res.render("level",{levels: level,onephases: onephase}) 
+              
+           
+              return res.redirect("/admin");
                   
                 
-                  })			})
+                  
                 }
               });
           
@@ -110,45 +106,72 @@ admin.post("/admin/addphase", function(req,res,next){
             
       
 
-               admin.post("/admin/:_id/:semster/addmodule", function(req,res,next){
-  
-                var  modulee = req.body.Module;
-                var  numberOfModule = req.body.NumberOfModule;
-                var semster = req.params._id;
-                console.log(req.params._id)
-            
-                 var newModule = new Module({
-                 Module:  modulee,
-                 NumberOfModule:  numberOfModule, 
-                 semster: semster,
-               
-                });
-                newModule.save(function(err,done){
-                  if (err){
-                     
-                      console.log("error")
-                    req.flash("error", "لم يتم ادخال كل البيانات");
-                    
-                return res.redirect("/admin/");
-                  } else {
-                    console.log(done)
-                    console.log("pas d errror")
-                req.flash("info", "تم التسجيل  ");
-                req.flash("error", "لم يتم ادخال كل البيانات");
-                Semster.findOne({Semster: req.params.semster},function(err,onesemster){
-                  if (!onesemster) {return res.redirect("/admin")}
-                 console.log(onesemster)
-                  Module.find({semster: onesemster._id},function(err,modulee){
-                    console.log(modulee)
-                     return  res.render("module",{modules: modulee,onesemsters: onesemster}) 
-                    
-                  
-                    })			})
-                  }
-                });
-            
-                 });
  
+                 admin.post("/admin/:level/:_id/addmodule", function(req,res,next){
+  
+                  var  modulee = req.body.Module;
+                  var  numberOfModule = req.body.NumberOfModule;
+                  var semster = req.params._id;
+                  console.log(req.params._id)
+              
+                   var newModule = new Module({
+                   Module:  modulee,
+                   NumberOfModule:  numberOfModule, 
+                   semster: semster,
+                 
+                  });
+                  newModule.save(function(err,done){
+                    if (err){
+                       
+                        console.log("error")
+                      req.flash("error", "لم يتم ادخال كل البيانات");
+                      
+                      return  res.redirect('/admin/phase/' + req.params.level ) 
+                    } else {
+                      console.log(done)
+                      console.log("pas d errror")
+                  req.flash("info", "تم التسجيل  ");
+                   return  res.redirect('/admin/phase/' + req.params.level ) 
+                      
+                    
+                    }
+                  });
+              
+                   });
+
+
+                   admin.post("/admin/:level/:_id/updatemodule", function(req,res,next){
+  
+                    var  modulee = req.body.Module;
+                    var  numberOfModule = req.body.NumberOfModule;
+                  
+                    console.log(req.params._id)
+                
+                     var newModule = new Module({
+                     Module:  modulee,
+                     NumberOfModule:  numberOfModule, 
+                     semster: semster,
+                   
+                    });
+                    newModule.save(function(err,done){
+                      if (err){
+                         
+                          console.log("error")
+                        req.flash("error", "لم يتم ادخال كل البيانات");
+                        
+                        return  res.redirect('/admin/phase/' + req.params.level ) 
+                      } else {
+                        console.log(done)
+                        console.log("pas d errror")
+                    req.flash("info", "تم التسجيل  ");
+                     return  res.redirect('/admin/phase/' + req.params.level ) 
+                        
+                      
+                      }
+                    });
+                
+                     });
+                   
                   admin.post("/admin/:_id/:semster/addsemster", function(req,res,next){
   
                 var  semster = req.body.Semster;
@@ -184,7 +207,7 @@ admin.post("/admin/addphase", function(req,res,next){
 
 
                 
-                  admin.post("/admin/:_id/:module/addmodule", function(req,res,next){
+          admin.post("/admin/:_id/:module/addmodule", function(req,res,next){
   
                 var  module = req.body.Module;
                 var  numberOfModule = req.body.NumberOfModule;
@@ -203,7 +226,7 @@ admin.post("/admin/addphase", function(req,res,next){
                       console.log("error")
                     req.flash("error", "لم يتم ادخال كل البيانات");
                     
-                return res.redirect("/admin/");
+                return res.redirect("/admin");
                   } else {
                     console.log(done)
                     console.log("pas d errror")

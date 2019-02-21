@@ -98,7 +98,7 @@ li a:hover {
 
 <div class="container" style="padding-top: 2%;width: 50%;">
   <h2 style="text-align: center ">
-   Semster
+   اعدادات الفصول و المواد
     
      
 </h2><br><br>
@@ -120,7 +120,7 @@ li a:hover {
 <div  >
    <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-   Add semster
+ اضافة فصل
   </button>
   
   <!-- Modal -->
@@ -128,18 +128,22 @@ li a:hover {
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">  
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+         
+         
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left" >
+            <span aria-hidden="true">&times;  الغاء</span>
           </button>
-        </div><form action="/admin/<%= onelevels._id %>/<%= onelevels.Level %>/addsemster" method="post">
+        </div>
+        <form action="/admin/<%= onelevels._id %>/<%= onelevels.Level %>/addsemster" method="post">
         <div class="modal-body">
           
-        
+            <h3 id="exampleModalLabel" style="text-align:center">اضافة فصل</h3>
          
               <div class="input-container">
-                  <input class="form-control" style="margin-right: 5px;text-align: right" type="text"  placeholder="Semster" name="Semster">
-                  <input class="form-control" type="number" style="text-align: right" placeholder="NumberOfSemster" name="NumberOfSemster">
+                  <label> الفصل </label>
+                  <input class="form-control" style="margin-right: 5px;text-align: right" type="text"  placeholder="الفصل" name="Semster">
+                  <label> رقم الفصل </label>
+                  <input class="form-control" type="number" style="text-align: right" placeholder="رقم الفصل" name="NumberOfSemster">
                   
               </div>
          
@@ -147,8 +151,8 @@ li a:hover {
          
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
+          <button type="submit" class="btn btn-primary">حفظ</button>
         </div> </form>
       </div>
     </div>
@@ -165,28 +169,103 @@ li a:hover {
       <% semsters.forEach(function(semster) { %>
       <% i = i + 1%>
 
-<div style="overflow-x:auto;" class="container">
+<div style="overflow-x:auto;" class="container col-md-12 ">
   <table>
-    <tr><th><a href="/admin/deletesemster/<%= semster._id %> ">Delete</a></th>
-      <th><a href="/admin/laevel/<%= semster._id  %>"> <%= semster.Semster %> </a></th>
+    <tr><th  style=" text-align: left"><a href="/admin/deletesemster/<%= semster._id %> " class="btn btn-danger" >حذف</a></th>
+      <th> <%= semster.Semster %> </th>
     
       <th ><%= i %></th>
      
     </tr>
-     <tr> 
+   
  
            
            
             <% modules.forEach(function(module) { %>
-              <% if (JSON.stringify(semster._id) == JSON.stringify(module.semster[0])) {%>
-                <tr><td><a href="/admin/deletemodule/<%= module._id %>" class="btn btn-danger" >Delete</a> </td>
-                     <td><a href="/admin/exam/<%= module._id  %>"><%= module.Module %></a></td> </tr>
-                 <% } %>
+              <% if (JSON.stringify(semster._id) == JSON.stringify(module.semster)) {%>
+                <tr>
+                  <td  style=" text-align: left">
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#example<%= module._id%>Modal">
+                        تعديل 
+                      </button>
+                     <a href="/admin/<%= semster.level%>/deletemodule/<%= module._id %>" class="btn btn-danger" >حذف</a> 
+                  </td>
+                     <td><a href="/admin/exam/<%= module._id  %>"><%= module.Module %></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td> 
+               </tr>
+                
+                     <div class="modal fade" id="example<%= module._id%>Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">  
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left" >
+                                    <span aria-hidden="true">&times;  الغاء</span>
+                                  </button>
+                              </button>
+                            </div><form action="/admin/<%= semster.level %>/<%= module._id %>/updatemodule" method="post">
+                            <div class="modal-body">
+                              
+                                <h3 id="exampleModalLabel" style="text-align:center"> تعديل على المادة</h3>
+                             
+                                  <div class="input-container">
+                                    <label>  * تعديل على المادة</label>
+                                      <input class="form-control" style="margin-right: 5px;text-align: right" type="text"  value="<%= module.Module %>" name="Module">
+                                      <label>  * تعديل على رقم المادة</label>
+                                      <input class="form-control" type="number" style="text-align: right" value="<%= module.NumberOfModule%>" name="NumberOfModule">
+                                      
+                                  </div>
+                             
+                        
+                             
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
+                              <button type="submit" class="btn btn-primary">حفظ</button>
+                            </div> </form>
+                          </div>
+                        </div>
+                      </div>
+                     <% } %>
                
               <% })%>
-             
+             <tr>
+                <td style=" text-align: left">  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#example<%= semster._id%>Modal">
+                ajouter moduel 
+              </button>
+            </td> 
+            <div class="modal fade" id="example<%= semster._id%>Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">  
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left" >
+                            <span aria-hidden="true">&times;  الغاء</span>
+                          </button>
+                      </button>
+                    </div><form action="/admin/<%= semster.level %>/<%= semster._id %>/addmodule" method="post">
+                    <div class="modal-body">
+                        <h3 id="exampleModalLabel" style="text-align:center">  اضافة مادة</h3>
+                    
+                     
+                          <div class="input-container">
+                            <label>المادة </label>
+                              <input class="form-control" style="margin-right: 5px;text-align: right" type="text"  placeholder="المادة" name="Module">
+                              <label> رقم المادة </label>
+                              <input class="form-control" type="number" style="text-align: right" placeholder="رقم المادة" name="NumberOfModule">
+                              
+                          </div>
+                     
+                
+                     
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
+                      <button type="submit" class="btn btn-primary">حفظ</button>
+                    </div> </form>
+                  </div>
+                </div>
+              </div>
+             </tr>
                
-      </tr> </table></div>
+      </table></div>
       <br><br>
       <% })%>
    

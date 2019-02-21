@@ -247,7 +247,7 @@ user.post('/forgot', function(req, res, next) {
 
 	user.get("/admin", function(req,res){
 	
-		if ( " req.user.Firstname" != "Admin") {
+		if ( " req.user.Firstname" != "Teacher") {
 		var phases;
     var levels;
     var semsters;
@@ -321,7 +321,7 @@ user.post('/forgot', function(req, res, next) {
 		 Teacher.find({}).
 		 populate("user"). 
 		 exec(function(err,teacher){
-      res.render("teacher",{teahcers: teacher})
+      res.render("teacher/teacher",{teachers: teacher})
 		 })
 		 
 	 })
@@ -524,19 +524,7 @@ user.get("/admin/deletephase/:_id",   function(req, res, next) {
 				})
 			});
 
-		user.get("/admin/:phase", function(req,res){
 
-			Phase.findOne({Phase: req.params.phase},function(err,onephase){
-				if (!onephase) {return res.redirect("/admin")}
-			 console.log(onephase)
-				Level.find({phase: onephase._id},function(err,level){
-					console.log(level)
-						res.render("level",{levels: level,onephases: onephase}) 
-					
-				
-					})			})
-	 
-	});
 
 	user.get("/admin/phase/:level",async function(req,res){
 		try{
@@ -563,22 +551,52 @@ user.get("/admin/deletephase/:_id",   function(req, res, next) {
 }} );
 
 
-user.get("/admin/laevel/:id", function(req,res){
-console.log("dakhel hena ya namiiii")
-	Semster.findOne({_id: req.params.id},function(err,onesemster){
-		if (!onesemster) {return res.redirect("/admin")}
-	 console.log(onesemster)
-		Module.find({semster: onesemster._id},function(err,module){
-			console.log(module)
-				res.render("module",{modules: module,onesemsters: onesemster}) 
+// this code will be delete
+
+//user.get("/admin/laevel/:id", function(req,res){
+//console.log("dakhel hena ya namiiii")
+//	Semster.findOne({_id: req.params.id},function(err,onesemster){
+	//	if (!onesemster) {return res.redirect("/admin")}
+	// console.log(onesemster)
+	//	Module.find({semster: onesemster._id},function(err,module){
+	//		console.log(module)
+	//			res.render("module",{modules: module,onesemsters: onesemster}) 
 			
 		
-			})			})
+	////		})			})
 
-});
+//});
 
 	
 
+user.post("/admin/:level/:_id/updatemodule", function(req,res,next){
+  
+	var  modulee = req.body.Module;
+	var  numberOfModule = req.body.NumberOfModule;
+Module.findOne({_id: req.params._id},function(err,modules){
+	modules.Module =  modulee
+	modules.NumberOfModule =   numberOfModule
+
+	modules.save(function(err,done){
+		if (err){
+			 
+				console.log("error of updating")
+			req.flash("error", "لم يتم ادخال كل البيانات");
+			
+			return  res.redirect('/admin/phase/' + req.params.level ) 
+		} else {
+			console.log(done)
+			console.log("pas d errror")
+	req.flash("info", "تم التسجيل  ");
+	 return  res.redirect('/admin/phase/' + req.params.level ) 
+			
+		
+		}
+	});
+	});
+
+
+	 });
 
 user.get("/admin/exam/:id", function(req,res){
 	console.log("dakhel hena ya namiiii")
@@ -596,7 +614,9 @@ user.get("/admin/exam/:id", function(req,res){
 	
 		
   user.get("/admin/deletesemster/:_id",   function(req, res, next) {
- 
+		Exam.findOneAndRemove( {semster: req.params._id } , function(err, exam) {
+			if (err) { return next(err); }
+		})
 		Semster.findOneAndRemove( { _id: req.params._id } , function(err, semster) {
 				if (err) { return next(err); }
 				if (!semster) { return next(404); }
@@ -607,7 +627,17 @@ user.get("/admin/exam/:id", function(req,res){
 			 
 			})});
 
-
+			user.get("/admin/:level/deletemodule/:_id",   function(req, res, next) {
+ 
+				Module.findOneAndRemove( { _id: req.params._id } , function(err, modules) {
+						if (err) { return next(err); }
+						if (!modules) { return next(404); }
+				 
+						req.flash("error", "تم الحدف");
+						return  res.redirect('/admin/phase/' + req.params.level ) 
+						
+					 
+					})});
 			function ensureAuthenticated(req, res, next) {
 				if (req.isAuthenticated()) {
 				next();
