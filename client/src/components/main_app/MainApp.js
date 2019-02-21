@@ -3,6 +3,7 @@ import Header from './header/Header'
 
 import './MainApp.css'
 import MainContent from './main-content/MainContent';
+import Footer from './footer/Footer';
 
 class MainApp extends Component {
     render() {
@@ -10,6 +11,7 @@ class MainApp extends Component {
             <div classNam="main">
                 <Header/>
                 <MainContent/>
+                <Footer/>
             </div>
         );
     }

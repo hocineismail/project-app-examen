@@ -1,15 +1,30 @@
+$main-color : #EEEEEE
+$font-color : #212121
+
+
 .nav
     display: grid
     grid-template-columns: 1fr 2fr
-    background: black
-    color: white
+    background: $main-color
+    color: $font-color
     h2
-        padding: 5px 40px
+        padding: 5px 50px
     .menu
         direction: ltr
         float: left
         ul
             list-style: none
-            li 
-                float: left
-                padding: 10px 40px
+            margin: 0
+            a
+                display: block
+                li 
+                    float: left
+                    text-decoration: none
+                    margin: 0px 10px
+                    padding: 33px
+                    overflow: hidden
+                    color: $font-color
+                    transition: ease-in 0.3s
+                    &:hover
+                        background: black
+                        color: white

@@ -1,0 +1,17 @@
+.info-section {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+}
+
+.info-section .prop {
+  text-align: left;
+}
+
+.info-section .prop-value {
+  float: right;
+  text-align: right;
+}
+/*# sourceMappingURL=PersonalInformations.css.map */

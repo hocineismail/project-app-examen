@@ -1,2 +1,18 @@
+$main-color : #EEEEEE
+$font-color : #212121
+
 .side-bar
-    background: red
+    background: $main-color
+    h4
+        text-align: center
+        margin: 10px 0px
+    .list-group
+        padding-right: 0px !important
+        li
+            float: right
+            a
+                text-decoration: none
+                color: $font-color
+                transition: ease-in 0.2s
+                &:hover 
+                    color: lighten($font-color, 30%)

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Cairo');
+
 body {
   margin: 0 auto;
   padding: 0;
@@ -8,6 +10,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   direction: rtl;
   width: 1200px;
+  font-family: 'Cairo', sans-serif;
+  text-align: right;
 }
 
 code {

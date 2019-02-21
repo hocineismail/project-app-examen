@@ -1,22 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 import './SidePage.css'
+import SideMenu from './side-menu/SideMenu';
 
 class SidePage extends Component {
-    render() {
-        return (
-            <div className='side-bar'>
-                <ul>
-                    <li>المادة ١</li>
-                    <li>المادة ٢</li>
-                    <li>المادة ٣</li>
-                    <li>المادة ٤</li>
-                    <li>المادة ٥</li>
-                    <li>المادة ٦</li>
-                </ul>
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div className="side-bar">
+        <h4>المواد</h4>
+        <SideMenu/>
+      </div>
+    )
+  }
 }
 
-export default SidePage;
+export default SidePage
