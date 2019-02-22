@@ -21,7 +21,7 @@
 <body>
 
   <div class="w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left" style="color:#fff;padding-top:3.7%;font-size: 18px;width:200px;background-color: rgb(73, 73, 73)" id="mySidebar">
-    <button   class="w3-bar-item w3-button w3-large w3-hide-large" onclick="w3_close()">Close &times;</button>
+    <button   class="w3-bar-item w3-button w3-large w3-hide-large" onclick="w3_close()">الغاء &times;</button>
     <h2 style="color: cornsilk;padding-right: 10%; text-align: right;" >القوائم</h2>
  <a href="/list/admins" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > قائمة المديرين </a>
  <a href="/list/teachers" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > قائمة المعلمين </a>
@@ -72,7 +72,7 @@
 
    <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Add phase
+اضافة مرحلة
   </button>
  
   <!-- Modal -->
@@ -99,8 +99,8 @@
          
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
+          <button type="submit" class="btn btn-primary">حفظ</button>
         </div> </form>
       </div>
     </div>
@@ -116,8 +116,8 @@
   <div style="overflow-x:auto;text-align: center">
       <table >
         <tr>
-          <th style=" text-align: left">Setting</th>
-          <th>Phase</th>
+          <th style=" text-align: left">تعديل</th>
+          <th>المرحلة</th>
           <th>#</th>
    
         </tr><% var i = 0  %><% var l = 0 %>
@@ -126,17 +126,17 @@
          
         <tr 	BGCOLOR="rgb(73, 73, 73)" style="color:#fff; font-size: 20px">
           <td style=" text-align: left">  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#phase<%= phase._id%>Modal">
-              Add phase
-              </button> <a href="/admin/deletephase/<%= phase._id%>" class="btn  btn-danger"> Deleete</a></td>
+              تعديل 
+              </button> <a href="/admin/deletephase/<%= phase._id%>" class="btn  btn-danger"> حذف</a></td>
           <th> <%= phase.Phase %></th>
           <th > <%= i %></th>
         </tr>
         <% levels.forEach(function(level) { %>
-          <% if (JSON.stringify(phase._id) == JSON.stringify(level.phase[0])) {%>
+          <% if (JSON.stringify(phase._id) == JSON.stringify(level.phase)) {%>
             <tr> <% l = l + 1%>
                 <td style=" text-align: left" ><button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal<%= level._id %>">
-                  Add level
-                </button> <a href="/admin/deletelevel/<%= level._id%>" class="btn btn-danger" > Delete</a> </td>
+                  تعديل
+                </button> <a href="/admin/deletelevel/<%= level._id%>" class="btn btn-danger" > حذف</a> </td>
               <td><a href="/admin/phase/<%= level._id %>"><%= level.Level %></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
                  <th style="font-size: 20px">  * &nbsp; &nbsp;</th>
                  
@@ -168,8 +168,8 @@
                        
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
+                        <button type="submit" class="btn btn-primary">حفظ</button>
                       </div> </form>
                     </div>
                   </div>
@@ -179,7 +179,7 @@
             <% } %> 
             <% })%>  
           <td style=" text-align: left">  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#example<%= phase._id%>Modal">
-                Add level
+                اضافة صف
               </button></td> 
             <div class="modal fade" id="example<%= phase._id%>Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -204,8 +204,8 @@
                      
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button type="submit" class="btn btn-primary">Save changes</button>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
+                      <button type="submit" class="btn btn-primary">حفظ</button>
                     </div> </form>
                   </div>
                 </div>
@@ -237,8 +237,8 @@
                        
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
+                        <button type="submit" class="btn btn-primary">حفظ</button>
                       </div> </form>
                     </div>
                   </div>
