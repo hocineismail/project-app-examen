@@ -6,7 +6,7 @@ var userSchema = mongoose.Schema({
     Firstname: {type: String, },
     Lastname: {type: String, },
     Birthday: {type: Date , },
-    Sex: {type: String  },
+    Sexe: {type: String  },
     Role: {type: String  },
     Address: {type: String, },
     Phone: {type: Number},
@@ -15,8 +15,6 @@ var userSchema = mongoose.Schema({
     resetPasswordToken: String,
     resetPasswordExpires: Date,
      createdAt: { type: Date, default: Date.now },
-
-
 });
 
 var noop = function() {};
