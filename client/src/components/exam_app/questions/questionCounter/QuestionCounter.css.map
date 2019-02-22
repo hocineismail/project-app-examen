@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,iBAAiB,CAAC;EACd,UAAU,EAAE,MAAM;EAClB,MAAM,EAAE,SAAS;CAAG",
+    "sources": [
+        "QuestionCounter.sass"
+    ],
+    "names": [],
+    "file": "QuestionCounter.css"
+}

@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,kBAAkB,CAAC;EACf,OAAO,EAAE,SAAS;EAClB,OAAO,EAAE,IAAI;EACb,qBAAqB,EAAE,GAAG;EAC1B,kBAAkB,EAAE,IAAI;CAAG",
+    "sources": [
+        "ExamInformations.sass"
+    ],
+    "names": [],
+    "file": "ExamInformations.css"
+}

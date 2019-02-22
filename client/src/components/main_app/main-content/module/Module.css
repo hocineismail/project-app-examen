@@ -1,0 +1,12 @@
+.module-exams {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 10px;
+}
+
+.module {
+  margin: 20px 0px;
+}
+/*# sourceMappingURL=Module.css.map */

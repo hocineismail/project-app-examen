@@ -1,0 +1,17 @@
+.informations-input {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 2fr;
+      grid-template-columns: 1fr 2fr;
+}
+
+.informations-input .input-prop {
+  text-align: left;
+}
+
+.informations-input .input-prop-value {
+  float: right;
+  text-align: right;
+  width: 70%;
+}
+/*# sourceMappingURL=InformationsInput.css.map */

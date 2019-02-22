@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,SAAS,CAAC;EACN,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,IAAI;CAAG;;AACnB,AAAA,UAAU,CAAC;EACP,KAAK,EAAE,KAAK;EACZ,MAAM,EAAE,SAAS;EACjB,OAAO,EAAE,IAAI;CAAG",
+    "sources": [
+        "ExamApp.sass"
+    ],
+    "names": [],
+    "file": "ExamApp.css"
+}

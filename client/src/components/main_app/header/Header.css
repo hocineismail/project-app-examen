@@ -1,0 +1,43 @@
+.nav {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 2fr;
+      grid-template-columns: 1fr 2fr;
+  background: #EEEEEE;
+  color: #212121;
+}
+
+.nav h2 {
+  padding: 5px 50px;
+}
+
+.nav .menu {
+  direction: ltr;
+  float: left;
+}
+
+.nav .menu ul {
+  list-style: none;
+  margin: 0;
+}
+
+.nav .menu ul a {
+  display: block;
+}
+
+.nav .menu ul a li {
+  float: left;
+  text-decoration: none;
+  margin: 0px 10px;
+  padding: 33px;
+  overflow: hidden;
+  color: #212121;
+  -webkit-transition: ease-in 0.3s;
+  transition: ease-in 0.3s;
+}
+
+.nav .menu ul a li:hover {
+  background: black;
+  color: white;
+}
+/*# sourceMappingURL=Header.css.map */
