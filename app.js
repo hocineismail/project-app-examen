@@ -7,7 +7,7 @@ var cookieParser = require("cookie-parser");
 var session = require("express-session");
 var flash = require("connect-flash"); 
 var passport = require("passport");
-mongoose.connect("mongodb://localhost:27017/databasejedida");
+mongoose.connect("mongodb://localhost:27017/databasejedidad");
 
 // routes
 var routes = require("./routes/routes");

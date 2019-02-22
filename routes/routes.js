@@ -217,11 +217,34 @@ function checkFileType(file, cb){
 });
 
 
-router.get("/teacher/valid",function(req,res){
-  Response.find({}).populate("question").exec(function(err,success){
-    console.log(success)
+router.get("/teacher/valid",async function(req,res){
+
+  
+    try{
     
-    res.render("teacher/validation")
-  })
+      const question = await Question.find({IsValidOne: false},{NotValid: false});
+      let responses = [];
+  
+    
+  
+      for(let i = 0; i < question.length; i++){
+        let response = await Response.find({question: question[i]._id });
+        responses.push(...response)
+        console.log(responses)
+      };
+
+  
+ 
+          res.render("teacher/validation",{question: question,responses: responses})
+      
+    }
+    catch(err){
+      res.status(500).render("/uhOhPage",{
+          message: err.message
+      })
+  }
+  
+ 
+  
 })
 module.exports = router;
