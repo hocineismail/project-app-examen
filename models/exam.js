@@ -6,7 +6,7 @@ var examSchema = Schema({
  Etat:  { type: Boolean, required: true  },
  NumberOfExam: { type: Number, required: true },
  IsOfficial: { type: Boolean, required: true },
- Time: {type: String, required: true},
+ Time: {type: Number, required: true},
  Date: {type: Date, required: true},
  createdAt: { type: Date, default: Date.now },
  module: {

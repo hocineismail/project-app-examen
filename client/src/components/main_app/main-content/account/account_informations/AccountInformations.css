@@ -1,0 +1,13 @@
+.account-informations {
+  text-align: center;
+  padding: 20px 10px;
+}
+
+.avatar {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  top: -30px;
+  margin: 0 auto;
+}
+/*# sourceMappingURL=AccountInformations.css.map */

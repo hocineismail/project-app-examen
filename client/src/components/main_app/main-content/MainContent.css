@@ -1,0 +1,7 @@
+.main-content {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 3fr;
+      grid-template-columns: 1fr 3fr;
+}
+/*# sourceMappingURL=MainContent.css.map */

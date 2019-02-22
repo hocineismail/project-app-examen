@@ -1,0 +1,10 @@
+.exam-informations {
+  padding: 20px 10px;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr;
+      grid-template-columns: 1fr;
+  -ms-grid-rows: auto;
+      grid-template-rows: auto;
+}
+/*# sourceMappingURL=ExamInformations.css.map */

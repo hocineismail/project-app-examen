@@ -1,0 +1,11 @@
+.response-box {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: auto 1fr;
+      grid-template-columns: auto 1fr;
+  grid-gap: 10px;
+  margin: 20px auto;
+  padding: 10px;
+  width: 600px;
+}
+/*# sourceMappingURL=Responses.css.map */

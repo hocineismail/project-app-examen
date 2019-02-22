@@ -1,16 +1,20 @@
-
-var mongoose = require("mongoose");
+var mongoose = require('mongoose')
 
 var Schema = mongoose.Schema
 var studentSchema = Schema({
- Phase: { type: String, required: true },
- Level:  { type: String, required: true },
- createdAt: { type: Date, default: Date.now },
- user: {
+  Phase: { type: Schema.Types.ObjectId, required: true, ref: 'Phase' },
+  Level: { type: Schema.Types.ObjectId, required: true, ref: 'Level' },
+  createdAt: { type: Date, default: Date.now },
+  semster: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: 'Semster'
+  },
+  user: {
     type: Schema.Types.ObjectId,
     ref: 'User'
   }
-});
+})
 
-var Student = mongoose.model("Student", studentSchema);
-module.exports = Student;
+var Student = mongoose.model('Student', studentSchema)
+module.exports = Student
