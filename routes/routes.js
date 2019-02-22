@@ -289,4 +289,22 @@ router.get("/valid/question/:id", function(req,res){
  res.redirect("/teacher/valid")
   })
 })
+
+router.get("/invalid/question/:id", function(req,res){
+  Question.findById({_id: req.params.id},function(err , question){
+   
+      question.IsValidOne = false,
+      question.IsValidTwo = false,
+      question.NotValid = true,
+      question.ErrorMessage = true,
+      //question.TeacherFinal = req.user._id
+      question.save(function(err, success){
+        if (err){console.log("il ya une error ")}
+      })
+    
+ 
+ console.log(question)
+ res.redirect("/teacher/valid")
+  })
+})
 module.exports = router;
