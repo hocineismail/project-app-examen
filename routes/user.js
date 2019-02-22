@@ -626,7 +626,7 @@ user.get("/admin/exam/:id", function(req,res){
 			})});
 
 			user.get("/admin/:level/deletemodule/:_id",   function(req, res, next) {
- 
+                
 				Module.findOneAndRemove( { _id: req.params._id } , function(err, modules) {
 						if (err) { return next(err); }
 						if (!modules) { return next(404); }

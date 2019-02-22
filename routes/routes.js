@@ -5,6 +5,8 @@ var User = require("../models/user");
 var Phase = require("../models/phase");
 var Teacher = require("../models/teacher");
 var Semster = require("../models/semster");
+var Question = require("../models/question");
+var Response = require("../models/response");
 var Level = require("../models/level");
 var Module = require("../models/module");
 var Exam = require("../models/exam")
@@ -80,6 +82,7 @@ const upload = multer({storage: storage,limits:{fileSize: 1000000},
 {name: 'image2'},
 {name: 'image3'},
 {name: 'image4'},
+{name: 'image5'},
 ])
 
 
@@ -100,11 +103,82 @@ function checkFileType(file, cb){
 }
 
   router.post('/upload', (req, res) => {
-        upload(req, res, function(err){
-          if (err){
-            console.log("rtoooooottttt")
+   if ( 
+     (req.body.Level != "") && 
+     (req.body.Phase != "")  && 
+     (req.body.Module != "")  && 
+     (req.body.Semster != "")  && 
+     (req.body.Exam != "")  && 
+     (req.body.NameOfCourse != "")  && 
+     (req.body.Chapiter != "")  && 
+     (req.body.TypeOfQuestion != "")  && 
+     (req.body.Difficulty != "")   )
+   {
+
+     upload(req, res, function(err){
+       
+         if (err){
+           console.log("rtoooooottttt")
+      req.flash("error", "حدث خلل اثناء ادخال البيانات الصور...تاكد من الصور التي تريد ادخاها");
+                      
+      return  res.redirect('/teacher/question') 
           } else {
-            console.log(req.files)
+          
+          var  newQuestion = new Question ({
+              Question: req.body.Question,
+              Response: req.body.Response,
+             
+              NameOfCourse: req.body.NameOfCourse,
+              TypeOfQuestion: req.body.TypeOfQuestion,
+              Chapiter: req.body.Chapiter,
+              Difficulty: req.body.Difficulty,
+              exam:  req.body.Exam,
+
+            });newQuestion.save(function(err,success){
+              if (err){
+                console.log("YBDA")
+                console.log(req.body.Question)
+                console.log(req.body.Response)
+                console.log( req.body.NameOfCourse)
+                console.log(req.body.TypeOfQuestion)
+                console.log(req.body.Chapiter)
+                console.log(req.body.Difficulty)
+                console.log("hena kayn error on nez question")
+                       req.flash("error", "لم يتم ادخال كل البيانات");
+                       return  res.redirect('/teacher/qauestion') 
+                      }
+              if (success){
+              var newResponse1 = new Response({
+                ResponseText: req.body.ResponseText1,
+                IsCorrect: false,
+                question: newQuestion._id
+              });newResponse1.save(function(err,s){
+                if (err){ console.log("webiiiii errror fi reponse nik xebri")}
+              })
+              var newResponse2 = new Response({
+                ResponseText: req.body.ResponseText2,
+                IsCorrect: false,
+                question: newQuestion._id
+              });newResponse2.save()
+              var newResponse3 = new Response({
+                ResponseText: req.body.ResponseText3,
+                IsCorrect: false,
+                question: newQuestion._id
+              });newResponse3.save()
+              var newResponse4 = new Response({
+                ResponseText: req.body.ResponseText4,
+                IsCorrect: true,
+                question: newQuestion._id
+              });newResponse4.save()
+            }
+          })
+            console.log("this code is naə of picter")
+            console.log(req.body.image5value)
+            if (req.body.image5value === "") {
+              console.log("is not null bitch ")
+            } else if (req.files.image5 != null) {
+              console.log(req.files.image5)
+            }
             console.log(req.body.Exam)
             console.log(req.body.Module)
             res.redirect("/teacher/question")
@@ -112,5 +186,20 @@ function checkFileType(file, cb){
            
           }
         })
+    } else {
+      console.log(req.files.image5)
+      req.flash("error", "لم يتم ادخال كل البيانات");
+                      
+      return  res.redirect('/teacher/qauestion') 
+    }
 });
+
+
+router.get("/teacher/valid",function(req,res){
+  Response.find({}).populate("question").exec(function(err,success){
+    console.log(success)
+    
+    res.render("teacher/validation")
+  })
+})
 module.exports = router;
