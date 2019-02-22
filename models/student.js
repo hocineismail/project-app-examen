@@ -13,7 +13,13 @@ var studentSchema = Schema({
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User'
-  }
+  },
+  exams: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Exam'
+  }, {
+    type: Number
+  }]
 })
 
 var Student = mongoose.model('Student', studentSchema)
