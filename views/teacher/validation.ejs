@@ -20,6 +20,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome
 <style>
 body {
     font-family: 'Cairo', sans-serif;
+    background-color: rgb(216, 216, 216)
   }
 table {
   border-collapse: collapse;
@@ -82,6 +83,9 @@ th, td {
     text-align: left;
   }
 }
+span {
+  font-size: 20px
+}
 </style>
 <body>
 
@@ -112,63 +116,66 @@ th, td {
   </div>
   <% }) %>
 </div>
+
+
 <div class="container">
 
- 
- 
     <% question.forEach(function(question) {%>
-      <div class="row"> 
-   <div style="border: 1px solid black">
-        
-       
-        <p> <%= question.NameOfCourse %> <span class=" ">عنوان الدرس</span>   </p>
-        <p > <%= question.TypeOfQuestion %>  <span class="">نوع السؤال</span></p>
-        <p> <%= question.Chapiter %> <span class="">الوحد </span></p>
-        <p > <%= question.Difficulty %> <span class="">درجة السؤال</span></p>
-        <p> <%= question.Question %>  <span class="">نوع السؤال</span></p>
-      
-        <% if (question.QuestionImage != null) {%>
-          <img src="/uploads/<%= question.QuestionImage %>" width="200px">
-          <%}%>
-        <hr> 
-        
-   
-        <% responses.forEach(function(response) {%>
+      <div class="card-deck">
          
-              <% if (JSON.stringify(question._id) == JSON.stringify(response.question)) {%>
-          
-                    <div class=" col-md-12 "> 
-                <% if (response.ResponseImage != null) {%>
-             
-                  <img src="/uploads/<%= response.ResponseImage %>" width="40%">  
-                <%}%>
-                <%if  (response.ResponseText != null) {%>
-                <%= response.ResponseText  %>  
-                <%}%>
-                </div>
-              
-              
-              
-           
-              <%}%>
+          <div class="card">
+        
+            <div class="card-body">
+            
+              <div class="row"> 
+              <div class="col-md-12">
+                 
+              <p><span >عنوان الدرس</span> :  <%= question.NameOfCourse %>   </p>
+              <p >  <span >نوع السؤال</span> : <%= question.TypeOfQuestion %> </p>
+              <p><span >الوحد </span> :  <%= question.Chapiter %> </p>
+              <p >  <span >درجة السؤال</span> : <%= question.Difficulty %></p>
+              <p><span > السؤال</span>  : <%- question.Question %>  </p>
              
             
+              <% if (question.QuestionImage != "") {%>
+                <img src="/uploads/<%= question.QuestionImage %>" width="80%">
+                <br>
+              <br>
+                <%}%>
+              </div>
+             
+              
+              <% responses.forEach(function(response) {%>
+               
+                <% if (JSON.stringify(question._id) == JSON.stringify(response.question)) {%>
+              <div class="col-md-6"> 
+              
+                  <% if (response.ResponseImage != "") {%>
+                   
+                    <img src="/uploads/<%= response.ResponseImage %>" width="80%">  
+                  <%}%>
+                  <%if  (response.ResponseText != "") {%>
+                <p>  <%= response.ResponseText  %>  </p> 
+                  <%}%>
+                
+              </div>
+                <%}%>
+          <%})%> 
           
-            <%})%> 
-     
-           
-           
-
-           
-           
-        
-           
-        <a href="#" class="btn btn-primary">actif</a>
-  
-  
-      </div>
- <%})%>
-
+            </div>
+              <p class="card-text" style="text-align: center"><small class="text-muted"><%= question.createdAt %></small></p>
+            </div>
+            <hr>
+            <div style="margin: 20px"> 
+            <button class="btn btn-danger" style="width: 100px" > button 1 </button>
+            <a href="/valid/question/<%= question._id %>" class="btn  btn-success" style="width: 100px" > validi </a>
+          </div>
+          </div>
+          
+        </div>
+      
+       
+        <%})%> 
 </div>
 
  <br>

@@ -402,19 +402,20 @@ user.get("/static",  function(req,res){
 				callback(null,CountQuestions);
 		})
 },function(callback){
-	Question.countDocuments({IsValideOne: true },function(err,validOne){
+	Question.countDocuments({IsValidOne: true },function(err,validOne){
 				if(err) return callback(err);
 				CountValidOne = validOne;
+				console.log(CountValidOne)
 				callback(null,CountValidOne );
 		})
 },function(callback){
-	Question.countDocuments({IsValideTwo: true},function(err,validTwo){
+	Question.countDocuments({IsValidTwo: true},function(err,validTwo){
 				if(err) return callback(err);
 				CountValidTwo = validTwo;
 				callback(null,CountValidTwo);
 		})
 },function(callback){
-	Question.countDocuments({IsValideFinale: true},function(err,validFinal){
+	Question.countDocuments({IsValidFinal: true},function(err,validFinal){
 				if(err) return callback(err);
 				CountValidFinal  = validFinal;
 				callback(null,CountValidFinal);

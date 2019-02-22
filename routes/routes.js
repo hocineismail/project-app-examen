@@ -237,7 +237,7 @@ router.get("/teacher/valid",async function(req,res){
   
     try{
     
-      const question = await Question.find({IsValidOne: false},{NotValid: false});
+      const question = await Question.find({IsValidFinal: false},{NotValid: false});
       let responses = [];
   
     
@@ -245,7 +245,7 @@ router.get("/teacher/valid",async function(req,res){
       for(let i = 0; i < question.length; i++){
         let response = await Response.find({question: question[i]._id });
         responses.push(...response)
-        console.log(responses)
+      
       };
 
   
@@ -261,5 +261,32 @@ router.get("/teacher/valid",async function(req,res){
   
  
   
+})
+
+router.get("/valid/question/:id", function(req,res){
+  Question.findById({_id: req.params.id},function(err , question){
+    if(question.IsValidOne != true) {
+      question.IsValidOne = true,
+      //question.TeacherOne = req.user._id
+      question.save(function(err, success){
+        if (err){console.log("il ya une error ")}
+      })
+    } else if (question.IsValidTwo != true) {
+      question.IsValidTwo = true
+       // question.TeacherOne = req.user._id
+      question.save(function(err, success){
+        if (err){console.log("il ya une error ")}
+      })
+    } else {
+      question.IsValidFinal = true
+      // question.TeacherFinal = req.user._id
+     question.save(function(err, success){
+       if (err){console.log("il ya une error ")}
+     })
+    }
+ 
+ console.log(question)
+ res.redirect("/teacher/valid")
+  })
 })
 module.exports = router;
