@@ -14,6 +14,7 @@ var Phase = require("../models/phase");
  var Teacher = require("../models/teacher");
  var Student = require("../models/student");
 var crypto = require("crypto");
+
 user.use(function(req, res, next) {
     res.locals.currentUser = req.user;
     res.locals.errors = req.flash("error");
@@ -344,12 +345,9 @@ user.get("/list/demande",async  function(req,res){
 		exec(function(err,teacher){
 			console.log(teacher)
 				res.render("listDemande",{
-					
-					
 						teachers: teacher})
-		
-	
-					})	});
+					})	
+			});
 
 user.get("/list/students",async  function(req,res){
 	try{

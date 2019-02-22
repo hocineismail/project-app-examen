@@ -155,7 +155,8 @@ function checkFileType(file, cb){
               image5 = req.body.image5value
             } else if (req.files.image5 != null) {
             image5 = req.files.image5[0].filename
-                 }            
+                 }   
+                 console.log("hena pas d erreur")         
           var  newQuestion = new Question ({
               Question: req.body.Question,
               Response: req.body.Response,
@@ -168,18 +169,20 @@ function checkFileType(file, cb){
 
             });newQuestion.save(function(err,success){
               if (err){
-                       console.log("hena kayn error on nez question")
+                      
                        req.flash("error", "لم يتم ادخال كل البيانات");
                        return  res.redirect('/teacher/qauestion') 
                       }
               if (success){
+                console.log(image1)
+              console.log(newQuestion._id)
               var newResponse1 = new Response({
                 ResponseText: req.body.ResponseText1,
                 IsCorrect: false,
                 ResponseImage: image1,
                 question: newQuestion._id
               });newResponse1.save(function(err,succcess){
-                if (err){ req.flash("error", "لم يتم ادخال كل البيانات");
+                if (err){ console.log("response 1 pas d error");
                 return  res.redirect('/teacher/qauestion') 
                }
               })
@@ -188,19 +191,31 @@ function checkFileType(file, cb){
                 IsCorrect: false,
                 ResponseImage: image2,
                 question: newQuestion._id
-              });newResponse2.save()
+              });newResponse2.save(function(err,succcess){
+                if (err){ console.log("response 1 pas d error");
+                return  res.redirect('/teacher/qauestion') 
+               }
+              })
               var newResponse3 = new Response({
                 ResponseText: req.body.ResponseText3,
                 IsCorrect: false,
                 ResponseImage: image3,
                 question: newQuestion._id
-              });newResponse3.save()
+              });newResponse3.save(function(err,succcess){
+                if (err){ console.log("response 1 pas d error");
+                return  res.redirect('/teacher/qauestion') 
+               }
+              })
               var newResponse4 = new Response({
                 ResponseText: req.body.ResponseText4,
                 IsCorrect: true,
                 ResponseImage: image4,
                 question: newQuestion._id
-              });newResponse4.save()
+              });newResponse4.save(function(err,succcess){
+                if (err){ console.log("response 1 pas d error");
+                return  res.redirect('/teacher/qauestion') 
+               }
+              })
             }
           })
            

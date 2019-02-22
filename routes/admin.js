@@ -13,6 +13,7 @@ var Module = require("../models/module");
 var Exam = require("../models/exam")
 
 var crypto = require("crypto");
+
 admin.use(function(req, res, next) {
     res.locals.currentUser = req.user;
     res.locals.errors = req.flash("error");
@@ -31,8 +32,6 @@ admin.get("/teacherValidation/:_id", function(req,res){
         if (err) return handleError(err);
         if (update) { return res.redirect("/admin")}
     });
-    
-    
   }
 })
 })

@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,aAAa,CAAC;EACV,OAAO,EAAE,IAAI;EACb,qBAAqB,EAAE,WAAW;EAClC,QAAQ,EAAE,IAAI;CAAG;;AACrB,AAAA,OAAO,CAAC;EACJ,MAAM,EAAE,QAAQ;CAAG",
+    "sources": [
+        "Module.sass"
+    ],
+    "names": [],
+    "file": "Module.css"
+}

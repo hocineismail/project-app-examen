@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,cAAc,CAAC;EACX,OAAO,EAAE,IAAI;EACb,qBAAqB,EAAE,OAAO;EAC9B,QAAQ,EAAE,IAAI;EACd,KAAK,EAAE,KAAK;EACZ,MAAM,EAAE,SAAS;CAAG",
+    "sources": [
+        "Submit.sass"
+    ],
+    "names": [],
+    "file": "Submit.css"
+}

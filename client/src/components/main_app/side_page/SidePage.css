@@ -1,0 +1,28 @@
+.side-bar {
+  background: #EEEEEE;
+}
+
+.side-bar h4 {
+  text-align: center;
+  margin: 10px 0px;
+}
+
+.side-bar .list-group {
+  padding-right: 0px !important;
+}
+
+.side-bar .list-group li {
+  float: right;
+}
+
+.side-bar .list-group li a {
+  text-decoration: none;
+  color: #212121;
+  -webkit-transition: ease-in 0.2s;
+  transition: ease-in 0.2s;
+}
+
+.side-bar .list-group li a:hover {
+  color: #6e6e6e;
+}
+/*# sourceMappingURL=SidePage.css.map */

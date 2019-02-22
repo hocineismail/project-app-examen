@@ -3,7 +3,7 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema
 var reponseSchema = Schema({
  ResponseText: { type: String,  },
- ResponseImage: { type: Number,},
+ ResponseImage: { type: String,},
  IsCorrect: { type: Boolean, required: true},
  createdAt: { type: Date, default: Date.now },
  question: {

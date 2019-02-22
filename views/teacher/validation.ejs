@@ -112,23 +112,72 @@ th, td {
   </div>
   <% }) %>
 </div>
-<% question.forEach(function(question) {%>
-  <%= question.Question %><br>
-<% responses.forEach(function(response) {%>
+<div class="container">
 
-  <% if (JSON.stringify(question._id) == JSON.stringify(response.question)) {%>
-
-  
-  <%}%>
-
-
-
-  <%})%>
-
- <%})%>
-  
-    </div>
+ 
+ 
+    <% question.forEach(function(question) {%>
+      <div class="row"> 
+   <div style="border: 1px solid black">
+        
+       
+        <p class=" col-md-2 "> <%= question.NameOfCourse %> <span class=" ">عنوان الدرس</span>   </p>
+        <p class=" col-md-2"> <%= question.TypeOfQuestion %>  <span class="">نوع السؤال</span></p>
+        <p class=" col-md-2"> <%= question.Chapiter %> <span class="">الوحد </span></p>
+        <p class=" col-md-2"> <%= question.Difficulty %> <span class="">درجة السؤال</span></p>
+        <p class="col-md-2"> <%= question.Question %>  <span class="">نوع السؤال</span></p>
       
+        <% if (question.QuestionImage != null) {%>
+          <img src="/uploads/<%= question.QuestionImage %>" width="200px">
+          <%}%>
+        <hr> 
+        
+   
+        <% responses.forEach(function(response) {%>
+         
+              <% if (JSON.stringify(question._id) == JSON.stringify(response.question)) {%>
+          
+                    <div class=" col-md-12 "> 
+                <% if (response.ResponseImage != null) {%>
+             
+                  <img src="/uploads/<%= response.ResponseImage %>" width="40%">  
+                <%}%>
+                <%if  (response.ResponseText != null) {%>
+                <%= response.ResponseText  %>  
+                <%}%>
+                </div>
+              
+              
+              
+           
+              <%}%>
+             
+            
+          
+            <%})%> 
+     
+           
+           
+
+           
+           
+        
+           
+        <a href="#" class="btn btn-primary">actif</a>
+  
+  
+      </div>
+ <%})%>
+
+</div>
+
+ <br>
+
+
+
+
+
+
 
 
     <script>
