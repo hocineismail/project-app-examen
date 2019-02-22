@@ -9,6 +9,7 @@
 <script type="text/javascript" src="../script.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -119,7 +120,7 @@ th, td {
 
     <div class="container">
       
-        <form action="/upload" method="post" enctype="multipart/form-data">
+        <form action="/upload" method="post" >
           <div class="row">
               <div class="col">
                 <label style="font-size: 20px">اختر المستوى  </label>
@@ -165,11 +166,11 @@ th, td {
            
         <div class="col">
             <label style="font-size: 20px"> عنوان الدرس </label>
-         <input type="text"  class="form-control" dir="rtl" placeholder="عنوان الدرس" required>
+         <input type="text" name="NameOfCourse" class="form-control" dir="rtl" placeholder="عنوان الدرس" required>
          </div>
          <div class="col">
             <label style="font-size: 20px"> الوحد</label>
-            <input type="text"  class="form-control" dir="rtl" placeholder="الوحد " required>
+            <input type="text" name="Chapiter" class="form-control" dir="rtl" placeholder="الوحد " required>
         </div>
  </div> <hr>
  <div class="row">
@@ -184,7 +185,7 @@ th, td {
    </div>
    <div class="col">
       <label style="font-size: 20px">  درجة السؤال </label>
-      <select name="LevelOfQuestion"  class="form-control"  dir="rtl" >
+      <select name="Difficulty"  class="form-control"  dir="rtl" >
         <option>سهل</option>
          <option>متوسط</option>
         <option> صعب</option>
@@ -194,11 +195,25 @@ th, td {
    
       <div class="col-md-12">
       <h4 style="font-family: 'Cairo', sans-serif;">ادخل السؤال</h4>
-      <textarea id="myArea1" class="textarea"></textarea> 
+      <textarea name="Question" id="myArea1" class="textarea"></textarea> 
+      <div class="file-field input-field">
+          <div class="btn grey">
+            <span>تحميل صورة</span>
+            <input name="image5" type="file">
+          </div>
+          <div class="file-path-wrapper">
+            <input class="file-path validate" type="text"  name="image5value" value="">
+          </div>
+        
+        </div>  
+    
   
     </div>
+    <h4 style="font-family: 'Cairo', sans-serif;padding-top: 20px">ادخل الاجوبة</h4>
     <div class="row">
-    <div class="col-md-3"> 
+      
+        <div class="col-md-3" style="border: 1px solid rgb(218, 54, 54);border-radius: 8px;background-color: rgb(255, 212, 212) ">  
+            <h6 style="font-family: 'Cairo', sans-serif;padding-top: 20px">ادخل اجابة خاطئة‬‎</h6>
       <div class="file-field input-field">
         <div class="btn grey">
           <span>تحميل صورة</span>
@@ -208,11 +223,12 @@ th, td {
           <input class="file-path validate" type="text">
         </div>
       </div>
-    <textarea style="text-align:right"></textarea>
+    <textarea style="text-align:right" name="ResponseText1" ></textarea>
 
 
     </div>
-    <div class="col-md-3"> 
+    <div class="col-md-3" style="border: 1px solid rgb(218, 54, 54);border-radius:8px;background-color: rgb(255, 212, 212) ">  
+        <h6 style="font-family: 'Cairo', sans-serif;padding-top: 20px">ادخل اجابة خاطئة‬‎</h6>
       <div class="file-field input-field">
         <div class="btn grey">
           <span>تحميل صورة</span>
@@ -222,9 +238,10 @@ th, td {
           <input class="file-path validate" type="text">
         </div>
       </div>
-      <textarea style="text-align:right" ></textarea>
+      <textarea style="text-align:right"  name="ResponseText2"></textarea>
     </div>
-    <div class="col-md-3"> 
+    <div class="col-md-3" style="border: 1px solid rgb(218, 54, 54);border-radius: 8px;background-color: rgb(255, 212, 212) ">  
+        <h6 style="font-family: 'Cairo', sans-serif;padding-top: 20px">ادخل اجابة خاطئة‬‎</h6>
       <div class="file-field input-field">
         <div class="btn grey">
           <span>تحميل صورة</span>
@@ -235,9 +252,10 @@ th, td {
         </div>
         
       </div>
-      <textarea style="text-align:right" ></textarea>
+      <textarea style="text-align:right" name="ResponseText3" ></textarea>
     </div>
-    <div class="col-md-3"> 
+    <div class="col-md-3"  style="border: 1px solid green;border-radius: 8px;background-color: rgb(237, 255, 236)"> 
+        <h6 style="font-family: 'Cairo', sans-serif;padding-top: 20px">ادخل اجابة الصحيحة</h6>
       <div class="file-field input-field">
         <div class="btn grey">
           <span>تحميل صورة</span>
@@ -247,26 +265,48 @@ th, td {
           <input class="file-path validate" type="text">
         </div>
       
-      </div>  <textarea style="text-align:right"></textarea>
-    </div> </div>
+      </div>  
+      <textarea style="text-align:right"  name="ResponseText4" ></textarea>
+     
+   
+  
+  </div>
+
+     
+       
+          
+            
+  </div>
+
     <label></label>
     <hr>
+
+
+
+
+     
     <div class="col-md-12">
       <h4 style="font-family: 'Cairo', sans-serif;">ادخل الاجابة النموذجية</h4>
    
-      <textarea id="myArea1" class="textarea"></textarea> 
+      <textarea id="myArea2" name="Response" class="textarea"></textarea> 
     </div>
-    <button type="submit"> submit</button>
+    <label></label>
+    <div class="row">
+      <div class="col"> <button type="submit" class="btn btn-success form-control"> ارسال السؤال </button> </div>
+      <div class="col"> </div>
+    </div>
+   
+
 </form>
 
-
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     </div>
       
     <script type="text/javascript" src="../editor-text/nicEdit.js"></script>
     <script type="text/javascript">
-    var area1
+    var area1,area2
      area1 = new nicEditor({fullPanel : true}).panelInstance('myArea1',{hasPanel : true});
-
+     area2 = new nicEditor({fullPanel : true}).panelInstance('myArea2',{hasPanel : true});
     </script>
     
 

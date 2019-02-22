@@ -267,6 +267,7 @@ admin.post("/admin/addphase", function(req,res,next){
                   var time = req.body.Time;
                   var date = req.body.Date;
                   var modulee = req.params._id;
+                  var question = []
                   console.log(req.params._id)
               
                    var newExam = new Exam({
@@ -277,6 +278,7 @@ admin.post("/admin/addphase", function(req,res,next){
                    Time: time,
                    Etat: etat,
                    module: modulee,
+                   question: question
                  
                   });
                   newExam.save(function(err,done){

@@ -12,7 +12,8 @@ var examSchema = Schema({
  module: {
     type: Schema.Types.ObjectId,
     ref: 'Module'
-  }
+  },
+ 
 });
 
 var Exam = mongoose.model("Exam", examSchema);

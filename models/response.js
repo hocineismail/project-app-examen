@@ -6,10 +6,10 @@ var reponseSchema = Schema({
  ResponseImage: { type: Number,},
  IsCorrect: { type: Boolean, required: true},
  createdAt: { type: Date, default: Date.now },
- question: [{
+ question: {
     type: Schema.Types.ObjectId,
     ref: 'Question'
-  }]
+  }
 });
 
 var Response = mongoose.model("Response", reponseSchema);
