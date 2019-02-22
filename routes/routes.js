@@ -124,12 +124,38 @@ function checkFileType(file, cb){
       req.flash("error", "حدث خلل اثناء ادخال البيانات الصور...تاكد من الصور التي تريد ادخاها");
                       
       return  res.redirect('/teacher/question') 
-          } else {var image5
+          } else {
+            
+            var image1
+            var image2
+            var image3
+            var image4
+            var image5
             if (req.body.image5value === "") {
+              image1 = req.body.image1value
+            } else if (req.files.image1 != null) {
+            image1 = req.files.image1[0].filename
+                 }
+                 if (req.body.image2value === "") {
+                  image2 = req.body.image2value
+                } else if (req.files.image2 != null) {
+                image2 = req.files.image2[0].filename
+                     }
+              if (req.body.image3value === "") {
+              image3 = req.body.image3value
+            } else if (req.files.image3 != null) {
+            image3 = req.files.image3[0].filename
+                 }
+                 if (req.body.image4value === "") {
+              image4 = req.body.image4value
+            } else if (req.files.image4 != null) {
+            image4 = req.files.image4[0].filename
+                 }
+                 if (req.body.image5value === "") {
               image5 = req.body.image5value
             } else if (req.files.image5 != null) {
             image5 = req.files.image5[0].filename
-                 }
+                 }            
           var  newQuestion = new Question ({
               Question: req.body.Question,
               Response: req.body.Response,
@@ -150,6 +176,7 @@ function checkFileType(file, cb){
               var newResponse1 = new Response({
                 ResponseText: req.body.ResponseText1,
                 IsCorrect: false,
+                ResponseImage: image1,
                 question: newQuestion._id
               });newResponse1.save(function(err,succcess){
                 if (err){ req.flash("error", "لم يتم ادخال كل البيانات");
@@ -159,36 +186,30 @@ function checkFileType(file, cb){
               var newResponse2 = new Response({
                 ResponseText: req.body.ResponseText2,
                 IsCorrect: false,
+                ResponseImage: image2,
                 question: newQuestion._id
               });newResponse2.save()
               var newResponse3 = new Response({
                 ResponseText: req.body.ResponseText3,
                 IsCorrect: false,
+                ResponseImage: image3,
                 question: newQuestion._id
               });newResponse3.save()
               var newResponse4 = new Response({
                 ResponseText: req.body.ResponseText4,
                 IsCorrect: true,
+                ResponseImage: image4,
                 question: newQuestion._id
               });newResponse4.save()
             }
           })
-            console.log("this code is naə of picter")
-            console.log(req.body.image5value)
-            if (req.body.image5value === "") {
-              console.log("is not null bitch ")
-            } else if (req.files.image5 != null) {
-              console.log(req.files.image5)
-            }
-            console.log(req.body.Exam)
-            console.log(req.body.Module)
+           
             res.redirect("/teacher/question")
            
            
           }
         })
     } else {
-      console.log(req.files.image5)
       req.flash("error", "لم يتم ادخال كل البيانات");
                       
       return  res.redirect('/teacher/qauestion') 
