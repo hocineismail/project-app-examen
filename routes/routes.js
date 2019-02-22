@@ -116,18 +116,24 @@ function checkFileType(file, cb){
    {
 
      upload(req, res, function(err){
-       
+       //this code for conditioon of req image 
+      
+      //end
          if (err){
            console.log("rtoooooottttt")
       req.flash("error", "حدث خلل اثناء ادخال البيانات الصور...تاكد من الصور التي تريد ادخاها");
                       
       return  res.redirect('/teacher/question') 
-          } else {
-          
+          } else {var image5
+            if (req.body.image5value === "") {
+              image5 = req.body.image5value
+            } else if (req.files.image5 != null) {
+            image5 = req.files.image5[0].filename
+                 }
           var  newQuestion = new Question ({
               Question: req.body.Question,
               Response: req.body.Response,
-             
+              QuestionImage: image5,
               NameOfCourse: req.body.NameOfCourse,
               TypeOfQuestion: req.body.TypeOfQuestion,
               Chapiter: req.body.Chapiter,
@@ -136,14 +142,7 @@ function checkFileType(file, cb){
 
             });newQuestion.save(function(err,success){
               if (err){
-                console.log("YBDA")
-                console.log(req.body.Question)
-                console.log(req.body.Response)
-                console.log( req.body.NameOfCourse)
-                console.log(req.body.TypeOfQuestion)
-                console.log(req.body.Chapiter)
-                console.log(req.body.Difficulty)
-                console.log("hena kayn error on nez question")
+                       console.log("hena kayn error on nez question")
                        req.flash("error", "لم يتم ادخال كل البيانات");
                        return  res.redirect('/teacher/qauestion') 
                       }
@@ -152,8 +151,10 @@ function checkFileType(file, cb){
                 ResponseText: req.body.ResponseText1,
                 IsCorrect: false,
                 question: newQuestion._id
-              });newResponse1.save(function(err,s){
-                if (err){ console.log("webiiiii errror fi reponse nik xebri")}
+              });newResponse1.save(function(err,succcess){
+                if (err){ req.flash("error", "لم يتم ادخال كل البيانات");
+                return  res.redirect('/teacher/qauestion') 
+               }
               })
               var newResponse2 = new Response({
                 ResponseText: req.body.ResponseText2,
