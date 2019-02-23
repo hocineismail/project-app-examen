@@ -5,30 +5,19 @@ import './MainApp.css'
 import MainContent from './main-content/MainContent'
 import Footer from './footer/Footer'
 
-import LoadingScreen from 'react-loading-screen'
-
-import { connect } from 'react-redux'
-
-import { fetchUserData } from '../../actions/userActions'
-
 class MainApp extends Component {
 
   render() {
+    console.log('MAIN APP COMPONENT')
     return (
         <div className="main">
           <Header />
-          <MainContent userData={this.props.userData}/>
+          <MainContent userData={this.props.userData} modules={this.props.modules} exams = {this.props.exams}/>
           <Footer />
         </div>
     )
   }
 }
 
-const mapActionToProps = {
-  fetchUserData
-}
 
-export default connect(
-  null,
-  mapActionToProps
-)(MainApp)
+export default MainApp
