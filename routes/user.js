@@ -319,10 +319,19 @@ user.post('/forgot', function(req, res, next) {
 	});
 // this url for interface teacher
    user.get("/teacher",ensureAuthenticated,function(req,res){
+<<<<<<< HEAD
+=======
+	console.log(req.user)
+>>>>>>> project
 	   if (req.user.Role === "Teacher" ) {
 		Teacher.find({user: req.user._id }).
 		populate("user"). 
 		exec(function(err,teacher){
+<<<<<<< HEAD
+=======
+			console.log(teacher)
+			
+>>>>>>> project
 	 res.render("teacher/teacher",{teachers: teacher})
 		})
 	   } else {
