@@ -239,19 +239,36 @@ router.get("/teacher/valid",async function(req,res){
     
       const question = await Question.find({IsValidFinal: false,NotValid: false});
       let responses = [];
-      console.log(question)
-  
+      let exams = [];
+    
     
   
-      for(let i = 0; i < question.length; i++){
+      for(let i = 0; i <= question.length; i++){
         let response = await Response.find({question: question[i]._id });
         responses.push(...response)
-      
-      };
+        let exam = await Exam.find({_id: question[i].exam });
+        exams.push(...exam)
 
+        
+      };
+    }
+      catch(err){
+        res.status(500).render("/uhOhPage",{
+            message: err.message
+        })
+    }
+    try { 
+      let modulee = [];
+      for(let i = 0; i <= exams.length; i++){
+        let modulee = await Module.find({exam: exams[i]._id });
+        modules.push(...modulee)
+   
+        console.log(modules.length)
+        console.log(exams.length)
+         };
   
  
-          res.render("teacher/validation",{question: question,responses: responses})
+          res.render("teacher/validation",{question: question,responses: responses,exam: exams} )
       
     }
     catch(err){
@@ -267,20 +284,19 @@ router.get("/teacher/valid",async function(req,res){
     
       const question = await Question.find({NotValid: true});
       let responses = [];
-      let exams = [];
+     
   
     
   
-      for(let i = 0; i < question.length; i++){
+      for(let i = 0; i <= question.length; i++){
         let response = await Response.find({question: question[i]._id });
         responses.push(...response)
-        let exam = await Exam.find({_id: question[i]._id });
-        exams.push(...exam)
+       
       };
 
   
  
-          res.render("teacher/notvalid",{question: question,responses: responses,exams: exam})
+          res.render("teacher/notvalid",{question: question,responses: responses})
       
     }
     catch(err){
