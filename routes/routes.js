@@ -267,18 +267,20 @@ router.get("/teacher/valid",async function(req,res){
     
       const question = await Question.find({NotValid: true});
       let responses = [];
+      let exams = [];
   
     
   
       for(let i = 0; i < question.length; i++){
         let response = await Response.find({question: question[i]._id });
         responses.push(...response)
-      
+        let exam = await Exam.find({_id: question[i]._id });
+        exams.push(...exam)
       };
 
   
  
-          res.render("teacher/notvalid",{question: question,responses: responses})
+          res.render("teacher/notvalid",{question: question,responses: responses,exams: exam})
       
     }
     catch(err){
