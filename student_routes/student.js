@@ -46,7 +46,6 @@ app.get('/:id', (req, res) => {
           'semster'
         ])
         let studentData = _.pick(student, ['Phase', 'Level', 'semster'])
-        console.log('RESULT ', { ...userData, ...studentData })
         res.json({
           ...userData,
           ...studentData
@@ -56,9 +55,7 @@ app.get('/:id', (req, res) => {
 })
 
 app.post('/:id', (req, res) => {
-  console.log('POST')
   let id = req.params.id
-  console.log('id', id)
   let bodyUser = _.pick(req.body, [
     'Firstname',
     'Lastname',
@@ -68,63 +65,86 @@ app.post('/:id', (req, res) => {
     'Phone',
     'email'
   ])
-  
+
   let bodyStudent = _.pick(req.body, ['Phase', 'Level', 'semster'])
 
-  User.findById(id, (u) => {
-    console.log('user: ', u)
-  })
-  User.update(
-    { _id: id },
-    { $set: bodyUser },
-    (err, userQueryResult) => {
+  updateUser(id, bodyUser)
+    .then(userQueryResult => {
+      Semster.findOne(
+        {
+          Semster: bodyStudent.semster
+        },
+        (err, sem) => {
+          bodyStudent.semster = sem._id
+          Level.findOne(
+            {
+              Level: bodyStudent.Level
+            },
+            (err, lvl) => {
+              bodyStudent.Level = lvl._id
+
+              Phase.findOne(
+                {
+                  Phase: bodyStudent.Phase
+                },
+                (err, phase) => {
+                  bodyStudent.Phase = phase._id
+
+                  updateStudent(id, bodyStudent)
+                    .then(studentQueryResult => {
+                      return res.json('User updated successfully')
+                    })
+                    .catch(err => {
+                      if (err) {
+                        return returnErrorMessage(res, err, 400)
+                      }
+                    })
+                }
+              )
+            }
+          )
+        }
+      )
+    })
+    .catch(err => {
       if (err) {
-        console.log(err)
         return returnErrorMessage(res, err, 400)
       }
-      console.log('User updated:', userQueryResult)
+    })
+})
 
-      if (!_.isEmpty(bodyStudent)) {
-        Semster.findOne(
-          {
-            Semster: bodyStudent.semster
-          },
-          (err, sem) => {
-            bodyStudent.semster = sem._id
-            Level.findOne(
-              {
-                Level: bodyStudent.Level
-              },
-              (err, lvl) => {
-                bodyStudent.Level = lvl._id
-
-                Phase.findOne(
-                  {
-                    Phase: bodyStudent.Phase
-                  },
-                  (err, phase) => {
-                    bodyStudent.Phase = phase._id
-                    Student.updateOne(
-                      { user: id },
-                      { $set: bodyStudent },
-                      (err, studentQueryResult) => {
-                        if (err) {
-                          return returnErrorMessage(res, err, 400)
-                        }
-                        return res.send('Student updated')
-                      }
-                    )
-                  }
-                )
-              }
-            )
-          }
-        )
+function updateUser(id, data) {
+  return new Promise((resolve, reject) => {
+    User.update({ _id: id }, { $set: data }, (err, userQueryResult) => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(userQueryResult)
       }
-    }
-  )
+    })
+  })
+}
 
-  return res.send('Student updated')
+function updateStudent(id, data) {
+  return new Promise((resolve, reject) => {
+    Student.updateOne(
+      { user: id },
+      {
+        $set: data
+      },
+      (err, studentQuery) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(studentQuery)
+        }
+      }
+    )
+  })
+}
+
+app.get('/modules/:id', (req, res) => {
+  
 })
 
 module.exports = app
