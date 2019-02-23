@@ -1,17 +1,4 @@
-<<<<<<< HEAD
-var express = require('express');
-var app = express();
-var mongoose = require("mongoose");
-var path = require("path");
-var bodyParser = require("body-parser");
-var cookieParser = require("cookie-parser");
-var session = require("express-session");
-var flash = require("connect-flash"); 
-var passport = require("passport");
 
-mongoose.connect("mongodb://localhost:27017/databasejedida");
-
-=======
 var express = require('express')
 var app = express()
 var mongoose = require('mongoose')
@@ -23,7 +10,6 @@ var flash = require('connect-flash')
 var passport = require('passport')
 
 mongoose.connect('mongodb://localhost:27017/projectexams')
->>>>>>> refs/remotes/origin/master
 
 // routes
 var routes = require('./routes/routes')

@@ -8,7 +8,7 @@ class SidePage extends Component {
     return (
       <div className="side-bar">
         <h4>المواد</h4>
-        <SideMenu/>
+        <SideMenu modules = {this.props.modules}/>
       </div>
     )
   }

@@ -12,9 +12,10 @@ import './MainContent.css'
 
 class MainContent extends Component {
     render() {
+        console.log('MAIN CONTENT')
         return (
             <div className='main-content'>
-                <SidePage />
+                <SidePage modules={this.props.modules} />
                 <Route path='/studenthome' exact component={ExamWrapper}/>
                 <Route path='/studenthome/exam/:name' exact component={ExamInformations}/>
                 <Route path='/studenthome/account' exact component={Account}/>

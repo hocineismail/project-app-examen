@@ -6,6 +6,8 @@ const User = require('../models/user')
 const Semster = require('../models/semster')
 const Level = require('../models/level')
 const Phase = require('../models/phase')
+const Module = require('../models/module')
+const Exam = require('../models/exam')
 
 const _ = require('lodash')
 
@@ -144,7 +146,67 @@ function updateStudent(id, data) {
 }
 
 app.get('/modules/:id', (req, res) => {
-  
+  let id = req.params.id
+
+  Student.findOne({ user: id })
+    .populate('Level')
+    .populate('semster')
+    .populate('Phase')
+    .exec((err, student) => {
+      if (err) {
+        return returnErrorMessage(res, err, 400)
+      }
+      Module.find({
+        semster: student.semster._id
+      })
+        .select('Module')
+        .exec((err, modules) => {
+          if (err) {
+            return returnErrorMessage(res, err, 400)
+          }
+          return res.json(modules)
+        })
+    })
 })
+
+app.get('/exams/:id', (req, res) => {
+  let id = req.params.id
+  let examsTable
+
+  let sync = false
+
+  Student.findOne({ user: id })
+    .populate('semster')
+    .exec((err, student) => {
+      if (err) {
+        return returnErrorMessage(res, err, 400)
+      }
+      console.log('1')
+      Module.find({ semster: student.semster._id }).exec(
+        async (err, modules) => {
+          if (err) {
+            return returnErrorMessage(res, err, 400)
+          }
+          try {
+            console.log('2')
+            result = Promise.all(getAllExamsOfStudent(modules)).then(completed => {
+              examsTable = completed
+              return res.json(examsTable)
+            })
+          } catch (err) {
+            throw err
+          }
+        }
+      )
+    })
+})
+
+const getAllExamsOfStudent = modules => {
+  console.log('3')
+  return modules.map(async module => ({
+    Module: module.Module,
+    Exams: await Exam.find({ module: module._id, Etat: true })
+  }))
+}
 
 module.exports = app

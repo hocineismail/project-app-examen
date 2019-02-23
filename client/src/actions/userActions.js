@@ -18,7 +18,6 @@ export function fetchUserData(id) {
       })
       .catch(err => {
         if (err) {
-          console.log('ERROR: ', err)
           return dispatch({
             type: types.fetchUserDataError,
             payload: err
@@ -34,7 +33,7 @@ export function postUserData(id, userData) {
     fetch(fetchInfo.apiUrl + `/${id}`, {
       method: 'post',
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
       },
       body
     })
@@ -48,9 +47,37 @@ export function postUserData(id, userData) {
       })
       .catch(err => {
         console.log(err)
-        if (err){
+        if (err) {
           return dispatch({
             type: types.postUserDataError,
+            payload: err
+          })
+        }
+      })
+  }
+}
+
+export function getStudentModules(id) {
+  return function(dispatch) {
+    console.log(fetchInfo.apiUr + '/modules/' + id)
+    fetch(fetchInfo.apiUrl + '/modules/' + id)
+      .then(res => {
+        console.log(res)
+        return res.json()
+      })
+      .then(res => {
+        console.log(res)
+        let payload = res
+        return dispatch({
+          type: types.fetchStudentModules,
+          payload
+        })
+      })
+      .catch(err => {
+        if (err) {
+          console.log(err)
+          return dispatch({
+            type: types.fetchStudentModulesError,
             payload: err
           })
         }
