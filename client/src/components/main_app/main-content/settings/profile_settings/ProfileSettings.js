@@ -21,6 +21,8 @@ class ProfileSettings extends Component {
     }
     let year = birthdate.getFullYear()
 
+    let Semster = ['الثلاثي الاول', 'الثلاثي الثاني', 'الثلاثي الثالث']
+
     let level = [
       'الصف الاول',
       'الصف الثاني',
@@ -98,7 +100,7 @@ class ProfileSettings extends Component {
           propValue={this.props.userData.Phase.Phase}
           type="choicebox"
           editable={true}
-          id='Level'
+          id='Phase'
           choices={['الابتدائية', 'الاكمالية', 'الثانوية']}
         />
         <InformationsInput
@@ -106,7 +108,7 @@ class ProfileSettings extends Component {
           propValue={this.props.userData.Level.Level}
           type="choicebox"
           editable={true}
-          id='Phase'
+          id='Level'
           choices={level}
         />
         <InformationsInput
@@ -115,7 +117,7 @@ class ProfileSettings extends Component {
           type="choicebox"
           id='semster'
           editable={true}
-          choices={['الثلاثي الاول', 'الثلاثي الثاني', 'الثلاثي الثالث']}
+          choices={Semster}
         />
         <Submit />
       </div>

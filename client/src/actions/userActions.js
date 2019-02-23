@@ -29,19 +29,25 @@ export function fetchUserData(id) {
 }
 
 export function postUserData(id, userData) {
+  let body = JSON.stringify(userData)
   return function(dispatch) {
-    fetch(fetchInfo.apiUrl + `/student/${id}`, {
-      method: 'POST',
-      body: userData
+    fetch(fetchInfo.apiUrl + `/${id}`, {
+      method: 'post',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body
     })
       .then(res => res.json())
       .then(res => {
+        console.log(res)
         return dispatch({
           type: types.postUserData,
           payload: true
         })
       })
       .catch(err => {
+        console.log(err)
         if (err){
           return dispatch({
             type: types.postUserDataError,
