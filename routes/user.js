@@ -317,15 +317,20 @@ user.post('/forgot', function(req, res, next) {
 		}
 		 
 	});
+// this url for interface teacher
+   user.get("/teacher",ensureAuthenticated,function(req,res){
+	   if (req.user.Role === "Teacher" ) {
+		Teacher.find({user: req.user._id }).
+		populate("user"). 
+		exec(function(err,teacher){
+	 res.render("teacher/teacher",{teachers: teacher})
+		})
+	   } else {
+		   //this link will do edit 
+		res.redirect("/")  
 
-   user.get("/teacher",function(req,res){
-		 Teacher.find({}).
-		 populate("user"). 
-		 exec(function(err,teacher){
-      res.render("teacher/teacher",{teachers: teacher})
-		 })
-		 
-	 })
+	   }
+  })
 	 
 
 	user.get("/list/teachers",async  function(req,res){

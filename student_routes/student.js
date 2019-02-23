@@ -173,22 +173,18 @@ app.get('/exams/:id', (req, res) => {
   let id = req.params.id
   let examsTable
 
-  let sync = false
-
   Student.findOne({ user: id })
     .populate('semster')
     .exec((err, student) => {
       if (err) {
         return returnErrorMessage(res, err, 400)
       }
-      console.log('1')
       Module.find({ semster: student.semster._id }).exec(
         async (err, modules) => {
           if (err) {
             return returnErrorMessage(res, err, 400)
           }
           try {
-            console.log('2')
             result = Promise.all(getAllExamsOfStudent(modules)).then(completed => {
               examsTable = completed
               return res.json(examsTable)
@@ -214,7 +210,6 @@ app.get('/exam/:id', (req, res) => {
 })
 
 const getAllExamsOfStudent = modules => {
-  console.log('3')
   return modules.map(async module => ({
     Module: module.Module,
     Exams: await Exam.find({ module: module._id, Etat: true })
