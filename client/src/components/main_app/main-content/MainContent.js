@@ -16,7 +16,7 @@ class MainContent extends Component {
         return (
             <div className='main-content'>
                 <SidePage modules={this.props.modules} />
-                <Route path='/studenthome' exact component={ExamWrapper}/>
+                <Route path='/studenthome' exact render={() => <ExamWrapper exams = {this.props.exams}/>}/>
                 <Route path='/studenthome/exam/:name' exact component={ExamInformations}/>
                 <Route path='/studenthome/account' exact component={Account}/>
                 <Route path='/studenthome/settings' exact render={() => <ProfileSettings userData={this.props.userData}/>}/>

@@ -9,8 +9,7 @@ import LoadingScreen from 'react-loading-screen'
 
 import { connect } from 'react-redux'
 
-import { fetchUserData } from './actions/userActions'
-import { getStudentModules } from './actions/userActions'
+import { fetchUserData, getStudentModules, getStudentExams} from './actions/userActions'
 
 class AppRoutes extends Component {
   constructor(props) {
@@ -25,27 +24,13 @@ class AppRoutes extends Component {
     console.log('Constructor')
     this.props.fetchUserData(window.localStorage.getItem('_id'))
     this.props.getStudentModules(window.localStorage.getItem('_id'))
-  }
-
-  componentWillReceiveProps(nextProps) {
-    console.log('UPDATE')
-    if (nextProps.userData) {
-      this.setState({
-        dataUserLoaded: true
-      })
-    }
-    if (nextProps.studentModules) {
-      console.log('MODULE')
-      this.setState({
-        dataModuleLoaded: true
-      })
-    }
+    this.props.getStudentExams(window.localStorage.getItem('_id'))
   }
 
   render() {
     console.log('userData:', this.props.userData )
     console.log('studentModules:', this.props.studentModules )
-    return  this.props.userData && this.props.studentModules ? (
+    return  this.props.userData && this.props.studentModules && this.props.studentExams ? (
       <BrowserRouter>
         <Switch>
           {console.log(this.props.userData)}
@@ -56,6 +41,7 @@ class AppRoutes extends Component {
               <MainApp
                 userData={this.props.userData}
                 modules={this.props.studentModules}
+                exams = {this.props.studentExams}
               />
             )}
           />
@@ -82,7 +68,8 @@ const mapStateToProps = (state, props) => {
 
 const mapActionsToProps = {
   fetchUserData,
-  getStudentModules
+  getStudentModules,
+  getStudentExams
 }
 
 export default connect(

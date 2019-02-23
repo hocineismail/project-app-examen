@@ -9,10 +9,7 @@ class ExamWrapper extends Component {
             <div className='exam-wrapper card'>
                 <h2>الامتحانات المتوفرة</h2>
                 <div className='dropdown-divider'></div>
-                <Module/>
-                <Module/>
-                <Module/>
-                <Module/>
+                {this.props.exams.map(moduleExams => <Module moduleExams = {moduleExams}/>)}
             </div>
         );
     }

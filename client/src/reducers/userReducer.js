@@ -5,41 +5,55 @@ const initialState = {
   error: false,
   errorMessage: null,
   userData: null,
-  studentModules : null,
-  studentModulesError : null
+  studentModules: null,
+  studentModulesError: null,
+  studentExams: null,
+  studentExamsError: null
 }
 
-export default function userReducer(state = initialState, action){
-    switch (action.type) {
-        case types.fetchUserData:
-            return {
-                ...state,
-                isLoading: false,
-                error: false,
-                errorMessage: null,
-                userData: action.payload
-            }
-        case types.fetchUserDataError:
-            return {
-                ...state,
-                isLoading:false,
-                error: true,
-                errorMessage: action.payload,
-                userData: null
-            }
-        case types.fetchStudentModules:
-            return {
-                ...state,
-                studentModules : action.payload,
-                studentModulesError : null
-            }
-        case types.fetchStudentModulesError:
-            return {
-                ...state,
-                studentModules: null,
-                studentModulesError: action.payload
-            }
-        default: 
-            return state
-    }
+export default function userReducer(state = initialState, action) {
+  switch (action.type) {
+    case types.fetchUserData:
+      return {
+        ...state,
+        isLoading: false,
+        error: false,
+        errorMessage: null,
+        userData: action.payload
+      }
+    case types.fetchUserDataError:
+      return {
+        ...state,
+        isLoading: false,
+        error: true,
+        errorMessage: action.payload,
+        userData: null
+      }
+    case types.fetchStudentModules:
+      return {
+        ...state,
+        studentModules: action.payload,
+        studentModulesError: null
+      }
+    case types.fetchStudentModulesError:
+      return {
+        ...state,
+        studentModules: null,
+        studentModulesError: action.payload
+      }
+    case types.fetchStudentExams:
+      return {
+        ...state,
+        studentExams: action.payload,
+        studentExamsError: null
+      }
+    case types.fetchStudentExamsError:
+      return {
+        ...state,
+        studentExamsError: action.payload,
+        studentExams: null
+      }
+    default:
+      return state
+  }
 }

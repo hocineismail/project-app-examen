@@ -12,7 +12,7 @@ class MainApp extends Component {
     return (
         <div className="main">
           <Header />
-          <MainContent userData={this.props.userData} modules={this.props.modules}/>
+          <MainContent userData={this.props.userData} modules={this.props.modules} exams = {this.props.exams}/>
           <Footer />
         </div>
     )

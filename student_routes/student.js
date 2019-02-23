@@ -201,6 +201,10 @@ app.get('/exams/:id', (req, res) => {
     })
 })
 
+app.get('/exam/:id', (req, res) => {
+  
+})
+
 const getAllExamsOfStudent = modules => {
   console.log('3')
   return modules.map(async module => ({
@@ -208,5 +212,6 @@ const getAllExamsOfStudent = modules => {
     Exams: await Exam.find({ module: module._id, Etat: true })
   }))
 }
+
 
 module.exports = app

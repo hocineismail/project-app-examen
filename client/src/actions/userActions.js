@@ -84,3 +84,22 @@ export function getStudentModules(id) {
       })
   }
 }
+
+
+export function getStudentExams(id){
+  return function(dispatch){
+    fetch(`${fetchInfo.apiUrl}/exams/${id}`)
+    .then(res => res.json())
+    .then(res => {
+      return dispatch({
+        type: types.fetchStudentExams,
+        payload: res
+      })
+    }).catch(err => {
+      return dispatch ({
+        type: types.fetchStudentExamsError,
+        payload: err
+      })
+    })
+  }
+}

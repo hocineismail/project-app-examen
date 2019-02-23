@@ -4,7 +4,9 @@ const types = {
     postUserData :'postUserData',
     postUserDataError :'postUserDataError',
     fetchStudentModules : 'fetchStudentModules',
-    fetchStudentModulesError : 'fetchStudentModulesError'
+    fetchStudentModulesError : 'fetchStudentModulesError',
+    fetchStudentExams : 'fetchStudentExams',
+    fetchStudentExamsError : 'fetchStudentExamsError'
 }
 
 export default types
