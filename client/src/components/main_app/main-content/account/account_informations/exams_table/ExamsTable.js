@@ -3,6 +3,13 @@ import React, { Component } from 'react'
 import './ExamsTabel.css'
 
 class ExamsTable extends Component {
+  constructor(props){
+    super(props)
+
+    this.state = {
+      exams: props.exams ? props.exams : []
+    }
+  }
   render() {
     return (
       <div className="exams-table card">
@@ -16,24 +23,16 @@ class ExamsTable extends Component {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>الجغرافية</td>
-              <td>١٠.٠٠</td>
-              <td>غير متوفر</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>العربية</td>
-              <td>١٧.٠٠</td>
-              <td>غير متوفر</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>الرياضيات</td>
-              <td>٠٩.٠٠</td>
-              <td>غير متوفر</td>
-            </tr>
+            {this.state.exams.map((exam, key) => {
+              return (
+                <tr>
+                  <th scope="row">{key}</th>
+                  <td>{exam.Exam}</td>
+                  <td>{exam.Grade}</td>
+                  <td>غير متوفر</td>
+                </tr>
+              )
+            })}
           </tbody>
         </table>
       </div>
