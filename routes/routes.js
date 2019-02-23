@@ -237,8 +237,9 @@ router.get("/teacher/valid",async function(req,res){
   
     try{
     
-      const question = await Question.find({IsValidFinal: false},{NotValid: false});
+      const question = await Question.find({IsValidFinal: false,NotValid: false});
       let responses = [];
+      console.log(question)
   
     
   
@@ -258,8 +259,33 @@ router.get("/teacher/valid",async function(req,res){
           message: err.message
       })
   }
+})
+  router.get("/teacher/notvalid",async function(req,res){
+
+  
+    try{
+    
+      const question = await Question.find({NotValid: true});
+      let responses = [];
+  
+    
+  
+      for(let i = 0; i < question.length; i++){
+        let response = await Response.find({question: question[i]._id });
+        responses.push(...response)
+      
+      };
+
   
  
+          res.render("teacher/notvalid",{question: question,responses: responses})
+      
+    }
+    catch(err){
+      res.status(500).render("/uhOhPage",{
+          message: err.message
+      })
+  }
   
 })
 
@@ -290,13 +316,13 @@ router.get("/valid/question/:id", function(req,res){
   })
 })
 
-router.get("/invalid/question/:id", function(req,res){
+router.post("/invalid/question/:id", function(req,res){
   Question.findById({_id: req.params.id},function(err , question){
    
       question.IsValidOne = false,
       question.IsValidTwo = false,
       question.NotValid = true,
-      question.ErrorMessage = true,
+      question.ErrorMessage = req.body.message,
       //question.TeacherFinal = req.user._id
       question.save(function(err, success){
         if (err){console.log("il ya une error ")}

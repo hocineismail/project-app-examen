@@ -19,7 +19,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome
 </head>
 <style>
 body {
-    font-family: 'Cairo', sans-serif;
+    font-family: 'Cairo', sgit ans-serif;
     background-color: rgb(216, 216, 216)
   }
 table {
@@ -93,6 +93,7 @@ span {
     <a href="#home">حسابي</a>
     <a href="#news">مراجعة الاسئلة</a>
     <a href="/teacher/question">اضافة سؤال </a>
+    <a href="/teacher/notvalid"> الاسئلة الغير مقبولة </a>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
       <i class="fa fa-bars"></i>
     </a>
@@ -167,7 +168,11 @@ span {
             </div>
             <hr>
             <div style="margin: 20px"> 
-            <button class="btn btn-danger" style="width: 100px" > button 1 </button>
+              <form action="/invalid/question/<%= question._id %>" method="post">
+                <textarea name="message"></textarea>
+                <button class="btn btn-danger" style="width: 100px" > button 1 </button>
+              </form>
+           
             <a href="/valid/question/<%= question._id %>" class="btn  btn-success" style="width: 100px" > validi </a>
           </div>
           </div>
