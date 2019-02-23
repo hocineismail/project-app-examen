@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "client" : "concurrently \"node app.js\" \"cd client && npm start \" "
+    "client" : "concurrently \"nodemon app.js\" \"cd client && npm start \" "
   },
   "author": "HOCINE ismail",
   "license": "ISC",

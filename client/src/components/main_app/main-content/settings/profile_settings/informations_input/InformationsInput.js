@@ -21,14 +21,22 @@ class InformationsInput extends React.Component {
   render() {
     let input =
       this.props.type === 'choicebox' ? (
-        <select className='input-prop-value form-control'>
-          {this.props.choices.map(c => {
-            return (<option>{c}</option>)
+        <select className='input-prop-value form-control' id={this.props.id}>
+          {this.props.choices.map((c, k) => {
+            console.log('INPUT VALUE:', c)
+            console.log('PROP VALUE:', this.props.propValue)
+            if (c === this.props.propValue){
+              console.log('EQUAL')
+              return (<option value={c} selected={true} key={k}>{c}</option>)
+            }else {
+              return (<option key={k} value={c}>{c}</option>)
+            }
           })}
         </select>
       ) : (
         <input
           type={this.props.type}
+          id={this.props.id}
           readonly={!this.props.editable}
           className="form-control input-prop-value"
           onChange={this.onChangeInput}
