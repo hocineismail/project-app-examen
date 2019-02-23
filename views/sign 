@@ -629,3 +629,49 @@ user.get("/admin/exam/:id", function(req,res){
 			 
 		})			 
 module.exports = user;
+
+
+  console.log("name of var image 5", image5questiom)
+          var  newQuestion = new Question ({
+              Question: req.body.Question,
+              Response: req.body.Response,
+              QuestionImage: image5,
+              NameOfCourse: req.body.NameOfCourse,
+              TypeOfQuestion: req.body.TypeOfQuestion,
+              Chapiter: req.body.Chapiter,
+              Difficulty: req.body.Difficulty,
+              exam:  req.body.Exam,
+
+            });newQuestion.save(function(err,success){
+              if (err){
+                       console.log("hena kayn error on nez question")
+                       req.flash("error", "لم يتم ادخال كل البيانات");
+                       return  res.redirect('/teacher/qauestion') 
+                      }
+              if (success){
+              var newResponse1 = new Response({
+                ResponseText: req.body.ResponseText1,
+                IsCorrect: false,
+                question: newQuestion._id
+              });newResponse1.save(function(err,succcess){
+                if (err){ req.flash("error", "لم يتم ادخال كل البيانات");
+                return  res.redirect('/teacher/qauestion') 
+               }
+              })
+              var newResponse2 = new Response({
+                ResponseText: req.body.ResponseText2,
+                IsCorrect: false,
+                question: newQuestion._id
+              });newResponse2.save()
+              var newResponse3 = new Response({
+                ResponseText: req.body.ResponseText3,
+                IsCorrect: false,
+                question: newQuestion._id
+              });newResponse3.save()
+              var newResponse4 = new Response({
+                ResponseText: req.body.ResponseText4,
+                IsCorrect: true,
+                question: newQuestion._id
+              });newResponse4.save()
+            }
+          })
