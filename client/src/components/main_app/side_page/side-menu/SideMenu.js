@@ -11,7 +11,7 @@ const SideMenu = props => {
         console.log(module)
         return (
           <li className="list-group-item">
-            <Link to={`/studenthome?module=${module._id}`}>
+            <Link to={`/studenthome?module=${module.Module}`}>
               {module.Module}
             </Link>
           </li>

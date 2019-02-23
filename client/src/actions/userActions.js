@@ -85,21 +85,42 @@ export function getStudentModules(id) {
   }
 }
 
-
-export function getStudentExams(id){
-  return function(dispatch){
+export function getStudentExams(id) {
+  return function(dispatch) {
     fetch(`${fetchInfo.apiUrl}/exams/${id}`)
-    .then(res => res.json())
-    .then(res => {
-      return dispatch({
-        type: types.fetchStudentExams,
-        payload: res
+      .then(res => res.json())
+      .then(res => {
+        return dispatch({
+          type: types.fetchStudentExams,
+          payload: res
+        })
       })
-    }).catch(err => {
-      return dispatch ({
-        type: types.fetchStudentExamsError,
-        payload: err
+      .catch(err => {
+        return dispatch({
+          type: types.fetchStudentExamsError,
+          payload: err
+        })
       })
-    })
+  }
+}
+
+export function getExamInformation(id) {
+  return function(dispatch) {
+    fetch(`${fetchInfo.apiUrl}/exam/${id}`)
+      .then(res => res.json())
+      .then(res => {
+        return dispatch({
+          type: types.fetchExamInformation,
+          payload: res
+        })
+      })
+      .catch(err => {
+        if (err) {
+          return dispatch({
+            type: types.fetchExamInformationError,
+            payload: err
+          })
+        }
+      })
   }
 }

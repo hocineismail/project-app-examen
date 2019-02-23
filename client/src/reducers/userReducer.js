@@ -8,7 +8,9 @@ const initialState = {
   studentModules: null,
   studentModulesError: null,
   studentExams: null,
-  studentExamsError: null
+  studentExamsError: null,
+  examInformations: null,
+  examInformationsError: null
 }
 
 export default function userReducer(state = initialState, action) {
@@ -52,6 +54,19 @@ export default function userReducer(state = initialState, action) {
         ...state,
         studentExamsError: action.payload,
         studentExams: null
+      }
+    case types.fetchExamInformation:
+      console.log(action.payload)
+      return {
+        ...state,
+        examInformations: action.payload,
+        examInformationsError: null
+      }
+    case types.fetchExamInformationError:
+      return {
+        ...state,
+        examInformationsError: action.payload,
+        examInformations: null
       }
     default:
       return state

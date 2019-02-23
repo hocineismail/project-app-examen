@@ -202,7 +202,15 @@ app.get('/exams/:id', (req, res) => {
 })
 
 app.get('/exam/:id', (req, res) => {
-  
+  let id = req.params.id
+
+  Exam.findById(id, (err, exam) => {
+    if (err){
+      return returnErrorMessage(res, err, 400)
+    }
+    return res.json(exam)
+  })
+
 })
 
 const getAllExamsOfStudent = modules => {
