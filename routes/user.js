@@ -630,6 +630,40 @@ Module.findOne({_id: req.params._id},function(err,modules){
 
 	 });
 
+
+//req update semster
+
+user.post("/admin/:level/:_id/updatesemster",ensureAuthenticated, function(req,res,next){
+  
+	var  semster = req.body.Semster;
+	var  numberOfSemster= req.body.NumberOfSemster;
+Semster.findOne({_id: req.params._id},function(err,semsters){
+	semsters.Semster =  semster
+	semsters.NumberOfSemster =   numberOfSemster
+
+	semsters.save(function(err,done){
+		if (err){
+			 
+				console.log("error of updating")
+			req.flash("error", "لم يتم ادخال كل البيانات");
+			
+			return  res.redirect('/admin/phase/' + req.params.level ) 
+		} else {
+			console.log(done)
+			console.log("pas d errror")
+	req.flash("info", "تم التسجيل  ");
+return  res.redirect('/admin/phase/' + req.params.level ) 
+			
+		
+		}
+	});
+	});
+
+
+	 });
+
+
+
 user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 	console.log("dakhel hena ya namiiii")
 		Module.findOne({_id: req.params.id},function(err,onemodule){
