@@ -119,7 +119,9 @@
         
          
               <div class="input-container">
+                  <label>  *    مرحلة</label>
                   <input class="form-control" style="margin-right: 5px;text-align: right" type="text"  placeholder="phase" name="Phase">
+                  <label>  *    مرحلة</label>
                   <input class="form-control" type="number" style="text-align: right" placeholder="NumberOfPhase" name="NumberOfPhase">
                   
               </div>
@@ -168,11 +170,7 @@
                 </button> <a href="/admin/deletelevel/<%= level._id%>" class="btn btn-danger" > حذف</a> </td>
               <td><a href="/admin/phase/<%= level._id %>"><%= level.Level %></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
                  <th style="font-size: 20px">  * &nbsp; &nbsp;</th>
-                 
-                  
-                  <!-- Modal -->
-                 
-            </tr>
+             </tr>
                <!-- Modal for update the level -->
                <div class="modal fade" id="exampleModal<%= level._id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog" role="document">
@@ -188,7 +186,9 @@
                       
                        
                             <div class="input-container">
+                                <label>  *    te3dil </label>
                                 <input class="form-control" style="margin-right: 5px;text-align: right" type="text"  value="<%= level.Level %>" name="Level">
+                                <label>  *    مرحلة</label>
                                 <input class="form-control" type="number" style="text-align: right" value="<%= level.NumberOfLevel %>" name="NumberOfLevel">
                                 
                             </div>
@@ -220,17 +220,13 @@
             </button>
                     </div><form action="/admin/<%= phase._id %>/<%= phase.Phase %>/addlevel" method="post">
                     <div class="modal-body">
-                      
-                    
-                     
                           <div class="input-container">
+                              <label>  *    add level </label>
                               <input class="form-control" style="margin-right: 5px;text-align: right" type="text"  placeholder="Level" name="Level">
                               <input class="form-control" type="number" style="text-align: right" placeholder="NumberOfLevel" name="NumberOfLevel">
                               
                           </div>
-                     
-                
-                     
+
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
@@ -239,9 +235,6 @@
                   </div>
                 </div>
               </div>
-
-           
-
 
               <div class="modal fade" id="phase<%= phase._id%>Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog" role="document">
@@ -254,16 +247,14 @@
                       </div><form action="/admin/updatephase/<%= phase._id%>" method="post">
                       <div class="modal-body">
                         
-                      
-                       
                             <div class="input-container">
+                                <label>  *    مرحلة</label>
                                 <input class="form-control" style="margin-right: 5px;text-align: right" type="text"  placeholder="phase" name="Phase">
+                                <label>  *    update phase</label>
                                 <input class="form-control" type="number" style="text-align: right" placeholder="NumberOfPhase" name="NumberOfPhase">
                                 
                             </div>
-                       
-                  
-                       
+ 
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
@@ -273,47 +264,10 @@
                   </div>
                 </div>
         <% })%>  
-
-
-
-      
-            
-            <!-- Modal -->
-           
-      </table>
+ </table>
     </div>
-    
- 
-    
-    
-    
-    </div>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    </div>
-      
- 
-  
-<!-- Button trigger modal -->
-
-
-
-
-
+ </div>
+  </div>
 
 <script>
 function w3_open() {

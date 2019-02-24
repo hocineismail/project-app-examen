@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 var express = require('express')
 var app = express()
 var mongoose = require('mongoose')
@@ -10,20 +9,7 @@ var flash = require('connect-flash')
 var passport = require('passport')
 
 mongoose.connect('mongodb://localhost:27017/projectexams')
-=======
-var express = require('express');
-var app = express();
-var mongoose = require("mongoose");
-var path = require("path");
-var bodyParser = require("body-parser");
-var cookieParser = require("cookie-parser");
-var session = require("express-session");
-var flash = require("connect-flash"); 
-var passport = require("passport");
 
-mongoose.connect("mongodb://localhost:27017/databaseproej");
-
->>>>>>> project
 
 // routes
 var routes = require("./routes/routes");
