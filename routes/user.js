@@ -59,12 +59,22 @@ var levels;
 })
 
 user.post("/signup", function(req, res) {
-	var Firstname = req.body.Firstname;
+	
+	User.countDocuments({}, function(err, count) {
+		var Firstname = req.body.Firstname;
 	var email = req.body.username;
 	var Lastname =  req.body.Lastname;
 	var Birthday = req.body.Birthday;
 	var Sexe = req.body.Sexe;
-	var Role = req.body.Role;
+	var Role 
+		if (count === 0){
+			var Role = "Admin";
+		} else {
+			var Role = req.body.Role;
+		}
+
+	
+
 
 	var Address =  req.body.Address;
 	var Phone = req.body.Phone;
@@ -99,8 +109,8 @@ user.post("/signup", function(req, res) {
 		
 				});
 				newStudent.save();
-				console.log(newStudent)
-			} else  {
+				
+			} else if ( ( newUser.Role === "Teacher")) {
 				var newTeacher = new Teacher({
 					Speciality: req.body.Speciality,
 					Phase: req.body.Phase,
@@ -108,9 +118,10 @@ user.post("/signup", function(req, res) {
 				 });
 				 newTeacher.save();
 				 console.log(newTeacher)
-				 res.redirect("/login")
+				 
 			}
 		 }
+		 res.redirect("/login")
 	});
 	});
  },passport.authenticate("login", {
@@ -118,7 +129,7 @@ user.post("/signup", function(req, res) {
 	successRedirect: "/",
 	failureRedirect: "/signup",
 	failureFlash: true
- }));
+ }));})
  
  user.get("/logout", function(req, res) {
 	req.logout();
@@ -246,9 +257,9 @@ user.post('/forgot', function(req, res, next) {
 	
 
 
-	user.get("/admin", function(req,res){
+	user.get("/admin",ensureAuthenticated, function(req,res){
 	
-		if ( " req.user.Firstname" != "Teacher") {
+		if (  req.user.Firstname != "Teacher") {
 		var phases;
     var levels;
     var semsters;
@@ -333,7 +344,7 @@ user.post('/forgot', function(req, res, next) {
   })
 	 
 
-	user.get("/list/teachers",async  function(req,res){
+	user.get("/list/teachers",ensureAuthenticated,async  function(req,res){
 		Teacher.find({}).
 		populate("user"). 
 		exec(function(err,teacher){
@@ -344,7 +355,7 @@ user.post('/forgot', function(req, res, next) {
 
 
 
-user.get("/list/demande",async  function(req,res){
+user.get("/list/demande",ensureAuthenticated,async  function(req,res){
 	Teacher.find({Actif: false}).
 		populate("user"). 
 		exec(function(err,teacher){
@@ -354,7 +365,7 @@ user.get("/list/demande",async  function(req,res){
 					})	
 			});
 
-user.get("/list/students",async  function(req,res){
+user.get("/list/students",ensureAuthenticated,async  function(req,res){
 	try{
 	
 		const user = await User.find({Role: "Student"});
@@ -385,7 +396,7 @@ user.get("/list/students",async  function(req,res){
 
 
 
-user.get("/list/Admins",  function(req,res){
+user.get("/list/Admins",ensureAuthenticated,  function(req,res){
 User.find({},function(err, admin){
 	if (err) {return res.redirect("/admin")}
 	console.log(admin)
@@ -393,7 +404,7 @@ User.find({},function(err, admin){
 })
 });
 
-user.get("/static",  function(req,res){
+user.get("/static",ensureAuthenticated,  function(req,res){
 
 	var CountQuestions;
 	var CountValidOne;
@@ -434,7 +445,7 @@ user.get("/static",  function(req,res){
 
 	});
 	
-user.get("/admin/deletephase/:_id",   function(req, res, next) {
+user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, next) {
  
 	Phase.findOneAndRemove( { _id: req.params._id } , function(err, phase) {
 			if (err) { return next(err); }
@@ -445,7 +456,7 @@ user.get("/admin/deletephase/:_id",   function(req, res, next) {
 			
 		 
 		})});
-		user.post("/admin/updatephase/:_id",   function(req, res, next) {
+		user.post("/admin/updatephase/:_id",ensureAuthenticated,   function(req, res, next) {
  
 			Phase.findOne({ _id: req.params._id } , function(err, phase) {
 					if (err) { return next(err); }
@@ -460,7 +471,7 @@ user.get("/admin/deletephase/:_id",   function(req, res, next) {
 				 
 				})});
 		
-				user.post("/admin/updatelevel/:_id",   function(req, res, next) {
+				user.post("/admin/updatelevel/:_id",ensureAuthenticated,   function(req, res, next) {
  
 					Level.findOne({ _id: req.params._id } , function(err, level) {
 							if (err) { return next(err); }
@@ -474,7 +485,7 @@ user.get("/admin/deletephase/:_id",   function(req, res, next) {
 							
 						 
 						})});
-		user.get("/admin/deletelevel/:_id",   function(req, res, next) {
+		user.get("/admin/deletelevel/:_id",ensureAuthenticated,   function(req, res, next) {
  
 			Level.findOneAndRemove( { _id: req.params._id } , function(err, level) {
 					if (err) { return next(err); }
@@ -488,7 +499,7 @@ user.get("/admin/deletephase/:_id",   function(req, res, next) {
 
 
 
-				user.post("/admin/updatesemster/:_id",   function(req, res, next) {
+				user.post("/admin/updatesemster/:_id",ensureAuthenticated,  function(req, res, next) {
  
 					Semster.findOne({ _id: req.params._id } , function(err, semster) {
 							if (err) { return next(err); }
@@ -504,7 +515,7 @@ user.get("/admin/deletephase/:_id",   function(req, res, next) {
 						})});
 
 
-		user.get("/admin/deletesemster/:_id",   function(req, res, next) {
+		user.get("/admin/deletesemster/:_id",ensureAuthenticated,   function(req, res, next) {
 			Module.find( { semster: req.params._id } , function(err, one) {
 		  one.forEach(function(delet){
 				console.log(delet._id)
@@ -530,7 +541,7 @@ user.get("/admin/deletephase/:_id",   function(req, res, next) {
 
 
 
-	user.get("/admin/phase/:level",async function(req,res){
+	user.get("/admin/phase/:level",ensureAuthenticated,async function(req,res){
 		try{
 			const onelevel = await Level.findOne({_id: req.params.level});
 			const semster = await Semster.find({level: onelevel._id});
@@ -573,7 +584,7 @@ user.get("/admin/deletephase/:_id",   function(req, res, next) {
 
 	
 
-user.post("/admin/:level/:_id/updatemodule", function(req,res,next){
+user.post("/admin/:level/:_id/updatemodule",ensureAuthenticated, function(req,res,next){
   
 	var  modulee = req.body.Module;
 	var  numberOfModule = req.body.NumberOfModule;
@@ -602,7 +613,7 @@ Module.findOne({_id: req.params._id},function(err,modules){
 
 	 });
 
-user.get("/admin/exam/:id", function(req,res){
+user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 	console.log("dakhel hena ya namiiii")
 		Module.findOne({_id: req.params.id},function(err,onemodule){
 			if (!onemodule) {return res.redirect("/admin")}
@@ -617,7 +628,7 @@ user.get("/admin/exam/:id", function(req,res){
 	});
 	
 		
-  user.get("/admin/deletesemster/:_id",   function(req, res, next) {
+  user.get("/admin/deletesemster/:_id",ensureAuthenticated,   function(req, res, next) {
 		Exam.findOneAndRemove( {semster: req.params._id } , function(err, exam) {
 			if (err) { return next(err); }
 		})
@@ -631,7 +642,7 @@ user.get("/admin/exam/:id", function(req,res){
 			 
 			})});
 
-			user.get("/admin/:level/deletemodule/:_id",   function(req, res, next) {
+			user.get("/admin/:level/deletemodule/:_id",ensureAuthenticated,   function(req, res, next) {
                 
 				Module.findOneAndRemove( { _id: req.params._id } , function(err, modules) {
 						if (err) { return next(err); }

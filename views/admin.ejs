@@ -40,7 +40,7 @@
     <div class="w3-container">
       <ul>
        
-        <li><a class="activee" href="/"><i class="fas fa-house-damage"></i>الصقحة الرئسية</a></li>
+        <li class="activee" ><a href="/"><i class="fas fa-house-damage"></i>الصقحة الرئسية</a></li>
 
         <li><a href="/admin"><i class="far fa-edit"></i>اعدادات</a></li>
         <li class="nav-item active "> <% if (currentUser) { %>
@@ -48,7 +48,7 @@
  </ul>
 </div>
   </div>
-  
+ 
   <div class="w3-container" style="text-align: right">
 
 <div class="container" style="padding-top: 2%;width: 50%;">
@@ -68,7 +68,36 @@
 </div>
 
 
-
+ <!-- model for public -->
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#pubexampleModalCenter">
+     add publɨc
+    </button>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="pubexampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" dir="rtl">
+          <div class="modal-header">
+            
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left" >
+              <span aria-hidden="true">&times;  الغاء</span>
+            </button>
+          </div> <form action="/addpub" method="post">
+          <div class="modal-body">
+          
+            <label>write your pub</label>
+             <input type="text" name="Pub" required>
+             
+       
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" type="submit" class="btn btn-primary">Save changes</button>
+          </div>    </form>
+        </div>
+      </div>
+    </div>
 
    <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
@@ -80,10 +109,10 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">  
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+        
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left" >
+                <span aria-hidden="true">&times;  الغاء</span>
+              </button>
         </div><form action="/admin/addphase" method="post">
         <div class="modal-body">
           
@@ -145,22 +174,22 @@
                  
             </tr>
                <!-- Modal for update the level -->
-               <div class="modal fade" id="exampleModal<%= phase._id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+               <div class="modal fade" id="exampleModal<%= level._id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header">  
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
+                      
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left" >
+              <span aria-hidden="true">&times;  الغاء</span>
+            </button>
                       </div><form action="/admin/updatelevel/<%= level._id %>" method="post">
                       <div class="modal-body">
                         
                       
                        
                             <div class="input-container">
-                                <input class="form-control" style="margin-right: 5px;text-align: right" type="text"  placeholder="Level" name="Level">
-                                <input class="form-control" type="number" style="text-align: right" placeholder="NumberOfLevel" name="NumberOfLevel">
+                                <input class="form-control" style="margin-right: 5px;text-align: right" type="text"  value="<%= level.Level %>" name="Level">
+                                <input class="form-control" type="number" style="text-align: right" value="<%= level.NumberOfLevel %>" name="NumberOfLevel">
                                 
                             </div>
                        
@@ -185,10 +214,10 @@
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">  
-                      <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
+                    
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left" >
+              <span aria-hidden="true">&times;  الغاء</span>
+            </button>
                     </div><form action="/admin/<%= phase._id %>/<%= phase.Phase %>/addlevel" method="post">
                     <div class="modal-body">
                       
@@ -218,10 +247,10 @@
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header">  
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
+                        
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left" >
+              <span aria-hidden="true">&times;  الغاء</span>
+            </button>
                       </div><form action="/admin/updatephase/<%= phase._id%>" method="post">
                       <div class="modal-body">
                         

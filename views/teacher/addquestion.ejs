@@ -119,7 +119,7 @@ th, td {
 </div>
 
     <div class="container">
-      
+      <% if (teacher.Actif === true ) { %>
         <form action="/upload" method="post" enctype="multipart/form-data">
           <div class="row">
               <div class="col">
@@ -298,8 +298,12 @@ th, td {
    
 
 </form>
-
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<% } else {  %>
+  <div class="alert alert-warning" role="alert">
+لا يمكنك اضافة سؤال لانه لم يتم تفعيل حسابك من طرف الادارة
+  </div>
+  <% }  %>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     </div>
       
     <script type="text/javascript" src="../editor-text/nicEdit.js"></script>

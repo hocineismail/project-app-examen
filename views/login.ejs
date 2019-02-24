@@ -1,35 +1,135 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <title>Bootstrap Example</title>
+
+  <!-- Add icon library -->
+  <title>تسجيل الدخولس</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
-<body style="background-color:#f1f1f1;">
-<div class="container" style="padding-top: 2%;width: 30%;">
-        <h2 style="text-align: center ">Admin</h2><br><br>
-        <% errors.forEach(function(error) { %>
-        <div class="alert alert-danger" role="alert">
-        <%= error %>
-        </div>
-        <% }) %>
-        <% infos.forEach(function(info) { %>
-        <div class="alert alert-info" role="alert">
-        <%= info %>
-        </div>
-        <% }) %>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;margin-top: 15%;
 
-<form action="/login" method="post">
- <input name="username" type="text" class="form-control"
-  placeholder="Username" required autofocus><br>
- <input name="password" type="password" class="form-control"
-  placeholder="Password" required>
- <input type="submit" value="Log in" class="btn btn-default">
-</form>
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.637)), url("https://www.hafryat.com/sites/default/files/%D8%A5%D8%AD%D8%B5%D8%A7%D8%A1%20%D8%B1%D8%B3%D9%85%D9%8A%2C%20%D8%A7%D9%84%D8%A3%D8%AF%D8%A8%2C%20%D8%A7%D9%84%D8%AB%D9%82%D8%A7%D9%81%D8%A9%20%D9%88%D8%A7%D9%84%D8%A3%D8%AF%D8%A8%2C%20%D8%A7%D9%84%D8%B9%D9%84%D9%88%D9%85%20%D8%A7%D9%84%D8%AA%D8%B7%D8%A8%D9%8A%D9%82%D9%8A%D8%A9%2C%20%D8%A7%D9%84%D9%81%D9%86%D9%88%D9%86%2C%20%D8%A7%D9%84%D9%83%D8%AA%D8%A8%20%D8%A7%D9%84%D9%85%D9%86%D8%B4%D9%88%D8%B1%D8%A9%2C%20%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%2C%20%D8%B3%D8%A7%D9%85%D8%AD%20%D9%81%D8%A7%D9%8A%D8%B2%2C%20%D8%B5%D9%86%D8%A7%D8%B9%D8%A9%20%D8%A7%D9%84%D9%83%D8%AA%D8%A7%D8%A8.jpg");
+  height: 90%;
+  
+position: relative;
+}
+ }
+* {box-sizing: border-box;}
+
+.input-container {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.icon {
+  padding: 10px;
+  background: dodgerblue;
+  color: white;
+  min-width: 50px;
+  text-align: center;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  outline: none;
+}
+
+.input-field:focus {
+  border: 2px solid dodgerblue;
+}
+
+/* Set a style for the submit button */
+.btn {
+  background-color: dodgerblue;
+  color: white;
+  padding: 15px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.btn:hover {
+  opacity: 1;
+  background-color: rgb(82, 167, 252);
+}
+
+</style>
+</head>
+<body dir="rtl">
+  <div class="container">
+  <div class="row">
+   
+
+    <div class="col-md-4">
+        <div class="mobile" style="background-color: #fff;padding-top: 20%;padding-bottom: 20% ">
+            <div class="container" style="padding-top: 2%;width: 70%;">
+          
+          
+            <% errors.forEach(function(error) { %>
+            <div class="alert alert-danger" role="alert">
+            <%= error %>
+            </div>
+            <% }) %>
+            <% infos.forEach(function(info) { %>
+            <div class="alert alert-info" role="alert">
+            <%= info %>
+            </div>
+            <% }) %>
+          <form action="/login" method="post">
+            <div class="input-container"  >
+                <i class="fa fa-envelope icon"></i>
+           <input name="username" type="text" class="input-field"
+            placeholder="Username" required autofocus> 
+          </div>
+              
+          <div class="input-container" >
+              <i class="fa fa-key icon"></i>
+           <input name="password" type="password" class="input-field"
+            placeholder="Password" required> 
+            </div>
+           <input type="submit" value="Log in" class="btn btn-default">
+          </form>
+          
+          <a href="/forgot" >forgot password
+          </a>
+          
+          </div>
+          </div>
+            
+           </div>
+
+
+           <div class="col-md-8" style="margin-bottom: 5%">
+       
+              <div class="card text-white bg-success ">
+                  <div class="card-header" style="text-align:right"> <h1 >Success card title</h1></div>
+                  <div class="card-body">
+                   
+                    <p style="text-align:right ; font-size: 18px">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  </div>
+                </div>
+                
+          </div>
+  </div>
 </div>
 </body>
 </html>

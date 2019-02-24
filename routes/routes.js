@@ -12,19 +12,37 @@ var Module = require("../models/module");
 var Exam = require("../models/exam")
 const multer = require("multer");
 const path = require('path');
-router.get("/teacher/question", function(req,res){
- Phase.find({},function(err,phase){
-     console.log(phase)
-     if (err) {return res.redirect("/teacher/question")}
-     if (phase) {res.render("teacher/addquestion",{
-         phases: phase})
-    }
- })
-  
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+  next();
+  } else {
+ 
+  res.redirect("/");
+  }
+ }
+
+router.get("/teacher/question",ensureAuthenticated, function(req,res){
+  if ( req.user.Role === "Teacher") { 
+  Teacher.findOne({user: req.user._id}, function(err,teacher){
+
+    Phase.find({},function(err,phase){
+      console.log(teacher)
+      if (err) {return res.redirect("/teacher/question")}
+      if (phase) {res.render("teacher/addquestion",{
+          phases: phase,teacher: teacher})
+     }
+  })
+   
+  })
+} else {
+ res.redirect("/")
+}
+
 });
 
 
-router.get("/teacher/validation", function(req,res){
+router.get("/teacher/validation",ensureAuthenticated, function(req,res){
     res.render("teacher/addquestion")
   }) 
 
@@ -52,7 +70,7 @@ router.post("/searchmodule",function(req, res){
 })	
 
 
-router.post("/searchexam",function(req, res){
+router.post("/searchexam",ensureAuthenticated,function(req, res){
     console.log(req.body.Module);
     Module.findOne({_id: req.body.Module}, function(err, module){
         Exam.find({module:  module._id},function(err , data){
@@ -102,7 +120,7 @@ function checkFileType(file, cb){
   }
 }
 
-  router.post('/upload', (req, res) => {
+  router.post('/upload', ensureAuthenticated , (req, res) => {
    if ( 
      (req.body.Level != "") && 
      (req.body.Phase != "")  && 
@@ -232,7 +250,7 @@ function checkFileType(file, cb){
 });
 
 
-router.get("/teacher/valid",async function(req,res){
+router.get("/teacher/valid",ensureAuthenticated,async function(req,res){
 
   
     try{
@@ -277,7 +295,7 @@ router.get("/teacher/valid",async function(req,res){
       })
   }
 })
-  router.get("/teacher/notvalid",async function(req,res){
+  router.get("/teacher/notvalid",ensureAuthenticated,async function(req,res){
 
   
     try{
@@ -307,7 +325,7 @@ router.get("/teacher/valid",async function(req,res){
   
 })
 
-router.get("/valid/question/:id", function(req,res){
+router.get("/valid/question/:id",ensureAuthenticated, function(req,res){
   Question.findById({_id: req.params.id},function(err , question){
     if(question.IsValidOne != true) {
       question.IsValidOne = true,
@@ -334,7 +352,7 @@ router.get("/valid/question/:id", function(req,res){
   })
 })
 
-router.post("/invalid/question/:id", function(req,res){
+router.post("/invalid/question/:id",ensureAuthenticated, function(req,res){
   Question.findById({_id: req.params.id},function(err , question){
    
       question.IsValidOne = false,
