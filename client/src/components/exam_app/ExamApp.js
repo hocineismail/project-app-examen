@@ -47,6 +47,7 @@ class ExamApp extends Component {
               render={() => (
                 <Questions
                   examQuestions={this.props.onExamInformation.questions}
+                  examId={this.props.onExamInformation.examInfo._id}
                   time={this.props.onExamInformation.examInfo.Time}
                 />
               )}

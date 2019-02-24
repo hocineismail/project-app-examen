@@ -11,7 +11,10 @@ const initialState = {
   studentExamsError: null,
   examInformations: null,
   examInformationsError: null,
-  onExamInformation: null
+  onExamInformation: null,
+  postedGrade: null,
+  grade: null,
+  correctResponses: null
 }
 
 export default function userReducer(state = initialState, action) {
@@ -57,7 +60,6 @@ export default function userReducer(state = initialState, action) {
         studentExams: null
       }
     case types.fetchExamInformation:
-      console.log(action.payload)
       return {
         ...state,
         examInformations: action.payload,
@@ -73,6 +75,13 @@ export default function userReducer(state = initialState, action) {
       return {
         ...state,
         onExamInformation: action.payload
+      }
+    case types.postExamGrade:
+      return {
+        ...state,
+        postedGrade: true,
+        grade: action.payload.grade,
+        correctResponses: action.payload.correctResponses
       }
     default:
       return state

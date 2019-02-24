@@ -246,7 +246,7 @@ app.get('/examquestions/:id', (req, res) => {
               }).select('ResponseText')
               examData.questions.push({
                 question: questions[i],
-                responses : rsp
+                responses: rsp
               })
             }
             return res.json(examData)
@@ -257,6 +257,70 @@ app.get('/examquestions/:id', (req, res) => {
       }
     }
   )
+})
+
+app.post('/exam/getresult/:id', async (req, res) => {
+  let id = req.params.id
+  let responses = _.pick(req.body, ['responses'])
+  let examId = _.pick(req.body, ['examId'])
+  let score = 0
+  let numberOfQuestions = 0
+  let correctResponses = []
+
+  Promise.all(
+    responses.responses.map(async response => {
+      let selectedResponse = await Response.findById(response)
+      if (selectedResponse.IsCorrect) {
+        score++
+      }
+      numberOfQuestions++
+    })
+  ).then(completed => {
+    studentExamOutput = {
+      Exam: examId.examId,
+      Grade: (score * 100) / numberOfQuestions
+    }
+    Student.updateOne(
+      { user: id },
+      {
+        $push: {
+          exams: studentExamOutput
+        }
+      },
+      (err, returnedQuery) => {
+        if (err) {
+          return returnErrorMessage(res, err, 400)
+        }
+        Question.find(
+          {
+            exam: examId.examId
+          },
+          (err, questions) => {
+            if (err) {
+              
+              return returnErrorMessage(res, err, 400)
+            }
+            Promise.all(
+              questions.map((question, k) => {
+                console.log('QUESTION')
+                correctResponses.push({
+                  questionNumber: k,
+                  correctResponse: question.Response
+                })
+              })
+            ).then(completed => {
+              console.log(numberOfQuestions)
+              return res.json({
+                message: 'Inserted Successfully',
+                grade: (score * 100) / numberOfQuestions,
+                correctResponses
+              })
+            })
+          }
+        )
+      }
+    )
+  })
 })
 
 const getAllExamsOfStudent = modules => {

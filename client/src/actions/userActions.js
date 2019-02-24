@@ -125,23 +125,52 @@ export function getExamInformation(id) {
   }
 }
 
-export function getExamQuestions(id){
-  return function(dispatch){
+export function getExamQuestions(id) {
+  return function(dispatch) {
     fetch(`${fetchInfo.apiUrl}/examquestions/${id}`)
-    .then(res => res.json())
-    .then(res => {
-      return dispatch({
-        type: types.fetchExamQuestions,
-        payload: res
-      })
-    })
-    .catch(err => {
-      if(err){
-        dispatch({
-          type: types.fetchExamQuestionsError,
-          payload: err
+      .then(res => res.json())
+      .then(res => {
+        return dispatch({
+          type: types.fetchExamQuestions,
+          payload: res
         })
-      }
+      })
+      .catch(err => {
+        if (err) {
+          dispatch({
+            type: types.fetchExamQuestionsError,
+            payload: err
+          })
+        }
+      })
+  }
+}
+
+export function postExamGrade(id, body) {
+  return function(dispatch) {
+    fetch(`${fetchInfo.apiUrl}/exam/getresult/${id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
     })
+      .then(res => res.json())
+      .then(res => {
+        console.log(res)
+        return dispatch({
+          type: types.postExamGrade,
+          payload: res
+        })
+      })
+      .catch(err => {
+        if (err) {
+          console.log(err)
+          return dispatch({
+            type: types.postExamGradeError,
+            payload: err
+          })
+        }
+      })
   }
 }

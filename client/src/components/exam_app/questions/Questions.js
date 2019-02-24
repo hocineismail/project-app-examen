@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-
+import { connect } from 'react-redux'
+import Swal from 'sweetalert2'
 
 import CountDown from 'react-countdown-now'
 
@@ -9,6 +10,8 @@ import QuestionCounter from './questionCounter/QuestionCounter'
 import Question from './question/Question'
 import Confirmation from './Confirmation/Confirmation'
 
+import { postExamGrade } from '../../../actions/userActions'
+
 class Questions extends Component {
   constructor(props) {
     super(props)
@@ -17,11 +20,17 @@ class Questions extends Component {
     this.state = {
       index: 0,
       questions: questions.map((q, k) => {
-        return <Question content={q} index={k} selectedResponse={window.localStorage.getItem(k)}/>
+        return (
+          <Question
+            content={q}
+            index={k}
+            selectedResponse={window.localStorage.getItem(k)}
+          />
+        )
       }),
-      time: window.localStorage.getItem('time')
-        ? window.localStorage.getItem('time')
-        : Date.now() + (props.time * 60 * 1000)
+      time: parseInt(window.localStorage.getItem('time'))
+        ? parseInt(window.localStorage.getItem('time'))
+        : Date.now() + props.time * 60 * 1000
     }
 
     this.onNextButtonClick = this.onNextButtonClick.bind(this)
@@ -30,6 +39,10 @@ class Questions extends Component {
   }
 
   countDownRenderer({ minutes, seconds }) {
+    window.localStorage.setItem(
+      'time',
+      Date.now() + minutes * 60 * 1000 + seconds * 1000
+    )
     return (
       <div className="timer">
         <p>
@@ -97,44 +110,64 @@ class Questions extends Component {
     )
   }
 
-  onFinishingExamButtons(){
+  onFinishingExamButtons() {
     return (
       <div className="submission">
-          <button
-            className="btn btn-warning"
-            onClick={this.onPreviousButtonClick}
-          >
-            العودة
-          </button>
-          <button className="btn btn-success" onClick={this.onExamFinished}>
-            متأكد
-          </button>
-        </div>
+        <button
+          className="btn btn-warning"
+          onClick={this.onPreviousButtonClick}
+        >
+          العودة
+        </button>
+        <button className="btn btn-success" onClick={this.onExamFinished}>
+          متأكد
+        </button>
+      </div>
     )
   }
 
-  onExamFinished(){
-    let numberOfQuestions = this.props.examQuestions.length
+  onExamFinished() {
+    let examId = this.props.examId
     let responses = []
+    this.props.examQuestions.map((question, index) => {
+      question.responses.map(response => {
+        if (response.ResponseText === window.localStorage.getItem(index)) {
+          responses.push(response._id)
+        }
+      })
+    })
+
+    let body = {
+      examId,
+      responses
+    }
+    this.props.postExamGrade(window.localStorage.getItem('_id'), body)
   }
 
-  getExamButtons(index, length){
+  getExamButtons(index, length) {
     let buttons
-    if (index === 0){
+    if (index === 0) {
       buttons = this.onStartExamButtons()
-    }else if (index === length - 1){
+    } else if (index === length - 1) {
       buttons = this.onLastExamQuestionButtons()
-    }else if (index === length){
+    } else if (index === length) {
       buttons = this.onFinishingExamButtons()
-    }else {
+    } else {
       buttons = this.duringExamButtons()
     }
     return buttons
   }
 
-  getResponseSelected(){
+  getResponseSelected() {
     let response = window.localStorage.getItem(this.state.index)
     return response
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.postedGrade) {
+      alert(nextProps.grade)
+      console.log(nextProps.correctResponses)
+    }
   }
 
   render() {
@@ -147,7 +180,10 @@ class Questions extends Component {
         <Confirmation />
       )
 
-    let submission = this.getExamButtons(this.state.index, this.state.questions.length)
+    let submission = this.getExamButtons(
+      this.state.index,
+      this.state.questions.length
+    )
 
     return (
       <div className="exam-questions">
@@ -163,5 +199,18 @@ class Questions extends Component {
   }
 }
 
+const mapStateToProps = (state, props) => {
+  return {
+    ...state,
+    ...props
+  }
+}
 
-export default Questions
+const mapActionsToProps = {
+  postExamGrade
+}
+
+export default connect(
+  mapStateToProps,
+  mapActionsToProps
+)(Questions)
