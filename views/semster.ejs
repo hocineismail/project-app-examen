@@ -130,7 +130,7 @@ li a:hover {
   <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
+      <div class="modal-content" dir="rtl">
         <div class="modal-header">  
          
          
@@ -175,14 +175,39 @@ li a:hover {
 
 <div style="overflow-x:auto;" class="container col-md-12 ">
   <table>
-    <tr><th  style=" text-align: left"><a href="/admin/deletesemster/<%= semster._id %> " class="btn btn-danger" >حذف</a></th>
+    <tr><th  style=" text-align: left">
+      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#e<%= semster._id %>xampleModalCenter">
+        <i class="fa fa-trash" aria-hidden="true"></i>
+      </button>
+    </th>
       <th> <%= semster.Semster %> </th>
     
       <th ><%= i %></th>
      
     </tr>
    
- 
+  
+    
+    <!-- Modal -->
+    <div class="modal fade" id="e<%= semster._id %>xampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" dir="rtl">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left" >
+              <span aria-hidden="true">&times;  الغاء</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
+            <a href="/admin/<%= semster.level%>/deletesemster/<%= semster._id %> " class="btn btn-danger" >
+              حفظ</a>
+          </div>
+        </div>
+      </div>
+    </div>
            
            
             <% modules.forEach(function(module) { %>
@@ -190,16 +215,40 @@ li a:hover {
                 <tr>
                   <td  style=" text-align: left">
                     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#example<%= module._id%>Modal">
-                        تعديل 
+                      <i class="fas fa-cog"></i> 
                       </button>
-                     <a href="/admin/<%= semster.level%>/deletemodule/<%= module._id %>" class="btn btn-danger" >حذف</a> 
+                      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleMo<%= module._id %>dalCenter">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                      </button>
+                    
                   </td>
+                
+                  
+                  <!-- Modal -->
+                  <div class="modal fade" id="exampleMo<%= module._id %>dalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content" dir="rtl">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left" >
+                            <span aria-hidden="true">&times;  الغاء</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          ...
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
+                          <a href="/admin/<%= semster.level%>/deletemodule/<%= module._id %>" class="btn btn-danger" >حفظ</a> 
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                      <td><a href="/admin/exam/<%= module._id  %>"><%= module.Module %></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td> 
                </tr>
                 
                      <div class="modal fade" id="example<%= module._id%>Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
-                          <div class="modal-content">
+                          <div class="modal-content" dir="rtl">
                             <div class="modal-header">  
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left" >
                                     <span aria-hidden="true">&times;  الغاء</span>
@@ -233,12 +282,12 @@ li a:hover {
               <% })%>
              <tr>
                 <td style=" text-align: left">  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#example<%= semster._id%>Modal">
-                ajouter moduel 
+                  <i class="fas fa-plus"></i> 
               </button>
             </td> 
             <div class="modal fade" id="example<%= semster._id%>Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
-                  <div class="modal-content">
+                  <div class="modal-content" dir="rtl">
                     <div class="modal-header">  
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left" >
                             <span aria-hidden="true">&times;  الغاء</span>
