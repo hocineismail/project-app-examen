@@ -119,16 +119,18 @@ position: relative;
 
 
            <div class="col-md-8" style="margin-bottom: 5%">
+       <% pub.forEach(function(pub) { %>
        
               <div class="card text-white bg-success ">
                   <div class="card-header" style="text-align:right"> <h1 >Success card title</h1></div>
                   <div class="card-body">
-                   
-                    <p style="text-align:right ; font-size: 18px">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  
+                    <p style="text-align:right ; font-size: 18px"><%= pub.Pub %></p>
                   </div>
                 </div>
                 
           </div>
+          <% }) %>
   </div>
 </div>
 </body>

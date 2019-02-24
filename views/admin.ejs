@@ -53,7 +53,7 @@
 
 <div class="container" style="padding-top: 2%;width: 50%;">
   <h2 style="text-align: center "> 
-      مرحلة
+     اعدادات المراحل و الصفوف
 </h2><br><br>
   <% errors.forEach(function(error) { %>
   <div class="alert alert-danger" style="text-align: right" role="alert">
@@ -71,7 +71,7 @@
  <!-- model for public -->
   <!-- Button trigger modal -->
   <button type="button" class="btn btn-default" data-toggle="modal" data-target="#pubexampleModalCenter">
-     add publɨc
+      اعلان في الصفحة الرئسية
     </button>
     
     <!-- Modal -->
@@ -83,17 +83,30 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left" >
               <span aria-hidden="true">&times;  الغاء</span>
             </button>
-          </div> <form action="/addpub" method="post">
+          </div>
+          <div class="modal-body">
+         <% pub.forEach(function(pub) { %>
+          <div class="alert alert-success" role="alert">
+          <p> <a href="/pub/delete/<%= pub._id%>">حذف الاعلان المشور</a></p>
+          <p><%= pub.Pub %></p>
+        </div>
+        
+          <div class="alert alert-warning" role="alert">
+           عند نشر اعلان اخر سيتم حذف الاعلان السابق تلقائيا
+                </div>
+                <%  }) %>
+          </div>
+          <form action="/addpub" method="post">
           <div class="modal-body">
           
-            <label>write your pub</label>
-             <input type="text" name="Pub" required>
+            <label>اكتب الاعلان</label>
+             <input class="form-control" type="text" name="Pub" required>
              
        
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" type="submit" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
+            <button type="submit" type="submit" class="btn btn-primary">نشر الاعلان</button>
           </div>    </form>
         </div>
       </div>
@@ -119,9 +132,12 @@
         
          
               <div class="input-container">
-                  <label>  *    مرحلة</label>
+
+
+                <label>ادخل المرحلة</label>
                   <input class="form-control" style="margin-right: 5px;text-align: right" type="text"  placeholder="phase" name="Phase">
-                  <label>  *    مرحلة</label>
+                  <label>ادخل رقم المرحلة</label>
+
                   <input class="form-control" type="number" style="text-align: right" placeholder="NumberOfPhase" name="NumberOfPhase">
                   
               </div>
@@ -186,9 +202,10 @@
                       
                        
                             <div class="input-container">
-                                <label>  *    te3dil </label>
+                                <label> تعديل الصف</label>
                                 <input class="form-control" style="margin-right: 5px;text-align: right" type="text"  value="<%= level.Level %>" name="Level">
-                                <label>  *    مرحلة</label>
+                                <label> تعديل رقم الصف</label>
+
                                 <input class="form-control" type="number" style="text-align: right" value="<%= level.NumberOfLevel %>" name="NumberOfLevel">
                                 
                             </div>
@@ -221,8 +238,10 @@
                     </div><form action="/admin/<%= phase._id %>/<%= phase.Phase %>/addlevel" method="post">
                     <div class="modal-body">
                           <div class="input-container">
-                              <label>  *    add level </label>
+                              <label>ادخل الصف</label>
+
                               <input class="form-control" style="margin-right: 5px;text-align: right" type="text"  placeholder="Level" name="Level">
+                              <label>ادخل رقم الصف</label>
                               <input class="form-control" type="number" style="text-align: right" placeholder="NumberOfLevel" name="NumberOfLevel">
                               
                           </div>
@@ -248,9 +267,11 @@
                       <div class="modal-body">
                         
                             <div class="input-container">
-                                <label>  *    مرحلة</label>
+
+                                <label>تعديل المرحلة</label>
                                 <input class="form-control" style="margin-right: 5px;text-align: right" type="text"  placeholder="phase" name="Phase">
-                                <label>  *    update phase</label>
+                                <label>تعديل رقم المرحلة</label>
+
                                 <input class="form-control" type="number" style="text-align: right" placeholder="NumberOfPhase" name="NumberOfPhase">
                                 
                             </div>

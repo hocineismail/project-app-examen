@@ -2,6 +2,8 @@ var express = require("express");
 var router = express.Router();
 var async =  require("async");
 var User = require("../models/user");
+
+var Pub = require("../models/pub");
 var Phase = require("../models/phase");
 var Teacher = require("../models/teacher");
 var Semster = require("../models/semster");
@@ -368,5 +370,56 @@ router.post("/invalid/question/:id",ensureAuthenticated, function(req,res){
  console.log(question)
  res.redirect("/teacher/valid")
   })
+})
+
+
+//POST Pub 
+router.post("/addpub",function(req,res){
+  Pub.countDocuments({},function(err,count){
+    if (!err){
+             if (count === 0 ){
+              var newPub  =  new Pub({
+                Pub: req.body.Pub,
+              });newPub.save(function(err,success){
+                // i will edit this message
+                if(err){
+                  console.log("this error ")
+                  req.flash("error", "errros");
+                  return res.redirect("/admin")}
+                if (success){req.flash("info", "updating");
+                return res.redirect("/admin")} 
+              })
+             } else {
+               Pub.remove({},function(err,s){
+                 if (err){ return res.redirect("/")}
+                 if (s){
+                  var newPub  =  new Pub({
+                    Pub: req.body.Pub,
+                  });newPub.save(function(err,success){
+                    // i will edit this message
+                    if(err){
+                      console.log("this error ")
+                      req.flash("error", "errros");
+                      return res.redirect("/admin")}
+                    if (success){req.flash("info", "updating");
+                    return res.redirect("/admin")} 
+                  })
+                 }
+               })
+             }
+        
+    }
+  })
+ 
+ 
+})
+router.get("/pub/delete/:id",function(req,res){
+  Pub.findOneAndRemove( { _id: req.params.id } , function(err, pyb) {
+    if (err) { return next(err); }
+    if (!pyb) { return next(404); }
+    req.flash("info", "pub bien suprin2");
+                  
+  res.redirect("/admin")
+  }) 
 })
 module.exports = router;
