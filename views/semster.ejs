@@ -71,29 +71,33 @@ li a:hover {
 </style>
 <body>
 
-  <div class="w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left" style="color:#fff;padding-top:3.7%;font-size: 18px;width:200px;background-color: rgb(73, 73, 73)" id="mySidebar">
-    <button   class="w3-bar-item w3-button w3-large w3-hide-large" onclick="w3_close()">Close &times;</button>
-    <h2 style="color: cornsilk;text-align: center">الدورات</h2>
-<a href="/cycle/" style="border-top: 1px solid #fff" class="w3-bar-item w3-button" > hello </a>
-</div>
-  
-  <div class="w3-main" style="margin-left:200px">
-  <div  style="color:#fff;background-color: rgb(73, 73, 73)">
-    <button class="w3-button  w3-xlarge w3-hide-large" onclick="w3_open()">&#9776;</button>
-    <div class="w3-container">
-      <ul>
-       
-        <li><a class="activee" href="/"><i class="fas fa-house-damage"></i>الصقحة الرئسية</a></li>
-
-        <li><a href="/admin"><i class="far fa-edit"></i>اعدادات</a></li>
-        <li class="nav-item active "> <% if (currentUser) { %>
-          <a class="nav-link" href="/Logout"><i class="fas fa-sign-out-alt icon"></i>تسجيل الخروج   </a>  <% }  %>  </li>
-        
+    <div class="w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left" style="color:#fff;padding-top:3.7%;font-size: 18px;width:200px;background-color: rgb(73, 73, 73)" id="mySidebar">
+        <button   class="w3-bar-item w3-button w3-large w3-hide-large" onclick="w3_close()">الغاء &times;</button>
+        <h2 style="color: cornsilk;padding-right: 10%; text-align: right;" >القوائم</h2>
+     <a href="/list/admins" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > قائمة المديرين </a>
+     <a href="/list/teachers" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > قائمة المعلمين </a>
+     <a href="/list/students" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > قائمة التلاميذ </a>
+     <h2 style="color: cornsilk;padding-right: 10%; text-align: right;">الاحصاء</h2>
+     <a href="/static/" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > صفحة الاحصاء </a>
+     <h2 style="color: cornsilk;padding-right: 10%; text-align: right;">الطلبات</h2>
+     <a href="/list/demande" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > صفحة الطلبات </a>
+     <h2 style="color: cornsilk;padding-right: 10%; text-align: right;">الناجحين</h2>
+     <a href="/list/seccus" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > قاوائم الناجحين </a>
+     </div>
+     <div class="w3-main" style="margin-left:200px">
+        <div  style="color:#fff;background-color: rgb(73, 73, 73)">
+          <button class="w3-button  w3-xlarge w3-hide-large" onclick="w3_open()">&#9776;</button>
+          <div class="w3-container">
+            <ul>
+             
+              <li class="activee" ><a href="/"><i class="fas fa-house-damage"></i>الصقحة الرئسية</a></li>
       
-      </ul>
-</div>
-  </div>
-  
+              <li><a href="/admin"><i class="far fa-edit"></i>اعدادات</a></li>
+              <li class="nav-item active "> <% if (currentUser) { %>
+                <a class="nav-link" href="/Logout"><i class="fas fa-sign-out-alt icon"></i>تسجيل الخروج   </a>  <% }  %>  </li>
+       </ul>
+      </div>
+        </div>
   <div class="w3-container" style="text-align: right">
 
 <div class="container" style="padding-top: 2%;width: 50%;">
@@ -293,3 +297,4 @@ function w3_close() {
      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 </body>
 </html>
+
