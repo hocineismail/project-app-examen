@@ -84,7 +84,7 @@ user.post("/signup", function(req, res) {
 
 	
 
-
+		deletesemster
 	var Address =  req.body.Address;
 	var Phone = req.body.Phone;
 
@@ -534,7 +534,7 @@ user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, nex
 						})});
 
 
-		user.get("/admin/deletesemster/:_id",ensureAuthenticated,   function(req, res, next) {
+		user.get("/admin/:level/deletesemster/:_id",ensureAuthenticated,   function(req, res, next) {
 			Module.find( { semster: req.params._id } , function(err, one) {
 		  one.forEach(function(delet){
 				console.log(delet._id)
@@ -553,7 +553,7 @@ user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, nex
 					if (!semster) { return next(404); }
 			 
 					req.flash("error", "تم الحدف");
-					res.redirect("/admin")
+					res.redirect("/admin/phase/" + req.params.level)
 					
 				})
 			});

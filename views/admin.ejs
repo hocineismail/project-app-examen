@@ -18,7 +18,7 @@
 <link rel="stylesheet" type="text/css" href="css/admin.css">
 </head>
 
-<body>
+<body style="background-color:rgb(243, 242, 242)">
 
   <div class="w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left" style="color:#fff;padding-top:3.7%;font-size: 18px;width:200px;background-color: rgb(73, 73, 73)" id="mySidebar">
     <button   class="w3-bar-item w3-button w3-large w3-hide-large" onclick="w3_close()">الغاء &times;</button>
@@ -37,14 +37,14 @@
   <div class="w3-main" style="margin-left:200px">
   <div  style="color:#fff;background-color: rgb(73, 73, 73)">
     <button class="w3-button  w3-xlarge w3-hide-large" onclick="w3_open()">&#9776;</button>
-    <div class="w3-container">
+    <div class="w3-container" >
       <ul>
        
-        <li class="activee" ><a href="/"><i class="fas fa-house-damage"></i>الصقحة الرئسية</a></li>
+        <li class="activee" ><a href="/"><i class="fas fa-house-damage"></i> </a></li>
 
-        <li><a href="/admin"><i class="far fa-edit"></i>اعدادات</a></li>
+        <li><a href="/admin"><i class="far fa-edit"></i></a></li>
         <li class="nav-item active "> <% if (currentUser) { %>
-          <a class="nav-link" href="/Logout"><i class="fas fa-sign-out-alt icon"></i>تسجيل الخروج   </a>  <% }  %>  </li>
+          <a class="nav-link" href="/Logout"><i class="fas fa-sign-out-alt icon"></i>  </a>  <% }  %>  </li>
  </ul>
 </div>
   </div>
@@ -120,7 +120,7 @@
   <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
+      <div class="modal-content"  dir="rtl">
         <div class="modal-header">  
         
             <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left" >
@@ -159,19 +159,46 @@
 
   <div style="overflow-x:auto;text-align: center">
       <table >
-        <tr>
-          <th style=" text-align: left">تعديل</th>
-          <th>المرحلة</th>
-          <th>#</th>
-   
-        </tr><% var i = 0  %><% var l = 0 %>
+          <tr>
+              <th style=" text-align: left">تعديل</th>
+              <th>المرحلة</th>
+              <th>#</th>
+       
+            </tr>
+       <% var i = 0  %><% var l = 0 %>
         <% phases.forEach(function(phase) { %>
           <% i = i + 1%>
          
-        <tr 	BGCOLOR="rgb(73, 73, 73)" style="color:#fff; font-size: 20px">
+            <tr style="color:black; font-size: 20px; background-color: rgb(226, 226, 226)">
           <td style=" text-align: left">  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#phase<%= phase._id%>Modal">
-              تعديل 
-              </button> <a href="/admin/deletephase/<%= phase._id%>" class="btn  btn-danger"> حذف</a></td>
+              <i class="fas fa-cog"></i> 
+              </button> 
+             
+              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenterdelete<%= phase._id%>">
+                  <i class="fa fa-trash" aria-hidden="true"></i>
+                </button>
+            
+            </td>
+            <div class="modal fade" id="exampleModalCenterdelete<%= phase._id%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content"  dir="rtl">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      ...
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
+                      <a href="/admin/deletephase/<%= phase._id%>" class="btn  btn-danger"> حذف</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            
           <th> <%= phase.Phase %></th>
           <th > <%= i %></th>
         </tr>
@@ -179,8 +206,10 @@
           <% if (JSON.stringify(phase._id) == JSON.stringify(level.phase)) {%>
             <tr> <% l = l + 1%>
                 <td style=" text-align: left" ><button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal<%= level._id %>">
-                  تعديل
-                </button> <a href="/admin/deletelevel/<%= level._id%>" class="btn btn-danger" > حذف</a> </td>
+                    <i class="fas fa-cog"></i> 
+                </button>  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#example<%= level._id %>ModalCenter">
+                  <i class="fa fa-trash" aria-hidden="true"></i>
+                  </button></td>
               <td><a href="/admin/phase/<%= level._id %>"><%= level.Level %></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
                  <th style="font-size: 20px">  * &nbsp; &nbsp;</th>
                  
@@ -188,10 +217,34 @@
                   <!-- Modal -->
                  
             </tr>
+
+            <!--this  model for dele level-->
+           
+              
+              <!-- Modal -->
+              <div class="modal fade" id="example<%= level._id %>ModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content"  dir="rtl">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      ...
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
+                      <a href="/admin/deletelevel/<%= level._id%>" class="btn btn-danger" >  حذف</a> 
+                    </div>
+                  </div>
+                </div>
+              </div>
                <!-- Modal for update the level -->
                <div class="modal fade" id="exampleModal<%= level._id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog" role="document">
-                    <div class="modal-content">
+                    <div class="modal-content"  dir="rtl">
                       <div class="modal-header">  
                       
           <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left" >
@@ -225,11 +278,11 @@
             <% } %> 
             <% })%>  
           <td style=" text-align: left">  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#example<%= phase._id%>Modal">
-                اضافة صف
+              <i class="fas fa-plus"></i>
               </button></td> 
             <div class="modal fade" id="example<%= phase._id%>Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
-                  <div class="modal-content">
+                  <div class="modal-content"  dir="rtl">
                     <div class="modal-header">  
                     
           <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left" >
@@ -264,7 +317,7 @@
 
               <div class="modal fade" id="phase<%= phase._id%>Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog" role="document">
-                    <div class="modal-content">
+                    <div class="modal-content"  dir="rtl">
                       <div class="modal-header">  
                         
           <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left" >
@@ -329,11 +382,12 @@
       
  
   
-<!-- Button trigger modal -->
 
 
 
 
+  <!--this Model for Delete-->
+  <!-- Modal -->
 
 
 <script>
