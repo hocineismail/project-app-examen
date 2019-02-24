@@ -8,6 +8,8 @@ const Level = require('../models/level')
 const Phase = require('../models/phase')
 const Module = require('../models/module')
 const Exam = require('../models/exam')
+const Question = require('../models/question')
+const Response = require('../models/response')
 
 const _ = require('lodash')
 
@@ -185,10 +187,12 @@ app.get('/exams/:id', (req, res) => {
             return returnErrorMessage(res, err, 400)
           }
           try {
-            result = Promise.all(getAllExamsOfStudent(modules)).then(completed => {
-              examsTable = completed
-              return res.json(examsTable)
-            })
+            result = Promise.all(getAllExamsOfStudent(modules)).then(
+              completed => {
+                examsTable = completed
+                return res.json(examsTable)
+              }
+            )
           } catch (err) {
             throw err
           }
@@ -201,12 +205,58 @@ app.get('/exam/:id', (req, res) => {
   let id = req.params.id
 
   Exam.findById(id, (err, exam) => {
-    if (err){
+    if (err) {
       return returnErrorMessage(res, err, 400)
     }
     return res.json(exam)
   })
+})
 
+app.get('/examquestions/:id', (req, res) => {
+  let id = req.params.id
+  Exam.findOne(
+    {
+      _id: id,
+      Etat: true
+    },
+    ['Exam', 'Time', 'NumberOfExam'],
+    (err, exam) => {
+      if (err) {
+        return returnErrorMessage(res, err, 400)
+      }
+      if (exam) {
+        let examData = {
+          examInfo: {},
+          questions: []
+        }
+        let examId = exam._id
+        examData['examInfo'] = exam
+        Question.find(
+          {
+            exam: examId,
+            IsValidFinal: true
+          },
+          async (err, questions) => {
+            if (err) {
+              return returnErrorMessage(res, err, 400)
+            }
+            for (let i = 0; i < questions.length; i++) {
+              let rsp = await Response.find({
+                question: questions[i]._id
+              }).select('ResponseText')
+              examData.questions.push({
+                question: questions[i],
+                responses : rsp
+              })
+            }
+            return res.json(examData)
+          }
+        )
+      } else {
+        return returnErrorMessage(res, err, 400)
+      }
+    }
+  )
 })
 
 const getAllExamsOfStudent = modules => {
@@ -215,6 +265,5 @@ const getAllExamsOfStudent = modules => {
     Exams: await Exam.find({ module: module._id, Etat: true })
   }))
 }
-
 
 module.exports = app

@@ -9,6 +9,8 @@ const types = {
     fetchStudentExamsError : 'fetchStudentExamsError',
     fetchExamInformation : 'fetchExamInformatiom',
     fetchExamInformationError : 'fetchExamInformatiomError',
+    fetchExamQuestions: 'fetchExamQuestions',
+    fetchExamQuestionsError: 'fetchExamQuestionsError'
 }
 
 export default types

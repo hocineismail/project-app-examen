@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 
+
 import CountDown from 'react-countdown-now'
 
 import './Questions.css'
@@ -11,57 +12,21 @@ import Confirmation from './Confirmation/Confirmation'
 class Questions extends Component {
   constructor(props) {
     super(props)
-    let question = [
-      {
-        question: 'السؤال الاول',
-        responses: [
-          'الجواب الاول',
-          'الجواب الثاني',
-          'الجواب الثالث',
-          'الجواب الرابع'
-        ]
-      },
-      {
-        question: 'السؤال الثاني',
-        responses: [
-          'الجواب الاول',
-          'الجواب الثاني',
-          'الجواب الثالث',
-          'الجواب الرابع'
-        ]
-      },
-      {
-        question: 'السؤال الثالث',
-        responses: [
-          'الجواب الاول',
-          'الجواب الثاني',
-          'الجواب الثالث',
-          'الجواب الرابع'
-        ]
-      },
-      {
-        question: 'السؤال الرابع',
-        responses: [
-          'الجواب الاول',
-          'الجواب الثاني',
-          'الجواب الثالث',
-          'الجواب الرابع'
-        ]
-      }
-    ]
+    let questions = props.examQuestions
 
     this.state = {
       index: 0,
-      questions: question.map((q, k) => {
+      questions: questions.map((q, k) => {
         return <Question content={q} index={k} selectedResponse={window.localStorage.getItem(k)}/>
       }),
       time: window.localStorage.getItem('time')
         ? window.localStorage.getItem('time')
-        : Date.now() + 100000
+        : Date.now() + (props.time * 60 * 1000)
     }
 
     this.onNextButtonClick = this.onNextButtonClick.bind(this)
     this.onPreviousButtonClick = this.onPreviousButtonClick.bind(this)
+    this.onExamFinished = this.onExamFinished.bind(this)
   }
 
   countDownRenderer({ minutes, seconds }) {
@@ -88,7 +53,6 @@ class Questions extends Component {
     this.setState({
       index: this.state.index - 1
     })
-    
   }
 
   onStartExamButtons() {
@@ -142,11 +106,16 @@ class Questions extends Component {
           >
             العودة
           </button>
-          <button className="btn btn-success" onClick={this.onNextButtonClick}>
+          <button className="btn btn-success" onClick={this.onExamFinished}>
             متأكد
           </button>
         </div>
     )
+  }
+
+  onExamFinished(){
+    let numberOfQuestions = this.props.examQuestions.length
+    let responses = []
   }
 
   getExamButtons(index, length){
@@ -193,5 +162,6 @@ class Questions extends Component {
     )
   }
 }
+
 
 export default Questions

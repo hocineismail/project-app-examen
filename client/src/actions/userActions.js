@@ -124,3 +124,24 @@ export function getExamInformation(id) {
       })
   }
 }
+
+export function getExamQuestions(id){
+  return function(dispatch){
+    fetch(`${fetchInfo.apiUrl}/examquestions/${id}`)
+    .then(res => res.json())
+    .then(res => {
+      return dispatch({
+        type: types.fetchExamQuestions,
+        payload: res
+      })
+    })
+    .catch(err => {
+      if(err){
+        dispatch({
+          type: types.fetchExamQuestionsError,
+          payload: err
+        })
+      }
+    })
+  }
+}

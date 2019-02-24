@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 import { getExamInformation } from '../../../../actions/userActions'
 
 class ExamInformations extends Component {
-  onButtonClick() {
+  onButtonClick(examId) {
     Swal.fire({
       title: 'هل انت متأكد؟',
       text:
@@ -23,7 +23,7 @@ class ExamInformations extends Component {
     }).then(result => {
       if (result.value) {
         window.open(
-          '/exampage',
+          `/exampage?examId=${examId}`,
           '_blank',
           'location=yes,scrollbars=yes,status=yes'
         )
@@ -59,7 +59,7 @@ class ExamInformations extends Component {
           <button
             type="button"
             class="btn btn-primary"
-            onClick={this.onButtonClick}
+            onClick={() => {this.onButtonClick(this.props.examInformations._id)}}
           >
             اختبر
           </button>
