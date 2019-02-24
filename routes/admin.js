@@ -22,22 +22,24 @@ admin.use(function(req, res, next) {
    });
 	 
 
-admin.get("/teacherValidation/:_id", function(req,res){
-  console.log(req.params._id)
-  Teacher.findOne({_id: req.params._id},function(err , success){
+admin.get("/teacherValidation/:_id",ensureAuthenticated, function(req,res){
+ 
+  Teacher.findOne({_id: req.params._id},function(err,teacher){
+    console.log(teacher)
     if(err) {return res.redirect("/admin")}
-    if (success) {
-      success.Actif = true;
-      success.save(function (err, update) {
-        if (err) return handleError(err);
-        if (update) { return res.redirect("/admin")}
+    if (teacher) {
+      teacher[0].Actif = true;
+   
+      teacher[0].save(function (err, update) {
+        if (err){ return res.redirect("/list/demande")}
+        if (update) { return res.redirect("/list/demande")}
     });
   }
 })
 })
 
 
-admin.post("/admin/addphase", function(req,res,next){
+admin.post("/admin/addphase",ensureAuthenticated, function(req,res,next){
     console.log( req.body.Phase)
         var  phase = req.body.Phase;
         var  numberOfPhase = req.body.NumberOfPhase;
@@ -67,7 +69,7 @@ admin.post("/admin/addphase", function(req,res,next){
 
 
 
-         admin.post("/admin/:_id/:phase/addlevel", function(req,res,next){
+         admin.post("/admin/:_id/:phase/addlevel",ensureAuthenticated, function(req,res,next){
   
               var  level = req.body.Level;
               var  numberOfLevel = req.body.NumberOfLevel;
@@ -106,7 +108,7 @@ admin.post("/admin/addphase", function(req,res,next){
       
 
  
-                 admin.post("/admin/:level/:_id/addmodule", function(req,res,next){
+                 admin.post("/admin/:level/:_id/addmodule",ensureAuthenticated, function(req,res,next){
   
                   var  modulee = req.body.Module;
                   var  numberOfModule = req.body.NumberOfModule;
@@ -139,7 +141,7 @@ admin.post("/admin/addphase", function(req,res,next){
                    });
 
 
-                   admin.post("/admin/:level/:_id/updatemodule", function(req,res,next){
+                   admin.post("/admin/:level/:_id/updatemodule",ensureAuthenticated, function(req,res,next){
   
                     var  modulee = req.body.Module;
                     var  numberOfModule = req.body.NumberOfModule;
@@ -171,7 +173,7 @@ admin.post("/admin/addphase", function(req,res,next){
                 
                      });
                    
-                  admin.post("/admin/:_id/:semster/addsemster", function(req,res,next){
+                  admin.post("/admin/:_id/:semster/addsemster",ensureAuthenticated, function(req,res,next){
   
                 var  semster = req.body.Semster;
                 var  numberOfSemster = req.body.NumberOfSemster;
@@ -206,7 +208,7 @@ admin.post("/admin/addphase", function(req,res,next){
 
 
                 
-          admin.post("/admin/:_id/:module/addmodule", function(req,res,next){
+          admin.post("/admin/:_id/:module/addmodule",ensureAuthenticated, function(req,res,next){
   
                 var  module = req.body.Module;
                 var  numberOfModule = req.body.NumberOfModule;
@@ -250,7 +252,7 @@ admin.post("/admin/addphase", function(req,res,next){
 
 
 
-                 admin.post("/admin/:_id/:module/addexam", function(req,res,next){
+                 admin.post("/admin/:_id/:module/addexam",ensureAuthenticated, function(req,res,next){
                   console.log(req.body.Exam)
                   console.log("-----")
                   console.log(req.body.NumberOfExam)
@@ -304,5 +306,14 @@ admin.post("/admin/addphase", function(req,res,next){
                     }
                   });
               
-                   });               
+                   });   
+                   function ensureAuthenticated(req, res, next) {
+                    if (req.isAuthenticated()) {
+                    next();
+                    } else {
+                   
+                    res.redirect("/");
+                    }
+                   }
+                              
 module.exports = admin;
