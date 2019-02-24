@@ -2,6 +2,8 @@ var express = require("express");
 var router = express.Router();
 var async =  require("async");
 var User = require("../models/user");
+
+var Pub = require("../models/pub");
 var Phase = require("../models/phase");
 var Teacher = require("../models/teacher");
 var Semster = require("../models/semster");
@@ -368,5 +370,22 @@ router.post("/invalid/question/:id",ensureAuthenticated, function(req,res){
  console.log(question)
  res.redirect("/teacher/valid")
   })
+})
+
+
+//POST Pub 
+router.post("/addpub",function(req,res){
+  var newPub  =  new Pub({
+    Pub: req.body.Pub,
+  });newPub.save(function(err,success){
+    // i will edit this message
+    if(err){
+      console.log("this error ")
+      req.flash("error", "errros");
+      return res.redirect("/admin")}
+    if (success){req.flash("info", "updating");
+    return res.redirect("/admin")} 
+  })
+ 
 })
 module.exports = router;

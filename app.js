@@ -10,7 +10,6 @@ var passport = require("passport");
 
 mongoose.connect("mongodb://localhost:27017/databaseproej");
 
-
 // routes
 var routes = require("./routes/routes");
 var user = require("./routes/user");
