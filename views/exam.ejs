@@ -1,4 +1,4 @@
-module <!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
 <title>Admin</title><head> 
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -134,11 +134,11 @@ li a:hover {
   <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
+      <div class="modal-content" dir="rtl">
         <div class="modal-header">  
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left" >
+                <span aria-hidden="true">&times;  الغاء</span>
+              </button>
           </button>
         </div><form action="/admin/<%= onemodules._id %>/<%= onemodules.Module %>/addexam" method="post">
         <div class="modal-body">
@@ -146,25 +146,34 @@ li a:hover {
         
          
               <div class="input-container">
-                  <input class="form-control" style="margin-right: 5px;text-align: right" type="text"  placeholder="Exam" name="Exam">
-                  <input class="form-control" type="number" style="text-align: right" placeholder="NumberOfExam" name="NumberOfExam">
+                  <div class="form-group">
+                  <label>اسم الدورة </label>
+                  <input class="form-control" style="margin-right: 5px;text-align: right" type="text"  placeholder="الامتحان" name="Exam" required>
+                 </div>
+                 <div class="form-group"> 
+                
+                  <label>  عدد الاسئلة</label>
+                  <input class="form-control" type="number" style="text-align: right" placeholder=" عدد الاسئلة " name="NumberOfExam" required>
+                 </div>
+                  <label>طبعية الامتحان  </label>
                   <div class="radio">
-                    <label><input type="radio" name="Etat" value="true" >true</label>
-                  </div>
-                  <div class="radio">
-                    <label><input type="radio" name="Etat">false</label>
-                  </div>
-                  <label class="checkbox-inline"><input type="checkbox" value="true" name="IsOfficial">Option 1</label>
-                  <input class="form-control" type="Time" style="text-align: right" placeholder="Time" name="Time">
-                  <input class="form-control" type="Date" style="text-align: right" placeholder="Date" name="Date">
+                      <label><input type="radio" name="optradio" checked >&nbsp;  &nbsp; &nbsp;  انتحان رسمي </label>
+                    </div>
+                    <div class="radio">
+                      <label><input type="radio" name="optradio">&nbsp;  &nbsp; &nbsp; امتتحان غير رسمي</label>
+                    </div>
+                    <label> المدة الامتحان </label>
+                  <input class="form-control" type="number" style="text-align: right" placeholder="المدة بدقائق" name="Time" required>
+                  <label>التاريخ </label>
+                  <input class="form-control" type="Date" style="text-align: right" placeholder="التاريخ" name="Date" required>
               </div>
          
     
          
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal"> الغاء</button>
+          <button type="submit" class="btn btn-primary">انشاء دورة جديدة </button>
         </div> </form>
       </div>
     </div>
