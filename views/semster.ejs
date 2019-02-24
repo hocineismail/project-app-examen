@@ -176,6 +176,9 @@ li a:hover {
 <div style="overflow-x:auto;" class="container col-md-12 ">
   <table>
     <tr><th  style=" text-align: left">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ex<%= semster._id %>ampleModalCenter">
+        <i class="fas fa-cog"></i> 
+      </button>
       <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#e<%= semster._id %>xampleModalCenter">
         <i class="fa fa-trash" aria-hidden="true"></i>
       </button>
@@ -186,6 +189,35 @@ li a:hover {
      
     </tr>
    
+    
+    <!-- Modal -->
+    <div class="modal fade" id="ex<%= semster._id %>ampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" dir="rtl">
+          <div class="modal-header">  
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left" >
+                  <span aria-hidden="true">&times;  الغاء</span>
+                </button>
+            </button>
+          </div><form action="/admin/<%= semster.level %>/<%= semster._id %>/updatesemster" method="post">
+          <div class="modal-body">
+              <h3 id="exampleModalLabel" style="text-align:center">  تعديل على الفصل</h3>
+          
+           
+                <div class="input-container">
+                  <label>تعديل الفصل </label>
+                    <input class="form-control" style="margin-right: 5px;text-align: right" type="text"  placeholder="الفصل"  value="<%= semster.Semster%>" name="Semster">
+                    <label>  تعديل رقم الفصل </label>
+                    <input class="form-control" type="number" style="text-align: right" placeholder="رقم الفصل" value="<%= semster.NumberOfSemster%>" name="NumberOfSemster">
+                    </div>
+        </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
+            <button type="submit" class="btn btn-primary">حفظ</button>
+          </div> </form>
+        </div>
+      </div>
+    </div>
   
     
     <!-- Modal -->
