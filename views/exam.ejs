@@ -157,10 +157,10 @@ li a:hover {
                  </div>
                   <label>طبعية الامتحان  </label>
                   <div class="radio">
-                      <label><input type="radio" name="optradio" checked >&nbsp;  &nbsp; &nbsp;  انتحان رسمي </label>
+                      <label><input type="radio" name="IsOfficial" value="true" checked >&nbsp;  &nbsp; &nbsp;  انتحان رسمي </label>
                     </div>
                     <div class="radio">
-                      <label><input type="radio" name="optradio">&nbsp;  &nbsp; &nbsp; امتتحان غير رسمي</label>
+                      <label><input type="radio" name="IsOfficial" value="false">&nbsp;  &nbsp; &nbsp; امتتحان غير رسمي</label>
                     </div>
                     <label> المدة الامتحان </label>
                   <input class="form-control" type="number" style="text-align: right" placeholder="المدة بدقائق" name="Time" required>
@@ -197,12 +197,37 @@ li a:hover {
       </tr><% var i = 0%>
       <tr>  <% exams.forEach(function(exam) { %>
       <% i = i + 1%>
-       <td><a href="/admin/deleteexam/<%= exam._id %> ">Delete</a> </td>
+       <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#examp<%= exam._id %>leModalCenter">
+          Launch demo modal
+        </button></td>
         <td > <a href="/admin/exam/<%= exam._id  %>"> <%= exam.Exam %> </a></td>
         
             <td><%= i %></td>
            
       </tr>
+      <!-- Button trigger modal -->
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="examp<%= exam._id %>leModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <a href="/admin/<%= onemodules._id %>/deleteexam/<%= exam._id %>" class="btn btn-danger">حذف</a> 
+        </div>
+      </div>
+    </div>
+  </div>
       <% })%>
     </table></div>
     
