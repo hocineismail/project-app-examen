@@ -10,7 +10,6 @@ var passport = require('passport')
 
 mongoose.connect('mongodb://localhost:27017/projectexams')
 
-
 // routes
 var routes = require("./routes/routes");
 var user = require("./routes/user");
@@ -78,9 +77,6 @@ app.post("/login", passport.authenticate("login", {
     failureRedirect: "/login",
     failureFlash: true
    }));
-app.get("/",function(req,res){
-    res.render("login")
-})
 
 app.listen(3000, () => {
     console.log('Server listing on 3000');

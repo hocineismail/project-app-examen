@@ -10,7 +10,8 @@
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-
+  
+<link href="https://fonts.googleapis.com/css?family=Cairo" rel="stylesheet">
 <script
 src="https://code.jquery.com/jquery-3.2.1.min.js"
 integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -21,10 +22,11 @@ crossorigin="anonymous"></script>
 <style>
 </style>
 </head>
-<body>
+<body style="  font-family: 'Cairo', sans-serif;">
         <div class="mobile">
                 <div class="container" style="padding-top: 2%;width: 350px;">
-                <h2 style="text-align: center ">Register</h2><br><br>
+                <h2 style="text-align: center ">انشاء حساب جديد
+                  </h2><br><br>
               
                 <% errors.forEach(function(error) { %>
                 <div class="alert alert-danger" role="alert">
@@ -123,10 +125,10 @@ crossorigin="anonymous"></script>
         <i class="fa fa-key icon"></i>  
 </div>
  <div v-if="input">
-    <button type="submit" class="btn">Register</button>
+    <button type="submit" class="btn">انشاء حساب</button>
  </div>
  <div v-else>
-    <a href="#" class="btn btn-secondary btn-lg disabled" role="button" aria-disabled="true">Link</a>
+    <a href="#" class="btn btn-secondary btn-lg disabled" role="button" aria-disabled="true">انشاء حساب</a>
  
 </div> 
 
