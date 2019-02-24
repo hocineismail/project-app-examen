@@ -15,9 +15,13 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   
+<link href="https://fonts.googleapis.com/css?family=Cairo" rel="stylesheet">
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
-body {font-family: Arial, Helvetica, sans-serif;margin-top: 15%;
+body {
+  font-size: 15px;
+  font-family: 'Cairo', sans-serif;
+  ;margin-top: 15%;
 
   background-attachment: fixed;
   background-position: center;
@@ -61,15 +65,31 @@ position: relative;
   background-color: dodgerblue;
   color: white;
   padding: 15px 20px;
+  font-size: 17px;
   border: none;
   cursor: pointer;
   width: 100%;
   opacity: 0.9;
 }
+.btn1 {
+  background-color: rgb(72, 199, 110);
+  color: white;
+  padding: 15px 20px;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+
+}
 
 .btn:hover {
   opacity: 1;
   background-color: rgb(82, 167, 252);
+}
+.btn1:hover {
+  opacity: 1;
+  background-color: rgb(164, 248, 185);
 }
 
 </style>
@@ -79,9 +99,9 @@ position: relative;
   <div class="row">
    
 
-    <div class="col-md-4">
+    <div class="col-md-5">
         <div class="mobile" style="background-color: #fff;padding-top: 20%;padding-bottom: 20% ">
-            <div class="container" style="padding-top: 2%;width: 70%;">
+            <div class="container" style="padding-top: 2%;width: 80%;">
           
           
             <% errors.forEach(function(error) { %>
@@ -98,37 +118,41 @@ position: relative;
             <div class="input-container"  >
                 <i class="fa fa-envelope icon"></i>
            <input name="username" type="text" class="input-field"
-            placeholder="Username" required autofocus> 
+            placeholder="البريد " required autofocus> 
           </div>
               
           <div class="input-container" >
               <i class="fa fa-key icon"></i>
            <input name="password" type="password" class="input-field"
-            placeholder="Password" required> 
+            placeholder="كلمة المرور" required> 
             </div>
-           <input type="submit" value="Log in" class="btn btn-default">
+           <input type="submit" value="تسجيل الدخول" class="btn btn-default">
           </form>
           
-          <a href="/forgot" >forgot password
+          <a href="/forgot" >نسيت كلمة المرور
           </a>
-          
+          <h1 style="text-align: center">او</h1><br>
+          <div class="input-container" > 
+          <a href="/signup" class="btn1 btn-default" style="text-align: center"> انشاء حساب جديد
+         </a></div>
           </div>
           </div>
             
            </div>
 
 
-           <div class="col-md-8" style="margin-bottom: 5%">
+           <div class="col-md-7" style="margin-bottom: 5%">
        <% pub.forEach(function(pub) { %>
        
               <div class="card text-white bg-success ">
-                  <div class="card-header" style="text-align:right"> <h1 >Success card title</h1></div>
+                  <div class="card-header" style="text-align:right"> <h1 >اعلان</h1></div>
                   <div class="card-body">
                   
                     <p style="text-align:right ; font-size: 18px"><%= pub.Pub %></p>
                   </div>
                 </div>
-                
+                  
+            
           </div>
           <% }) %>
   </div>
