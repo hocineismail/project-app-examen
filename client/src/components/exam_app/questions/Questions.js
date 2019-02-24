@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Swal from 'sweetalert2'
+import { Redirect } from 'react-router-dom'
 
 import CountDown from 'react-countdown-now'
 
@@ -10,7 +11,10 @@ import QuestionCounter from './questionCounter/QuestionCounter'
 import Question from './question/Question'
 import Confirmation from './Confirmation/Confirmation'
 
-import { postExamGrade } from '../../../actions/userActions'
+import {
+  postExamGrade,
+  deleteGradeInformation
+} from '../../../actions/userActions'
 
 class Questions extends Component {
   constructor(props) {
@@ -30,12 +34,14 @@ class Questions extends Component {
       }),
       time: parseInt(window.localStorage.getItem('time'))
         ? parseInt(window.localStorage.getItem('time'))
-        : Date.now() + props.time * 60 * 1000
+        : Date.now() + props.time * 60 * 1000,
+      redirection: false
     }
 
     this.onNextButtonClick = this.onNextButtonClick.bind(this)
     this.onPreviousButtonClick = this.onPreviousButtonClick.bind(this)
     this.onExamFinished = this.onExamFinished.bind(this)
+    this.onCountDownCompleted = this.onCountDownCompleted.bind(this)
   }
 
   countDownRenderer({ minutes, seconds }) {
@@ -163,10 +169,21 @@ class Questions extends Component {
     return response
   }
 
+  onCountDownCompleted() {
+    this.onExamFinished()
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.postedGrade) {
-      alert(nextProps.grade)
-      console.log(nextProps.correctResponses)
+      console.log('POSTED GRADE')
+      this.setState({
+        redirection: true
+      })
+      window.localStorage.removeItem('0')
+      window.localStorage.removeItem('1')
+      window.localStorage.removeItem('2')
+      window.localStorage.removeItem('3')
+      window.localStorage.removeItem('time')
     }
   }
 
@@ -185,9 +202,13 @@ class Questions extends Component {
       this.state.questions.length
     )
 
-    return (
+    return !this.state.redirection ? (
       <div className="exam-questions">
-        <CountDown date={this.state.time} renderer={this.countDownRenderer} />
+        <CountDown
+          date={this.state.time}
+          renderer={this.countDownRenderer}
+          isCompleted={this.onCountDownCompleted()}
+        />
         <QuestionCounter
           totalQuestions={this.state.questions.length}
           questionNumber={this.state.index + 1}
@@ -195,6 +216,8 @@ class Questions extends Component {
         {questionSection}
         {submission}
       </div>
+    ) : (
+      <Redirect to="/exampage/result" />
     )
   }
 }
@@ -207,7 +230,8 @@ const mapStateToProps = (state, props) => {
 }
 
 const mapActionsToProps = {
-  postExamGrade
+  postExamGrade,
+  deleteGradeInformation
 }
 
 export default connect(

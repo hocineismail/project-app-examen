@@ -33,7 +33,7 @@ app.get('/:id', (req, res) => {
       .populate('Level')
       .populate('semster')
       .populate('Phase')
-      .exec((err, student) => {
+      .exec(async (err, student) => {
         if (err) {
           return errorMessage(res, err, 400)
         }
@@ -49,10 +49,31 @@ app.get('/:id', (req, res) => {
           'Level',
           'semster'
         ])
-        let studentData = _.pick(student, ['Phase', 'Level', 'semster'])
-        res.json({
-          ...userData,
-          ...studentData
+        let studentData = _.pick(student, [
+          'Phase',
+          'Level',
+          'semster',
+          'exams'
+        ])
+        let exams = []
+        Promise.all(
+          studentData.exams.map(async exam => {
+            console.log(exam)
+            exName = await Exam.findById(exam.Exam).select('Exam')
+            console.log(exName)
+            exams.push({
+              Exam: exam._id,
+              Grade: exam.Grade,
+              examName: exName.Exam
+            })
+          })
+        ).then(completed => {
+          studentData.exams = exams
+          console.log(studentData.exams)
+          res.json({
+            ...userData,
+            ...studentData
+          })
         })
       })
   })
@@ -297,7 +318,6 @@ app.post('/exam/getresult/:id', async (req, res) => {
           },
           (err, questions) => {
             if (err) {
-              
               return returnErrorMessage(res, err, 400)
             }
             Promise.all(

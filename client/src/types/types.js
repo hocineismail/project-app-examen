@@ -12,7 +12,8 @@ const types = {
     fetchExamQuestions: 'fetchExamQuestions',
     fetchExamQuestionsError: 'fetchExamQuestionsError',
     postExamGrade : 'postExamGrade',
-    postExamGradeError : 'postExamGradeError'
+    postExamGradeError : 'postExamGradeError',
+    deleteGradeInformation: 'deleteGradeInformation'
 }
 
 export default types

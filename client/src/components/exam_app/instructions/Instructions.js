@@ -34,7 +34,7 @@ const Instructions = props => {
         غريمه السيء بل ومن. انذار استمرار حتى لم, كما وجزر سقطت أم, عرض أم
         إستعمل الشتاء المجتمع.
       </p>
-      <Link className='btn btn-primary' to={'/exampage/questions'+props.id}>التالي</Link> 
+      <Link className='btn btn-primary' to={'/exampage/questions?examId='+props.id}>التالي</Link> 
     </div>
   )
 }

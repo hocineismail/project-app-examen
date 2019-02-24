@@ -174,3 +174,9 @@ export function postExamGrade(id, body) {
       })
   }
 }
+
+export function deleteGradeInformation(){
+  return {
+    type: types.deleteGradeInformation
+  }
+}

@@ -83,6 +83,13 @@ export default function userReducer(state = initialState, action) {
         grade: action.payload.grade,
         correctResponses: action.payload.correctResponses
       }
+    case types.deleteGradeInformation:
+      return {
+        ...state,
+        postedGrade: false,
+        grade: null,
+        correctResponses: null
+      }
     default:
       return state
   }

@@ -8,6 +8,7 @@ import './ExamApp.css'
 import Header from './header/Header'
 import Instructions from './instructions/Instructions'
 import Questions from './questions/Questions'
+import Result from './result/Result'
 
 import { getExamQuestions } from '../../actions/userActions'
 
@@ -52,6 +53,8 @@ class ExamApp extends Component {
                 />
               )}
             />
+            <Route path="/exampage/result" exact render={() => <Result />} />
+            )} />
           </Switch>
         </div>
       </div>
