@@ -77,9 +77,6 @@ app.post("/login", passport.authenticate("login", {
     failureRedirect: "/login",
     failureFlash: true
    }));
-app.get("/",function(req,res){
-    res.render("login")
-})
 
 app.listen(3000, () => {
     console.log('Server listing on 3000');

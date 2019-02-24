@@ -71,7 +71,7 @@
  <!-- model for public -->
   <!-- Button trigger modal -->
   <button type="button" class="btn btn-default" data-toggle="modal" data-target="#pubexampleModalCenter">
-     اضافة اول اعلان في الصفحة الرئسية
+      اعلان في الصفحة الرئسية
     </button>
     
     <!-- Modal -->
@@ -84,7 +84,18 @@
               <span aria-hidden="true">&times;  الغاء</span>
             </button>
           </div>
-          
+          <div class="modal-body">
+         <% pub.forEach(function(pub) { %>
+          <div class="alert alert-success" role="alert">
+          <p> <a href="/pub/delete/<%= pub._id%>">حذف الاعلان المشور</a></p>
+          <p><%= pub.Pub %></p>
+        </div>
+        
+          <div class="alert alert-warning" role="alert">
+           عند نشر اعلان اخر سيتم حذف الاعلان السابق تلقائيا
+                </div>
+                <%  }) %>
+          </div>
           <form action="/addpub" method="post">
           <div class="modal-body">
           

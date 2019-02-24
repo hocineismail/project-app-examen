@@ -4,6 +4,7 @@ var async =  require("async");
 var nodemailer = require('nodemailer');
 var User = require("../models/user")
 var Phase = require("../models/phase");
+var Pub = require("../models/pub");
  var Semster = require("../models/semster");
  var Level = require("../models/level");
  var Module = require("../models/module");
@@ -24,10 +25,18 @@ user.use(function(req, res, next) {
 	 
 	
 
-
-user.get("/login",function(req,res){
-    res.render("login")
+   user.get("/",function(req,res){
+   
+	Pub.find({},function(err, pub){
+	if (err){console.log("this is error ")}
+	if (pub){ 
+		console.log(" makan walo ",pub)
+		res.render("login",{pub: pub})}
+	})
+   
 })
+
+
 user.get("/forgot",function(req,res){
     res.render("forgot")
 })
@@ -263,7 +272,8 @@ user.post('/forgot', function(req, res, next) {
     var levels;
     var semsters;
     var modules;
-    var admins;
+	var admins;
+	var pubs;
 		var teachers;
 		var students;
 
@@ -304,6 +314,13 @@ user.post('/forgot', function(req, res, next) {
 					students = student;
 					callback(null,students);
 			})
+		},function(callback){
+			Pub.find({},function(err,pub){
+					if(err) return callback(err);
+					pubs = pub;
+				
+					callback(null,pubs);
+			})	
 	},function(callback){
         Module.find({},function(err,module){
             if(err) return callback(err);
@@ -312,9 +329,9 @@ user.post('/forgot', function(req, res, next) {
         })
     }
     ],function(err){
-			
+		console.log(pubs)
   
-        res.render("admin",{CountStudents: students, CountTeachers: teachers ,CountAdmins: admins ,phases: phases, levels: levels,semsters: semsters , modules: modules});
+        res.render("admin",{pub: pubs,CountStudents: students, CountTeachers: teachers ,CountAdmins: admins ,phases: phases, levels: levels,semsters: semsters , modules: modules});
 			})
 		
 		} else if (req.user.Role === "Teacher")  {
