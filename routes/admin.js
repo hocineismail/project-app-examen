@@ -259,16 +259,15 @@ admin.post("/admin/addphase",ensureAuthenticated, function(req,res,next){
                   console.log("-----")
                   console.log(req.body.Date)
                   console.log("-----")
-                  console.log(req.body.Time)
+                  console.log(req.body.IsOfficial)
                   console.log("-----")
                   var  exam = req.body.Exam;
                   var  numberOfExam = req.body.NumberOfExam;
-                  var etat =  req.body.Etat;
                   var isOfficial = req.body.IsOfficial;
                   var time = req.body.Time;
                   var date = req.body.Date;
                   var modulee = req.params._id;
-                  var question = []
+                 
                   console.log(req.params._id)
               
                    var newExam = new Exam({
@@ -277,9 +276,9 @@ admin.post("/admin/addphase",ensureAuthenticated, function(req,res,next){
                    IsOfficial: isOfficial,
                    Date: date,
                    Time: time,
-                   Etat: etat,
+                   Etat: false,
                    module: modulee,
-                   question: question
+                  
                  
                   });
                   newExam.save(function(err,done){
@@ -287,26 +286,21 @@ admin.post("/admin/addphase",ensureAuthenticated, function(req,res,next){
                        
                         console.log("error")
                       req.flash("error", "لم يتم ادخال كل البيانات");
+
                       
-                  return res.redirect("/admin/");
+                  return  res.redirect("/admin/exam/" + req.params._id)
                     } else {
                       console.log(done)
                       console.log("pas d errror")
                   req.flash("info", "تم التسجيل  ");
-                  req.flash("error", "لم يتم ادخال كل البيانات");
-                  Module.findOne({_id: req.params._id},function(err,onemodule){
-                    if (!onemodule) {return res.redirect("/admin")}
-                   console.log(onemodule)
-                    Exam.find({module: onemodule._id},function(err,exam){
-                      console.log(exam)
-                       return  res.render("exam",{exams: exam,onemodules: onemodule}) 
-                      
-                    
-                      })			})
+                  res.redirect("/admin/exam/" + req.params._id)
                     }
                   });
               
                    });   
+
+
+
                    function ensureAuthenticated(req, res, next) {
                     if (req.isAuthenticated()) {
                     next();

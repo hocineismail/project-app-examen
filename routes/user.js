@@ -513,8 +513,18 @@ user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, nex
 					
 				 
 				})});
-
-
+				
+				user.get("/admin/:module/deleteexam/:id",ensureAuthenticated,   function(req, res, next) {
+ 
+					Exam.findOneAndRemove( { _id: req.params.id } , function(err, exam) {
+							if (err) { return next(err); }
+							if (!exam) { return next(404); }
+					 
+							req.flash("error", "تم الحدف");
+							res.redirect("/admin/exam/" + req.params.module)
+							
+						 
+						})});
 
 				user.post("/admin/updatesemster/:_id",ensureAuthenticated,  function(req, res, next) {
  
