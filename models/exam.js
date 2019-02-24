@@ -3,7 +3,7 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema
 var examSchema = Schema({
  Exam: { type: String, required: true },
- Etat:  { type: Boolean, required: true  },
+ Etat:  { type: Boolean },
  NumberOfExam: { type: Number, required: true },
  IsOfficial: { type: Boolean, required: true },
  Time: {type: Number, required: true},
