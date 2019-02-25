@@ -28,9 +28,9 @@ admin.get("/teacherValidation/:_id",ensureAuthenticated, function(req,res){
     console.log(teacher)
     if(err) {return res.redirect("/admin")}
     if (teacher) {
-      teacher[0].Actif = true;
+      teacher.Actif = true;
    
-      teacher[0].save(function (err, update) {
+      teacher.save(function (err, update) {
         if (err){ return res.redirect("/list/demande")}
         if (update) { return res.redirect("/list/demande")}
     });
