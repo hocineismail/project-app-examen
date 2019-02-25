@@ -85,9 +85,9 @@ app.post('/:id', (req, res) => {
     'Sexe',
     'Address',
     'Phone',
-    'email'
+    'password'
   ])
-
+  console.log(bodyUser)
   let bodyStudent = _.pick(req.body, ['Phase', 'Level', 'semster'])
 
   updateUser(id, bodyUser)
@@ -136,6 +136,12 @@ app.post('/:id', (req, res) => {
 })
 
 function updateUser(id, data) {
+  if (data.password) {
+    User.findById(id, (err, user) => {
+      user.password = data.password
+      user.save()
+    })
+  }
   return new Promise((resolve, reject) => {
     User.update({ _id: id }, { $set: data }, (err, userQueryResult) => {
       if (err) {
@@ -205,12 +211,12 @@ app.get('/exams/:id', (req, res) => {
             return returnErrorMessage(res, err, 400)
           }
           try {
-            result = Promise.all(getAllExamsOfStudent(modules, student.exams)).then(
-              completed => {
-                examsTable = completed
-                return res.json(examsTable)
-              }
-            )
+            result = Promise.all(
+              getAllExamsOfStudent(modules, student.exams)
+            ).then(completed => {
+              examsTable = completed
+              return res.json(examsTable)
+            })
           } catch (err) {
             throw err
           }
@@ -347,7 +353,11 @@ const getAllExamsOfStudent = (modules, previousExams) => {
   })
   return modules.map(async module => ({
     Module: module.Module,
-    Exams: await Exam.find({ module: module._id, Etat: true, _id : {$nin : previousExamsId} })
+    Exams: await Exam.find({
+      module: module._id,
+      Etat: true,
+      _id: { $nin: previousExamsId }
+    })
   }))
 }
 

@@ -180,7 +180,6 @@ class Questions extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.postedGrade) {
-      console.log('POSTED GRADE')
       this.setState({
         redirection: true
       })

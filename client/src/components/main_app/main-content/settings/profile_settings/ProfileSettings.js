@@ -35,10 +35,13 @@ class ProfileSettings extends Component {
     } else if (this.props.userData.Phase.Phase === 'الثانوية') {
       level = ['الفصل الاول', 'الفصل الثاني', 'الفصل الثالث']
     }
-    console.log(day + '-' + month + '-' + year)
     return (
       <div className="profile-settings card">
-        <img src={this.props.userData.Sexe === 'ذكر' ? ManAvatar : WomanAvatar} alt="Student Avatar" className="avatar" />
+        <img
+          src={this.props.userData.Sexe === 'ذكر' ? ManAvatar : WomanAvatar}
+          alt="Student Avatar"
+          className="avatar"
+        />
         <InformationsInput
           prop="الاسم"
           propValue={this.props.userData.Firstname}
@@ -65,26 +68,27 @@ class ProfileSettings extends Component {
           propValue={this.props.userData.Address}
           type="text"
           editable={true}
-          id='Address'
+          id="Address"
         />
         <InformationsInput
           prop="تاريخ الميلاد"
           propValue={year + '-' + month + '-' + day}
           type="date"
           editable={true}
-          id='Birthday'
+          id="Birthday"
         />
         <InformationsInput
           prop="البريد الالكتروني"
           propValue={this.props.userData.email}
           type="email"
           editable={false}
-          id='email'
+          id="email"
         />
         <InformationsInput
           prop="كلمة السر"
-          propValue="dont even try babe!"
+          propValue={''}
           type="password"
+          id="Password"
           editable={true}
         />
         <InformationsInput
@@ -93,14 +97,14 @@ class ProfileSettings extends Component {
           type="choicebox"
           editable={true}
           choices={['ذكر', 'انثى']}
-          id='Sexe'
+          id="Sexe"
         />
         <InformationsInput
           prop="المرحلة"
           propValue={this.props.userData.Phase.Phase}
           type="choicebox"
           editable={true}
-          id='Phase'
+          id="Phase"
           choices={['الابتدائية', 'الاكمالية', 'الثانوية']}
         />
         <InformationsInput
@@ -108,14 +112,14 @@ class ProfileSettings extends Component {
           propValue={this.props.userData.Level.Level}
           type="choicebox"
           editable={true}
-          id='Level'
+          id="Level"
           choices={level}
         />
         <InformationsInput
           prop="الثلاثي"
           propValue={this.props.userData.semster.Semster}
           type="choicebox"
-          id='semster'
+          id="semster"
           editable={true}
           choices={Semster}
         />

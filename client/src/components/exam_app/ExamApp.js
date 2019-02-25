@@ -26,6 +26,7 @@ class ExamApp extends Component {
     this.props.getExamQuestions(this.state.id)
   }
 
+  
   render() {
     return this.props.onExamInformation ? (
       <div className="exam-app">
