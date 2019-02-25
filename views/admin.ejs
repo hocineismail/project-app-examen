@@ -181,16 +181,23 @@
             </td>
             <div class="modal fade" id="exampleModalCenterdelete<%= phase._id%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
-                  <div class="modal-content"  dir="rtl">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      ...
-                    </div>
+                    <div class="modal-content" dir="rtl">
+                        <div class="modal-header">
+                          
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left" >
+                            <span aria-hidden="true">&times;  الغاء</span>
+                          </button>
+                      
+                        </div>
+                        
+                        <div class="modal-body">
+                            <i class="fa fa-trash" aria-hidden="true" style="color: red; font-size: 30px;float: left"></i>
+                            <p> 
+                         هل انت متاكد من حذف المرحلة 
+                        <span style="color: red">" <%= phase.Phase %> "</span> 
+                          نهائيا
+                        </p>
+                        </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
                       <a href="/admin/deletephase/<%= phase._id%>" class="btn  btn-danger"> حذف</a>
@@ -225,16 +232,23 @@
               <div class="modal fade" id="example<%= level._id %>ModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                   <div class="modal-content"  dir="rtl">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      ...
-                    </div>
-                    <div class="modal-footer">
+                      <div class="modal-header">
+                          
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left" >
+                              <span aria-hidden="true">&times;  الغاء</span>
+                            </button>
+                        
+                          </div>
+                          
+                          <div class="modal-body">
+                              <i class="fa fa-trash" aria-hidden="true" style="color: red; font-size: 30px;float: left"></i>
+                              <p> 
+                           هل انت متاكد من حذف الصف 
+                          <span style="color: red">" <%= level.Level %> "</span> 
+                            نهائيا
+                          </p>
+                          </div>
+                      <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
                       <a href="/admin/deletelevel/<%= level._id%>" class="btn btn-danger" >  حذف</a> 
                     </div>
@@ -330,9 +344,9 @@
                        
                             <div class="input-container">
                                 <label>تعديل المرحلة</label>
-                                <input class="form-control" style="margin-right: 5px;text-align: right" type="text"  placeholder="phase" name="Phase">
+                                <input class="form-control" style="margin-right: 5px;text-align: right" type="text"  value="<%= phase.Phase %>" name="Phase">
                                 <label>تعديل رقم المرحلة</label>
-                                <input class="form-control" type="number" style="text-align: right" placeholder="NumberOfPhase" name="NumberOfPhase">
+                                <input class="form-control" type="number" style="text-align: right" value="<%= phase.NumberOfPhase %>" name="NumberOfPhase">
                                 
                             </div>
                        

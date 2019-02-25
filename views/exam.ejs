@@ -71,18 +71,21 @@ li a:hover {
 </style>
 <body>
 
-  <div class="w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left" style="color:#fff;padding-top:3.7%;font-size: 18px;width:200px;background-color: rgb(73, 73, 73)" id="mySidebar">
-    <button   class="w3-bar-item w3-button w3-large w3-hide-large" onclick="w3_close()">Close &times;</button>
-    <h2 style="color: cornsilk;text-align: center">الدورات</h2>
-   
-     
-      <a href="/cycle/" style="border-top: 1px solid #fff" class="w3-bar-item w3-button" > hello </a>
-    
-   
-   
-   
-   
-  </div>
+  <body style="background-color:rgb(243, 242, 242)">
+
+    <div class="w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left" style="color:#fff;padding-top:3.7%;font-size: 18px;width:200px;background-color: rgb(73, 73, 73)" id="mySidebar">
+      <button   class="w3-bar-item w3-button w3-large w3-hide-large" onclick="w3_close()">الغاء &times;</button>
+      <h2 style="color: cornsilk;padding-right: 10%; text-align: right;" >القوائم</h2>
+   <a href="/list/admins" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > قائمة المديرين </a>
+   <a href="/list/teachers" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > قائمة المعلمين </a>
+   <a href="/list/students" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > قائمة التلاميذ </a>
+   <h2 style="color: cornsilk;padding-right: 10%; text-align: right;">الاحصاء</h2>
+   <a href="/static/" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > صفحة الاحصاء </a>
+   <h2 style="color: cornsilk;padding-right: 10%; text-align: right;">الطلبات</h2>
+   <a href="/list/demande" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > صفحة الطلبات </a>
+   <h2 style="color: cornsilk;padding-right: 10%; text-align: right;">الناجحين</h2>
+   <a href="/list/seccus" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > قاوائم الناجحين </a>
+   </div>
   
   <div class="w3-main" style="margin-left:200px">
   <div  style="color:#fff;background-color: rgb(73, 73, 73)">
@@ -90,11 +93,11 @@ li a:hover {
     <div class="w3-container">
       <ul>
        
-        <li><a class="activee" href="/"><i class="fas fa-house-damage"></i>الصقحة الرئسية</a></li>
+        <li><a class="activee" href="/"><i class="fas fa-house-damage"></i> </a></li>
 
-        <li><a href="/admin"><i class="far fa-edit"></i>اعدادات</a></li>
+        <li><a href="/admin"><i class="far fa-edit"></i></a></li>
         <li class="nav-item active "> <% if (currentUser) { %>
-          <a class="nav-link" href="/Logout"><i class="fas fa-sign-out-alt icon"></i>تسجيل الخروج   </a>  <% }  %>  </li>
+          <a class="nav-link" href="/Logout"><i class="fas fa-sign-out-alt icon"></i>    </a>  <% }  %>  </li>
         
       
       </ul>
@@ -106,8 +109,7 @@ li a:hover {
 
 <div class="container" style="padding-top: 2%;width: 50%;">
   <h2 style="text-align: center ">
-  EXAm
-    
+  اعدادات الامتحانات و الدورات
      
 </h2><br><br>
   <% errors.forEach(function(error) { %>
@@ -128,7 +130,7 @@ li a:hover {
 <div  >
    <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-   Add module
+   اضافة امتحان جديد 
   </button>
   
   <!-- Modal -->
@@ -143,8 +145,8 @@ li a:hover {
         </div><form action="/admin/<%= onemodules._id %>/<%= onemodules.Module %>/addexam" method="post">
         <div class="modal-body">
           
+        <h3  style="text-align: center">   اضافة امتحان جديد    </h3>
         
-         
               <div class="input-container">
                   <div class="form-group">
                   <label>اسم الدورة </label>
@@ -162,6 +164,9 @@ li a:hover {
                     <div class="radio">
                       <label><input type="radio" name="IsOfficial" value="false">&nbsp;  &nbsp; &nbsp; امتتحان غير رسمي</label>
                     </div>
+                    <div class="alert alert-warning" role="alert">
+                     ملاحظة ... سيتم تسجيل اسماء الناجحين في الامتحان الرسمي لتسليم الجوائز
+                           </div>
                     <label> المدة الامتحان </label>
                   <input class="form-control" type="number" style="text-align: right" placeholder="المدة بدقائق" name="Time" required>
                   <label>التاريخ </label>
@@ -187,19 +192,27 @@ li a:hover {
 
 
 
-<div style="overflow-x:auto;" class="container">
+<div style="overflow-x:auto;" >
     <table>
-      <tr><th>Setting</th>
-        <th>exam</th>
+      <tr>
+        <th style="text-align: left">اعدادات</th>
+        <th>الامتحان</th>
       
        
         <th >#</th>
       </tr><% var i = 0%>
       <tr>  <% exams.forEach(function(exam) { %>
       <% i = i + 1%>
-       <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#examp<%= exam._id %>leModalCenter">
-          Launch demo modal
-        </button></td>
+       <td style="text-align: left"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#examp<%= exam._id %>leModalCenter">
+          <i class="fa fa-trash" aria-hidden="true"></i>
+       
+        </button>
+        <% if (exam.Etat === true ){ %>
+          <a href="/exam/update/etat/<%= exam._id %>" class="btn btn-success"> true </a>
+          <% } else  { %>
+      <a href="/exam/update/etat/<%= exam._id %>" class="btn btn-danger"> false </a>
+    <% } %>
+    </td>
         <td > <a href="/admin/exam/<%= exam._id  %>"> <%= exam.Exam %> </a></td>
         
             <td><%= i %></td>
@@ -211,15 +224,22 @@ li a:hover {
   <!-- Modal -->
   <div class="modal fade" id="examp<%= exam._id %>leModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
+      <div class="modal-content" dir="rtl">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+          
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left" >
+            <span aria-hidden="true">&times;  الغاء</span>
           </button>
+      
         </div>
+        
         <div class="modal-body">
-          ...
+            <i class="fa fa-trash" aria-hidden="true" style="color: red; font-size: 30px;float: left"></i>
+            <p> 
+         هل انت متاكد من حذف امتحان 
+        <span style="color: red">" <%= exam.Exam %> "</span> 
+          نهائيا
+        </p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
