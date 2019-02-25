@@ -198,131 +198,155 @@ li a:hover {
   </div>
 
 
+   
 
-<div style="overflow-x:auto;" >
-    <table>
-      <tr>
-        <th style="text-align: left">اعدادات</th>
-        <th>الامتحان</th>
-      
-       
-        <th >#</th>
-      </tr><% var i = 0%>
-      <tr>  <% exams.forEach(function(exam) { %>
-      <% i = i + 1%>
-       <td style="text-align: left">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModa<%= exam._id %>lCenter">
-          <i class="fas fa-cog"></i> 
-        </button>
-        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#examp<%= exam._id %>leModalCenter">
-          <i class="fa fa-trash" aria-hidden="true"></i>
-       
-        </button>
-        <!-- Button trigger modal -->
-
-
-        <% if (exam.Etat === true ){ %>
-          <a href="/exam/update/etat/<%= exam._id %>" class="btn btn-success"> مفعل </a>
-          <% } else  { %>
-      <a href="/exam/update/etat/<%= exam._id %>" class="btn btn-danger"> مغلق </a>
-    <% } %>
-    </td>
-        <td > <a href="/admin/exam/<%= exam._id  %>"> <%= exam.Exam %> </a></td>
-        
-            <td><%= i %></td>
-           
-      </tr>
-      <!-- Button trigger modal -->
-
-<!-- Modal update -->
-<div class="modal fade" id="exampleModa<%= exam._id %>lCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content" dir="rtl">
-      <div class="modal-header">  
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left" >
-              <span aria-hidden="true">&times;  الغاء</span>
-            </button>
-        </button>
-      </div><form action="/admin/exam/<%= exam._id %>/update" method="post">
-      <div class="modal-body">
-        
-      <h3  style="text-align: center">   تعديل الامتحان     </h3>
-      <div class="alert alert-danger" role="alert">
-       هام جدا...
-       <br>
-       قد يؤدي تغيير بيانات للامتحانات القديمة الى حدوث مشاكل 
-       <br>
-       في حالة وجود مشاكل اتصل بمطور مواقع
-              </div>
-            <div class="input-container">
-                <div class="form-group">
-                <label>اسم الدورة </label>
-                <input class="form-control" style="margin-right: 5px;text-align: right" type="text"  placeholder="الامتحان" name="Exam" value="<%= exam.Exam%>"required>
-               </div>
-               <div class="form-group"> 
-              
-                <label>  عدد الاسئلة</label>
-                <input class="form-control" type="number" style="text-align: right" placeholder=" عدد الاسئلة " name="NumberOfExam" value="<%= exam.NumberOfExam%>"required>
-               </div>
-                <label>طبعية الامتحان  </label>
-                <div class="radio">
-                    <label><input type="radio" name="IsOfficial" value="true" checked >&nbsp;  &nbsp; &nbsp;  انتحان رسمي </label>
-                  </div>
-                  <div class="radio">
-                    <label><input type="radio" name="IsOfficial" value="false">&nbsp;  &nbsp; &nbsp; امتتحان غير رسمي</label>
-                  </div>
-                  <div class="alert alert-warning" role="alert">
-                   ملاحظة ... سيتم تسجيل اسماء الناجحين في الامتحان الرسمي لتسليم الجوائز
-                         </div>
-                  <label> مدة الامتحان </label>
-                <input class="form-control" type="number" style="text-align: right" placeholder="المدة بدقائق" name="Time" value="<%= exam.Time %>" required>
-              
-            </div>
-       
-  
-       
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal"> الغاء</button>
-        <button type="submit" class="btn btn-primary">  تحديث </button>
-      </div> </form>
-    </div>
-  </div>
-</div>
-  
-  <!-- Modal delete  -->
-  <div class="modal fade" id="examp<%= exam._id %>leModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content" dir="rtl">
-        <div class="modal-header">
-          
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left" >
-            <span aria-hidden="true">&times;  الغاء</span>
-          </button>
-      
-        </div>
-        
-        <div class="modal-body">
-            <i class="fa fa-trash" aria-hidden="true" style="color: red; font-size: 30px;float: left"></i>
-            <p> 
-         هل انت متاكد من حذف امتحان 
-        <span style="color: red">" <%= exam.Exam %> "</span> 
-          نهائيا
-        </p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
-          <a href="/admin/<%= onemodules._id %>/deleteexam/<%= exam._id %>" class="btn btn-danger">حذف</a> 
-        </div>
-      </div>
-    </div>
-  </div>
-      <% })%>
-    </table></div>
-    
 <!-- Button trigger modal -->
 
+<div class="table-responsive" dir="rtl" > 
+    <% var i = 0%>
+    <table class="table" >
+      <thead>
+          <tr>
+             <th >#</th>
+            <th>الامتحان</th>
+            <th>عدد الاسئلة</th>
+            <th>امتحان</th>
+              <th style="text-align: left">اعدادات</th>
+           </tr>
+          <tr>  <% exams.forEach(function(exam) { %>
+            <% i = i + 1%>
+          
+           
+          <td><%= i %></td>
+          <td > <a href="/admin/exam/<%= exam._id  %>"> <%= exam.Exam %> </a></td>
+          <td><%= exam.NumberOfExam %></td>
+          <% if  (exam.Etat === true ) {%>
+          <td>رسمي</td>
+          <% } else {%>
+            <td>ليس رسمي </td>
+            <% } %>
+       
+            <td style="text-align: left">
 
+                <% if (exam.Etat === true ){ %>
+                  <a href="/exam/update/<%= onemodules._id %>/etat/<%= exam._id %>" class="btn btn-success"> مفعل </a>
+                  <% } else  { %>
+              <a href="/exam/update/<%= onemodules._id %>/etat/<%= exam._id %>" class="btn btn-danger"> مغلق </a>
+            <% } %>
+            
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#examp<%= exam._id %>leModalCenter">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                 
+                  </button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModa<%= exam._id %>lCenter">
+                  <i class="fas fa-cog"></i> 
+                </button>
+               
+                <!-- Button trigger modal -->
+        
+        
+              
+                  
+              </td>
+            </tr>
+            <!-- Button trigger modal -->
+      
+      <!-- Modal update -->
+      <div class="modal fade" id="exampleModa<%= exam._id %>lCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content" dir="rtl">
+            <div class="modal-header">  
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left" >
+                    <span aria-hidden="true">&times;  الغاء</span>
+                  </button>
+              </button>
+            </div><form action="/admin/update/<%= onemodules._id %>/exam/<%= exam._id %>" method="post">
+            <div class="modal-body">
+              
+            <h3  style="text-align: center">   تعديل الامتحان     </h3>
+            <div class="alert alert-danger" role="alert">
+             هام جدا...
+             <br>
+             قد يؤدي تغيير بيانات للامتحانات القديمة الى حدوث مشاكل 
+             <br>
+             في حالة وجود مشاكل اتصل بمطور مواقع
+                    </div>
+                  <div class="input-container">
+                      <div class="form-group">
+                      <label>اسم الدورة </label>
+                      <input class="form-control" style="margin-right: 5px;text-align: right" type="text"  placeholder="الامتحان" name="Exam" value="<%= exam.Exam%>"required>
+                     </div>
+                     <div class="form-group"> 
+                    
+                      <label>  عدد الاسئلة</label>
+                      <input class="form-control" type="number" style="text-align: right" placeholder=" عدد الاسئلة " name="NumberOfExam" value="<%= exam.NumberOfExam%>"required>
+                     </div>
+                      <label>طبعية الامتحان  </label>
+                      <div class="radio">
+                          <label><input type="radio" name="IsOfficial" value="true" checked >&nbsp;  &nbsp; &nbsp;  انتحان رسمي </label>
+                        </div>
+                        <div class="radio">
+                          <label><input type="radio" name="IsOfficial" value="false">&nbsp;  &nbsp; &nbsp; امتتحان غير رسمي</label>
+                        </div>
+                        <div class="alert alert-warning" role="alert">
+                         ملاحظة ... سيتم تسجيل اسماء الناجحين في الامتحان الرسمي لتسليم الجوائز
+                               </div>
+                        <label> مدة الامتحان </label>
+                      <input class="form-control" type="number" style="text-align: right" placeholder="المدة بدقائق" name="Time" value="<%= exam.Time %>" required>
+                    
+                  </div>
+             
+        
+             
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal"> الغاء</button>
+              <button type="submit" class="btn btn-primary">  تحديث </button>
+            </div> </form>
+          </div>
+        </div>
+      </div>
+        
+        <!-- Modal delete  -->
+        <div class="modal fade" id="examp<%= exam._id %>leModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" dir="rtl">
+              <div class="modal-header">
+                
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left" >
+                  <span aria-hidden="true">&times;  الغاء</span>
+                </button>
+            
+              </div>
+              
+              <div class="modal-body">
+                  <i class="fa fa-trash" aria-hidden="true" style="color: red; font-size: 30px;float: left"></i>
+                  <p> 
+               هل انت متاكد من حذف امتحان 
+              <span style="color: red">" <%= exam.Exam %> "</span> 
+                نهائيا
+              </p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
+                <a href="/admin/<%= onemodules._id %>/deleteexam/<%= exam._id %>" class="btn btn-danger">حذف</a> 
+              </div>
+            </div>
+          </div>
+        </div>
+            <% })%>
+        
+        </thead>
+        <tbody>
+        
+         
+            
+           
+      
+   
+        </tbody>
+      </table>
+        </div>
 
 
 
