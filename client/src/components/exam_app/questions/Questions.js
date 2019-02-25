@@ -42,6 +42,7 @@ class Questions extends Component {
     this.onPreviousButtonClick = this.onPreviousButtonClick.bind(this)
     this.onExamFinished = this.onExamFinished.bind(this)
     this.onCountDownCompleted = this.onCountDownCompleted.bind(this)
+    this.countDownRenderer = this.countDownRenderer.bind(this)
   }
 
   countDownRenderer({ minutes, seconds }) {
@@ -49,6 +50,10 @@ class Questions extends Component {
       'time',
       Date.now() + minutes * 60 * 1000 + seconds * 1000
     )
+    if (minutes === 0 && seconds === 0) {
+      this.onExamFinished()
+    }
+
     return (
       <div className="timer">
         <p>
@@ -189,7 +194,7 @@ class Questions extends Component {
 
   render() {
     let questionSection =
-      this.state.index < 4 ? (
+      this.state.index < this.state.questions.length ? (
         <React.Fragment>
           {this.state.questions[this.state.index]}
         </React.Fragment>
@@ -207,7 +212,6 @@ class Questions extends Component {
         <CountDown
           date={this.state.time}
           renderer={this.countDownRenderer}
-          isCompleted={this.onCountDownCompleted()}
         />
         <QuestionCounter
           totalQuestions={this.state.questions.length}

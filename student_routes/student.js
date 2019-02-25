@@ -58,9 +58,7 @@ app.get('/:id', (req, res) => {
         let exams = []
         Promise.all(
           studentData.exams.map(async exam => {
-            console.log(exam)
             exName = await Exam.findById(exam.Exam).select('Exam')
-            console.log(exName)
             exams.push({
               Exam: exam._id,
               Grade: exam.Grade,
@@ -69,7 +67,6 @@ app.get('/:id', (req, res) => {
           })
         ).then(completed => {
           studentData.exams = exams
-          console.log(studentData.exams)
           res.json({
             ...userData,
             ...studentData
@@ -208,7 +205,7 @@ app.get('/exams/:id', (req, res) => {
             return returnErrorMessage(res, err, 400)
           }
           try {
-            result = Promise.all(getAllExamsOfStudent(modules)).then(
+            result = Promise.all(getAllExamsOfStudent(modules, student.exams)).then(
               completed => {
                 examsTable = completed
                 return res.json(examsTable)
@@ -343,10 +340,14 @@ app.post('/exam/getresult/:id', async (req, res) => {
   })
 })
 
-const getAllExamsOfStudent = modules => {
+const getAllExamsOfStudent = (modules, previousExams) => {
+  let previousExamsId = []
+  previousExams.map(exam => {
+    previousExamsId.push(exam.Exam)
+  })
   return modules.map(async module => ({
     Module: module.Module,
-    Exams: await Exam.find({ module: module._id, Etat: true })
+    Exams: await Exam.find({ module: module._id, Etat: true, _id : {$nin : previousExamsId} })
   }))
 }
 

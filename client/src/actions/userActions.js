@@ -39,14 +39,12 @@ export function postUserData(id, userData) {
     })
       .then(res => res.json())
       .then(res => {
-        console.log(res)
         return dispatch({
           type: types.postUserData,
           payload: true
         })
       })
       .catch(err => {
-        console.log(err)
         if (err) {
           return dispatch({
             type: types.postUserDataError,
@@ -59,14 +57,11 @@ export function postUserData(id, userData) {
 
 export function getStudentModules(id) {
   return function(dispatch) {
-    console.log(fetchInfo.apiUr + '/modules/' + id)
     fetch(fetchInfo.apiUrl + '/modules/' + id)
       .then(res => {
-        console.log(res)
         return res.json()
       })
       .then(res => {
-        console.log(res)
         let payload = res
         return dispatch({
           type: types.fetchStudentModules,
@@ -75,7 +70,6 @@ export function getStudentModules(id) {
       })
       .catch(err => {
         if (err) {
-          console.log(err)
           return dispatch({
             type: types.fetchStudentModulesError,
             payload: err
@@ -157,7 +151,6 @@ export function postExamGrade(id, body) {
     })
       .then(res => res.json())
       .then(res => {
-        console.log(res)
         return dispatch({
           type: types.postExamGrade,
           payload: res
@@ -165,7 +158,6 @@ export function postExamGrade(id, body) {
       })
       .catch(err => {
         if (err) {
-          console.log(err)
           return dispatch({
             type: types.postExamGradeError,
             payload: err

@@ -10,8 +10,7 @@ class Result extends React.Component {
     console.log('RESULTs')
   }
   render() {
-    console.log('RESULT RENDER')
-    return (
+    return this.props.correctResponses ? (
       <div className="instructions">
         <h3>الاجابة النموذجية</h3>
         {this.props.correctResponses.map(response => {
@@ -26,10 +25,17 @@ class Result extends React.Component {
             </React.Fragment>
           )
         })}
-        <Link className="btn btn-primary" to={'/studenthome'}>
+        <button
+          className="btn btn-primary"
+          onClick={() => {
+            window.close()
+          }}
+        >
           العودة الى الصفحة الرئيسية
-        </Link>
+        </button>
       </div>
+    ) : (
+      <h1>Error !</h1>
     )
   }
 }
