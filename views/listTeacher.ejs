@@ -116,13 +116,51 @@ li a:hover {
 </div>
 
 
-<% teachers.forEach(function(teacher) {%>
-  <%= teacher.user.email %>
-<% })%>
 
+ 
+<div class="table-responsive" dir="rtl"> 
+
+<table class="table" >
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">اللقب</th>
+        <th scope="col">الاسم</th>
+        <th scope="col">الجنس</th>
+        <th scope="col">رقم الهاتف</th>
+        <th scope="col">البريد</th>
+        <th scope="col">المرحلة</th>
+        <th scope="col">الاختصاص</th>
+        <th scope="col"> الحساب</th>
+        
+      </tr>
+    </thead>
+    <tbody><% i = 0 %>
+      <% teachers.forEach(function(teacher) {%>
+      <tr><% i = i + 1 %>
+        <th scope="row"><%= i %></th>
+        <td><%= teacher.user.Lastname %></td>
+        <td> <%= teacher.user.Firstname %></td>
+       
+        <td><%= teacher.user.Sexe %></td>
+        <td> <%= teacher.user.Phone %></td>
+        <td> <%= teacher.user.email %></td>
+        <td> <%= teacher.Phase%></td>
+        <td> <%= teacher.Speciality%></td>
+        <% if (teacher.Actif === true ){ %>
+          <td style="color: green"> مفعل </td>
+        <% } else { %>
+          <td style="color: red">  غير مفعل </td>
+        <% } %>
+        
+       
+      </tr>
+      <%})%>
+    </tbody>
+  </table>
     </div>
       
-
+  </div>
 <script>
 function w3_open() {
   document.getElementById("mySidebar").style.display = "block";
