@@ -413,9 +413,10 @@ user.get("/list/students",ensureAuthenticated,async  function(req,res){
 
 
 user.get("/list/Admins",ensureAuthenticated,  function(req,res){
-User.find({},function(err, admin){
-	if (err) {return res.redirect("/admin")}
+User.find({Role: "Admin"},function(err, admin){
 	console.log(admin)
+	if (err) {return res.redirect("/admin")}
+	
 	res.render("listAdmins",{admins: admin})
 })
 });
