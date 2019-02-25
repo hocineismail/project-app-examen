@@ -81,10 +81,7 @@ user.post("/signup", function(req, res) {
 		} else {
 			var Role = req.body.Role;
 		}
-
-	
-
-		deletesemster
+    console.log(Role)
 	var Address =  req.body.Address;
 	var Phone = req.body.Phone;
 
@@ -127,7 +124,7 @@ user.post("/signup", function(req, res) {
 				 });
 				 newTeacher.save();
 				 console.log(newTeacher)
-				 res.redirect("/login")
+				 res.redirect("/")
 			}
 		 }
 	});
@@ -147,7 +144,7 @@ user.post("/signup", function(req, res) {
 
 user.post("/login", passport.authenticate("login", {
 	successRedirect: "/admin",
-	failureRedirect: "/login",
+	failureRedirect: "/",
 	failureFlash: true
  }));
 
@@ -725,7 +722,7 @@ user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 				}
 			 }
 
-
+//this req for ajax
 		user.post("/searchlevel",function(req, res){
 				console.log(req.body.Phase);
 				Phase.findOne({Phase: req.body.Phase}, function(err, phase){
@@ -735,5 +732,21 @@ user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 					})
 				})
 			 
-		})			 
+		})	
+//this req for etat exam
+user.get("/exam/update/etat/:id",function(req,res){
+	Exam.findOne({_id: req.params.id},function(err,exam){
+		if (err){console.log("error bitchj ")}
+		if (exam){
+			if (exam.Etat === true){
+				exam.Etat = false
+				exam.save()
+			} else {
+				exam.Etat = true
+				exam.save()
+			}
+			res.redirect("/admin/exam/" + req.params.id)
+		}
+	})
+})				 
 module.exports = user;

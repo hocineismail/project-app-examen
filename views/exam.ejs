@@ -208,9 +208,9 @@ li a:hover {
        
         </button>
         <% if (exam.Etat === true ){ %>
-          <a href="/exam/update/etat/<%= exam._id %>" class="btn btn-success"> true </a>
+          <a href="/exam/update/etat/<%= exam._id %>" class="btn btn-success"> مفعل </a>
           <% } else  { %>
-      <a href="/exam/update/etat/<%= exam._id %>" class="btn btn-danger"> false </a>
+      <a href="/exam/update/etat/<%= exam._id %>" class="btn btn-danger"> مغلق </a>
     <% } %>
     </td>
         <td > <a href="/admin/exam/<%= exam._id  %>"> <%= exam.Exam %> </a></td>
