@@ -737,7 +737,7 @@ user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 			 
 		})	
 //this req for etat exam
-user.get("/exam/update/etat/:id",function(req,res){
+user.get("/exam/update/:link/etat/:id",function(req,res){
 	Exam.findOne({_id: req.params.id},function(err,exam){
 		if (err){console.log("error bitchj ")}
 		if (exam){
@@ -748,8 +748,24 @@ user.get("/exam/update/etat/:id",function(req,res){
 				exam.Etat = true
 				exam.save()
 			}
-			res.redirect("/admin/exam/" + req.params.id)
+			res.redirect("/admin/exam/" + req.params.link)
 		}
 	})
-})				 
+})			
+//This req for updqte exam 
+	 
+user.post("/admin/update/:link/exam/:id",function(req,res){
+	Exam.findOne({_id: req.params.id},function(err,exam){
+		if (err){console.log("error bitchj ")}
+		if (exam){
+			exam.Exam = req.body.Exam,
+			exam.NumberOfExam = req.body.NumberOfExam,
+			exam.IsOfficial = req.body.IsOfficial,
+			exam.Time = req.body.Time
+            exam.save()
+			
+			res.redirect("/admin/exam/" + req.params.link)
+		}
+	})
+})	
 module.exports = user;
