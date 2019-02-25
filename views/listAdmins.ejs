@@ -116,12 +116,38 @@ li a:hover {
 </div>
 
 
-<% admins.forEach(function(admin) {%>
-hh
- <%= admin.email %><br>                                                                                                                                                                                               
- <%= admin.Firstname %><br>
-<%})%>
 
+hh
+ <br>                                                                                                                                                                                               
+<br>
+
+<table class="table" dir="rtl">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">اللقب</th>
+      <th scope="col">الاسم</th>
+      <th scope="col">الجنس</th>
+      <th scope="col">رقم الهاتف</th>
+      <th scope="col">البريد</th>
+      
+    </tr>
+  </thead>
+  <tbody><% i = 0 %>
+      <% admins.forEach(function(admin) {%>
+    <tr><% i = i + 1 %>
+      <th scope="row"><%= i %></th>
+      <td> <%= admin.Firstname %></td>
+      <td><%= admin.Lastname %></td>
+      <td><%= admin.Sexe %></td>
+      <td> <%= admin.Phone %></td>
+      <td> <%= admin.email %></td>
+     
+     
+    </tr>
+    <%})%>
+  </tbody>
+</table>
     </div>
       
 

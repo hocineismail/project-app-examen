@@ -1,4 +1,4 @@
-module <!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
 <title>Admin</title><head> 
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -71,18 +71,21 @@ li a:hover {
 </style>
 <body>
 
-  <div class="w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left" style="color:#fff;padding-top:3.7%;font-size: 18px;width:200px;background-color: rgb(73, 73, 73)" id="mySidebar">
-    <button   class="w3-bar-item w3-button w3-large w3-hide-large" onclick="w3_close()">Close &times;</button>
-    <h2 style="color: cornsilk;text-align: center">الدورات</h2>
-   
-     
-      <a href="/cycle/" style="border-top: 1px solid #fff" class="w3-bar-item w3-button" > hello </a>
-    
-   
-   
-   
-   
-  </div>
+  <body style="background-color:rgb(243, 242, 242)">
+
+    <div class="w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left" style="color:#fff;padding-top:3.7%;font-size: 18px;width:200px;background-color: rgb(73, 73, 73)" id="mySidebar">
+      <button   class="w3-bar-item w3-button w3-large w3-hide-large" onclick="w3_close()">الغاء &times;</button>
+      <h2 style="color: cornsilk;padding-right: 10%; text-align: right;" >القوائم</h2>
+   <a href="/list/admins" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > قائمة المديرين </a>
+   <a href="/list/teachers" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > قائمة المعلمين </a>
+   <a href="/list/students" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > قائمة التلاميذ </a>
+   <h2 style="color: cornsilk;padding-right: 10%; text-align: right;">الاحصاء</h2>
+   <a href="/static/" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > صفحة الاحصاء </a>
+   <h2 style="color: cornsilk;padding-right: 10%; text-align: right;">الطلبات</h2>
+   <a href="/list/demande" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > صفحة الطلبات </a>
+   <h2 style="color: cornsilk;padding-right: 10%; text-align: right;">الناجحين</h2>
+   <a href="/list/seccus" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > قاوائم الناجحين </a>
+   </div>
   
   <div class="w3-main" style="margin-left:200px">
   <div  style="color:#fff;background-color: rgb(73, 73, 73)">
@@ -90,11 +93,11 @@ li a:hover {
     <div class="w3-container">
       <ul>
        
-        <li><a class="activee" href="/"><i class="fas fa-house-damage"></i>الصقحة الرئسية</a></li>
+        <li><a class="activee" href="/"><i class="fas fa-house-damage"></i> </a></li>
 
-        <li><a href="/admin"><i class="far fa-edit"></i>اعدادات</a></li>
+        <li><a href="/admin"><i class="far fa-edit"></i></a></li>
         <li class="nav-item active "> <% if (currentUser) { %>
-          <a class="nav-link" href="/Logout"><i class="fas fa-sign-out-alt icon"></i>تسجيل الخروج   </a>  <% }  %>  </li>
+          <a class="nav-link" href="/Logout"><i class="fas fa-sign-out-alt icon"></i>    </a>  <% }  %>  </li>
         
       
       </ul>
@@ -106,8 +109,7 @@ li a:hover {
 
 <div class="container" style="padding-top: 2%;width: 50%;">
   <h2 style="text-align: center ">
-  EXAm
-    
+  اعدادات الامتحانات و الدورات
      
 </h2><br><br>
   <% errors.forEach(function(error) { %>
@@ -128,43 +130,62 @@ li a:hover {
 <div  >
    <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-   Add module
+   اضافة امتحان جديد 
   </button>
   
   <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
+      <div class="modal-content" dir="rtl">
         <div class="modal-header">  
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left" >
+                <span aria-hidden="true">&times;  الغاء</span>
+              </button>
           </button>
         </div><form action="/admin/<%= onemodules._id %>/<%= onemodules.Module %>/addexam" method="post">
         <div class="modal-body">
           
+        <h3  style="text-align: center">   اضافة امتحان جديد    </h3>
         
-         
               <div class="input-container">
-                  <input class="form-control" style="margin-right: 5px;text-align: right" type="text"  placeholder="Exam" name="Exam">
-                  <input class="form-control" type="number" style="text-align: right" placeholder="NumberOfExam" name="NumberOfExam">
+                  <div class="form-group">
+                  <label>اسم الدورة </label>
+                  <input class="form-control" style="margin-right: 5px;text-align: right" type="text"  placeholder="الامتحان" name="Exam" required>
+                 </div>
+                 <div class="form-group"> 
+                
+                  <label>  عدد الاسئلة</label>
+                  <input class="form-control" type="number" style="text-align: right" placeholder=" عدد الاسئلة " name="NumberOfExam" required>
+                 </div>
+                  <label>طبعية الامتحان  </label>
                   <div class="radio">
-                    <label><input type="radio" name="Etat" value="true" >true</label>
-                  </div>
-                  <div class="radio">
-                    <label><input type="radio" name="Etat">false</label>
-                  </div>
-                  <label class="checkbox-inline"><input type="checkbox" value="true" name="IsOfficial">Option 1</label>
-                  <input class="form-control" type="Time" style="text-align: right" placeholder="Time" name="Time">
-                  <input class="form-control" type="Date" style="text-align: right" placeholder="Date" name="Date">
+                      <label><input type="radio" name="IsOfficial" value="true" checked >&nbsp;  &nbsp; &nbsp;  انتحان رسمي </label>
+                    </div>
+                    <div class="radio">
+                      <label><input type="radio" name="IsOfficial" value="false">&nbsp;  &nbsp; &nbsp; امتتحان غير رسمي</label>
+                    </div>
+                    <div class="alert alert-warning" role="alert">
+                     ملاحظة ... 
+                     <br>
+                     سيتم تسجيل اسماء الناجحين في الامتحان الرسمي لتسليم الجوائز
+                           </div>
+                    <label> مدة الامتحان </label>
+                  <input class="form-control" type="number" style="text-align: right" placeholder="المدة بدقائق" name="Time" required>
+                  <label>التاريخ </label>
+                  <input class="form-control" type="Date" style="text-align: right" placeholder="التاريخ" name="Date" required>
               </div>
          
     
          
         </div>
+        <div class="alert alert-warning" role="alert">
+          ملاحظة ...
+          <br>
+      سيتم تفعيل الامتحان تلقائيا  <span style="color: red"> فقد لامتحانات الغير رسمية</span> بعد اكتمال الاسئلة المحددة و التدقيق فيها 
+       </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal"> الغاء</button>
+          <button type="submit" class="btn btn-primary">انشاء دورة جديدة </button>
         </div> </form>
       </div>
     </div>
@@ -177,29 +198,155 @@ li a:hover {
   </div>
 
 
+   
 
-<div style="overflow-x:auto;" class="container">
-    <table>
-      <tr><th>Setting</th>
-        <th>exam</th>
-      
-       
-        <th >#</th>
-      </tr><% var i = 0%>
-      <tr>  <% exams.forEach(function(exam) { %>
-      <% i = i + 1%>
-       <td><a href="/admin/deleteexam/<%= exam._id %> ">Delete</a> </td>
-        <td > <a href="/admin/exam/<%= exam._id  %>"> <%= exam.Exam %> </a></td>
-        
-            <td><%= i %></td>
-           
-      </tr>
-      <% })%>
-    </table></div>
-    
 <!-- Button trigger modal -->
 
+<div class="table-responsive" dir="rtl" > 
+    <% var i = 0%>
+    <table class="table" >
+      <thead>
+          <tr>
+             <th >#</th>
+            <th>الامتحان</th>
+            <th>عدد الاسئلة</th>
+            <th>امتحان</th>
+              <th style="text-align: left">اعدادات</th>
+           </tr>
+          <tr>  <% exams.forEach(function(exam) { %>
+            <% i = i + 1%>
+          
+           
+          <td><%= i %></td>
+          <td > <a href="/admin/exam/<%= exam._id  %>"> <%= exam.Exam %> </a></td>
+          <td><%= exam.NumberOfExam %></td>
+          <% if  (exam.Etat === true ) {%>
+          <td>رسمي</td>
+          <% } else {%>
+            <td>ليس رسمي </td>
+            <% } %>
+       
+            <td style="text-align: left">
 
+                <% if (exam.Etat === true ){ %>
+                  <a href="/exam/update/<%= onemodules._id %>/etat/<%= exam._id %>" class="btn btn-success"> مفعل </a>
+                  <% } else  { %>
+              <a href="/exam/update/<%= onemodules._id %>/etat/<%= exam._id %>" class="btn btn-danger"> مغلق </a>
+            <% } %>
+            
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#examp<%= exam._id %>leModalCenter">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                 
+                  </button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModa<%= exam._id %>lCenter">
+                  <i class="fas fa-cog"></i> 
+                </button>
+               
+                <!-- Button trigger modal -->
+        
+        
+              
+                  
+              </td>
+            </tr>
+            <!-- Button trigger modal -->
+      
+      <!-- Modal update -->
+      <div class="modal fade" id="exampleModa<%= exam._id %>lCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content" dir="rtl">
+            <div class="modal-header">  
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left" >
+                    <span aria-hidden="true">&times;  الغاء</span>
+                  </button>
+              </button>
+            </div><form action="/admin/update/<%= onemodules._id %>/exam/<%= exam._id %>" method="post">
+            <div class="modal-body">
+              
+            <h3  style="text-align: center">   تعديل الامتحان     </h3>
+            <div class="alert alert-danger" role="alert">
+             هام جدا...
+             <br>
+             قد يؤدي تغيير بيانات للامتحانات القديمة الى حدوث مشاكل 
+             <br>
+             في حالة وجود مشاكل اتصل بمطور مواقع
+                    </div>
+                  <div class="input-container">
+                      <div class="form-group">
+                      <label>اسم الدورة </label>
+                      <input class="form-control" style="margin-right: 5px;text-align: right" type="text"  placeholder="الامتحان" name="Exam" value="<%= exam.Exam%>"required>
+                     </div>
+                     <div class="form-group"> 
+                    
+                      <label>  عدد الاسئلة</label>
+                      <input class="form-control" type="number" style="text-align: right" placeholder=" عدد الاسئلة " name="NumberOfExam" value="<%= exam.NumberOfExam%>"required>
+                     </div>
+                      <label>طبعية الامتحان  </label>
+                      <div class="radio">
+                          <label><input type="radio" name="IsOfficial" value="true" checked >&nbsp;  &nbsp; &nbsp;  انتحان رسمي </label>
+                        </div>
+                        <div class="radio">
+                          <label><input type="radio" name="IsOfficial" value="false">&nbsp;  &nbsp; &nbsp; امتتحان غير رسمي</label>
+                        </div>
+                        <div class="alert alert-warning" role="alert">
+                         ملاحظة ... سيتم تسجيل اسماء الناجحين في الامتحان الرسمي لتسليم الجوائز
+                               </div>
+                        <label> مدة الامتحان </label>
+                      <input class="form-control" type="number" style="text-align: right" placeholder="المدة بدقائق" name="Time" value="<%= exam.Time %>" required>
+                    
+                  </div>
+             
+        
+             
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal"> الغاء</button>
+              <button type="submit" class="btn btn-primary">  تحديث </button>
+            </div> </form>
+          </div>
+        </div>
+      </div>
+        
+        <!-- Modal delete  -->
+        <div class="modal fade" id="examp<%= exam._id %>leModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" dir="rtl">
+              <div class="modal-header">
+                
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left" >
+                  <span aria-hidden="true">&times;  الغاء</span>
+                </button>
+            
+              </div>
+              
+              <div class="modal-body">
+                  <i class="fa fa-trash" aria-hidden="true" style="color: red; font-size: 30px;float: left"></i>
+                  <p> 
+               هل انت متاكد من حذف امتحان 
+              <span style="color: red">" <%= exam.Exam %> "</span> 
+                نهائيا
+              </p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
+                <a href="/admin/<%= onemodules._id %>/deleteexam/<%= exam._id %>" class="btn btn-danger">حذف</a> 
+              </div>
+            </div>
+          </div>
+        </div>
+            <% })%>
+        
+        </thead>
+        <tbody>
+        
+         
+            
+           
+      
+   
+        </tbody>
+      </table>
+        </div>
 
 
 

@@ -81,10 +81,7 @@ user.post("/signup", function(req, res) {
 		} else {
 			var Role = req.body.Role;
 		}
-
-	
-
-
+    console.log(Role)
 	var Address =  req.body.Address;
 	var Phone = req.body.Phone;
 
@@ -127,7 +124,11 @@ user.post("/signup", function(req, res) {
 				 });
 				 newTeacher.save();
 				 console.log(newTeacher)
+<<<<<<< HEAD
 				 
+=======
+				 res.redirect("/")
+>>>>>>> project
 			}
 		 }
 		 res.redirect("/login")
@@ -148,7 +149,7 @@ user.post("/signup", function(req, res) {
 
 user.post("/login", passport.authenticate("login", {
 	successRedirect: "/admin",
-	failureRedirect: "/login",
+	failureRedirect: "/",
 	failureFlash: true
  }));
 
@@ -414,9 +415,10 @@ user.get("/list/students",ensureAuthenticated,async  function(req,res){
 
 
 user.get("/list/Admins",ensureAuthenticated,  function(req,res){
-User.find({},function(err, admin){
-	if (err) {return res.redirect("/admin")}
+User.find({Role: "Admin"},function(err, admin){
 	console.log(admin)
+	if (err) {return res.redirect("/admin")}
+	
 	res.render("listAdmins",{admins: admin})
 })
 });
@@ -513,8 +515,18 @@ user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, nex
 					
 				 
 				})});
-
-
+				
+				user.get("/admin/:module/deleteexam/:id",ensureAuthenticated,   function(req, res, next) {
+ 
+					Exam.findOneAndRemove( { _id: req.params.id } , function(err, exam) {
+							if (err) { return next(err); }
+							if (!exam) { return next(404); }
+					 
+							req.flash("error", "تم الحدف");
+							res.redirect("/admin/exam/" + req.params.module)
+							
+						 
+						})});
 
 				user.post("/admin/updatesemster/:_id",ensureAuthenticated,  function(req, res, next) {
  
@@ -532,7 +544,7 @@ user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, nex
 						})});
 
 
-		user.get("/admin/deletesemster/:_id",ensureAuthenticated,   function(req, res, next) {
+		user.get("/admin/:level/deletesemster/:_id",ensureAuthenticated,   function(req, res, next) {
 			Module.find( { semster: req.params._id } , function(err, one) {
 		  one.forEach(function(delet){
 				console.log(delet._id)
@@ -551,7 +563,7 @@ user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, nex
 					if (!semster) { return next(404); }
 			 
 					req.flash("error", "تم الحدف");
-					res.redirect("/admin")
+					res.redirect("/admin/phase/" + req.params.level)
 					
 				})
 			});
@@ -630,6 +642,40 @@ Module.findOne({_id: req.params._id},function(err,modules){
 
 	 });
 
+
+//req update semster
+
+user.post("/admin/:level/:_id/updatesemster",ensureAuthenticated, function(req,res,next){
+  
+	var  semster = req.body.Semster;
+	var  numberOfSemster= req.body.NumberOfSemster;
+Semster.findOne({_id: req.params._id},function(err,semsters){
+	semsters.Semster =  semster
+	semsters.NumberOfSemster =   numberOfSemster
+
+	semsters.save(function(err,done){
+		if (err){
+			 
+				console.log("error of updating")
+			req.flash("error", "لم يتم ادخال كل البيانات");
+			
+			return  res.redirect('/admin/phase/' + req.params.level ) 
+		} else {
+			console.log(done)
+			console.log("pas d errror")
+	req.flash("info", "تم التسجيل  ");
+return  res.redirect('/admin/phase/' + req.params.level ) 
+			
+		
+		}
+	});
+	});
+
+
+	 });
+
+
+
 user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 	console.log("dakhel hena ya namiiii")
 		Module.findOne({_id: req.params.id},function(err,onemodule){
@@ -679,7 +725,7 @@ user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 				}
 			 }
 
-
+//this req for ajax
 		user.post("/searchlevel",function(req, res){
 				console.log(req.body.Phase);
 				Phase.findOne({Phase: req.body.Phase}, function(err, phase){
@@ -689,5 +735,37 @@ user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 					})
 				})
 			 
-		})			 
+		})	
+//this req for etat exam
+user.get("/exam/update/:link/etat/:id",function(req,res){
+	Exam.findOne({_id: req.params.id},function(err,exam){
+		if (err){console.log("error bitchj ")}
+		if (exam){
+			if (exam.Etat === true){
+				exam.Etat = false
+				exam.save()
+			} else {
+				exam.Etat = true
+				exam.save()
+			}
+			res.redirect("/admin/exam/" + req.params.link)
+		}
+	})
+})			
+//This req for updqte exam 
+	 
+user.post("/admin/update/:link/exam/:id",function(req,res){
+	Exam.findOne({_id: req.params.id},function(err,exam){
+		if (err){console.log("error bitchj ")}
+		if (exam){
+			exam.Exam = req.body.Exam,
+			exam.NumberOfExam = req.body.NumberOfExam,
+			exam.IsOfficial = req.body.IsOfficial,
+			exam.Time = req.body.Time
+            exam.save()
+			
+			res.redirect("/admin/exam/" + req.params.link)
+		}
+	})
+})	
 module.exports = user;
