@@ -121,7 +121,7 @@ user.post("/signup", function(req, res) {
 			} else if ( ( newUser.Role === "Teacher")) {
 				var newTeacher = new Teacher({
 					Speciality: req.body.Speciality,
-					Phase: req.body.Phase,
+					phase: req.body.Phase,
 					user: newUser._id,
 				 });
 				 newTeacher.save();
@@ -349,9 +349,9 @@ user.post('/forgot', function(req, res, next) {
 	console.log(req.user)
 	   if (req.user.Role === "Teacher" ) {
 		Teacher.find({user: req.user._id }).
-		populate("user"). 
+		populate("user").
 		exec(function(err,teacher){
-			console.log(teacher)
+		
 			
 	 res.render("teacher/teacher",{teachers: teacher})
 		})
@@ -366,7 +366,9 @@ user.post('/forgot', function(req, res, next) {
 	user.get("/list/teachers",ensureAuthenticated,async  function(req,res){
 		Teacher.find({}).
 		populate("user"). 
+		populate("phase").
 		exec(function(err,teacher){
+			console.log(teacher)
 					res.render("listTeacher",{teachers: teacher})
 		 
 				})	});
@@ -829,5 +831,15 @@ user.get("/admin/exam/question/:id",async function(req,res){
 }
 
 })
+// this route for deversite of users
+user.get("/routes",function(req,res){
+	if ( req.user.Role === "Teacher" ) {
+		res.redirect("/teacher")
 
+	} else if ( req.user.Role === "Student" ) {
+  // this route will be change 
+	}else if ( req.user.Role === "Admin" ) {
+		res.redirect("/teacher")
+	}
+})
 module.exports = user;

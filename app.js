@@ -8,7 +8,7 @@ var session = require("express-session");
 var flash = require("connect-flash"); 
 var passport = require("passport");
 
-mongoose.connect("mongodb://localhost:27017/databaseproej");
+mongoose.connect("mongodb://localhost:27017/databss");
 
 // routes
 var routes = require("./routes/routes");
