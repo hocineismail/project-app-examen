@@ -23,7 +23,7 @@ admin.use(function(req, res, next) {
 	 
 
 admin.get("/teacherValidation/:_id",ensureAuthenticated, function(req,res){
-  if (  req.user.Role === "Teacher") {
+  if (  req.user.Role === "Admin") {
   Teacher.findOne({_id: req.params._id},function(err,teacher){
     if(err) {return res.redirect("/admin")}
     if (teacher) {
@@ -306,10 +306,8 @@ admin.post("/admin/addphase",ensureAuthenticated, function(req,res,next){
                 } else {
                   res.redirect("/routes")
                 }
-                   });   
-
-
-
+                   });  
+                   
                    function ensureAuthenticated(req, res, next) {
                     if (req.isAuthenticated()) {
                     next();

@@ -121,6 +121,7 @@ user.post("/signup", function(req, res) {
 			} else if ( ( newUser.Role === "Teacher")) {
 				var newTeacher = new Teacher({
 					Speciality: req.body.Speciality,
+					Count: 0,
 					phase: req.body.Phase,
 					user: newUser._id,
 				 });
@@ -397,7 +398,7 @@ user.get("/list/students",ensureAuthenticated,async  function(req,res){
 	//
 	//
 	//
-	if (  req.user.Firstname === "Admin") {
+	if (  req.user.Role === "Admin") {
 	try{
 	
 		const user = await User.find({Role: "Student"});

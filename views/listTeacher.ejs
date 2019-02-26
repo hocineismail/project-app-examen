@@ -131,6 +131,7 @@ li a:hover {
         <th scope="col">البريد</th>
         <th scope="col">المرحلة</th>
         <th scope="col">الاختصاص</th>
+        <th scope="col"> count</th>
         <th scope="col"> الحساب</th>
         
       </tr>
@@ -147,6 +148,7 @@ li a:hover {
         <td> <%= teacher.user.email %></td>
         <td> <%= teacher.phase.Phase %></td>
         <td> <%= teacher.Speciality%></td>
+        <td> <%= teacher.Count%></td>
         <% if (teacher.Actif === true ){ %>
           <td style="color: green"> مفعل </td>
         <% } else { %>

@@ -275,6 +275,14 @@ function checkFileType(file, cb){
                 if (err){ console.log("response 1 pas d error");
                 return  res.redirect('/teacher/qauestion') 
                }
+               if (succcess){
+                 Teacher.findOne({user: req.user._id},function(err,user) {
+                 user.Count =  user.Count + 1
+                 console.log(user.Count)
+                 user.save()
+               })
+
+               }
               })
             }
           })
@@ -341,11 +349,12 @@ router.get("/teacher/valid",async function(req,res){
   router.get("/teacher/notvalid",ensureAuthenticated,async function(req,res){
     if ( req.user.Role === "Teacher") { 
     try{
+      var user = req.user.Firstname + " " + req.user.Lastname ;
       const phases =  await Phase.find({});
       const levels =  await Level.find({});
       const semsters =  await Semster.find({});
       const modules =  await Module.find({});
-       const question = await Question.find({NotValid: true});
+       const question = await Question.find({NotValid: true,Author: user });
        let responses = [];
        let exams = [];
      
@@ -382,6 +391,8 @@ router.get("/teacher/valid",async function(req,res){
 router.get("/valid/question/:id",ensureAuthenticated, function(req,res){
   if ( req.user.Role === "Teacher") { 
   Question.findById({_id: req.params.id},function(err , question){
+    var user = req.user.Firstname + " " + req.user.Lastname 
+    if ( (user != question.TeacherOne)  && (user != question.TeacherTwo)  && (user != question.TeacherFinal)) { 
     if(question.IsValidOne != true) {
       question.IsValidOne = true,
       question.TeacherOne = req.user.Firstname + " " + req.user.Lastname ;
@@ -402,9 +413,13 @@ router.get("/valid/question/:id",ensureAuthenticated, function(req,res){
        if (err){console.log("il ya une error ")}
      })
     }
- 
- console.log(question)
- res.redirect("/teacher/valid")
+    console.log(question)
+    res.redirect("/teacher/valid")
+  } else {
+    // will be write message error 
+    res.redirect("/teacher/valid")
+  }
+
   })
 } else {
   res.redirect("/routes")

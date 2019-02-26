@@ -127,6 +127,8 @@ span {
 <div class="container">
 
     <% question.forEach(function(question) {%>
+      <% var user = currentUser.Firstname + " " + currentUser.Lastname %>
+      <% if (  (question.Author != user) &&   (question.TeacherOne != user)  &&   (question.TeacherTwo != user)  &&  (question.TeacherFinal != user))  { %>
       <div class="card-deck">
          
           <div class="card">
@@ -184,7 +186,7 @@ span {
           
         </div>
       
-       
+        <%  } %>
         <%})%> 
 </div>
 
