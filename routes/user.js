@@ -125,8 +125,9 @@ user.post("/signup", function(req, res) {
 				 });
 				 newTeacher.save();
 				 console.log(newTeacher)
-				 res.redirect("/")
+				
 			}
+			res.redirect("/")
 		 }
 	});
 	});
