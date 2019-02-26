@@ -728,6 +728,7 @@ user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 
 //this req for ajax
 		user.post("/searchlevel",function(req, res){
+			if (req.body.Phase != undefined) { 
 				console.log(req.body.Phase);
 				Phase.findOne({Phase: req.body.Phase}, function(err, phase){
 					Level.find({phase:  phase._id},function(err , data){
@@ -735,6 +736,7 @@ user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 							res.send(data);
 					})
 				})
+			}
 			 
 		})	
 //this req for etat exam
