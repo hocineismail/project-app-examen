@@ -23,9 +23,8 @@ admin.use(function(req, res, next) {
 	 
 
 admin.get("/teacherValidation/:_id",ensureAuthenticated, function(req,res){
- 
+  if (  req.user.Role === "Teacher") {
   Teacher.findOne({_id: req.params._id},function(err,teacher){
-    console.log(teacher)
     if(err) {return res.redirect("/admin")}
     if (teacher) {
       teacher.Actif = true;
@@ -36,10 +35,14 @@ admin.get("/teacherValidation/:_id",ensureAuthenticated, function(req,res){
     });
   }
 })
+  } else {
+    res.redirect("/routes")
+  }
 })
 
 
 admin.post("/admin/addphase",ensureAuthenticated, function(req,res,next){
+  if (  req.user.Role === "Admin") {
     console.log( req.body.Phase)
         var  phase = req.body.Phase;
         var  numberOfPhase = req.body.NumberOfPhase;
@@ -51,7 +54,6 @@ admin.post("/admin/addphase",ensureAuthenticated, function(req,res,next){
         });
         newPhase.save(function(err,done){
           if (err){
-              console.log( req.body.Phase)
               console.log("error")
             req.flash("error", "لم يتم ادخال كل البيانات");
         return res.redirect("/admin");
@@ -62,7 +64,9 @@ admin.post("/admin/addphase",ensureAuthenticated, function(req,res,next){
         res.redirect("/admin");
           }
         });
-    
+      } else {
+        res.redirect("/routes")
+      }
          });
     
       
@@ -70,7 +74,7 @@ admin.post("/admin/addphase",ensureAuthenticated, function(req,res,next){
 
 
          admin.post("/admin/:_id/:phase/addlevel",ensureAuthenticated, function(req,res,next){
-  
+          if (  req.user.Role === "Admin") {
               var  level = req.body.Level;
               var  numberOfLevel = req.body.NumberOfLevel;
               var phase = req.params._id;
@@ -101,7 +105,9 @@ admin.post("/admin/addphase",ensureAuthenticated, function(req,res,next){
                   
                 }
               });
-          
+            } else {
+              res.redirect("/routes")
+            }
                });
           
             
@@ -109,7 +115,7 @@ admin.post("/admin/addphase",ensureAuthenticated, function(req,res,next){
 
  
                  admin.post("/admin/:level/:_id/addmodule",ensureAuthenticated, function(req,res,next){
-  
+                  if (  req.user.Role === "Admin") {
                   var  modulee = req.body.Module;
                   var  numberOfModule = req.body.NumberOfModule;
                   var semster = req.params._id;
@@ -137,12 +143,14 @@ admin.post("/admin/addphase",ensureAuthenticated, function(req,res,next){
                     
                     }
                   });
-              
+                } else {
+                  res.redirect("/routes")
+                }
                    });
 
 
                    admin.post("/admin/:level/:_id/updatemodule",ensureAuthenticated, function(req,res,next){
-  
+                    if (  req.user.Role === "Admin") {
                     var  modulee = req.body.Module;
                     var  numberOfModule = req.body.NumberOfModule;
                   
@@ -170,11 +178,13 @@ admin.post("/admin/addphase",ensureAuthenticated, function(req,res,next){
                       
                       }
                     });
-                
+                  } else {
+                    res.redirect("/routes")
+                  }
                      });
                    
                   admin.post("/admin/:_id/:semster/addsemster",ensureAuthenticated, function(req,res,next){
-  
+                    if (  req.user.Role === "Admin") {
                 var  semster = req.body.Semster;
                 var  numberOfSemster = req.body.NumberOfSemster;
                 var level = req.params._id;
@@ -201,7 +211,9 @@ admin.post("/admin/addphase",ensureAuthenticated, function(req,res,next){
                      return  res.redirect('/admin/phase/' + req.params._id ) 
           }
                 });
-            
+              } else {
+                res.redirect("/routes")
+              }
                  });
 
 
@@ -209,7 +221,7 @@ admin.post("/admin/addphase",ensureAuthenticated, function(req,res,next){
 
                 
           admin.post("/admin/:_id/:module/addmodule",ensureAuthenticated, function(req,res,next){
-  
+            if (  req.user.Role === "Admin") {
                 var  module = req.body.Module;
                 var  numberOfModule = req.body.NumberOfModule;
                 var semster = req.params._id;
@@ -244,7 +256,9 @@ admin.post("/admin/addphase",ensureAuthenticated, function(req,res,next){
                     })			})
                   }
                 });
-            
+              } else {
+                res.redirect("/routes")
+              }
                  }); 
 
 
@@ -253,14 +267,7 @@ admin.post("/admin/addphase",ensureAuthenticated, function(req,res,next){
 
 
                  admin.post("/admin/:_id/:module/addexam",ensureAuthenticated, function(req,res,next){
-                  console.log(req.body.Exam)
-                  console.log("-----")
-                  console.log(req.body.NumberOfExam)
-                  console.log("-----")
-                  console.log(req.body.Date)
-                  console.log("-----")
-                  console.log(req.body.IsOfficial)
-                  console.log("-----")
+                  if (  req.user.Role === "Admin") {
                   var  exam = req.body.Exam;
                   var  numberOfExam = req.body.NumberOfExam;
                   var isOfficial = req.body.IsOfficial;
@@ -296,7 +303,9 @@ admin.post("/admin/addphase",ensureAuthenticated, function(req,res,next){
                   res.redirect("/admin/exam/" + req.params._id)
                     }
                   });
-              
+                } else {
+                  res.redirect("/routes")
+                }
                    });   
 
 

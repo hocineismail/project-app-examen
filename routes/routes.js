@@ -38,49 +38,67 @@ router.get("/teacher/question",ensureAuthenticated, function(req,res){
    
   })
 } else {
- res.redirect("/")
+ res.redirect("/routes")
 }
 
 });
 
 
 router.get("/teacher/validation",ensureAuthenticated, function(req,res){
+  if ( req.user.Role === "Teacher") { 
     res.render("teacher/addquestion")
+  } else {
+    res.redirect("/routes")
+   }
   }) 
 
 router.post("/searchsemster",function(req, res){
-    console.log(req.body.Level);
+
+  if ( req.user.Role === "Teacher") { 
+    if (req.body.Level != undefined) { 
+  
     Level.findOne({_id: req.body.Level}, function(err, level){
         Semster.find({level:  level._id},function(err , data){
-        console.log(data)
                 res.send(data);
         })
     })
- 
+  }
+  } else {
+    res.redirect("/routes")
+   }
 })
 
 router.post("/searchmodule",function(req, res){
-    console.log(req.body.Semster);
+  if ( req.user.Role === "Teacher") { 
+    if (req.body.Semster != undefined) { 
     Semster.findOne({_id: req.body.Semster}, function(err, semster){
-        console.log(semster)
+        if (err) { }
         Module.find({semster:  semster._id},function(err , data){
         if (err) { console.log("errooooooooooor")}
                 res.send(data);
         })
     })
- 
+  }
+} else {
+  res.redirect("/routes")
+ }
 })	
 
 
 router.post("/searchexam",ensureAuthenticated,function(req, res){
-    console.log(req.body.Module);
+  if ( req.user.Role === "Teacher") { 
+    if (req.body.Module != undefined) { 
+ 
     Module.findOne({_id: req.body.Module}, function(err, module){
         Exam.find({module:  module._id},function(err , data){
         
                 res.send(data);
         })
     })
- 
+  }
+} else {
+  res.redirect("/routes")
+ }
 })	
 
 
@@ -123,6 +141,7 @@ function checkFileType(file, cb){
 }
 
   router.post('/upload', ensureAuthenticated , (req, res) => {
+    if ( req.user.Role === "Teacher") { 
    if ( 
      (req.body.Level != "") && 
      (req.body.Phase != "")  && 
@@ -270,11 +289,14 @@ function checkFileType(file, cb){
                       
       return  res.redirect('/teacher/qauestion') 
     }
+  } else {
+    res.redirect("/routes")
+   }
 });
 
 
 router.get("/teacher/valid",async function(req,res){
-
+  if ( req.user.Role === "Teacher") { 
   
     try{
      const phases =  await Phase.find({});
@@ -310,11 +332,14 @@ router.get("/teacher/valid",async function(req,res){
               message: err.message
           })
       }
+    } else {
+      res.redirect("/routes")
+     }
 })
 
 //this route for question not valid
   router.get("/teacher/notvalid",ensureAuthenticated,async function(req,res){
- 
+    if ( req.user.Role === "Teacher") { 
     try{
       const phases =  await Phase.find({});
       const levels =  await Level.find({});
@@ -349,9 +374,13 @@ router.get("/teacher/valid",async function(req,res){
                message: err.message
            })
        }
+      } else {
+        res.redirect("/routes")
+       }
  })
 
 router.get("/valid/question/:id",ensureAuthenticated, function(req,res){
+  if ( req.user.Role === "Teacher") { 
   Question.findById({_id: req.params.id},function(err , question){
     if(question.IsValidOne != true) {
       question.IsValidOne = true,
@@ -377,9 +406,13 @@ router.get("/valid/question/:id",ensureAuthenticated, function(req,res){
  console.log(question)
  res.redirect("/teacher/valid")
   })
+} else {
+  res.redirect("/routes")
+ }
 })
 
 router.post("/invalid/question/:id",ensureAuthenticated, function(req,res){
+  if ( req.user.Role === "Teacher") { 
   Question.findById({_id: req.params.id},function(err , question){
    
       question.IsValidOne = false,
@@ -395,11 +428,15 @@ router.post("/invalid/question/:id",ensureAuthenticated, function(req,res){
  console.log(question)
  res.redirect("/teacher/valid")
   })
+} else {
+  res.redirect("/routes")
+ }
 })
 
 
 //POST Pub 
 router.post("/addpub",function(req,res){
+  if ( req.user.Role === "Admin") { 
   Pub.countDocuments({},function(err,count){
     if (!err){
              if (count === 0 ){
@@ -435,10 +472,13 @@ router.post("/addpub",function(req,res){
         
     }
   })
- 
+} else {
+  res.redirect("/routes")
+ }
  
 })
 router.get("/pub/delete/:id",function(req,res){
+  if ( req.user.Role === "Admin") { 
   Pub.findOneAndRemove( { _id: req.params.id } , function(err, pyb) {
     if (err) { return next(err); }
     if (!pyb) { return next(404); }
@@ -446,5 +486,9 @@ router.get("/pub/delete/:id",function(req,res){
                   
   res.redirect("/admin")
   }) 
+} else {
+  res.redirect("/routes")
+ }
+ 
 })
 module.exports = router;
