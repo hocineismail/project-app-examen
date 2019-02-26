@@ -124,11 +124,8 @@ user.post("/signup", function(req, res) {
 				 });
 				 newTeacher.save();
 				 console.log(newTeacher)
-<<<<<<< HEAD
-				 
-=======
+
 				 res.redirect("/")
->>>>>>> project
 			}
 		 }
 		 res.redirect("/login")

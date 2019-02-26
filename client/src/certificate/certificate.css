@@ -1,0 +1,30 @@
+.certificate {
+    direction: rtl;
+    width: 100%;
+    height: 100%;
+}
+
+.certificate img {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+}
+
+.certificate-exam {
+    position: absolute;
+    z-index: 2;
+    top: 265px;
+    right: 930px;
+    font-size: 30px;
+}
+
+
+.certificate-name {
+    position: absolute;
+    z-index: 2;
+    top: 325px;
+    right: 930px;
+    font-size: 30px;
+
+}
