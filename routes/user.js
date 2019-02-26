@@ -146,7 +146,7 @@ user.post("/signup", function(req, res) {
 
 
 user.post("/login", passport.authenticate("login", {
-	successRedirect: "/admin",
+	successRedirect: "/routes",
 	failureRedirect: "/",
 	failureFlash: true
  }));
@@ -267,7 +267,7 @@ user.post('/forgot', function(req, res, next) {
 
 	user.get("/admin",ensureAuthenticated, function(req,res){
 	
-		if (  req.user.Firstname != "Teacher") {
+		if (  req.user.Role === "Admin") {
 		var phases;
     var levels;
     var semsters;
@@ -334,19 +334,16 @@ user.post('/forgot', function(req, res, next) {
         res.render("admin",{pub: pubs,CountStudents: students, CountTeachers: teachers ,CountAdmins: admins ,phases: phases, levels: levels,semsters: semsters , modules: modules});
 			})
 		
-		} else if (req.user.Role === "Teacher")  {
-			res.redirect("/teacher");
-		} else if (req.user.Role === "Student")  {
-			// this for your page using react you can edit this code 
-			res.redirect("/student");
+	
 		} else {
-			res.redirect("/")
+			res.redirect("/routes")
 		}
 		 
 	});
+
 // this url for interface teacher
    user.get("/teacher",ensureAuthenticated,function(req,res){
-	console.log(req.user)
+
 	   if (req.user.Role === "Teacher" ) {
 		Teacher.find({user: req.user._id }).
 		populate("user").
@@ -357,13 +354,14 @@ user.post('/forgot', function(req, res, next) {
 		})
 	   } else {
 		   //this link will do edit 
-		res.redirect("/")  
+		res.redirect("/routes")  
 
 	   }
   })
 	 
 
 	user.get("/list/teachers",ensureAuthenticated,async  function(req,res){
+		if (  req.user.Role === "Admin") {	
 		Teacher.find({}).
 		populate("user"). 
 		populate("phase").
@@ -371,22 +369,35 @@ user.post('/forgot', function(req, res, next) {
 			console.log(teacher)
 					res.render("listTeacher",{teachers: teacher})
 		 
-				})	});
+				})
+		} else {
+			res.redirect("/routes")
+		}	
+	});
 
 
 
 
 user.get("/list/demande",ensureAuthenticated,async  function(req,res){
+	if (  req.user.Role === "Admin") {
 	Teacher.find({Actif: false}).
 		populate("user"). 
 		exec(function(err,teacher){
 			console.log(teacher)
 				res.render("listDemande",{
 						teachers: teacher})
-					})	
+					})
+				} else {
+					res.redirect("/routes")
+				}		
 			});
 
 user.get("/list/students",ensureAuthenticated,async  function(req,res){
+	// this code zill be change 
+	//
+	//
+	//
+	if (  req.user.Firstname === "Admin") {
 	try{
 	
 		const user = await User.find({Role: "Student"});
@@ -410,7 +421,9 @@ user.get("/list/students",ensureAuthenticated,async  function(req,res){
 				message: err.message
 		})
 }
-
+} else {
+	res.redirect("/routes")
+}	
 });
 
 
@@ -418,16 +431,21 @@ user.get("/list/students",ensureAuthenticated,async  function(req,res){
 
 
 user.get("/list/Admins",ensureAuthenticated,  function(req,res){
+	if (  req.user.Role === "Admin") {
 User.find({Role: "Admin"},function(err, admin){
 	console.log(admin)
 	if (err) {return res.redirect("/admin")}
 	
 	res.render("listAdmins",{admins: admin})
 })
+
+} else {
+	res.redirect("/routes")
+}	
 });
 
 user.get("/static",ensureAuthenticated,  function(req,res){
-
+	if (  req.user.Role === "Admin") {
 	var CountQuestions;
 	var CountValidOne;
 	var CountValidTwo;
@@ -464,11 +482,13 @@ user.get("/static",ensureAuthenticated,  function(req,res){
 
 		res.render("static",{CountQuestions: CountQuestions, CountValidOne: CountValidOne,CountValidTwo: CountValidTwo,CountValidFinal: CountValidFinal});
 	}) 
-
+} else {
+	res.redirect("/routes")
+}
 	});
 	
 user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, next) {
- 
+	if (  req.user.Role === "Admin") {
 	Phase.findOneAndRemove( { _id: req.params._id } , function(err, phase) {
 			if (err) { return next(err); }
 			if (!phase) { return next(404); }
@@ -477,9 +497,13 @@ user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, nex
 			res.redirect("/admin")
 			
 		 
-		})});
+		})
+	} else {
+		res.redirect("/routes")
+	}
+	});
 		user.post("/admin/updatephase/:_id",ensureAuthenticated,   function(req, res, next) {
- 
+			if (  req.user.Role === "Admin") {
 			Phase.findOne({ _id: req.params._id } , function(err, phase) {
 					if (err) { return next(err); }
 					if (!phase) { return next(404); }
@@ -491,10 +515,14 @@ user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, nex
 					res.redirect("/admin")
 					
 				 
-				})});
+				})
+			} else {
+				res.redirect("/routes")
+			}
+			});
 		
 				user.post("/admin/updatelevel/:_id",ensureAuthenticated,   function(req, res, next) {
- 
+					if (  req.user.Role === "Admin") {
 					Level.findOne({ _id: req.params._id } , function(err, level) {
 							if (err) { return next(err); }
 							if (!level) { return next(404); }
@@ -504,11 +532,16 @@ user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, nex
 		
 							req.flash("error", "update ");
 							res.redirect("/admin")
-							
+					
 						 
-						})});
+						})
+					} else {
+						res.redirect("/routes")
+					}
+				});
 		user.get("/admin/deletelevel/:_id",ensureAuthenticated,   function(req, res, next) {
- 
+			if (  req.user.Role === "Admin") {
+	
 			Level.findOneAndRemove( { _id: req.params._id } , function(err, level) {
 					if (err) { return next(err); }
 					if (!level) { return next(404); }
@@ -517,10 +550,15 @@ user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, nex
 					res.redirect("/admin")
 					
 				 
-				})});
+				})
+			
+			} else {
+				res.redirect("/routes")
+			}
+		});
 				
 				user.get("/admin/:module/deleteexam/:id",ensureAuthenticated,   function(req, res, next) {
- 
+					if (  req.user.Role === "Admin") {
 					Exam.findOneAndRemove( { _id: req.params.id } , function(err, exam) {
 							if (err) { return next(err); }
 							if (!exam) { return next(404); }
@@ -529,10 +567,15 @@ user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, nex
 							res.redirect("/admin/exam/" + req.params.module)
 							
 						 
-						})});
+						})
+					
+					} else {
+						res.redirect("/routes")
+					}
+				});
 
 				user.post("/admin/updatesemster/:_id",ensureAuthenticated,  function(req, res, next) {
- 
+					if (  req.user.Role === "Admin") {
 					Semster.findOne({ _id: req.params._id } , function(err, semster) {
 							if (err) { return next(err); }
 							if (!semster) { return next(404); }
@@ -544,10 +587,16 @@ user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, nex
 							res.redirect("/admin")
 							
 						 
-						})});
+						})
+						
+					} else {
+						res.redirect("/routes")
+					}
+				});
 
 
 		user.get("/admin/:level/deletesemster/:_id",ensureAuthenticated,   function(req, res, next) {
+			if (  req.user.Role === "Admin") {
 			Module.find( { semster: req.params._id } , function(err, one) {
 		  one.forEach(function(delet){
 				console.log(delet._id)
@@ -569,11 +618,15 @@ user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, nex
 					res.redirect("/admin/phase/" + req.params.level)
 					
 				})
+			} else {
+				res.redirect("/routes")
+			}
 			});
 
 
 
 	user.get("/admin/phase/:level",ensureAuthenticated,async function(req,res){
+		if (  req.user.Role === "Admin") {
 		try{
 			const onelevel = await Level.findOne({_id: req.params.level});
 			const semster = await Semster.find({level: onelevel._id});
@@ -595,7 +648,11 @@ user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, nex
 			res.status(500).render("/uhOhPage",{
 					message: err.message
 			})
-}} );
+}
+} else {
+	res.redirect("/routes")
+}
+} );
 
 
 // this code will be delete
@@ -617,7 +674,7 @@ user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, nex
 	
 
 user.post("/admin/:level/:_id/updatemodule",ensureAuthenticated, function(req,res,next){
-  
+	if (  req.user.Role === "Admin") {
 	var  modulee = req.body.Module;
 	var  numberOfModule = req.body.NumberOfModule;
 Module.findOne({_id: req.params._id},function(err,modules){
@@ -641,7 +698,9 @@ Module.findOne({_id: req.params._id},function(err,modules){
 		}
 	});
 	});
-
+} else {
+	res.redirect("/routes")
+}
 
 	 });
 
@@ -649,7 +708,7 @@ Module.findOne({_id: req.params._id},function(err,modules){
 //req update semster
 
 user.post("/admin/:level/:_id/updatesemster",ensureAuthenticated, function(req,res,next){
-  
+	if (  req.user.Role === "Admin") {
 	var  semster = req.body.Semster;
 	var  numberOfSemster= req.body.NumberOfSemster;
 Semster.findOne({_id: req.params._id},function(err,semsters){
@@ -673,29 +732,36 @@ return  res.redirect('/admin/phase/' + req.params.level )
 		}
 	});
 	});
-
+} else {
+	res.redirect("/routes")
+}
 
 	 });
 
 
 
 user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
-	console.log("dakhel hena ya namiiii")
+	if (  req.user.Role === "Admin") {
+
 		Module.findOne({_id: req.params.id},function(err,onemodule){
 			if (!onemodule) {return res.redirect("/admin")}
-		 console.log(onemodule)
-			Exam.find({module: onemodule._id},function(err,exam){
-				console.log(exam)
+                 Exam.find({module: onemodule._id},function(err,exam){
+			
 					res.render("exam",{exams: exam,onemodules: onemodule}) 
 				
 			
-				})			})
+				})
+			})
+			} else {
+				res.redirect("/routes")
+			}
 	
 	});
 	
 		
   user.get("/admin/deletesemster/:_id",ensureAuthenticated,   function(req, res, next) {
-		Exam.findOneAndRemove( {semster: req.params._id } , function(err, exam) {
+	if (  req.user.Role === "Admin") {
+	Exam.findOneAndRemove( {semster: req.params._id } , function(err, exam) {
 			if (err) { return next(err); }
 		})
 		Semster.findOneAndRemove( { _id: req.params._id } , function(err, semster) {
@@ -706,10 +772,15 @@ user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 				res.redirect("/admin")
 				
 			 
-			})});
+			})
+		} else {
+			res.redirect("/routes")
+		}
+
+	});
 
 			user.get("/admin/:level/deletemodule/:_id",ensureAuthenticated,   function(req, res, next) {
-                
+				if (  req.user.Role === "Admin") {
 				Module.findOneAndRemove( { _id: req.params._id } , function(err, modules) {
 						if (err) { return next(err); }
 						if (!modules) { return next(404); }
@@ -718,7 +789,11 @@ user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 						return  res.redirect('/admin/phase/' + req.params.level ) 
 						
 					 
-					})});
+					})
+				} else {
+					res.redirect("/routes")
+				}
+			});
 			function ensureAuthenticated(req, res, next) {
 				if (req.isAuthenticated()) {
 				next();
@@ -775,6 +850,7 @@ user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 
 //this req for etat exam
 user.get("/exam/update/:link/etat/:id",function(req,res){
+	if (  req.user.Role === "Admin") {
 	Exam.findOne({_id: req.params.id},function(err,exam){
 		if (err){console.log("error bitchj ")}
 		if (exam){
@@ -788,10 +864,14 @@ user.get("/exam/update/:link/etat/:id",function(req,res){
 			res.redirect("/admin/exam/" + req.params.link)
 		}
 	})
+} else {
+	res.redirect("/routes")
+}
 })			
 //This req for updqte exam 
 	 
 user.post("/admin/update/:link/exam/:id",function(req,res){
+	if (  req.user.Role === "Admin") {
 	Exam.findOne({_id: req.params.id},function(err,exam){
 		if (err){console.log("error bitchj ")}
 		if (exam){
@@ -804,10 +884,14 @@ user.post("/admin/update/:link/exam/:id",function(req,res){
 			res.redirect("/admin/exam/" + req.params.link)
 		}
 	})
+} else {
+	res.redirect("/routes")
+}
 })	
 
 //This route for interface  exam display all question ref exam
 user.get("/admin/exam/question/:id",async function(req,res){
+	if (  req.user.Role === "Admin") {
 	try{
 	
 		const question = await Question.find({exam: req.params.id});
@@ -829,7 +913,9 @@ user.get("/admin/exam/question/:id",async function(req,res){
 				message: err.message
 		})
 }
-
+} else {
+	res.redirect("/routes")
+}
 })
 // this route for deversite of users
 user.get("/routes",function(req,res){
@@ -838,8 +924,8 @@ user.get("/routes",function(req,res){
 
 	} else if ( req.user.Role === "Student" ) {
   // this route will be change 
-	}else if ( req.user.Role === "Admin" ) {
-		res.redirect("/teacher")
+	} else if ( req.user.Role === "Admin" ) {
+		res.redirect("/admin")
 	}
 })
 module.exports = user;
