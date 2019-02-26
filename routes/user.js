@@ -115,7 +115,7 @@ user.post("/signup", function(req, res) {
 					semster: req.body.Semster,
 					user: newUser._id,
 		
-				});
+				});console.log("semster"+semster)
 				newStudent.save();
 				console.log(newStudent)
 			} else if ( ( newUser.Role === "Teacher")) {
