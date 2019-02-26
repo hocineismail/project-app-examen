@@ -11,6 +11,7 @@ var questionSchema = Schema({
  LevelOfQuestion:  { type: String },
  Difficulty: {type: String, required: true },
  NotValid:  { type: Boolean, default: false  },
+ Author: {type: String, required: true },
  IsValidOne:  { type: Boolean, default: false  },
  TeacherOne:  { type: String,  },
  IsValidTwo:  { type: Boolean, default: false  },
