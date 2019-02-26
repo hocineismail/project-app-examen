@@ -68,6 +68,7 @@ var levels;
 	})
 })
 
+ 
 user.post("/signup", function(req, res) {
 	
 	User.countDocuments({}, function(err, count) {
@@ -126,28 +127,20 @@ user.post("/signup", function(req, res) {
 				 });
 				 newTeacher.save();
 				 console.log(newTeacher)
-<<<<<<< HEAD
-<<<<<<< HEAD
-				 
-=======
-				 res.redirect("/")
->>>>>>> project
-=======
-				
->>>>>>> project
-			}
-			res.redirect("/")
+
 		 }
 		 res.redirect("/login")
-	});
-	});
+
+		}
+	})
  },passport.authenticate("login", {
 	 
 	successRedirect: "/",
 	failureRedirect: "/signup",
 	failureFlash: true
- }));})
- 
+ }));
+})
+})
  user.get("/logout", function(req, res) {
 	req.logout();
 	res.redirect("/");
@@ -352,20 +345,11 @@ user.post('/forgot', function(req, res, next) {
 
 // this url for interface teacher
    user.get("/teacher",ensureAuthenticated,function(req,res){
-<<<<<<< HEAD
-=======
-
->>>>>>> project
 	   if (req.user.Role === "Teacher" ) {
 		Teacher.find({user: req.user._id }).
 		populate("user").
 		exec(function(err,teacher){
-<<<<<<< HEAD
-=======
-		
-			
->>>>>>> project
-	 res.render("teacher/teacher",{teachers: teacher})
+				 res.render("teacher/teacher",{teachers: teacher})
 		})
 	   } else {
 		   //this link will do edit 
