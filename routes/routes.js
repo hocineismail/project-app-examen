@@ -252,55 +252,48 @@ function checkFileType(file, cb){
 });
 
 
-router.get("/teacher/valid",ensureAuthenticated,async function(req,res){
+router.get("/teacher/valid",async function(req,res){
 
   
     try{
-    
+     const phases =  await Phase.find({});
+     const levels =  await Level.find({});
+     const semsters =  await Semster.find({});
+     const modules =  await Module.find({});
       const question = await Question.find({IsValidFinal: false,NotValid: false});
       let responses = [];
       let exams = [];
     
     
   
-      for(let i = 0; i <= question.length; i++){
+      for(let i = 0; i < question.length; i++){
         let response = await Response.find({question: question[i]._id });
         responses.push(...response)
         let exam = await Exam.find({_id: question[i].exam });
         exams.push(...exam)
-
-        
-      };
-    }
-      catch(err){
-        res.status(500).render("/uhOhPage",{
-            message: err.message
-        })
-    }
-    try { 
-      let modulee = [];
-      for(let i = 0; i <= exams.length; i++){
-        let modulee = await Module.find({exam: exams[i]._id });
-        modules.push(...modulee)
+        };
+      console.log(exams)
    
-        console.log(modules.length)
-        console.log(exams.length)
-         };
-  
  
-          res.render("teacher/validation",{question: question,responses: responses,exam: exams} )
+          res.render("teacher/validation",{question: question,
+                                           responses: responses,
+                                            exam: exams,
+                                            phases: phases,
+                                            levels: levels,
+                                            semsters: semsters,
+                                            modules: modules   } )
       
-    }
-    catch(err){
-      res.status(500).render("/uhOhPage",{
-          message: err.message
-      })
-  }
+        }
+        catch(err){
+          res.status(500).render("/uhOhPage",{
+              message: err.message
+          })
+      }
 })
-  router.get("/teacher/notvalid",ensureAuthenticated,async function(req,res){
 
-  
-    try{
+//this route for question not valid
+  router.get("/teacher/notvalid",ensureAuthenticated,async function(req,res){
+ try{
     
       const question = await Question.find({NotValid: true});
       let responses = [];
