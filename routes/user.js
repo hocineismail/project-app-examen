@@ -13,6 +13,7 @@ var Pub = require("../models/pub");
 
  var Question = require("../models/question");
  var Teacher = require("../models/teacher");
+ var Response = require("../models/response");
  var Student = require("../models/student");
 var crypto = require("crypto");
 
@@ -766,4 +767,31 @@ user.post("/admin/update/:link/exam/:id",function(req,res){
 		}
 	})
 })	
+
+//This route for interface  exam display all question ref exam
+user.get("/admin/exam/question/:id",async function(req,res){
+	try{
+	
+		const question = await Question.find({exam: req.params.id});
+		let responses = [];
+
+	
+		for(let i = 0; i < question.length; i++){
+			
+			let response = await Response.find({question: question[i]._id });
+			responses.push(...response)
+			console.log("error is her", responses)
+		};
+
+		res.render("displayQuestion",{questions: question, responses: responses})
+		
+	}
+	catch(err){
+		res.status(500).render("/uhOhPage",{
+				message: err.message
+		})
+}
+
+})
+
 module.exports = user;
