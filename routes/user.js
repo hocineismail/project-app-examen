@@ -394,34 +394,17 @@ user.get("/list/demande",ensureAuthenticated,async  function(req,res){
 			});
 
 user.get("/list/students",ensureAuthenticated,async  function(req,res){
-	// this code zill be change 
-	//
-	//
-	//
-	if (  req.user.Role === "Admin") {
-	try{
-	
-		const user = await User.find({Role: "Student"});
-		let student = [];
-
-
-
-		for(let i = 0; i < user.length; i++){
-			let student = await Student.find({user: user[i]._id });
-			student.push(...student)
-		};
-
-				res.render("listStudent",{
-						users: user,
-					
-						students: student})
-		
-	}
-	catch(err){
-		res.status(500).render("/uhOhPage",{
-				message: err.message
-		})
-}
+	if (req.user.Role === "Admin") {
+		Student.find({}).
+		populate("user"). 
+		populate("Phase").
+		populate("Level").
+		exec(function(err,student){
+			console.log(student)
+					res.render("listStudent",{students: student})
+		 
+				})
+			
 } else {
 	res.redirect("/routes")
 }	
