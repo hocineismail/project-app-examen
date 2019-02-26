@@ -106,12 +106,13 @@ user.post("/signup", function(req, res) {
 	password: password,  
 });
 	newUser.save({},function(err, success){
-		if (err) { console.log( "ay tnaket azebiii ")}
+		if (err) { console.log( "this is error")}
 		if (success) {
 			if ( newUser.Role === "Student"){
 				var newStudent = new Student({
 					Phase: req.body.Phase,
 					Level: req.body.Level,
+					semster: req.body.Semster,
 					user: newUser._id,
 		
 				});
@@ -738,6 +739,38 @@ user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 			}
 			 
 		})	
+
+	
+
+		user.post("/searchlevelsignup",function(req, res){
+			if (req.body.Phase != undefined) { 
+				console.log(req.body.Phase);
+				Phase.findOne({_id: req.body.Phase}, function(err, phase){
+					Level.find({phase:  phase._id},function(err , data){
+					
+							res.send(data);
+					})
+				})
+			}
+			 
+		})	
+
+
+		user.post("/searchsemstersignup",function(req, res){
+			if (req.body.Level != undefined) { 
+				console.log(req.body.Level);
+				Level.findOne({_id: req.body.Level}, function(err, level){
+					if (!err) {
+					console.log(level)
+					Semster.find({level:  level._id},function(err , data){
+					
+							res.send(data);
+					}) }
+				})
+			}
+			 
+		})	
+
 //this req for etat exam
 user.get("/exam/update/:link/etat/:id",function(req,res){
 	Exam.findOne({_id: req.params.id},function(err,exam){
