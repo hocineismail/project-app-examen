@@ -314,50 +314,61 @@ router.get("/teacher/valid",async function(req,res){
 
 //this route for question not valid
   router.get("/teacher/notvalid",ensureAuthenticated,async function(req,res){
- try{
-    
-      const question = await Question.find({NotValid: true});
-      let responses = [];
-     
-  
-    
-  
-      for(let i = 0; i <= question.length; i++){
-        let response = await Response.find({question: question[i]._id });
-        responses.push(...response)
-       
-      };
-
-  
  
-          res.render("teacher/notvalid",{question: question,responses: responses})
-      
-    }
-    catch(err){
-      res.status(500).render("/uhOhPage",{
-          message: err.message
-      })
-  }
+    try{
+      const phases =  await Phase.find({});
+      const levels =  await Level.find({});
+      const semsters =  await Semster.find({});
+      const modules =  await Module.find({});
+       const question = await Question.find({NotValid: true});
+       let responses = [];
+       let exams = [];
+     
+     
+   
+       for(let i = 0; i < question.length; i++){
+         let response = await Response.find({question: question[i]._id });
+         responses.push(...response)
+         let exam = await Exam.find({_id: question[i].exam });
+         exams.push(...exam)
+         };
+       console.log(exams)
+    
   
-})
+           res.render("teacher/validation",{question: question,
+                                            responses: responses,
+                                             exam: exams,
+                                             phases: phases,
+                                             levels: levels,
+                                             semsters: semsters,
+                                             modules: modules   } )
+       
+         }
+         catch(err){
+           res.status(500).render("/uhOhPage",{
+               message: err.message
+           })
+       }
+ })
 
 router.get("/valid/question/:id",ensureAuthenticated, function(req,res){
   Question.findById({_id: req.params.id},function(err , question){
     if(question.IsValidOne != true) {
       question.IsValidOne = true,
-      //question.TeacherOne = req.user._id
+      question.TeacherOne = req.user.Firstname + " " + req.user.Lastname ;
       question.save(function(err, success){
         if (err){console.log("il ya une error ")}
       })
     } else if (question.IsValidTwo != true) {
       question.IsValidTwo = true
-       // question.TeacherOne = req.user._id
+      question.TeacherTwo = req.user.Firstname + " " + req.user.Lastname ;
+      console.log(question.TeacherTwo)
       question.save(function(err, success){
         if (err){console.log("il ya une error ")}
       })
     } else {
       question.IsValidFinal = true
-      // question.TeacherFinal = req.user._id
+     question.TeacherFinal = req.user.Firstname + " " + req.user.Lastname ;
      question.save(function(err, success){
        if (err){console.log("il ya une error ")}
      })

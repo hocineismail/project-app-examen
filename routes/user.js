@@ -126,11 +126,16 @@ user.post("/signup", function(req, res) {
 				 newTeacher.save();
 				 console.log(newTeacher)
 <<<<<<< HEAD
+<<<<<<< HEAD
 				 
 =======
 				 res.redirect("/")
 >>>>>>> project
+=======
+				
+>>>>>>> project
 			}
+			res.redirect("/")
 		 }
 		 res.redirect("/login")
 	});
