@@ -88,7 +88,7 @@ th, td {
   }
 }
 </style>
-<body>
+<body dir="rtl" style="background-color: rgb(240, 240, 240)">
 
   <div class="topnav" id="myTopnav">
     <a href="#home">حسابي</a>
@@ -118,16 +118,11 @@ th, td {
   <% }) %>
 </div>
 
-    <div class="container">
+    <div class="container" style="background-color: rgb(255, 255, 255);border: 1px solid black;border-radius: 8px; ;padding: 3%">
       <% if (teacher.Actif === true ) { %>
         <form action="/upload" method="post" enctype="multipart/form-data">
           <div class="row">
-              <div class="col">
-                <label style="font-size: 20px">اختر المستوى  </label>
-                  <select name="Level" id="level"  class="form-control"  dir="rtl" >
-                    <option value="" disabled selected>المستوى </option>
-                    </select>
-                </div>
+             
                <div class="col">
                   <label style="font-size: 20px"> اختر المرحلة </label>
                   <select class="form-control" dir="rtl"  id="phase" required>
@@ -136,23 +131,29 @@ th, td {
                          <option><%= phase.Phase %> </option> 
                       <% }) %></select>
                </div>
-             
+               <div class="col">
+                  <label style="font-size: 20px">اختر المستوى  </label>
+                    <select name="Level" id="level"  class="form-control"  dir="rtl" >
+                      <option value="" disabled selected>المستوى </option>
+                      </select>
+                  </div>
         </div>
             
         <div class="row">
-           
             <div class="col">
-                <label style="font-size: 20px"> اختر المادة </label>
-   <select name="Module" id="module"  class="form-control"  dir="rtl" placeholder=" اختر المادة ">
-    <option value="" disabled selected>المادة</option>
-    </select>
-             </div>
-             <div class="col">
                 <label style="font-size: 20px"> اختر الفصل الدراسي </label>
                 <select name="Semster" id="semster"  class="form-control"  dir="rtl" >
                   <option value="" disabled selected>الفصل الدراسي</option>
                   </select>
             </div>
+            <div class="col">
+           
+              <label style="font-size: 20px"> اختر المادة </label>
+   <select name="Module" id="module"  class="form-control"  dir="rtl" placeholder=" اختر المادة ">
+    <option value="" disabled selected>المادة</option>
+    </select>
+             </div>
+            
      </div>
      <hr>
   
@@ -212,8 +213,8 @@ th, td {
     <h4 style="font-family: 'Cairo', sans-serif;padding-top: 20px">ادخل الاجوبة</h4>
     <div class="row">
       
-        <div class="col-md-3" style="border: 1px solid rgb(218, 54, 54);border-radius: 8px;background-color: rgb(255, 212, 212) ">  
-            <h6 style="font-family: 'Cairo', sans-serif;padding-top: 20px">ادخل اجابة خاطئة‬‎</h6>
+        <div class="col-md-3"  style="border: 1px solid rgb(188, 233, 188);border-radius: 8px;background-color: rgb(237, 255, 236)"> 
+            <h6 style="font-family: 'Cairo', sans-serif;padding-top: 20px">ادخل الجواب الاول </h6>
       <div class="file-field input-field">
         <div class="btn grey">
           <span>تحميل صورة</span>
@@ -227,8 +228,8 @@ th, td {
 
 
     </div>
-    <div class="col-md-3" style="border: 1px solid rgb(218, 54, 54);border-radius:8px;background-color: rgb(255, 212, 212) ">  
-        <h6 style="font-family: 'Cairo', sans-serif;padding-top: 20px">ادخل اجابة خاطئة‬‎</h6>
+    <div class="col-md-3"  style="border: 1px solid rgb(188, 233, 188);border-radius: 8px;background-color: rgb(237, 255, 236)"> 
+        <h6 style="font-family: 'Cairo', sans-serif;padding-top: 20px">ادخل  الجواب الثاني</h6>
       <div class="file-field input-field">
         <div class="btn grey">
           <span>تحميل صورة</span>
@@ -240,8 +241,7 @@ th, td {
       </div>
       <textarea style="text-align:right"  name="ResponseText2"></textarea>
     </div>
-    <div class="col-md-3" style="border: 1px solid rgb(218, 54, 54);border-radius: 8px;background-color: rgb(255, 212, 212) ">  
-        <h6 style="font-family: 'Cairo', sans-serif;padding-top: 20px">ادخل اجابة خاطئة‬‎</h6>
+    <div class="col-md-3"  style="border: 1px solid rgb(188, 233, 188);border-radius: 8px;background-color: rgb(237, 255, 236)">        <h6 style="font-family: 'Cairo', sans-serif;padding-top: 20px">ادخل  الجواب الثالث</h6>
       <div class="file-field input-field">
         <div class="btn grey">
           <span>تحميل صورة</span>
@@ -254,8 +254,8 @@ th, td {
       </div>
       <textarea style="text-align:right" name="ResponseText3" ></textarea>
     </div>
-    <div class="col-md-3"  style="border: 1px solid green;border-radius: 8px;background-color: rgb(237, 255, 236)"> 
-        <h6 style="font-family: 'Cairo', sans-serif;padding-top: 20px">ادخل اجابة الصحيحة</h6>
+    <div class="col-md-3"  style="border: 1px solid rgb(188, 233, 188);border-radius: 8px;background-color: rgb(237, 255, 236)"> 
+        <h6 style="font-family: 'Cairo', sans-serif;padding-top: 20px">ادخل  الجواب الرابع</h6>
       <div class="file-field input-field">
         <div class="btn grey">
           <span>تحميل صورة</span>
@@ -271,9 +271,36 @@ th, td {
    
   
   </div>
+  <div class="col-md-12" > 
+      <h4 style="font-family: 'Cairo', sans-serif;padding-top: 20px"> اختر الاجابة الصحيحة من بين الاجابات المدخلة</h4>
+  
+ 
 
-     
-       
+</div>
+  <div class="form-check col-md-3">
+      <input class="form-check-input" type="radio" name="IsCorrect" id="exampleRadios1" value="One" checked>
+      <label class="form-check-label" for="exampleRadios1">
+           الجواب الاول 
+      </label>
+    </div> 
+    <div class="form-check  col-md-3">
+      <input class="form-check-input" type="radio" name="IsCorrect" id="exampleRadios2" value="Two">
+      <label class="form-check-label" for="exampleRadios2">
+          الجواب الثاني 
+      </label>
+    </div>
+    <div class="form-check  col-md-3">
+        <input class="form-check-input" type="radio" name="IsCorrect" id="exampleRadios3" value="Three">
+        <label class="form-check-label" for="exampleRadios3">
+            الجواب الثالث
+        </label>
+      </div>
+      <div class="form-check  col-md-3">
+          <input class="form-check-input" type="radio" name="IsCorrect" id="exampleRadios4" value="Four">
+          <label class="form-check-label" for="exampleRadios4">
+              الجواب الرابع
+          </label>
+        </div>  
           
             
   </div>
@@ -292,8 +319,8 @@ th, td {
     </div>
     <label></label>
     <div class="row">
-      <div class="col"> <button type="submit" class="btn btn-success form-control"> ارسال السؤال </button> </div>
-      <div class="col"> </div>
+      <div class="col" > <button type="submit" class="btn btn-success form-control"> ارسال السؤال </button> </div>
+      
     </div>
    
 
@@ -303,7 +330,7 @@ th, td {
 لا يمكنك اضافة سؤال لانه لم يتم تفعيل حسابك من طرف الادارة
   </div>
   <% }  %>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br>
     </div>
       
     <script type="text/javascript" src="../editor-text/nicEdit.js"></script>
