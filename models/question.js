@@ -11,13 +11,25 @@ var questionSchema = Schema({
  LevelOfQuestion:  { type: String },
  Difficulty: {type: String, required: true },
  NotValid:  { type: Boolean, default: false  },
- Author: {type: String, required: true },
+ Author: {
+  type: Schema.Types.ObjectId,
+  ref: 'User'
+},
  IsValidOne:  { type: Boolean, default: false  },
- TeacherOne:  { type: String,  },
+ TeacherOne:  {
+  type: Schema.Types.ObjectId,
+  ref: 'User'
+},
  IsValidTwo:  { type: Boolean, default: false  },
- TeacherTwo:  { type: String,  },
+ TeacherTwo:  {
+  type: Schema.Types.ObjectId,
+  ref: 'User'
+},
  IsValidFinal:  { type: Boolean, default: false  },
- TeacherFinal:  { type: String,  },
+ TeacherFinal:  {
+  type: Schema.Types.ObjectId,
+  ref: 'User'
+},
  ErrorMessage:  { type: String, },
  createdAt: { type: Date, default: Date.now },
  exam: {

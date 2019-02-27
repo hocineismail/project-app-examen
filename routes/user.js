@@ -116,7 +116,7 @@ user.post("/signup", function(req, res) {
 					semster: req.body.Semster,
 					user: newUser._id,
 		
-				});
+				});console.log("semster"+semster)
 				newStudent.save();
 				
 			} else if ( ( newUser.Role === "Teacher")) {
@@ -393,7 +393,10 @@ user.get("/list/demande",ensureAuthenticated,async  function(req,res){
 			});
 
 user.get("/list/students",ensureAuthenticated,async  function(req,res){
+<<<<<<< HEAD
 
+=======
+>>>>>>> project
 	if (req.user.Role === "Admin") {
 		Student.find({}).
 		populate("user"). 
