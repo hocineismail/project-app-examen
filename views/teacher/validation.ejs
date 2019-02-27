@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html >
 <title>Admin</title><head> 
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link href="https://fonts.googleapis.com/css?family=Cairo" rel="stylesheet">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
-<script type="text/javascript" src="../script.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="https://unpkg.com/pell/dist/pell.min.css">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-</head>
-</head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Lalezar" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cairo" rel="stylesheet">
+    </head>
 <style>
 body {
     font-family: 'Cairo', sgit ans-serif;
@@ -86,6 +89,57 @@ th, td {
 span {
   font-size: 20px
 }
+
+  body {
+    font-family: 'Cairo', sans-serif;
+  }
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #ddd;
+
+}
+
+th, td {
+  text-align: right;  padding: 8px;
+
+}
+tr:nth-child(even){background-color: #f2f2f2}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color:  rgb(73, 73, 73);
+}
+
+li {
+  float: left;
+  font-size: 20px
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color:  rgb(114, 114, 114);
+  color: #f2f2f2;
+  text-decoration: none
+}
+.activee  {
+  background-color: rgb(73, 73, 73);
+  color: #f2f2f2;
+  text-decoration: none
+}
+
+</style>
 </style>
 <body>
 
@@ -118,30 +172,8 @@ span {
   <% }) %>
 </div>
 
-<h1> this div for exam </h1>
-<div class="w3-container">
-  <h2>W3.CSS Login Modal</h2>
-  <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-green w3-large">Login</button>
+<!-- Button trigger modal -->
 
-  <div id="id01" class="w3-modal">
-    <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
-
-      <div class="w3-center"><br>
-        <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
-        <img src="img_avatar4.png" alt="Avatar" style="width:30%" class="w3-circle w3-margin-top">
-      </div>
-
-      
-
-      <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
-        <button onclick="document.getElementById('id01').style.display='none'" type="button" class="w3-button w3-red">Cancel</button>
-       
-      </div>
-
-    </div>
-  </div>
-</div>
-         
 <% exam.forEach(function(exams) {%>
   <p> <%= exams._id %> </p>
   
@@ -149,38 +181,82 @@ span {
 <div class="container">
 
     <% question.forEach(function(question) {%>
-      <% var user = currentUser.Firstname + " " + currentUser.Lastname %>
-      <%= user %> <br>
-      <% if (  (question.Author != user) &&   (question.TeacherOne != user)  &&   (question.TeacherTwo != user)  &&  (question.TeacherFinal != user))  { %>
-      <div class="card-deck">
+      <!-- this algo for comparison  -->
+      <% if(question.TeacherOne !=  null) {  %>
+    <% var userOne = JSON.stringify(question.TeacherOne._id) %>
+      <% } else {  %>
+        <%  var userOne = ""  %>
+     <% } %>
+
+     <% if(question.TeacherTwo !=  null) {  %>
+      <%  var userTwo = JSON.stringify(question.TeacherTwo._id)%>
+    <% } else {  %>
+      <%  var userTwo = "" %>
+   <% } %>
+
+   <% if(question.TeacherFinal !=  null) {  %>
+    <%  var userFinal = JSON.stringify(question.TeacherFinal._id)%>
+  <% } else {  %>
+    <%   var userFinal = "" %>
+ <% } %>
+
+
+
+      <% if ( 
+             (JSON.stringify(question.Author._id) != JSON.stringify(currentUser._id))
+       &&   (userOne != JSON.stringify(currentUser._id) )  
+       &&   (userTwo != JSON.stringify(currentUser._id))  
+       &&  (userFinal != JSON.stringify(currentUser._id)) 
+       )  { %>
+     
+        <div class="card-deck" style="padding-bottom: 3%;" >
          
-          <div class="card">
+          <div class="card" style="padding: 3%;" >
         
-            <div class="card-body">
+            <div class="card-body" >
             
-              <div class="row"> 
-              <div class="col-md-12">
-                 
-              <p><span >عنوان الدرس</span> :  <%= question.NameOfCourse %>   </p>
-              <p >  <span >نوع السؤال</span> : <%= question.TypeOfQuestion %> </p>
-              <p><span >الوحد </span> :  <%= question.Chapiter %> </p>
-              <p >  <span >درجة السؤال</span> : <%= question.Difficulty %></p>
-              <p><span > السؤال</span>  : <%- question.Question %>  </p>
+              <div class="row" dir="rtl"> 
+              <div class="col-md-12" >
+                     <div class="col-md-6"> 
+                          <h4><span style="border-bottom: 2px solid black">عنوان الدرس</span> :  <%= question.NameOfCourse %>   </h4>
+                        <h4 >  <span style="border-bottom: 2px solid black">نوع السؤال</span> : <%= question.TypeOfQuestion %> </h4>
+                    </div>
+                    <div class="col-md-6"> 
+                        <h4><span style="border-bottom: 2px solid black">الوحد </span> :  <%= question.Chapiter %> </h4>
+                        <h4 >  <span style="border-bottom: 2px solid black">درجة السؤال</span> : <%= question.Difficulty %></h4>
+                     </div>
              
             
-              <% if (question.QuestionImage != "") {%>
-                <img src="/uploads/<%= question.QuestionImage %>" width="80%">
-                <br>
-              <br>
-                <%}%>
+              
               </div>
              
-              
+              <% i = 0 %>
+              <div class="col-md-12"> 
+                      <h4> السؤال  :  </h4>
+                   <div style="  border:1px solid black;   border-radius: 8px; margin: 2%;padding: 2%"> 
+               
+                        <h5> <%- question.Question %></h5>
+                           <% if (question.QuestionImage != "") {%>
+                          <img src="/uploads/<%= question.QuestionImage %>" width="80%">
+                      <br>
+                       <br>
+                        <%}%>
+                   </div>
+              </div>
               <% responses.forEach(function(response) {%>
                
                 <% if (JSON.stringify(question._id) == JSON.stringify(response.question)) {%>
-              <div class="col-md-6"> 
-              
+                  
+              <div class="col-md-6" > 
+                
+            <div style="  border:1px solid black;
+            border-radius: 8px; margin: 2%;padding: 2%"> 
+                <% i = i +1 %>
+                <% if (response.IsCorrect === true ) { %>
+              <p style="color: green">الجواب <%= i  %> </p>
+              <% } else { %>
+                <p style="color: red">الجواب <%= i  %></p>
+                <% } %>
                   <% if (response.ResponseImage != "") {%>
                    
                     <img src="/uploads/<%= response.ResponseImage %>" width="80%">  
@@ -188,26 +264,103 @@ span {
                   <%if  (response.ResponseText != "") {%>
                 <p>  <%= response.ResponseText  %>  </p> 
                   <%}%>
-                
+                </div>
               </div>
                 <%}%>
+               
+            
           <%})%> 
           
+        
+            <div class="col-md-12" > 
+                <h4> الاجابة النموذجية:  </h4>
+                <div style="  border:1px solid black;
+                border-radius: 8px; margin: 2%;padding: 2%"> 
+             
+                  <h5> <%- question.Response %></h5>
+              
             </div>
+            
+            <div class="col-md-12" > 
+                <div class="col-md-3" > 
+                    <h4> اسم المعلم المدخل:  </h4>
+                    <div style="  border:1px solid black;
+                    border-radius: 8px; margin: 2%;padding: 2%"> 
+                 
+                      <h5> <%= question.Author.Firstname +" " +  question.Author.Lastname  %></h5>
+                  
+                </div> </div>
+                <div class="col-md-3" > 
+                    <h4> اسم المعلم المراقب الاول:  </h4>
+                    <div style="  border:1px solid black;
+                    border-radius: 8px; margin: 2%;padding: 2%"> 
+                    <% if ( question.TeacherOne != null) { %>
+                      <h5><%= question.TeacherOne.Firstname +" " + question.TeacherOne.Lastname %></h5>
+                   <% } else { %>
+                   <h5></h5>
+                   <% } %>
+                </div> </div>
+                <div class="col-md-3" > 
+                    <h4> اسم المعلم المراقل الثاني:  </h4>
+                    <div style="  border:1px solid black;
+                    border-radius: 8px; margin: 2%;padding: 2%"> 
+                  <% if ( question.TeacherTwo != null) { %>
+                      <h5> <%= question.TeacherTwo.Firstname +" " + question.TeacherTwo.Lastname  %></h5>
+                      <% } else { %>
+                        <h5></h5>
+                        <% } %>
+                </div> </div>
+                <div class="col-md-3" > 
+                    <h4> اسم المعلم المدقق:  </h4>
+                    <div style="  border:1px solid black;
+                    border-radius: 8px; margin: 2%;padding: 2%"> 
+                    <% if ( question.TeacherFinal != null) { %>
+                      <h5> <%= question.TeacherFinal.Firstname +" " + question.TeacherFinal.Lastname  %></h5>
+                      <% } else { %>
+                        <h5></h5>
+                        <% } %>
+                </div> </div>
               <p class="card-text" style="text-align: center"><small class="text-muted"><%= question.createdAt %></small></p>
-            </div>
+            </div> </div>
             <hr>
-            <div style="margin: 20px"> 
-              <form action="/invalid/question/<%= question._id %>" method="post">
-                <textarea name="message"></textarea>
-                <button class="btn btn-danger" style="width: 100px" > button 1 </button>
-              </form>
            
-            <a href="/valid/question/<%= question._id %>" class="btn  btn-success" style="width: 100px" > validi </a>
           </div>
-          </div>
-          
+          <div style="margin: 20px"> 
+           
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#<%= question._id %>exampleModal">
+                Launch demo modal
+              </button>
+              
+              <!-- Modal -->
+              <div class="modal fade" id="<%= question._id %>exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content" >
+                        <div class="modal-header">
+                          
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left" >
+                            <span aria-hidden="true">&times;  الغاء</span>
+                          </button>
+                    </div><form action="/invalid/question/<%= question._id %>" method="post">
+                    <div class="modal-body">
+                        
+                          <textarea name="message" class="form-control" style="text-align: right"></textarea>
+                        
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div></form>
+                  </div>
+                </div>
+              </div>
+                     
+          <a href="/valid/question/<%= question._id %>" class="btn  btn-success" style="width: 100px" > validi </a>
         </div>
+        </div>       
+      </div>
+       
+   
+</div>
       
         <%  } %>
         <%})%> 
@@ -218,7 +371,10 @@ span {
 
 
 
-
+ <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+ <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+ 
 
 
 
@@ -233,10 +389,5 @@ span {
       }
       </script>
       
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.22/vue.js"></script>
-    
-     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-</body>
+   </body>
 </html>
