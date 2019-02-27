@@ -5,7 +5,7 @@ var SALT_FACTOR = 10;
 var userSchema = mongoose.Schema({
     Firstname: {type: String, },
     Lastname: {type: String, },
-    Birthday: {type: Date , },
+    Birthday: {type: Date},
     Sexe: {type: String  },
     Role: {type: String  },
     Address: {type: String, },

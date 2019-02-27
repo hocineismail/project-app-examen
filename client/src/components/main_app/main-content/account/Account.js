@@ -16,7 +16,7 @@ class Account extends Component {
     return (
       <div className="account">
         <AccountInformations userData={this.props.userData} />
-        <ExamsTable examsData={this.props.userData.exams} />
+        <ExamsTable examsData={this.props.userData.exams} userName={this.props.userData.Firstname + ' ' + this.props.userData.Lastname} />
       </div>
     )
   }
