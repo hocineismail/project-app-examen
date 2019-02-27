@@ -116,7 +116,7 @@ user.post("/signup", function(req, res) {
 					semster: req.body.Semster,
 					user: newUser._id,
 		
-				});
+				});console.log("semster"+semster)
 				newStudent.save();
 				
 			} else if ( ( newUser.Role === "Teacher")) {
@@ -350,7 +350,7 @@ user.post('/forgot', function(req, res, next) {
 		Teacher.find({user: req.user._id }).
 		populate("user").
 		exec(function(err,teacher){
-				 res.render("teacher/teacher",{teachers: teacher})
+		 res.render("teacher/teacher",{teachers: teacher})
 		})
 	   } else {
 		   //this link will do edit 
@@ -393,34 +393,21 @@ user.get("/list/demande",ensureAuthenticated,async  function(req,res){
 			});
 
 user.get("/list/students",ensureAuthenticated,async  function(req,res){
-	// this code zill be change 
-	//
-	//
-	//
-	if (  req.user.Role === "Admin") {
-	try{
-	
-		const user = await User.find({Role: "Student"});
-		let student = [];
+<<<<<<< HEAD
 
-
-
-		for(let i = 0; i < user.length; i++){
-			let student = await Student.find({user: user[i]._id });
-			student.push(...student)
-		};
-
-				res.render("listStudent",{
-						users: user,
-					
-						students: student})
-		
-	}
-	catch(err){
-		res.status(500).render("/uhOhPage",{
-				message: err.message
-		})
-}
+=======
+>>>>>>> project
+	if (req.user.Role === "Admin") {
+		Student.find({}).
+		populate("user"). 
+		populate("Phase").
+		populate("Level").
+		exec(function(err,student){
+			console.log(student)
+					res.render("listStudent",{students: student})
+		 
+				})
+			
 } else {
 	res.redirect("/routes")
 }	
@@ -894,7 +881,7 @@ user.get("/admin/exam/question/:id",async function(req,res){
 	if (  req.user.Role === "Admin") {
 	try{
 	
-		const question = await Question.find({exam: req.params.id});
+		const question = await Question.find({exam: req.params.id}).populate("Author").populate("TeacherOne").populate("TeacherTwo").populate("TeacherFinal");
 		let responses = [];
 
 	

@@ -196,7 +196,7 @@ function checkFileType(file, cb){
             image5 = req.files.image5[0].filename
                  }   
                  console.log("hena pas d erreur")   
-                 var Author = req.user.Firstname + " " + req.user.Lastname ;  
+                 var Author = req.user._id  ;  
           var  newQuestion = new Question ({
               Question: req.body.Question,
               Response: req.body.Response,
@@ -391,24 +391,24 @@ router.get("/teacher/valid",async function(req,res){
 router.get("/valid/question/:id",ensureAuthenticated, function(req,res){
   if ( req.user.Role === "Teacher") { 
   Question.findById({_id: req.params.id},function(err , question){
-    var user = req.user.Firstname + " " + req.user.Lastname 
+    var user = req.user._id 
     if ( (user != question.TeacherOne)  && (user != question.TeacherTwo)  && (user != question.TeacherFinal)) { 
     if(question.IsValidOne != true) {
       question.IsValidOne = true,
-      question.TeacherOne = req.user.Firstname + " " + req.user.Lastname ;
+      question.TeacherOne = req.user._id  ;
       question.save(function(err, success){
         if (err){console.log("il ya une error ")}
       })
     } else if (question.IsValidTwo != true) {
       question.IsValidTwo = true
-      question.TeacherTwo = req.user.Firstname + " " + req.user.Lastname ;
+      question.TeacherTwo = req.user._id ;
       console.log(question.TeacherTwo)
       question.save(function(err, success){
         if (err){console.log("il ya une error ")}
       })
     } else {
       question.IsValidFinal = true
-     question.TeacherFinal = req.user.Firstname + " " + req.user.Lastname ;
+     question.TeacherFinal = req.user._id  ;
      question.save(function(err, success){
        if (err){console.log("il ya une error ")}
      })
