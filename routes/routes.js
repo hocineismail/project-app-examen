@@ -349,12 +349,16 @@ router.get("/teacher/valid",async function(req,res){
   router.get("/teacher/notvalid",ensureAuthenticated,async function(req,res){
     if ( req.user.Role === "Teacher") { 
     try{
-      var user = req.user.Firstname + " " + req.user.Lastname ;
+      var user = req.user._id ;
       const phases =  await Phase.find({});
       const levels =  await Level.find({});
       const semsters =  await Semster.find({});
       const modules =  await Module.find({});
-       const question = await Question.find({NotValid: true,Author: user });
+       const question = await Question.find({NotValid: true,Author: user }).
+                                       populate("Author").
+                                       populate("teacherOne").
+                                       populate("TeacherTwo").
+                                       populate("TeacherFinal");
        let responses = [];
        let exams = [];
      
@@ -366,10 +370,10 @@ router.get("/teacher/valid",async function(req,res){
          let exam = await Exam.find({_id: question[i].exam });
          exams.push(...exam)
          };
-       console.log(exams)
+       console.log(question)
     
   
-           res.render("teacher/validation",{question: question,
+           res.render("teacher/notvalid",{question: question,
                                             responses: responses,
                                              exam: exams,
                                              phases: phases,
@@ -434,7 +438,7 @@ router.post("/invalid/question/:id",ensureAuthenticated, function(req,res){
       question.IsValidTwo = false,
       question.NotValid = true,
       question.ErrorMessage = req.body.message,
-      //question.TeacherFinal = req.user._id
+      question.TeacherFinal = req.user._id
       question.save(function(err, success){
         if (err){console.log("il ya une error ")}
       })
