@@ -21,11 +21,10 @@ class Submit extends React.Component {
       Level: document.querySelector('#Level').value,
       semster: document.querySelector('#semster').value
     }
+    console.log('BIRTHDAY : ', new Date(body.Birthday).toISOString())
     let password = document.querySelector('#Password').value
     if (password !== '') {
-      console.log('PASSWORD')
       body.password = password
-      console.log(body.password)
     }
 
     this.props.postUserData(window.localStorage.getItem('_id'), body)

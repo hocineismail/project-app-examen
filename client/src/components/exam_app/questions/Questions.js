@@ -23,6 +23,7 @@ class Questions extends Component {
 
     this.state = {
       index: 0,
+      pureQuestions: questions,
       questions: questions.map((q, k) => {
         return (
           <Question
@@ -183,14 +184,19 @@ class Questions extends Component {
       this.setState({
         redirection: true
       })
-      window.localStorage.removeItem('0')
-      window.localStorage.removeItem('1')
-      window.localStorage.removeItem('2')
-      window.localStorage.removeItem('3')
+      for (let i = 0; i < this.state.pureQuestions.length; i++) {
+        window.localStorage.removeItem(i)
+      }
       window.localStorage.removeItem('time')
     }
   }
 
+  componentWillUnmount() {
+    for (let i = 0; i < this.state.pureQuestions.length; i++) {
+      window.localStorage.removeItem(i)
+    }
+    window.localStorage.removeItem('time')
+  }
   render() {
     let questionSection =
       this.state.index < this.state.questions.length ? (
@@ -208,10 +214,7 @@ class Questions extends Component {
 
     return !this.state.redirection ? (
       <div className="exam-questions">
-        <CountDown
-          date={this.state.time}
-          renderer={this.countDownRenderer}
-        />
+        <CountDown date={this.state.time} renderer={this.countDownRenderer} />
         <QuestionCounter
           totalQuestions={this.state.questions.length}
           questionNumber={this.state.index + 1}

@@ -13,6 +13,7 @@ const Response = require('../models/response')
 
 const _ = require('lodash')
 
+
 function returnErrorMessage(res, err, statusCode) {
   return res.status(statusCode).json({
     type: 'error',
@@ -29,6 +30,7 @@ app.get('/:id', (req, res) => {
     if (!user) {
       return returnErrorMessage(res, err, 204)
     }
+
     Student.findOne({ user: id })
       .populate('Level')
       .populate('semster')
@@ -46,8 +48,7 @@ app.get('/:id', (req, res) => {
           'Phone',
           'email',
           'Phase',
-          'Level',
-          'semster'
+          'Level'
         ])
         let studentData = _.pick(student, [
           'Phase',
@@ -87,7 +88,6 @@ app.post('/:id', (req, res) => {
     'Phone',
     'password'
   ])
-  console.log(bodyUser)
   let bodyStudent = _.pick(req.body, ['Phase', 'Level', 'semster'])
 
   updateUser(id, bodyUser)
