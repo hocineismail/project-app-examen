@@ -118,67 +118,128 @@ span {
 </div>
 
 
-<div class="container">
 
-    <% question.forEach(function(question) {%>
-      <div class="card-deck">
-         
-          <div class="card">
-        
-            <div class="card-body">
-            
-              <div class="row"> 
-              <div class="col-md-12">
-                 
-              <p><span >عنوان الدرس</span> :  <%= question.NameOfCourse %>   </p>
-              <p >  <span >نوع السؤال</span> : <%= question.TypeOfQuestion %> </p>
-              <p><span >الوحد </span> :  <%= question.Chapiter %> </p>
-              <p >  <span >درجة السؤال</span> : <%= question.Difficulty %></p>
-              <p><span > السؤال</span>  : <%- question.Question %>  </p>
-             
-            
-              <% if (question.QuestionImage != "") {%>
-                <img src="/uploads/<%= question.QuestionImage %>" width="80%">
-                <br>
-              <br>
-                <%}%>
-              </div>
-             
-              
-              <% responses.forEach(function(response) {%>
-               
-                <% if (JSON.stringify(question._id) == JSON.stringify(response.question)) {%>
-              <div class="col-md-6"> 
-              
-                  <% if (response.ResponseImage != "") {%>
-                   
-                    <img src="/uploads/<%= response.ResponseImage %>" width="80%">  
-                  <%}%>
-                  <%if  (response.ResponseText != "") {%>
-                <p>  <%= response.ResponseText  %>  </p> 
-                  <%}%>
-                
-              </div>
-                <%}%>
-          <%})%> 
-          
-            </div>
-              <p class="card-text" style="text-align: center"><small class="text-muted"><%= question.createdAt %></small></p>
-            </div>
-            <hr>
-            <div style="margin: 20px"> 
-            <button class="btn btn-danger" style="width: 100px" > button 1 </button>
-            <a href="/valid/question/<%= question._id %>" class="btn  btn-success" style="width: 100px" > validi </a>
-          </div>
-          </div>
-          
-        </div>
-      
+
+
+<div class="container"  >
+
+  <% questions.forEach(function(question) {%>
+    <div class="card-deck" style="padding-bottom: 3%;" >
        
+        <div class="card" style="padding: 3%;" >
+      
+          <div class="card-body" >
+          
+            <div class="row" dir="rtl"> 
+            <div class="col-md-12" >
+                   <div class="col-md-6"> 
+                        <h4><span style="border-bottom: 2px solid black">عنوان الدرس</span> :  <%= question.NameOfCourse %>   </h4>
+                      <h4 >  <span style="border-bottom: 2px solid black">نوع السؤال</span> : <%= question.TypeOfQuestion %> </h4>
+                  </div>
+                  <div class="col-md-6"> 
+                      <h4><span style="border-bottom: 2px solid black">الوحد </span> :  <%= question.Chapiter %> </h4>
+                      <h4 >  <span style="border-bottom: 2px solid black">درجة السؤال</span> : <%= question.Difficulty %></h4>
+                   </div>
+           
+          
+            
+            </div>
+           
+            <% i = 0 %>
+            <div class="col-md-12"> 
+                    <h4> السؤال  :  </h4>
+                 <div style="  border:1px solid black;   border-radius: 8px; margin: 2%;padding: 2%"> 
+             
+                      <h5> <%- question.Question %></h5>
+                         <% if (question.QuestionImage != "") {%>
+                        <img src="/uploads/<%= question.QuestionImage %>" width="80%">
+                    <br>
+                     <br>
+                      <%}%>
+                 </div>
+            </div>
+            <% responses.forEach(function(response) {%>
+             
+              <% if (JSON.stringify(question._id) == JSON.stringify(response.question)) {%>
+                
+            <div class="col-md-6" > 
+          <div style="  border:1px solid black;
+          border-radius: 8px; margin: 2%;padding: 2%"> 
+              <% i = i +1 %>
+              <% if (response.IsCorrect === true ) { %>
+            <p style="color: green">الجواب <%= i  %> </p>
+            <% } else { %>
+              <p style="color: red">الجواب <%= i  %></p>
+              <% } %>
+                <% if (response.ResponseImage != "") {%>
+                 
+                  <img src="/uploads/<%= response.ResponseImage %>" width="80%">  
+                <%}%>
+                <%if  (response.ResponseText != "") {%>
+              <p>  <%= response.ResponseText  %>  </p> 
+                <%}%>
+              </div>
+            </div>
+              <%}%>
+             
+          
         <%})%> 
+        
+      
+          <div class="col-md-12" > 
+              <h4> الاجابة النموذجية:  </h4>
+              <div style="  border:1px solid black;
+              border-radius: 8px; margin: 2%;padding: 2%"> 
+           
+                <h5> <%- question.Response %></h5>
+            
+          </div>
+          
+          <div class="col-md-12" > 
+              <div class="col-md-3" > 
+                  <h4> اسم المعلم المدخل:  </h4>
+                  <div style="  border:1px solid black;
+                  border-radius: 8px; margin: 2%;padding: 2%"> 
+               
+                    <h5> <%= question.Author %></h5>
+                
+              </div> </div>
+              <div class="col-md-3" > 
+                  <h4> اسم المعلم المراقب الاول:  </h4>
+                  <div style="  border:1px solid black;
+                  border-radius: 8px; margin: 2%;padding: 2%"> 
+               
+                    <h5> <%= question.TeacherOne %></h5>
+                
+              </div> </div>
+              <div class="col-md-3" > 
+                  <h4> اسم المعلم المراقل الثاني:  </h4>
+                  <div style="  border:1px solid black;
+                  border-radius: 8px; margin: 2%;padding: 2%"> 
+               
+                    <h5> <%= question.TeacherTwo %></h5>
+                
+              </div> </div>
+              <div class="col-md-3" > 
+                  <h4> اسم المعلم المدقق:  </h4>
+                  <div style="  border:1px solid black;
+                  border-radius: 8px; margin: 2%;padding: 2%"> 
+               
+                    <h5> <%= question.TeacherFinal %></h5>
+                
+              </div> </div>
+            <p class="card-text" style="text-align: center"><small class="text-muted"><%= question.createdAt %></small></p>
+          </div> </div>
+          <hr>
+         
+        </div>
+        
+      </div>       
+    </div>
+     
+ 
 </div>
-
- <br>
+<%})%>  
 
 
 

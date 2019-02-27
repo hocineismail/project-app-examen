@@ -176,7 +176,8 @@ function checkFileType(file, cb){
             } else if (req.files.image5 != null) {
             image5 = req.files.image5[0].filename
                  }   
-                 console.log("hena pas d erreur")         
+                 console.log("hena pas d erreur")   
+                 var Author = req.user.Firstname + " " + req.user.Lastname ;  
           var  newQuestion = new Question ({
               Question: req.body.Question,
               Response: req.body.Response,
@@ -186,7 +187,7 @@ function checkFileType(file, cb){
               Chapiter: req.body.Chapiter,
               Difficulty: req.body.Difficulty,
               exam:  req.body.Exam,
-
+              Author: Author,
             });newQuestion.save(function(err,success){
               if (err){
                       
@@ -194,11 +195,31 @@ function checkFileType(file, cb){
                        return  res.redirect('/teacher/qauestion') 
                       }
               if (success){
-                console.log(image1)
-              console.log(newQuestion._id)
+                if (req.body.IsCorrect === "One" ) {
+                      var IsCorrect1 = true
+                } else {
+                  var IsCorrect1 = false
+                }
+                if (req.body.IsCorrect === "Two" ) {
+                  var IsCorrect2 = true
+                } else {
+                  var IsCorrect2 = false
+                  
+                }
+                if (req.body.IsCorrect === "Three" ) {
+                  var IsCorrect3 = true
+                } else {
+                  var IsCorrect3 = false
+                  
+                }
+                if (req.body.IsCorrect === "Four" ) {
+                  var IsCorrect4 = true
+                } else {
+                  var IsCorrect4 = false                  
+                }
               var newResponse1 = new Response({
                 ResponseText: req.body.ResponseText1,
-                IsCorrect: false,
+                IsCorrect: IsCorrect1,
                 ResponseImage: image1,
                 question: newQuestion._id
               });newResponse1.save(function(err,succcess){
@@ -208,7 +229,7 @@ function checkFileType(file, cb){
               })
               var newResponse2 = new Response({
                 ResponseText: req.body.ResponseText2,
-                IsCorrect: false,
+                IsCorrect: IsCorrect2,
                 ResponseImage: image2,
                 question: newQuestion._id
               });newResponse2.save(function(err,succcess){
@@ -218,7 +239,7 @@ function checkFileType(file, cb){
               })
               var newResponse3 = new Response({
                 ResponseText: req.body.ResponseText3,
-                IsCorrect: false,
+                IsCorrect: IsCorrect3,
                 ResponseImage: image3,
                 question: newQuestion._id
               });newResponse3.save(function(err,succcess){
@@ -228,7 +249,7 @@ function checkFileType(file, cb){
               })
               var newResponse4 = new Response({
                 ResponseText: req.body.ResponseText4,
-                IsCorrect: true,
+                IsCorrect: IsCorrect4,
                 ResponseImage: image4,
                 question: newQuestion._id
               });newResponse4.save(function(err,succcess){
@@ -252,98 +273,102 @@ function checkFileType(file, cb){
 });
 
 
-router.get("/teacher/valid",ensureAuthenticated,async function(req,res){
+router.get("/teacher/valid",async function(req,res){
 
   
     try{
-    
+     const phases =  await Phase.find({});
+     const levels =  await Level.find({});
+     const semsters =  await Semster.find({});
+     const modules =  await Module.find({});
       const question = await Question.find({IsValidFinal: false,NotValid: false});
       let responses = [];
       let exams = [];
     
     
   
-      for(let i = 0; i <= question.length; i++){
+      for(let i = 0; i < question.length; i++){
         let response = await Response.find({question: question[i]._id });
         responses.push(...response)
         let exam = await Exam.find({_id: question[i].exam });
         exams.push(...exam)
-
-        
-      };
-    }
-      catch(err){
-        res.status(500).render("/uhOhPage",{
-            message: err.message
-        })
-    }
-    try { 
-      let modulee = [];
-      for(let i = 0; i <= exams.length; i++){
-        let modulee = await Module.find({exam: exams[i]._id });
-        modules.push(...modulee)
+        };
+      console.log(exams)
    
-        console.log(modules.length)
-        console.log(exams.length)
-         };
-  
  
-          res.render("teacher/validation",{question: question,responses: responses,exam: exams} )
+          res.render("teacher/validation",{question: question,
+                                           responses: responses,
+                                            exam: exams,
+                                            phases: phases,
+                                            levels: levels,
+                                            semsters: semsters,
+                                            modules: modules   } )
       
-    }
-    catch(err){
-      res.status(500).render("/uhOhPage",{
-          message: err.message
-      })
-  }
+        }
+        catch(err){
+          res.status(500).render("/uhOhPage",{
+              message: err.message
+          })
+      }
 })
+
+//this route for question not valid
   router.get("/teacher/notvalid",ensureAuthenticated,async function(req,res){
-
-  
-    try{
-    
-      const question = await Question.find({NotValid: true});
-      let responses = [];
-     
-  
-    
-  
-      for(let i = 0; i <= question.length; i++){
-        let response = await Response.find({question: question[i]._id });
-        responses.push(...response)
-       
-      };
-
-  
  
-          res.render("teacher/notvalid",{question: question,responses: responses})
-      
-    }
-    catch(err){
-      res.status(500).render("/uhOhPage",{
-          message: err.message
-      })
-  }
+    try{
+      const phases =  await Phase.find({});
+      const levels =  await Level.find({});
+      const semsters =  await Semster.find({});
+      const modules =  await Module.find({});
+       const question = await Question.find({NotValid: true});
+       let responses = [];
+       let exams = [];
+     
+     
+   
+       for(let i = 0; i < question.length; i++){
+         let response = await Response.find({question: question[i]._id });
+         responses.push(...response)
+         let exam = await Exam.find({_id: question[i].exam });
+         exams.push(...exam)
+         };
+       console.log(exams)
+    
   
-})
+           res.render("teacher/validation",{question: question,
+                                            responses: responses,
+                                             exam: exams,
+                                             phases: phases,
+                                             levels: levels,
+                                             semsters: semsters,
+                                             modules: modules   } )
+       
+         }
+         catch(err){
+           res.status(500).render("/uhOhPage",{
+               message: err.message
+           })
+       }
+ })
 
 router.get("/valid/question/:id",ensureAuthenticated, function(req,res){
   Question.findById({_id: req.params.id},function(err , question){
     if(question.IsValidOne != true) {
       question.IsValidOne = true,
-      //question.TeacherOne = req.user._id
+      question.TeacherOne = req.user.Firstname + " " + req.user.Lastname ;
       question.save(function(err, success){
         if (err){console.log("il ya une error ")}
       })
     } else if (question.IsValidTwo != true) {
       question.IsValidTwo = true
-       // question.TeacherOne = req.user._id
+      question.TeacherTwo = req.user.Firstname + " " + req.user.Lastname ;
+      console.log(question.TeacherTwo)
       question.save(function(err, success){
         if (err){console.log("il ya une error ")}
       })
     } else {
       question.IsValidFinal = true
-      // question.TeacherFinal = req.user._id
+     question.TeacherFinal = req.user.Firstname + " " + req.user.Lastname ;
      question.save(function(err, success){
        if (err){console.log("il ya une error ")}
      })
