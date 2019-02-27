@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 
 const Instructions = props => {
   return (
@@ -33,7 +34,7 @@ const Instructions = props => {
         غريمه السيء بل ومن. انذار استمرار حتى لم, كما وجزر سقطت أم, عرض أم
         إستعمل الشتاء المجتمع.
       </p>
-      <a className='btn btn-primary' href='/exampage/questions'>التالي</a> 
+      <Link className='btn btn-primary' to={'/exampage/questions?examId='+props.id}>التالي</Link> 
     </div>
   )
 }

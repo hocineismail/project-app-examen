@@ -7,10 +7,10 @@ const SideMenu = props => {
       <li className="list-group-item active">
         <Link to="/studenthome">جميع المواد</Link>
       </li>
-      {props.modules.map(module => {
+      {props.modules.map((module, key) => {
         console.log(module)
         return (
-          <li className="list-group-item">
+          <li className="list-group-item" key={key}>
             <Link to={`/studenthome?module=${module.Module}`}>
               {module.Module}
             </Link>

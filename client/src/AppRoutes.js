@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Route, BrowserRouter, Switch } from 'react-router-dom'
 import MainApp from './components/main_app/MainApp'
 import ExamApp from './components/exam_app/ExamApp'
+import Certificate from './certificate/Certificate'
 
 import _ from 'lodash'
 
@@ -14,27 +15,24 @@ import { fetchUserData, getStudentModules, getStudentExams} from './actions/user
 class AppRoutes extends Component {
   constructor(props) {
     super(props)
-    console.log('Constructor')
     this.state = {
       dataUserLoaded: false,
       dataModulesLoaded: false
     }
   }
   componentDidMount() {
-    console.log('Constructor')
     this.props.fetchUserData(window.localStorage.getItem('_id'))
     this.props.getStudentModules(window.localStorage.getItem('_id'))
     this.props.getStudentExams(window.localStorage.getItem('_id'))
   }
 
   render() {
-    console.log('userData:', this.props.userData )
-    console.log('studentModules:', this.props.studentModules )
+
     return  this.props.userData && this.props.studentModules && this.props.studentExams ? (
       <BrowserRouter>
         <Switch>
-          {console.log(this.props.userData)}
           <Route path={'/exampage'} component={ExamApp} />
+          <Route path={'/certificate'} exact component={Certificate} />
           <Route
             path={'/studenthome'}
             render={() => (

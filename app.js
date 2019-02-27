@@ -9,7 +9,7 @@ var session = require("express-session");
 var flash = require("connect-flash"); 
 var passport = require("passport");
 
-mongoose.connect("mongodb://localhost:27017/databss");
+mongoose.connect("mongodb://localhost:27017/projectexams");
 
 
 // routes
@@ -19,6 +19,7 @@ var admin = require("./routes/admin")
 var setUpPassport = require("./routes/setuppassport");
 
 let student = require('./student_routes/student')
+let certificate = require('./student_routes/certificate')
 
 app.use((req, res, next )=>{
 
@@ -73,7 +74,7 @@ app.use(routes);
 app.use(admin);
 
 app.use('/student', student)
-
+app.use('/certificate', certificate)
 app.post("/login", passport.authenticate("login", {
     successRedirect: "/",
     failureRedirect: "/login",

@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import Swal from 'sweetalert2'
+import { Redirect } from 'react-router-dom'
 
 import CountDown from 'react-countdown-now'
 
@@ -8,63 +11,50 @@ import QuestionCounter from './questionCounter/QuestionCounter'
 import Question from './question/Question'
 import Confirmation from './Confirmation/Confirmation'
 
+import {
+  postExamGrade,
+  deleteGradeInformation
+} from '../../../actions/userActions'
+
 class Questions extends Component {
   constructor(props) {
     super(props)
-    let question = [
-      {
-        question: 'السؤال الاول',
-        responses: [
-          'الجواب الاول',
-          'الجواب الثاني',
-          'الجواب الثالث',
-          'الجواب الرابع'
-        ]
-      },
-      {
-        question: 'السؤال الثاني',
-        responses: [
-          'الجواب الاول',
-          'الجواب الثاني',
-          'الجواب الثالث',
-          'الجواب الرابع'
-        ]
-      },
-      {
-        question: 'السؤال الثالث',
-        responses: [
-          'الجواب الاول',
-          'الجواب الثاني',
-          'الجواب الثالث',
-          'الجواب الرابع'
-        ]
-      },
-      {
-        question: 'السؤال الرابع',
-        responses: [
-          'الجواب الاول',
-          'الجواب الثاني',
-          'الجواب الثالث',
-          'الجواب الرابع'
-        ]
-      }
-    ]
+    let questions = props.examQuestions
 
     this.state = {
       index: 0,
-      questions: question.map((q, k) => {
-        return <Question content={q} index={k} selectedResponse={window.localStorage.getItem(k)}/>
+      pureQuestions: questions,
+      questions: questions.map((q, k) => {
+        return (
+          <Question
+            content={q}
+            index={k}
+            selectedResponse={window.localStorage.getItem(k)}
+          />
+        )
       }),
-      time: window.localStorage.getItem('time')
-        ? window.localStorage.getItem('time')
-        : Date.now() + 100000
+      time: parseInt(window.localStorage.getItem('time'))
+        ? parseInt(window.localStorage.getItem('time'))
+        : Date.now() + props.time * 60 * 1000,
+      redirection: false
     }
 
     this.onNextButtonClick = this.onNextButtonClick.bind(this)
     this.onPreviousButtonClick = this.onPreviousButtonClick.bind(this)
+    this.onExamFinished = this.onExamFinished.bind(this)
+    this.onCountDownCompleted = this.onCountDownCompleted.bind(this)
+    this.countDownRenderer = this.countDownRenderer.bind(this)
   }
 
   countDownRenderer({ minutes, seconds }) {
+    window.localStorage.setItem(
+      'time',
+      Date.now() + minutes * 60 * 1000 + seconds * 1000
+    )
+    if (minutes === 0 && seconds === 0) {
+      this.onExamFinished()
+    }
+
     return (
       <div className="timer">
         <p>
@@ -88,7 +78,6 @@ class Questions extends Component {
     this.setState({
       index: this.state.index - 1
     })
-    
   }
 
   onStartExamButtons() {
@@ -133,44 +122,84 @@ class Questions extends Component {
     )
   }
 
-  onFinishingExamButtons(){
+  onFinishingExamButtons() {
     return (
       <div className="submission">
-          <button
-            className="btn btn-warning"
-            onClick={this.onPreviousButtonClick}
-          >
-            العودة
-          </button>
-          <button className="btn btn-success" onClick={this.onNextButtonClick}>
-            متأكد
-          </button>
-        </div>
+        <button
+          className="btn btn-warning"
+          onClick={this.onPreviousButtonClick}
+        >
+          العودة
+        </button>
+        <button className="btn btn-success" onClick={this.onExamFinished}>
+          متأكد
+        </button>
+      </div>
     )
   }
 
-  getExamButtons(index, length){
+  onExamFinished() {
+    let examId = this.props.examId
+    let responses = []
+    this.props.examQuestions.map((question, index) => {
+      question.responses.map(response => {
+        if (response.ResponseText === window.localStorage.getItem(index)) {
+          responses.push(response._id)
+        }
+      })
+    })
+
+    let body = {
+      examId,
+      responses
+    }
+    this.props.postExamGrade(window.localStorage.getItem('_id'), body)
+  }
+
+  getExamButtons(index, length) {
     let buttons
-    if (index === 0){
+    if (index === 0) {
       buttons = this.onStartExamButtons()
-    }else if (index === length - 1){
+    } else if (index === length - 1) {
       buttons = this.onLastExamQuestionButtons()
-    }else if (index === length){
+    } else if (index === length) {
       buttons = this.onFinishingExamButtons()
-    }else {
+    } else {
       buttons = this.duringExamButtons()
     }
     return buttons
   }
 
-  getResponseSelected(){
+  getResponseSelected() {
     let response = window.localStorage.getItem(this.state.index)
     return response
   }
 
+  onCountDownCompleted() {
+    this.onExamFinished()
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.postedGrade) {
+      this.setState({
+        redirection: true
+      })
+      for (let i = 0; i < this.state.pureQuestions.length; i++) {
+        window.localStorage.removeItem(i)
+      }
+      window.localStorage.removeItem('time')
+    }
+  }
+
+  componentWillUnmount() {
+    for (let i = 0; i < this.state.pureQuestions.length; i++) {
+      window.localStorage.removeItem(i)
+    }
+    window.localStorage.removeItem('time')
+  }
   render() {
     let questionSection =
-      this.state.index < 4 ? (
+      this.state.index < this.state.questions.length ? (
         <React.Fragment>
           {this.state.questions[this.state.index]}
         </React.Fragment>
@@ -178,9 +207,12 @@ class Questions extends Component {
         <Confirmation />
       )
 
-    let submission = this.getExamButtons(this.state.index, this.state.questions.length)
+    let submission = this.getExamButtons(
+      this.state.index,
+      this.state.questions.length
+    )
 
-    return (
+    return !this.state.redirection ? (
       <div className="exam-questions">
         <CountDown date={this.state.time} renderer={this.countDownRenderer} />
         <QuestionCounter
@@ -190,8 +222,25 @@ class Questions extends Component {
         {questionSection}
         {submission}
       </div>
+    ) : (
+      <Redirect to="/exampage/result" />
     )
   }
 }
 
-export default Questions
+const mapStateToProps = (state, props) => {
+  return {
+    ...state,
+    ...props
+  }
+}
+
+const mapActionsToProps = {
+  postExamGrade,
+  deleteGradeInformation
+}
+
+export default connect(
+  mapStateToProps,
+  mapActionsToProps
+)(Questions)

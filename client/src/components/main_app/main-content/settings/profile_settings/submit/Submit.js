@@ -9,8 +9,6 @@ import Swal from 'sweetalert2'
 import './Submit.css'
 
 class Submit extends React.Component {
-
-
   onSaveButtonClicked() {
     let body = {
       Firstname: document.querySelector('#Firstname').value,
@@ -22,6 +20,11 @@ class Submit extends React.Component {
       Phase: document.querySelector('#Phase').value,
       Level: document.querySelector('#Level').value,
       semster: document.querySelector('#semster').value
+    }
+    console.log('BIRTHDAY : ', new Date(body.Birthday).toISOString())
+    let password = document.querySelector('#Password').value
+    if (password !== '') {
+      body.password = password
     }
 
     this.props.postUserData(window.localStorage.getItem('_id'), body)
@@ -35,20 +38,27 @@ class Submit extends React.Component {
     }).then(r => {
       window.location.href = '/studenthome/account'
     })
-   
   }
 
-  onCancleButtonClicked(){
+  onCancleButtonClicked() {
     window.location.href = '/studenthome/account'
   }
 
   render() {
     return (
       <div className="settings-form">
-        <button className="btn btn-success" onClick={this.onSaveButtonClicked.bind(this)}>
+        <button
+          className="btn btn-success"
+          onClick={this.onSaveButtonClicked.bind(this)}
+        >
           حفظ
         </button>
-        <button className="btn btn-warning" onClick={this.onCancleButtonClicked}>الغاء</button>
+        <button
+          className="btn btn-warning"
+          onClick={this.onCancleButtonClicked}
+        >
+          الغاء
+        </button>
       </div>
     )
   }
