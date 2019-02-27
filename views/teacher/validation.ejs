@@ -119,7 +119,29 @@ span {
 </div>
 
 <h1> this div for exam </h1>
+<div class="w3-container">
+  <h2>W3.CSS Login Modal</h2>
+  <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-green w3-large">Login</button>
 
+  <div id="id01" class="w3-modal">
+    <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+
+      <div class="w3-center"><br>
+        <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
+        <img src="img_avatar4.png" alt="Avatar" style="width:30%" class="w3-circle w3-margin-top">
+      </div>
+
+      
+
+      <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
+        <button onclick="document.getElementById('id01').style.display='none'" type="button" class="w3-button w3-red">Cancel</button>
+       
+      </div>
+
+    </div>
+  </div>
+</div>
+         
 <% exam.forEach(function(exams) {%>
   <p> <%= exams._id %> </p>
   
@@ -128,6 +150,7 @@ span {
 
     <% question.forEach(function(question) {%>
       <% var user = currentUser.Firstname + " " + currentUser.Lastname %>
+      <%= user %> <br>
       <% if (  (question.Author != user) &&   (question.TeacherOne != user)  &&   (question.TeacherTwo != user)  &&  (question.TeacherFinal != user))  { %>
       <div class="card-deck">
          
