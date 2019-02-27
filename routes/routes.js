@@ -38,49 +38,67 @@ router.get("/teacher/question",ensureAuthenticated, function(req,res){
    
   })
 } else {
- res.redirect("/")
+ res.redirect("/routes")
 }
 
 });
 
 
 router.get("/teacher/validation",ensureAuthenticated, function(req,res){
+  if ( req.user.Role === "Teacher") { 
     res.render("teacher/addquestion")
+  } else {
+    res.redirect("/routes")
+   }
   }) 
 
 router.post("/searchsemster",function(req, res){
-    console.log(req.body.Level);
+
+  if ( req.user.Role === "Teacher") { 
+    if (req.body.Level != undefined) { 
+  
     Level.findOne({_id: req.body.Level}, function(err, level){
         Semster.find({level:  level._id},function(err , data){
-        console.log(data)
                 res.send(data);
         })
     })
- 
+  }
+  } else {
+    res.redirect("/routes")
+   }
 })
 
 router.post("/searchmodule",function(req, res){
-    console.log(req.body.Semster);
+  if ( req.user.Role === "Teacher") { 
+    if (req.body.Semster != undefined) { 
     Semster.findOne({_id: req.body.Semster}, function(err, semster){
-        console.log(semster)
+        if (err) { }
         Module.find({semster:  semster._id},function(err , data){
         if (err) { console.log("errooooooooooor")}
                 res.send(data);
         })
     })
- 
+  }
+} else {
+  res.redirect("/routes")
+ }
 })	
 
 
 router.post("/searchexam",ensureAuthenticated,function(req, res){
-    console.log(req.body.Module);
+  if ( req.user.Role === "Teacher") { 
+    if (req.body.Module != undefined) { 
+ 
     Module.findOne({_id: req.body.Module}, function(err, module){
         Exam.find({module:  module._id},function(err , data){
         
                 res.send(data);
         })
     })
- 
+  }
+} else {
+  res.redirect("/routes")
+ }
 })	
 
 
@@ -123,6 +141,7 @@ function checkFileType(file, cb){
 }
 
   router.post('/upload', ensureAuthenticated , (req, res) => {
+    if ( req.user.Role === "Teacher") { 
    if ( 
      (req.body.Level != "") && 
      (req.body.Phase != "")  && 
@@ -256,6 +275,14 @@ function checkFileType(file, cb){
                 if (err){ console.log("response 1 pas d error");
                 return  res.redirect('/teacher/qauestion') 
                }
+               if (succcess){
+                 Teacher.findOne({user: req.user._id},function(err,user) {
+                 user.Count =  user.Count + 1
+                 console.log(user.Count)
+                 user.save()
+               })
+
+               }
               })
             }
           })
@@ -270,11 +297,14 @@ function checkFileType(file, cb){
                       
       return  res.redirect('/teacher/qauestion') 
     }
+  } else {
+    res.redirect("/routes")
+   }
 });
 
 
 router.get("/teacher/valid",async function(req,res){
-
+  if ( req.user.Role === "Teacher") { 
   
     try{
      const phases =  await Phase.find({});
@@ -310,17 +340,21 @@ router.get("/teacher/valid",async function(req,res){
               message: err.message
           })
       }
+    } else {
+      res.redirect("/routes")
+     }
 })
 
 //this route for question not valid
   router.get("/teacher/notvalid",ensureAuthenticated,async function(req,res){
- 
+    if ( req.user.Role === "Teacher") { 
     try{
+      var user = req.user.Firstname + " " + req.user.Lastname ;
       const phases =  await Phase.find({});
       const levels =  await Level.find({});
       const semsters =  await Semster.find({});
       const modules =  await Module.find({});
-       const question = await Question.find({NotValid: true});
+       const question = await Question.find({NotValid: true,Author: user });
        let responses = [];
        let exams = [];
      
@@ -349,10 +383,16 @@ router.get("/teacher/valid",async function(req,res){
                message: err.message
            })
        }
+      } else {
+        res.redirect("/routes")
+       }
  })
 
 router.get("/valid/question/:id",ensureAuthenticated, function(req,res){
+  if ( req.user.Role === "Teacher") { 
   Question.findById({_id: req.params.id},function(err , question){
+    var user = req.user.Firstname + " " + req.user.Lastname 
+    if ( (user != question.TeacherOne)  && (user != question.TeacherTwo)  && (user != question.TeacherFinal)) { 
     if(question.IsValidOne != true) {
       question.IsValidOne = true,
       question.TeacherOne = req.user.Firstname + " " + req.user.Lastname ;
@@ -373,13 +413,21 @@ router.get("/valid/question/:id",ensureAuthenticated, function(req,res){
        if (err){console.log("il ya une error ")}
      })
     }
- 
- console.log(question)
- res.redirect("/teacher/valid")
+    console.log(question)
+    res.redirect("/teacher/valid")
+  } else {
+    // will be write message error 
+    res.redirect("/teacher/valid")
+  }
+
   })
+} else {
+  res.redirect("/routes")
+ }
 })
 
 router.post("/invalid/question/:id",ensureAuthenticated, function(req,res){
+  if ( req.user.Role === "Teacher") { 
   Question.findById({_id: req.params.id},function(err , question){
    
       question.IsValidOne = false,
@@ -395,11 +443,15 @@ router.post("/invalid/question/:id",ensureAuthenticated, function(req,res){
  console.log(question)
  res.redirect("/teacher/valid")
   })
+} else {
+  res.redirect("/routes")
+ }
 })
 
 
 //POST Pub 
 router.post("/addpub",function(req,res){
+  if ( req.user.Role === "Admin") { 
   Pub.countDocuments({},function(err,count){
     if (!err){
              if (count === 0 ){
@@ -435,10 +487,13 @@ router.post("/addpub",function(req,res){
         
     }
   })
- 
+} else {
+  res.redirect("/routes")
+ }
  
 })
 router.get("/pub/delete/:id",function(req,res){
+  if ( req.user.Role === "Admin") { 
   Pub.findOneAndRemove( { _id: req.params.id } , function(err, pyb) {
     if (err) { return next(err); }
     if (!pyb) { return next(404); }
@@ -446,5 +501,9 @@ router.get("/pub/delete/:id",function(req,res){
                   
   res.redirect("/admin")
   }) 
+} else {
+  res.redirect("/routes")
+ }
+ 
 })
 module.exports = router;

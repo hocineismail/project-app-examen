@@ -121,7 +121,7 @@ li a:hover {
 <div class="table-responsive" dir="rtl"> 
 
 <table class="table" >
-    <thead>
+  <thead>
       <tr>
         <th scope="col">#</th>
         <th scope="col">اللقب</th>
@@ -131,22 +131,24 @@ li a:hover {
         <th scope="col">البريد</th>
         <th scope="col">المرحلة</th>
         <th scope="col">الاختصاص</th>
+        <th scope="col"> count</th>
         <th scope="col"> الحساب</th>
         
       </tr>
     </thead>
-    <tbody><% i = 0 %>
+    <tbody>
+      <% i = 0 %>
       <% teachers.forEach(function(teacher) {%>
       <tr><% i = i + 1 %>
         <th scope="row"><%= i %></th>
         <td><%= teacher.user.Lastname %></td>
         <td> <%= teacher.user.Firstname %></td>
-       
         <td><%= teacher.user.Sexe %></td>
         <td> <%= teacher.user.Phone %></td>
         <td> <%= teacher.user.email %></td>
-        <td> <%= teacher.Phase%></td>
+        <td> <%= teacher.phase.Phase %></td>
         <td> <%= teacher.Speciality%></td>
+        <td> <%= teacher.Count%></td>
         <% if (teacher.Actif === true ){ %>
           <td style="color: green"> مفعل </td>
         <% } else { %>
