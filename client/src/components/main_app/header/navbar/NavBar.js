@@ -59,6 +59,7 @@ const NavBar = props => {
             type="search"
             placeholder="البحث"
             aria-label="Search"
+            name="module"
           />
           <button
             className="btn btn-outline-success my-2 my-sm-0"

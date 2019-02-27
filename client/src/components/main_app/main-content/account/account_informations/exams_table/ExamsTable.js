@@ -3,11 +3,17 @@ import React, { Component } from 'react'
 import './ExamsTabel.css'
 
 class ExamsTable extends Component {
-  constructor(props){
+  constructor(props) {
     super(props)
-
     this.state = {
-      exams: props.exams ? props.exams : []
+      exams: props.examsData ? props.examsData : []
+    }
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.examsData) {
+      this.setState({
+        exams: nextProps.examsData
+      })
     }
   }
   render() {
@@ -24,10 +30,11 @@ class ExamsTable extends Component {
           </thead>
           <tbody>
             {this.state.exams.map((exam, key) => {
+              console.log('EXAMS')
               return (
-                <tr>
+                <tr key={key}>
                   <th scope="row">{key}</th>
-                  <td>{exam.Exam}</td>
+                  <td>{exam.examName}</td>
                   <td>{exam.Grade}</td>
                   <td>غير متوفر</td>
                 </tr>

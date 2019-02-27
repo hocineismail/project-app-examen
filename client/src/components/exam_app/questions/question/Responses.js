@@ -3,8 +3,6 @@ import React from 'react'
 import './Responses.css'
 import Choice from './Choice'
 
-import { Form } from 'semantic-ui-react'
-
 class Responses extends React.Component {
   constructor(props) {
     super(props)
@@ -27,16 +25,13 @@ class Responses extends React.Component {
     return (
       <div className="responses">
         {this.state.responses.map((r, k) => {
-          let checked = false
-          console.log('Item:', r)
-          console.log(this.state.selectedResponse)
-          if (this.state.selectedResponse === r) {
+          let checked = this.state.checked
+          if (this.state.selectedResponse === r.ResponseText) {
             checked = true
-            console.log('TRUE')
           }
           return (
             <Choice
-              propValue={r}
+              propValue={r.ResponseText}
               index={this.state.index}
               isChecked={checked}
               key={k}

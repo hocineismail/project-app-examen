@@ -39,14 +39,12 @@ export function postUserData(id, userData) {
     })
       .then(res => res.json())
       .then(res => {
-        console.log(res)
         return dispatch({
           type: types.postUserData,
           payload: true
         })
       })
       .catch(err => {
-        console.log(err)
         if (err) {
           return dispatch({
             type: types.postUserDataError,
@@ -59,14 +57,11 @@ export function postUserData(id, userData) {
 
 export function getStudentModules(id) {
   return function(dispatch) {
-    console.log(fetchInfo.apiUr + '/modules/' + id)
     fetch(fetchInfo.apiUrl + '/modules/' + id)
       .then(res => {
-        console.log(res)
         return res.json()
       })
       .then(res => {
-        console.log(res)
         let payload = res
         return dispatch({
           type: types.fetchStudentModules,
@@ -75,7 +70,6 @@ export function getStudentModules(id) {
       })
       .catch(err => {
         if (err) {
-          console.log(err)
           return dispatch({
             type: types.fetchStudentModulesError,
             payload: err
@@ -122,5 +116,59 @@ export function getExamInformation(id) {
           })
         }
       })
+  }
+}
+
+export function getExamQuestions(id) {
+  return function(dispatch) {
+    fetch(`${fetchInfo.apiUrl}/examquestions/${id}`)
+      .then(res => res.json())
+      .then(res => {
+        return dispatch({
+          type: types.fetchExamQuestions,
+          payload: res
+        })
+      })
+      .catch(err => {
+        if (err) {
+          dispatch({
+            type: types.fetchExamQuestionsError,
+            payload: err
+          })
+        }
+      })
+  }
+}
+
+export function postExamGrade(id, body) {
+  return function(dispatch) {
+    fetch(`${fetchInfo.apiUrl}/exam/getresult/${id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    })
+      .then(res => res.json())
+      .then(res => {
+        return dispatch({
+          type: types.postExamGrade,
+          payload: res
+        })
+      })
+      .catch(err => {
+        if (err) {
+          return dispatch({
+            type: types.postExamGradeError,
+            payload: err
+          })
+        }
+      })
+  }
+}
+
+export function deleteGradeInformation(){
+  return {
+    type: types.deleteGradeInformation
   }
 }

@@ -8,8 +8,11 @@ const Level = require('../models/level')
 const Phase = require('../models/phase')
 const Module = require('../models/module')
 const Exam = require('../models/exam')
+const Question = require('../models/question')
+const Response = require('../models/response')
 
 const _ = require('lodash')
+
 
 function returnErrorMessage(res, err, statusCode) {
   return res.status(statusCode).json({
@@ -27,11 +30,12 @@ app.get('/:id', (req, res) => {
     if (!user) {
       return returnErrorMessage(res, err, 204)
     }
+
     Student.findOne({ user: id })
       .populate('Level')
       .populate('semster')
       .populate('Phase')
-      .exec((err, student) => {
+      .exec(async (err, student) => {
         if (err) {
           return errorMessage(res, err, 400)
         }
@@ -44,13 +48,30 @@ app.get('/:id', (req, res) => {
           'Phone',
           'email',
           'Phase',
-          'Level',
-          'semster'
+          'Level'
         ])
-        let studentData = _.pick(student, ['Phase', 'Level', 'semster'])
-        res.json({
-          ...userData,
-          ...studentData
+        let studentData = _.pick(student, [
+          'Phase',
+          'Level',
+          'semster',
+          'exams'
+        ])
+        let exams = []
+        Promise.all(
+          studentData.exams.map(async exam => {
+            exName = await Exam.findById(exam.Exam).select('Exam')
+            exams.push({
+              Exam: exam._id,
+              Grade: exam.Grade,
+              examName: exName.Exam
+            })
+          })
+        ).then(completed => {
+          studentData.exams = exams
+          res.json({
+            ...userData,
+            ...studentData
+          })
         })
       })
   })
@@ -65,9 +86,8 @@ app.post('/:id', (req, res) => {
     'Sexe',
     'Address',
     'Phone',
-    'email'
+    'password'
   ])
-
   let bodyStudent = _.pick(req.body, ['Phase', 'Level', 'semster'])
 
   updateUser(id, bodyUser)
@@ -116,6 +136,12 @@ app.post('/:id', (req, res) => {
 })
 
 function updateUser(id, data) {
+  if (data.password) {
+    User.findById(id, (err, user) => {
+      user.password = data.password
+      user.save()
+    })
+  }
   return new Promise((resolve, reject) => {
     User.update({ _id: id }, { $set: data }, (err, userQueryResult) => {
       if (err) {
@@ -185,7 +211,9 @@ app.get('/exams/:id', (req, res) => {
             return returnErrorMessage(res, err, 400)
           }
           try {
-            result = Promise.all(getAllExamsOfStudent(modules)).then(completed => {
+            result = Promise.all(
+              getAllExamsOfStudent(modules, student.exams)
+            ).then(completed => {
               examsTable = completed
               return res.json(examsTable)
             })
@@ -201,20 +229,136 @@ app.get('/exam/:id', (req, res) => {
   let id = req.params.id
 
   Exam.findById(id, (err, exam) => {
-    if (err){
+    if (err) {
       return returnErrorMessage(res, err, 400)
     }
     return res.json(exam)
   })
-
 })
 
-const getAllExamsOfStudent = modules => {
+app.get('/examquestions/:id', (req, res) => {
+  let id = req.params.id
+  Exam.findOne(
+    {
+      _id: id,
+      Etat: true
+    },
+    ['Exam', 'Time', 'NumberOfExam'],
+    (err, exam) => {
+      if (err) {
+        return returnErrorMessage(res, err, 400)
+      }
+      if (exam) {
+        let examData = {
+          examInfo: {},
+          questions: []
+        }
+        let examId = exam._id
+        examData['examInfo'] = exam
+        Question.find(
+          {
+            exam: examId,
+            IsValidFinal: true
+          },
+          async (err, questions) => {
+            if (err) {
+              return returnErrorMessage(res, err, 400)
+            }
+            for (let i = 0; i < questions.length; i++) {
+              let rsp = await Response.find({
+                question: questions[i]._id
+              }).select('ResponseText')
+              examData.questions.push({
+                question: questions[i],
+                responses: rsp
+              })
+            }
+            return res.json(examData)
+          }
+        )
+      } else {
+        return returnErrorMessage(res, err, 400)
+      }
+    }
+  )
+})
+
+app.post('/exam/getresult/:id', async (req, res) => {
+  let id = req.params.id
+  let responses = _.pick(req.body, ['responses'])
+  let examId = _.pick(req.body, ['examId'])
+  let score = 0
+  let numberOfQuestions = 0
+  let correctResponses = []
+
+  Promise.all(
+    responses.responses.map(async response => {
+      let selectedResponse = await Response.findById(response)
+      if (selectedResponse.IsCorrect) {
+        score++
+      }
+      numberOfQuestions++
+    })
+  ).then(completed => {
+    studentExamOutput = {
+      Exam: examId.examId,
+      Grade: (score * 100) / numberOfQuestions
+    }
+    Student.updateOne(
+      { user: id },
+      {
+        $push: {
+          exams: studentExamOutput
+        }
+      },
+      (err, returnedQuery) => {
+        if (err) {
+          return returnErrorMessage(res, err, 400)
+        }
+        Question.find(
+          {
+            exam: examId.examId
+          },
+          (err, questions) => {
+            if (err) {
+              return returnErrorMessage(res, err, 400)
+            }
+            Promise.all(
+              questions.map((question, k) => {
+                console.log('QUESTION')
+                correctResponses.push({
+                  questionNumber: k,
+                  correctResponse: question.Response
+                })
+              })
+            ).then(completed => {
+              console.log(numberOfQuestions)
+              return res.json({
+                message: 'Inserted Successfully',
+                grade: (score * 100) / numberOfQuestions,
+                correctResponses
+              })
+            })
+          }
+        )
+      }
+    )
+  })
+})
+
+const getAllExamsOfStudent = (modules, previousExams) => {
+  let previousExamsId = []
+  previousExams.map(exam => {
+    previousExamsId.push(exam.Exam)
+  })
   return modules.map(async module => ({
     Module: module.Module,
-    Exams: await Exam.find({ module: module._id, Etat: true })
+    Exams: await Exam.find({
+      module: module._id,
+      Etat: true,
+      _id: { $nin: previousExamsId }
+    })
   }))
 }
-
 
 module.exports = app
