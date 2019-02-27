@@ -24,19 +24,38 @@ class ExamsTable extends Component {
             <tr>
               <th scope="col">#</th>
               <th scope="col">الامتحان</th>
+              <th scope="col">التاريخ</th>
               <th scope="col">العلامة</th>
               <th scope="col">الشهادة</th>
             </tr>
           </thead>
           <tbody>
             {this.state.exams.map((exam, key) => {
-              console.log('EXAMS')
+              let date = new Date(exam.Date)
+              let day = date.getDay() < 10 ? '0' + date.getDay() : date.getDay()
+              let month =
+                date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth()
+              let certificate =
+                exam.Grade >= 50 ? (
+                  <a
+                    className="btn btn-info"
+                    target="__blank"
+                    href={`http://localhost:3000/certificate/${exam.examName}&${
+                      this.props.userName
+                    }&${day + ' - ' + month + ' - ' + date.getFullYear()}`}
+                  >
+                    الشهادة
+                  </a>
+                ) : (
+                  'الشهادة غير متوفرة'
+                )
               return (
                 <tr key={key}>
-                  <th scope="row">{key}</th>
+                  <th scope="row">{key + 1}</th>
                   <td>{exam.examName}</td>
+                  <td>{day + ' - ' + month + ' - ' + date.getFullYear()}</td>
                   <td>{exam.Grade}</td>
-                  <td>غير متوفر</td>
+                  <td>{certificate}</td>
                 </tr>
               )
             })}

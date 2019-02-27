@@ -30,7 +30,7 @@ class ProfileSettings extends Component {
       'الصف الرابع',
       'الصف الخامس'
     ]
-    if (this.props.userData.Phase.Phase === 'الاكمالية') {
+    if (this.props.userData.Phase.Phase === 'المتوسطة') {
       level = ['الفصل الاول', 'الفصل الثاني', 'الفصل الثالث', 'الفصل الرابع']
     } else if (this.props.userData.Phase.Phase === 'الثانوية') {
       level = ['الفصل الاول', 'الفصل الثاني', 'الفصل الثالث']
@@ -105,7 +105,7 @@ class ProfileSettings extends Component {
           type="choicebox"
           editable={true}
           id="Phase"
-          choices={['الابتدائية', 'الاكمالية', 'الثانوية']}
+          choices={['الابتدائية', 'المتوسطة', 'الثانوية']}
         />
         <InformationsInput
           prop="الصف"
