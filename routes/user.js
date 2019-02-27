@@ -881,7 +881,7 @@ user.get("/admin/exam/question/:id",async function(req,res){
 	if (  req.user.Role === "Admin") {
 	try{
 	
-		const question = await Question.find({exam: req.params.id});
+		const question = await Question.find({exam: req.params.id}).populate("Author").populate("TeacherOne").populate("TeacherTwo").populate("TeacherFinal");
 		let responses = [];
 
 	

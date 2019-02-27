@@ -212,32 +212,38 @@ li a:hover {
                     <div style="  border:1px solid black;
                     border-radius: 8px; margin: 2%;padding: 2%"> 
                  
-                      <h5> <%= question.Author %></h5>
+                      <h5> <%= question.Author.Firstname +" " +  question.Author.Lastname  %></h5>
                   
                 </div> </div>
                 <div class="col-md-3" > 
                     <h4> اسم المعلم المراقب الاول:  </h4>
                     <div style="  border:1px solid black;
                     border-radius: 8px; margin: 2%;padding: 2%"> 
-                 
-                      <h5> <%= question.TeacherOne %></h5>
-                  
+                    <% if ( question.TeacherOne != null) { %>
+                      <h5><%= question.TeacherOne.Firstname +" " + question.TeacherOne.Lastname %></h5>
+                   <% } else { %>
+                   <h5></h5>
+                   <% } %>
                 </div> </div>
                 <div class="col-md-3" > 
                     <h4> اسم المعلم المراقل الثاني:  </h4>
                     <div style="  border:1px solid black;
                     border-radius: 8px; margin: 2%;padding: 2%"> 
-                 
-                      <h5> <%= question.TeacherTwo %></h5>
-                  
+                  <% if ( question.TeacherTwo != null) { %>
+                      <h5> <%= question.TeacherTwo.Firstname +" " + question.TeacherTwo.Lastname  %></h5>
+                      <% } else { %>
+                        <h5></h5>
+                        <% } %>
                 </div> </div>
                 <div class="col-md-3" > 
                     <h4> اسم المعلم المدقق:  </h4>
                     <div style="  border:1px solid black;
                     border-radius: 8px; margin: 2%;padding: 2%"> 
-                 
-                      <h5> <%= question.TeacherFinal %></h5>
-                  
+                    <% if ( question.TeacherFinal != null) { %>
+                      <h5> <%= question.TeacherFinal.Firstname +" " + question.TeacherFinal.Lastname  %></h5>
+                      <% } else { %>
+                        <h5></h5>
+                        <% } %>
                 </div> </div>
               <p class="card-text" style="text-align: center"><small class="text-muted"><%= question.createdAt %></small></p>
             </div> </div>
