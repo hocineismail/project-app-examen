@@ -174,10 +174,6 @@ li a:hover {
 
 <!-- Button trigger modal -->
 
-<% exam.forEach(function(exams) {%>
-  <p> <%= exams._id %> </p>
-  
-  <% }) %>
 <div class="container">
 
     <% question.forEach(function(question) {%>
@@ -204,11 +200,12 @@ li a:hover {
 
       <% if ( 
              (JSON.stringify(question.Author._id) != JSON.stringify(currentUser._id))
-       &&   (userOne != JSON.stringify(currentUser._id) )  
-       &&   (userTwo != JSON.stringify(currentUser._id))  
-       &&  (userFinal != JSON.stringify(currentUser._id)) 
+       &&  (  (userOne != JSON.stringify(currentUser._id)) ||  JSON.stringify(question.IsValidOne) == "false" ) 
+       &&   ( (userTwo != JSON.stringify(currentUser._id))   ||  JSON.stringify(question.IsValidTwo) == "false" ) 
+       &&   ((userFinal != JSON.stringify(currentUser._id))  ||  JSON.stringify(question.IsValidFinal) == "false" ) 
        )  { %>
      
+
         <div class="card-deck" style="padding-bottom: 3%;" >
          
           <div class="card" style="padding: 3%;" >
@@ -217,6 +214,27 @@ li a:hover {
             
               <div class="row" dir="rtl"> 
               <div class="col-md-12" >
+              
+                <% modules.forEach(function(module) {%>
+                  <% if (  JSON.stringify(question.exam.module) == JSON.stringify(module._id) ) {  %>
+                
+                <%= module.Module %><br>
+                <% semsters.forEach(function(semster) {%>
+                  <% if (  JSON.stringify(module.semster) == JSON.stringify(semster._id) ) {  %>
+                  <br>
+                <%= semster.Semster %><br>
+                     <% levels.forEach(function(level) {%>
+                  <% if (  JSON.stringify(semster.level) == JSON.stringify(level._id) ) {  %>
+                  <br>
+                <%= level.Level %><br>
+                
+             <% } %>
+                <% } )%>
+                 
+             <% } %>
+                <% } )%>
+             <% } %>
+                <% } )%>
                      <div class="col-md-6"> 
                           <h4><span style="border-bottom: 2px solid black">عنوان الدرس</span> :  <%= question.NameOfCourse %>   </h4>
                         <h4 >  <span style="border-bottom: 2px solid black">نوع السؤال</span> : <%= question.TypeOfQuestion %> </h4>

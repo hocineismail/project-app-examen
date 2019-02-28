@@ -239,15 +239,18 @@ li a:hover {
                        
                             <div class="col-sm">
                            <input type="text" name="Chapiter"   placeholder="الوحد " value="<%= question.Chapiter %>" required> 
-                      </div></div>
+                            </div>
+                    
+                    </div>
                      
                   </div>
                   <div class="col-md-6"> 
                       <div class="form-group row">
-                      <span class="span">عنوان الدرس :</span>
-                      <div class="col-sm">
-                           <input type="text" name="NameOfCourse"  value="<%= question.NameOfCourse %>" required>  
-                      </div></div>
+                           <span class="span">عنوان الدرس :</span>
+                           <div class="col-sm">
+                           <input type="text" name="Course"  value="<%= question.NameOfCourse %>" required>  
+                           </div>
+                     </div>
                
                     </div>
                           <% } %>
@@ -342,9 +345,9 @@ li a:hover {
           
                 <% i = i +1 %>
                 <% if (response.IsCorrect === true ) { %>
-              <p style="color: green">الجواب <%= i  %> </p>
+              <p style="color: green; text-align: right">الجواب <%= i  %> </p>
               <% } else { %>
-                <p style="color: red">الجواب <%= i  %></p>
+                <p style="color: red;text-align: right">الجواب <%= i  %></p>
                 <% } %>
                   <% if (response.ResponseImage != "") {%>
                    

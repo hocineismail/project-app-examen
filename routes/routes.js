@@ -90,7 +90,7 @@ router.post("/searchexam",ensureAuthenticated,function(req, res){
     if (req.body.Module != undefined) { 
  
     Module.findOne({_id: req.body.Module}, function(err, module){
-        Exam.find({module:  module._id},function(err , data){
+        Exam.find({module:  module._id, EtatFinal: false},function(err , data){
         
                 res.send(data);
         })
@@ -280,6 +280,14 @@ function checkFileType(file, cb){
                  user.Count =  user.Count + 1
                  console.log(user.Count)
                  user.save()
+                 Question.countDocuments({exam: req.body.Exam},function(err, count){
+                 Exam.findById({_id: req.body.Exam},function(err, success){
+                   if ( count === success.NumberOfExam){
+                    success.EtatFinal = true
+                    success.save()
+                   }
+                }) 
+               })
                })
 
                }
@@ -311,24 +319,26 @@ router.get("/teacher/valid",async function(req,res){
      const levels =  await Level.find({});
      const semsters =  await Semster.find({});
      const modules =  await Module.find({});
-      const question = await Question.find({IsValidFinal: false,NotValid: false});
+      const question = await Question.find({IsValidFinal: false,NotValid: false}).
+      populate("Author").
+      populate("exam").
+      populate("teacherOne").
+      populate("TeacherTwo").
+      populate("TeacherFinal");;
       let responses = [];
-      let exams = [];
+   
     
     
   
       for(let i = 0; i < question.length; i++){
         let response = await Response.find({question: question[i]._id });
         responses.push(...response)
-        let exam = await Exam.find({_id: question[i].exam });
-        exams.push(...exam)
+        
         };
-      console.log(exams)
-   
+
  
           res.render("teacher/validation",{question: question,
                                            responses: responses,
-                                            exam: exams,
                                             phases: phases,
                                             levels: levels,
                                             semsters: semsters,
@@ -350,29 +360,29 @@ router.get("/teacher/valid",async function(req,res){
     if ( req.user.Role === "Teacher") { 
     try{
       var user = req.user._id ;
+      const  exams = [];
       const phases =  await Phase.find({});
       const levels =  await Level.find({});
       const semsters =  await Semster.find({});
       const modules =  await Module.find({});
+     
        const question = await Question.find({NotValid: true,Author: user }).limit(1).
                                        populate("Author").
                                        populate("teacherOne").
                                        populate("TeacherTwo").
                                        populate("TeacherFinal");
        let responses = [];
-       let exams = [];
-     
+   
      
    
        for(let i = 0; i < question.length; i++){
          let response = await Response.find({question: question[i]._id });
          responses.push(...response)
          let exam = await Exam.find({_id: question[i].exam });
-         exams.push(...exam)
+        exams.push(...exam)
+      
          };
-       console.log(question)
-    
-  
+      
            res.render("teacher/notvalid",{question: question,
                                             responses: responses,
                                              exam: exams,
@@ -434,11 +444,11 @@ router.post("/invalid/question/:id",ensureAuthenticated, function(req,res){
   if ( req.user.Role === "Teacher") { 
   Question.findById({_id: req.params.id},function(err , question){
    
-      question.IsValidOne = false,
-      question.IsValidTwo = false,
-      question.NotValid = true,
-      question.ErrorMessage = req.body.message,
-      question.TeacherFinal = req.user._id
+    question.IsValidOne = false;
+    question.IsValidTwo = false;
+    
+    question.NotValid = true;
+    question.ErrorMessage = req.body.message;
       question.save(function(err, success){
         if (err){console.log("il ya une error ")}
       })
@@ -533,28 +543,47 @@ router.post("/update/question/:id", function(req,res){
       if (req.body.Difficulty != question.Difficulty){
         question.Difficulty = req.body.Difficulty
       }
+      if (req.body.Course != question.NameOfCourse){
+        question.NameOfCourse = req.body.Course
+      }
       if (req.body.Question != question.Question){
         question.Question = req.body.Question
       }
       
-      if (req.body.image5value != question.QuestionImage){
+      if ( (req.body.image5value != null ) &&(req.body.image5value != question.QuestionImage)){
         
               console.log(req.files.image5[0].filename)
               question.QuestionImage = req.files.image5[0].filename
-            
-            
-          
-     
-      }
+     }
       question.NotValid = false
       question.save().then(function(err, result) {
         console.log('question update');
+        Response.find({_id: question._id},function(err, reponse){
+          if ( (req.body.image1value != null ) &&(req.body.image1value != question.QuestionImage)){
+        
+            console.log(req.files.image5[0].filename)
+            response[0].QuestionImage = req.files.image1[0].filename
+   }
+   if ( (req.body.image1value != null ) &&(req.body.image1value != question.QuestionImage)){
+        
+    console.log(req.files.image5[0].filename)
+    response[1].QuestionImage = req.files.image1[0].filename
+}
+if ( (req.body.image1value != null ) &&(req.body.image1value != question.QuestionImage)){
+        
+  console.log(req.files.image5[0].filename)
+  response[3].QuestionImage = req.files.image1[0].filename
+}
+if ( (req.body.image1value != null ) &&(req.body.image1value != question.QuestionImage)){
+        
+  console.log(req.files.image5[0].filename)
+  response[4].QuestionImage = req.files.image1[0].filename
+}
+  })
         res.redirect("/teacher/notvalid") 
     });
   }
 });
-
-      res.redirect("/teacher/notvalid") 
     }
   })
      })    
