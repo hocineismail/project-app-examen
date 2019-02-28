@@ -316,5 +316,13 @@ admin.post("/admin/addphase",ensureAuthenticated, function(req,res,next){
                     res.redirect("/");
                     }
                    }
-                              
+       admin.post("/update/question/:id", function(req,res){
+         Question.find({_id: req.params.id},function(err, question){
+           if (!err){
+             question.NotValid = false
+             question.save()
+             res.redirect("/teacher/notvalid") 
+           }
+         })
+         res.redirect("/teacher/notvalid")     })                       
 module.exports = admin;
