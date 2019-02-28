@@ -24,8 +24,11 @@ methods: {
   this.input = true;
   this.teacher = false;
   this.student = true;
- }
+ },
+ add0: function(){
+console.log(" clilkani bicth")
   
+ }
 },
 
 
