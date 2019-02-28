@@ -151,7 +151,8 @@ class Questions extends Component {
 
     let body = {
       examId,
-      responses
+      responses,
+      questionNumber : this.state.pureQuestions.length
     }
     this.props.postExamGrade(window.localStorage.getItem('_id'), body)
   }
