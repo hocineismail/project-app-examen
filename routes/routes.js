@@ -252,7 +252,7 @@ function checkFileType(file, cb){
                 ResponseImage: image2,
                 question: newQuestion._id
               });newResponse2.save(function(err,succcess){
-                if (err){ console.log("response 1 pas d error");
+                if (err){ console.log("response 2 pas d error");
                 return  res.redirect('/teacher/qauestion') 
                }
               })
@@ -262,7 +262,7 @@ function checkFileType(file, cb){
                 ResponseImage: image3,
                 question: newQuestion._id
               });newResponse3.save(function(err,succcess){
-                if (err){ console.log("response 1 pas d error");
+                if (err){ console.log("response 3 pas d error");
                 return  res.redirect('/teacher/qauestion') 
                }
               })
@@ -272,7 +272,7 @@ function checkFileType(file, cb){
                 ResponseImage: image4,
                 question: newQuestion._id
               });newResponse4.save(function(err,succcess){
-                if (err){ console.log("response 1 pas d error");
+                if (err){ console.log("response 4 pas d error");
                 return  res.redirect('/teacher/qauestion') 
                }
                if (succcess){
@@ -558,27 +558,43 @@ router.post("/update/question/:id", function(req,res){
       question.NotValid = false
       question.save().then(function(err, result) {
         console.log('question update');
-        Response.find({_id: question._id},function(err, reponse){
+        Response.find({question: question._id},function(err, response){
           if ( (req.body.image1value != null ) &&(req.body.image1value != question.QuestionImage)){
         
-            console.log(req.files.image5[0].filename)
-            response[0].QuestionImage = req.files.image1[0].filename
+            console.log(req.files.image1[0].filename)
+            response[0].ResponseImage = req.files.image1[0].filename
+            console.log(response[0])
+            response[0].save()
    }
-   if ( (req.body.image1value != null ) &&(req.body.image1value != question.QuestionImage)){
-        
-    console.log(req.files.image5[0].filename)
-    response[1].QuestionImage = req.files.image1[0].filename
+
+
+
+   if ( (req.body.image2value != null ) &&(req.body.image2value != question.QuestionImage)){
+    console.log(response)
+    console.log(req.files.image2[0].filename)
+
+    response[1].QuestionImage = req.files.image2[0].filename
+    response[1].save()
 }
-if ( (req.body.image1value != null ) &&(req.body.image1value != question.QuestionImage)){
+
+
+
+if ( (req.body.image3value != null ) &&(req.body.image1value != question.QuestionImage)){
         
-  console.log(req.files.image5[0].filename)
-  response[3].QuestionImage = req.files.image1[0].filename
+  console.log(req.files.image3[0].filename)
+  response[2].QuestionImage = req.files.image3[0].filename
+  response[2].save()
 }
-if ( (req.body.image1value != null ) &&(req.body.image1value != question.QuestionImage)){
+
+
+
+if ( (req.body.image4value != null ) &&(req.body.image1value != question.QuestionImage)){
         
-  console.log(req.files.image5[0].filename)
-  response[4].QuestionImage = req.files.image1[0].filename
+  console.log(req.files.image4[0].filename)
+  response[3].QuestionImage = req.files.image4[0].filename
+  response[3].save()
 }
+
   })
         res.redirect("/teacher/notvalid") 
     });
