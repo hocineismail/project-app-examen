@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -138,7 +138,10 @@ li a:hover {
   color: #f2f2f2;
   text-decoration: none
 }
-
+.span {
+  font-size: 18px;
+  color: rgb(43, 93, 139) 
+}
 </style>
 </style>
 <body dir="rtl">
@@ -174,14 +177,11 @@ li a:hover {
 
 <!-- Button trigger modal -->
 
-<% exam.forEach(function(exams) {%>
-  <p> <%= exams._id %> </p>
-  
-  <% }) %>
+
 <div class="container" >
 
     <% question.forEach(function(question) {%>
-   
+      <form action="/update/question/<%= question._id %>" method="post">
 
 
 
@@ -207,32 +207,47 @@ li a:hover {
                                   <% phases.forEach(function(phase) {%>
                                     <% if (JSON.stringify(phase._id) == JSON.stringify(level.phase)) {  %>
                                       <div class="col-md-12">
-                                      <h4 style=" text-align: center; border-bottom: 1px solid black"> <span>رقم  السؤال</span> : <%= question._id %></h4>
+                                      <h4 style=" text-align: center; border-bottom: 1px solid black"> <span class="span">رقم  السؤال</span> : <%= question._id %></h4>
                                     </div>
                                       <div class="col-md-6">
                                          
-                                        <h4 > <span style="border-bottom: 2px solid black">المرحلة</span> : <%= phase.Phase %></h4>
-                                        <h4><span style="border-bottom: 2px solid black">الدورة </span> :   <%= exam.Exam %></h4>
+                                        <h4 > <span class="span">المرحلة</span> : <%= phase.Phase %></h4>
+                                        <h4><span class="span">الدورة </span> :   <%= exam.Exam %></h4>
                                       </div>
 
                     <div class="col-md-6"> 
-                        <h4 ><span style="border-bottom: 2px solid black">الطور </span> : <%= level.Level %></h4>
-                        <h4><span style="border-bottom: 2px solid black">الوحد </span> :  <%= question.Chapiter %> </h4>
+                        <h4 ><span class="span">الطور </span> : <%= level.Level %></h4>
+                        <h4><span class="span">الفصل </span> :  <%= semster.Semster %> </h4>
                 
                    </div>
                
                 <div class="col-md-12"> 
-                    <h4><span style="border-bottom: 2px solid black">الفصل </span> :  <%= semster.Semster %> </h4>
+                    <h4 >  <span class="span">المادة</span> : <%= module.Module %> %></h4>
+                 
                 </div>
-               
-                  <div class="col-md-6"> 
-                      <h4 >  <span style="border-bottom: 2px solid black">المادة</span> : <%= module.Module %> %></h4>
+                <div class="col-md-12" > 
+                    <div class="alert alert-danger" role="alert" style="margin-top: 2%">
+                    <h4  style="border-bottom: 2px solid rgb(250, 157, 157)"> رسالة المراجع  :  </h4>
+                    <div> 
+                   
+                      <h5> <%= question.ErrorMessage %></h5>
                      
+                      </div> </div></div>
+                  <div class="col-md-6"> 
+                      <div class="form-group row">
+                   <span class="span">الوحد :</span>  
+                       
+                            <div class="col-sm">
+                           <input type="text" name="Chapiter" class="form-control" dir="rtl" placeholder="الوحد " value="<%= question.Chapiter %>" required> 
+                      </div></div>
                      
                   </div>
                   <div class="col-md-6"> 
-                      <h4><span style="border-bottom: 2px solid black">عنوان الدرس</span> :  <%= question.NameOfCourse %>   </h4>    
-                     
+                      <div class="form-group row">
+                      <span class="span">عنوان الدرس :</span>
+                      <div class="col-sm">
+                           <input type="text" name="Chapiter" class="form-control" dir="rtl" value="<%= question.NameOfCourse %>">  
+                      </div></div>
                
                     </div>
                           <% } %>
@@ -251,12 +266,36 @@ li a:hover {
                   <% } %>
                   <% }) %> </div>
                     
+                    <div class="col-md-6">
+                          <div class="form-group row">
+                          <span class="span">نوع السؤال : </span><div class="col-sm">
+                            <select name="TypeOfQuestion"  class="form-control"  dir="rtl" >
+                          <option selected="selected">
+                            <%= question.TypeOfQuestion %>
+                            </option>
+                          <option> تفكير</option>
+                          <option> تذكر</option>
+                           <option>تطبيق</option>
+
+                  </select> </div>
+                          </div>
+                        
+                      </div>
                     <div class="col-md-6"> 
-                        <h4 >  <span style="border-bottom: 2px solid black">نوع السؤال</span> : <%= question.TypeOfQuestion %> </h4>
-                    </div>
-                    <div class="col-md-6"> 
-                        <h4 >  <span style="border-bottom: 2px solid black">درجة السؤال</span> : <%= question.Difficulty %></h4>
-                     </div>
+                        <div class="form-group row">
+                       <span class="span">درجة السؤال : </span> 
+                       <div class="col-sm">
+                       <select name="Difficulty"  class="form-control"  dir="rtl" >
+                         <option selected="selected">
+                            <%= question.Difficulty %> 
+                         </option>
+                         <option>سهل </option> 
+                           <option>متوسط</option>
+                          <option> صعب</option>
+                          </select>
+                        </div>
+                      </div>
+
              
 
                     
@@ -268,24 +307,39 @@ li a:hover {
               <% i = 0 %>
               <div class="col-md-12"> 
                       <h4> السؤال  :  </h4>
-                   <div style="  border:1px solid black;   border-radius: 8px; margin: 2%;padding: 2%"> 
+                   <div style=" background-color: rgb(242, 255, 239);   border-radius: 8px; margin: 2%;padding: 2%"> 
                
-                        <h5> <%- question.Question %></h5>
+                        <h5>   </h5>
+                        <textarea name="Question" id="myArea1" class="textarea"> <%- question.Question %></textarea> 
+      <div class="file-field input-field">
+          <div class="btn grey">
+            <span >تحميل صورة</span>
+            <input name="image5" type="file">
+          </div>
+          <div class="file-path-wrapper">
+            <input class="file-path validate" type="text"  name="image5value" value="<%= question.QuestionImage %>">
+          </div>
+        
+        </div>  
+                  
                            <% if (question.QuestionImage != "") {%>
                           <img src="/uploads/<%= question.QuestionImage %>" width="80%">
                       <br>
                        <br>
                         <%}%>
                    </div>
-              </div>
+              </div>        <div class="col-md-12" > 
+                <div class="row"> 
               <% responses.forEach(function(response) {%>
                
                 <% if (JSON.stringify(question._id) == JSON.stringify(response.question)) {%>
                   
               <div class="col-md-6" > 
                 
-            <div style="  border:1px solid black;
+            <div style="   background-color: rgb(242, 255, 239);
             border-radius: 8px; margin: 2%;padding: 2%"> 
+             
+          
                 <% i = i +1 %>
                 <% if (response.IsCorrect === true ) { %>
               <p style="color: green">الجواب <%= i  %> </p>
@@ -295,22 +349,32 @@ li a:hover {
                   <% if (response.ResponseImage != "") {%>
                    
                     <img src="/uploads/<%= response.ResponseImage %>" width="80%">  
+                    <div class="file-field input-field">
+                        <div class="btn grey">
+                          <span>تحميل صورة</span>
+                          <input name="image<%= i %>" type="file">
+                        </div>
+                        <div class="file-path-wrapper">
+                          <input class="file-path validate" type="text" name="image<%= i %>value" value="">
+                        </div>
+                      </div>
                   <%}%>
                   <%if  (response.ResponseText != "") {%>
-                <p>  <%= response.ResponseText  %>  </p> 
+                    <textarea style="text-align:right" name="ResponseText<%= i %>" > <%= response.ResponseText %></textarea>
+               
                   <%}%>
                 </div>
               </div>
+
+           
                 <%}%>
-               
-            
-          <%})%> 
-          
+              <%})%> 
+            </div></div>
         
             <div class="col-md-12" > 
 
                 <h4> الاجابة النموذجية:  </h4>
-                <div style="  border:1px solid black;
+                <div style="  background-color: rgb(242, 255, 239);
                 border-radius: 8px; margin: 2%;padding: 2%"> 
              
                   <h5> <%- question.Response %></h5>
@@ -321,7 +385,7 @@ li a:hover {
                 <div class="row"> 
                 <div class="col-md-3" > 
                     <h4> اسم المعلم المدخل:  </h4>
-                    <div style="  border:1px solid black;
+                    <div style=" background-color: rgb(242, 255, 239);
                     border-radius: 8px; margin: 2%;padding: 2%;height: 45px""> 
                  
                       <h5> <%= question.Author.Firstname +" " +  question.Author.Lastname  %></h5>
@@ -329,7 +393,7 @@ li a:hover {
                 </div> </div>
                 <div class="col-md-3" > 
                     <h4> اسم المعلم المراقب الاول:  </h4>
-                    <div style="  border:1px solid black;
+                    <div style="   background-color: rgb(242, 255, 239);
                     border-radius: 8px; margin: 2%;padding: 2%;height: 45px"> 
                     <% if ( question.TeacherOne != null) { %>
                       <h5><%= question.TeacherOne.Firstname +" " + question.TeacherOne.Lastname %></h5>
@@ -339,7 +403,7 @@ li a:hover {
                 </div> </div>
                 <div class="col-md-3" > 
                     <h4> اسم المعلم المراقل الثاني:  </h4>
-                    <div style="  border:1px solid black;
+                    <div style="   background-color: rgb(242, 255, 239);
                     border-radius: 8px; margin: 2%;padding: 2%; height: 45px" > 
                   <% if ( question.TeacherTwo != null) { %>
                       <h5> <%= question.TeacherTwo.Firstname +" " + question.TeacherTwo.Lastname  %></h5>
@@ -349,7 +413,7 @@ li a:hover {
                 </div> </div>
                 <div class="col-md-3" > 
                     <h4> اسم المعلم المدقق:  </h4>
-                    <div style="  border:1px solid black;
+                    <div style="   background-color: rgb(242, 255, 239);
                     border-radius: 8px; margin: 2%;padding: 2%; height: 45px"> 
                     <% if ( question.TeacherFinal != null) { %>
                       <h5> <%= question.TeacherFinal.Firstname +" " + question.TeacherFinal.Lastname  %></h5>
@@ -357,6 +421,9 @@ li a:hover {
                         <h5></h5>
                         <% } %>
                 </div> </div></div>
+
+
+                      <button type="submit" class="btn  btn-success" style="width: 100px" > validi </botton>
               <p class="card-text" style="text-align: center"><small class="text-muted"><%= question.createdAt %></small></p>
             </div> </div>
             <hr>
@@ -369,12 +436,36 @@ li a:hover {
    
 </div>
       
-     
+    </form>
         <%})%> 
 </div>
 
  <br>
 
+ <script type="text/javascript" src="../editor-text/nicEdit.js"></script>
+ <script type="text/javascript">
+ var area1,area2
+  area1 = new nicEditor({fullPanel : true}).panelInstance('myArea1',{hasPanel : true});
+  area2 = new nicEditor({fullPanel : true}).panelInstance('myArea2',{hasPanel : true});
+ </script>
+ 
+
+ <script>
+   function myFunction() {
+     var x = document.getElementById("myTopnav");
+     if (x.className === "topnav") {
+       x.className += " responsive";
+     } else {
+       x.className = "topnav";
+     }
+   }
+   </script>
+   
+   <script
+   src="https://code.jquery.com/jquery-3.2.1.min.js"
+   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+   crossorigin="anonymous"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>  
 
 
 

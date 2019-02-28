@@ -354,7 +354,7 @@ router.get("/teacher/valid",async function(req,res){
       const levels =  await Level.find({});
       const semsters =  await Semster.find({});
       const modules =  await Module.find({});
-       const question = await Question.find({NotValid: true,Author: user }).
+       const question = await Question.find({NotValid: true,Author: user }).limit(1).
                                        populate("Author").
                                        populate("teacherOne").
                                        populate("TeacherTwo").
@@ -510,4 +510,19 @@ router.get("/pub/delete/:id",function(req,res){
  }
  
 })
+
+router.post("/update/question/:id", function(req,res){
+  Question.findById({_id: req.params.id},function(err, question){
+    if (!err){
+      question.NotValid = false
+      question.save().then(function(err, result) {
+        console.log('question update');
+        res.redirect("/teacher/notvalid") 
+    });
+      
+
+      res.redirect("/teacher/notvalid") 
+    }
+  })
+     })    
 module.exports = router;
