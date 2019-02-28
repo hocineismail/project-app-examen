@@ -142,6 +142,9 @@ li a:hover {
             <div class="card-body" >
             
               <div class="row" dir="rtl"> 
+                  <div class="col-md-12">
+                      <h4 style=" text-align: center; border-bottom: 1px solid black"> <span class="span">رقم  السؤال</span> : <%= question._id %></h4>
+                    </div>
               <div class="col-md-12" >
                      <div class="col-md-6"> 
                           <h4><span style="border-bottom: 2px solid black">عنوان الدرس</span> :  <%= question.NameOfCourse %>   </h4>
@@ -159,7 +162,7 @@ li a:hover {
               <% i = 0 %>
               <div class="col-md-12"> 
                       <h4> السؤال  :  </h4>
-                   <div style="  border:1px solid black;   border-radius: 8px; margin: 2%;padding: 2%"> 
+                      <div style=" background-color: rgb(242, 255, 239);   border-radius: 8px; margin: 2%;padding: 2%">
                
                         <h5> <%- question.Question %></h5>
                            <% if (question.QuestionImage != "") {%>
@@ -174,8 +177,7 @@ li a:hover {
                 <% if (JSON.stringify(question._id) == JSON.stringify(response.question)) {%>
                   
               <div class="col-md-6" > 
-            <div style="  border:1px solid black;
-            border-radius: 8px; margin: 2%;padding: 2%"> 
+           <div style=" background-color: rgb(242, 255, 239);   border-radius: 8px; margin: 2%;padding: 2%">
                 <% i = i +1 %>
                 <% if (response.IsCorrect === true ) { %>
               <p style="color: green">الجواب <%= i  %> </p>
@@ -199,26 +201,24 @@ li a:hover {
         
             <div class="col-md-12" > 
                 <h4> الاجابة النموذجية:  </h4>
-                <div style="  border:1px solid black;
-                border-radius: 8px; margin: 2%;padding: 2%"> 
+                <div style=" background-color: rgb(242, 255, 239);   border-radius: 8px; margin: 2%;padding: 2%">
              
                   <h5> <%- question.Response %></h5>
               
             </div>
             
             <div class="col-md-12" > 
+              <div class="row">
                 <div class="col-md-3" > 
                     <h4> اسم المعلم المدخل:  </h4>
-                    <div style="  border:1px solid black;
-                    border-radius: 8px; margin: 2%;padding: 2%"> 
+                    <div style=" background-color: rgb(242, 255, 239);   border-radius: 8px; margin: 2%;padding: 2%;height: 50px">
                  
                       <h5> <%= question.Author.Firstname +" " +  question.Author.Lastname  %></h5>
                   
                 </div> </div>
                 <div class="col-md-3" > 
-                    <h4> اسم المعلم المراقب الاول:  </h4>
-                    <div style="  border:1px solid black;
-                    border-radius: 8px; margin: 2%;padding: 2%"> 
+                    <h4> اسم  المراقب الاول:  </h4>
+                    <div style=" background-color: rgb(242, 255, 239);   border-radius: 8px; margin: 2%;padding: 2%; height: 50px">
                     <% if ( question.TeacherOne != null) { %>
                       <h5><%= question.TeacherOne.Firstname +" " + question.TeacherOne.Lastname %></h5>
                    <% } else { %>
@@ -226,9 +226,8 @@ li a:hover {
                    <% } %>
                 </div> </div>
                 <div class="col-md-3" > 
-                    <h4> اسم المعلم المراقل الثاني:  </h4>
-                    <div style="  border:1px solid black;
-                    border-radius: 8px; margin: 2%;padding: 2%"> 
+                    <h4> اسم  المراقل الثاني:  </h4>
+                    <div style=" background-color: rgb(242, 255, 239);   border-radius: 8px; margin: 2%;padding: 2%; height: 50px"> 
                   <% if ( question.TeacherTwo != null) { %>
                       <h5> <%= question.TeacherTwo.Firstname +" " + question.TeacherTwo.Lastname  %></h5>
                       <% } else { %>
@@ -236,15 +235,14 @@ li a:hover {
                         <% } %>
                 </div> </div>
                 <div class="col-md-3" > 
-                    <h4> اسم المعلم المدقق:  </h4>
-                    <div style="  border:1px solid black;
-                    border-radius: 8px; margin: 2%;padding: 2%"> 
+                    <h4> اسم  المدقق:  </h4>
+                    <div style=" background-color: rgb(242, 255, 239);   border-radius: 8px; margin: 2%;padding: 2%;height: 50px">
                     <% if ( question.TeacherFinal != null) { %>
                       <h5> <%= question.TeacherFinal.Firstname +" " + question.TeacherFinal.Lastname  %></h5>
                       <% } else { %>
                         <h5></h5>
                         <% } %>
-                </div> </div>
+                </div> </div></div>
               <p class="card-text" style="text-align: center"><small class="text-muted"><%= question.createdAt %></small></p>
             </div> </div>
             <hr>

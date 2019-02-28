@@ -90,7 +90,7 @@ router.post("/searchexam",ensureAuthenticated,function(req, res){
     if (req.body.Module != undefined) { 
  
     Module.findOne({_id: req.body.Module}, function(err, module){
-        Exam.find({module:  module._id},function(err , data){
+        Exam.find({module:  module._id, EtatFinal: false},function(err , data){
         
                 res.send(data);
         })
@@ -280,6 +280,14 @@ function checkFileType(file, cb){
                  user.Count =  user.Count + 1
                  console.log(user.Count)
                  user.save()
+                 Question.countDocuments({exam: req.body.Exam},function(err, count){
+                 Exam.findById({_id: req.body.Exam},function(err, success){
+                   if ( count === success.NumberOfExam){
+                    success.EtatFinal = true
+                    success.save()
+                   }
+                }) 
+               })
                })
 
                }
