@@ -1,10 +1,10 @@
 import React from 'react'
 import Responses from './Responses'
 
+import './Question.css'
 class Question extends React.Component {
   constructor(props) {
     super(props)
-    console.log(props.content)
     this.state = {
       responses: props.content.responses,
       selectedResponse: props.selectedResponse,
@@ -20,9 +20,13 @@ class Question extends React.Component {
   }
 
   render() {
+    let image = this.props.content.question.QuestionImage ? (
+      <img src = {this.props.content.question.QuestionImage} alt='question-img'/>
+    ) : (null)
     return (
       <div className="question">
         <h4>{this.props.content.question.Question}</h4>
+        {image}
         <Responses
           responses={this.state.responses}
           selectedResponse={this.state.selectedResponse}

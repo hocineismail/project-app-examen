@@ -87,37 +87,32 @@ app.post('/:id', (req, res) => {
     'password'
   ])
   let bodyStudent = _.pick(req.body, ['Phase', 'Level', 'semster'])
-  console.log('STUDENT')
+  console.log(bodyUser)
   console.log(bodyStudent)
   updateUser(id, bodyUser)
     .then(userQueryResult => {
-      User.findById(id).exec((err, dataBack) => {
-        if (err) {
-          return returnErrorMessage(res, err, 400)
-        }
-        dataBack.Birthday = new Date(bodyUser.Birthday).toISOString()
-        dataBack.save()
-      })
-
+      if (bodyUser.Birthday) {
+        User.findById(id).exec((err, dataBack) => {
+          if (err) {
+            return returnErrorMessage(res, err, 400)
+          }
+          dataBack.Birthday = new Date(bodyUser.Birthday).toISOString()
+          dataBack.save()
+        })
+      }
       Semster.findOne(
         {
           Semster: bodyStudent.semster
         },
         (err, sem) => {
-          console.log('ERROR : ')
-          console.log(err)
-          console.log('SEM:')
-           console.log(sem)
           bodyStudent.semster = sem._id
           Level.findOne(
             {
               Level: bodyStudent.Level
             },
             (err, lvl) => {
-              console.log('ERROR : ')
               console.log(err)
-              console.log('SEM:')
-               console.log(lvl)
+              console.log(lvl)
               bodyStudent.Level = lvl._id
 
               Phase.findOne(
@@ -282,7 +277,7 @@ app.get('/examquestions/:id', (req, res) => {
             for (let i = 0; i < questions.length; i++) {
               let rsp = await Response.find({
                 question: questions[i]._id
-              }).select('ResponseText')
+              }).select(['ResponseText', 'ResponseImage'])
               examData.questions.push({
                 question: questions[i],
                 responses: rsp
@@ -302,23 +297,25 @@ app.post('/exam/getresult/:id', async (req, res) => {
   let id = req.params.id
   let responses = _.pick(req.body, ['responses'])
   let examId = _.pick(req.body, ['examId'])
+  let numberOfQuestions = req.body.questionNumber
   let score = 0
-  let numberOfQuestions = 0
   let correctResponses = []
-
+  console.log('POST Student')
   Promise.all(
     responses.responses.map(async response => {
       let selectedResponse = await Response.findById(response)
+      console.log('RESPONSE')
       if (selectedResponse.IsCorrect) {
         score++
       }
-      numberOfQuestions++
     })
   ).then(completed => {
     studentExamOutput = {
       Exam: examId.examId,
       Grade: (score * 100) / numberOfQuestions
     }
+    console.log('OUTPUT')
+    console.log(studentExamOutput)
     Student.updateOne(
       { user: id },
       {
@@ -340,14 +337,13 @@ app.post('/exam/getresult/:id', async (req, res) => {
             }
             Promise.all(
               questions.map((question, k) => {
-                console.log('QUESTION')
+                console.log('GRADE')
                 correctResponses.push({
                   questionNumber: k,
                   correctResponse: question.Response
                 })
               })
             ).then(completed => {
-              console.log(numberOfQuestions)
               return res.json({
                 message: 'Inserted Successfully',
                 grade: (score * 100) / numberOfQuestions,
