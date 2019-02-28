@@ -9,6 +9,45 @@ import WomanAvatar from './womanavatar.png'
 import Submit from './submit/Submit'
 
 class ProfileSettings extends Component {
+  constructor(props) {
+    super(props)
+    let level = [
+      'الصف الاول',
+      'الصف الثاني',
+      'الصف الثالث',
+      'الصف الرابع',
+      'الصف الخامس'
+    ]
+
+    if (props.userData.Phase.Phase === 'المتوسطة') {
+      level = ['الصف الاول', 'الصف الثاني', 'الصف الثالث', 'الصف الرابع']
+    } else if (props.userData.Phase.Phase === 'الثانوية') {
+      level = ['الصف الاول', 'الصف الثاني', 'الصف الثالث']
+    }
+    this.state = {
+      Semster: ['الثلاثي الاول', 'الثلاثي الثاني', 'الثلاثي الثالث'],
+      level
+    }
+    this.onPhaseChanges = this.onPhaseChanges.bind(this)
+  }
+
+  onPhaseChanges(e) {
+    let phase = e.target.value
+    if (phase === 'المتوسطة') {
+      this.setState({
+        level: ['الصف الاول', 'الصف الثاني', 'الصف الثالث', 'الصف الرابع']
+      })
+    } else if (phase === 'الثانوية') {
+      this.setState({
+        level: ['الصف الاول', 'الصف الثاني', 'الصف الثالث']
+      })
+    }else {
+      this.setState({
+        level: ['الصف الاول', 'الصف الثاني', 'الصف الثالث', 'الصف الرابع', 'الصف الخامس']
+      })
+    }
+  }
+
   render() {
     let birthdate = new Date(this.props.userData.Birthday)
     let day = birthdate.getDate()
@@ -21,20 +60,6 @@ class ProfileSettings extends Component {
     }
     let year = birthdate.getFullYear()
 
-    let Semster = ['الثلاثي الاول', 'الثلاثي الثاني', 'الثلاثي الثالث']
-
-    let level = [
-      'الصف الاول',
-      'الصف الثاني',
-      'الصف الثالث',
-      'الصف الرابع',
-      'الصف الخامس'
-    ]
-    if (this.props.userData.Phase.Phase === 'المتوسطة') {
-      level = ['الفصل الاول', 'الفصل الثاني', 'الفصل الثالث', 'الفصل الرابع']
-    } else if (this.props.userData.Phase.Phase === 'الثانوية') {
-      level = ['الفصل الاول', 'الفصل الثاني', 'الفصل الثالث']
-    }
     return (
       <div className="profile-settings card">
         <img
@@ -106,6 +131,7 @@ class ProfileSettings extends Component {
           editable={true}
           id="Phase"
           choices={['الابتدائية', 'المتوسطة', 'الثانوية']}
+          onChange={this.onPhaseChanges}
         />
         <InformationsInput
           prop="الصف"
@@ -113,7 +139,7 @@ class ProfileSettings extends Component {
           type="choicebox"
           editable={true}
           id="Level"
-          choices={level}
+          choices={this.state.level}
         />
         <InformationsInput
           prop="الثلاثي"
@@ -121,7 +147,7 @@ class ProfileSettings extends Component {
           type="choicebox"
           id="semster"
           editable={true}
-          choices={Semster}
+          choices={this.state.Semster}
         />
         <Submit />
       </div>

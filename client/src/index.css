@@ -23,6 +23,9 @@ code {
   body {
     width: 2000px;
   }
+  .response-box {
+    width: 800px !important;
+  }
 }
 
 @media only screen and (max-width: 1200px) {
@@ -33,6 +36,9 @@ code {
 @media only screen and (max-width: 1000px) {
   body {
     width: 800px;
+  }
+  .response-box {
+    width: 500px !important;
   }
   .side-bar {
     display: none;
@@ -53,6 +59,9 @@ code {
 @media only screen and (max-width: 800px) {
   body {
     width: 400px;
+  }
+  .response-box {
+    width: 300px !important;
   }
   .account,
   .exam-wrapper,

@@ -10,18 +10,21 @@ import './Submit.css'
 
 class Submit extends React.Component {
   onSaveButtonClicked() {
+    let Birthday = document.querySelector('#Birthday').value
+      ? document.querySelector('#Birthday').value
+      : null
     let body = {
       Firstname: document.querySelector('#Firstname').value,
       Lastname: document.querySelector('#Lastname').value,
       Phone: document.querySelector('#Phone').value,
       Address: document.querySelector('#Address').value,
-      Birthday: document.querySelector('#Birthday').value,
+      Birthday,
       Sexe: document.querySelector('#Sexe').value,
       Phase: document.querySelector('#Phase').value,
       Level: document.querySelector('#Level').value,
       semster: document.querySelector('#semster').value
     }
-    console.log('BIRTHDAY : ', new Date(body.Birthday).toISOString())
+    console.log(body.Birthday)
     let password = document.querySelector('#Password').value
     if (password !== '') {
       body.password = password

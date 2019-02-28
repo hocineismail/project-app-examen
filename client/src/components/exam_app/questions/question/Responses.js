@@ -32,6 +32,7 @@ class Responses extends React.Component {
           return (
             <Choice
               propValue={r.ResponseText}
+              propImage={r.ResponseImage}
               index={this.state.index}
               isChecked={checked}
               key={k}

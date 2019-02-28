@@ -57,6 +57,9 @@ class Choice extends React.Component {
   }
 
   render() {
+    let image = this.props.propImage ? (
+      <img src={this.props.propImage} alt="response-img" />
+    ) : null
     return (
       <div className="form-check card response-box">
         <input
@@ -67,8 +70,9 @@ class Choice extends React.Component {
           onChange={this.onRadioClick}
           checked={this.state.isChecked}
           id={this.props.id}
-        />{' '}
+        />
         {this.props.propValue}
+        {image}
       </div>
     )
   }
