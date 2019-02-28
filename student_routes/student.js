@@ -13,7 +13,6 @@ const Response = require('../models/response')
 
 const _ = require('lodash')
 
-
 function returnErrorMessage(res, err, statusCode) {
   return res.status(statusCode).json({
     type: 'error',
@@ -46,9 +45,7 @@ app.get('/:id', (req, res) => {
           'Sexe',
           'Address',
           'Phone',
-          'email',
-          'Phase',
-          'Level'
+          'email'
         ])
         let studentData = _.pick(student, [
           'Phase',
@@ -63,7 +60,8 @@ app.get('/:id', (req, res) => {
             exams.push({
               Exam: exam._id,
               Grade: exam.Grade,
-              examName: exName.Exam
+              examName: exName.Exam,
+              Date: exam.Date
             })
           })
         ).then(completed => {
@@ -89,20 +87,37 @@ app.post('/:id', (req, res) => {
     'password'
   ])
   let bodyStudent = _.pick(req.body, ['Phase', 'Level', 'semster'])
-
+  console.log('STUDENT')
+  console.log(bodyStudent)
   updateUser(id, bodyUser)
     .then(userQueryResult => {
+      User.findById(id).exec((err, dataBack) => {
+        if (err) {
+          return returnErrorMessage(res, err, 400)
+        }
+        dataBack.Birthday = new Date(bodyUser.Birthday).toISOString()
+        dataBack.save()
+      })
+
       Semster.findOne(
         {
           Semster: bodyStudent.semster
         },
         (err, sem) => {
+          console.log('ERROR : ')
+          console.log(err)
+          console.log('SEM:')
+           console.log(sem)
           bodyStudent.semster = sem._id
           Level.findOne(
             {
               Level: bodyStudent.Level
             },
             (err, lvl) => {
+              console.log('ERROR : ')
+              console.log(err)
+              console.log('SEM:')
+               console.log(lvl)
               bodyStudent.Level = lvl._id
 
               Phase.findOne(
@@ -143,7 +158,7 @@ function updateUser(id, data) {
     })
   }
   return new Promise((resolve, reject) => {
-    User.update({ _id: id }, { $set: data }, (err, userQueryResult) => {
+    User.updateOne({ _id: id }, { $set: data }, (err, userQueryResult) => {
       if (err) {
         reject(err)
       } else {

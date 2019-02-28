@@ -20,6 +20,10 @@ var studentSchema = Schema({
         type: Schema.Types.ObjectId,
         ref: 'Exam'
       },
+      Date: {
+        type: Date,
+        default: Date.now
+      },
       Grade: {
         type: Number
       }

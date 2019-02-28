@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Route, BrowserRouter, Switch } from 'react-router-dom'
 import MainApp from './components/main_app/MainApp'
 import ExamApp from './components/exam_app/ExamApp'
-import Certificate from './certificate/Certificate'
 
 import _ from 'lodash'
 
@@ -32,7 +31,6 @@ class AppRoutes extends Component {
       <BrowserRouter>
         <Switch>
           <Route path={'/exampage'} component={ExamApp} />
-          <Route path={'/certificate'} exact component={Certificate} />
           <Route
             path={'/studenthome'}
             render={() => (

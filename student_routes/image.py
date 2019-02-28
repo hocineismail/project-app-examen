@@ -42,7 +42,7 @@ def createCertificate(exam, name, date):
 
     draw = ImageDraw.Draw(image)
     draw.text((490, 280), bidi_exam, (0,0,0), font=font)
-    draw.text((400, 345), bidi_name, (0,0,0), font=font)
+    draw.text((350, 345), bidi_name, (0,0,0), font=font)
     draw.text((150, 440), bidi_date, (0,0,0), font=font)
     draw = ImageDraw.Draw(image)
 
