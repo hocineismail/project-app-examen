@@ -15,7 +15,7 @@
     
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="sweetalert2/dist/sweetalert2.all.min.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Lalezar" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Cairo" rel="stylesheet">
@@ -181,7 +181,7 @@ li a:hover {
 <div class="container" >
 
     <% question.forEach(function(question) {%>
-      <form action="/update/question/<%= question._id %>" method="post">
+      <form action="/update/question/<%= question._id %>" method="post"  enctype="multipart/form-data">
 
 
 
@@ -238,7 +238,7 @@ li a:hover {
                    <span class="span">الوحد :</span>  
                        
                             <div class="col-sm">
-                           <input type="text" name="Chapiter" class="form-control" dir="rtl" placeholder="الوحد " value="<%= question.Chapiter %>" required> 
+                           <input type="text" name="Chapiter"   placeholder="الوحد " value="<%= question.Chapiter %>" required> 
                       </div></div>
                      
                   </div>
@@ -246,7 +246,7 @@ li a:hover {
                       <div class="form-group row">
                       <span class="span">عنوان الدرس :</span>
                       <div class="col-sm">
-                           <input type="text" name="Chapiter" class="form-control" dir="rtl" value="<%= question.NameOfCourse %>">  
+                           <input type="text" name="NameOfCourse"  value="<%= question.NameOfCourse %>" required>  
                       </div></div>
                
                     </div>
@@ -270,9 +270,7 @@ li a:hover {
                           <div class="form-group row">
                           <span class="span">نوع السؤال : </span><div class="col-sm">
                             <select name="TypeOfQuestion"  class="form-control"  dir="rtl" >
-                          <option selected="selected">
-                            <%= question.TypeOfQuestion %>
-                            </option>
+                          <option selected="selected"><%= question.TypeOfQuestion %></option>
                           <option> تفكير</option>
                           <option> تذكر</option>
                            <option>تطبيق</option>
@@ -311,19 +309,21 @@ li a:hover {
                
                         <h5>   </h5>
                         <textarea name="Question" id="myArea1" class="textarea"> <%- question.Question %></textarea> 
-      <div class="file-field input-field">
-          <div class="btn grey">
-            <span >تحميل صورة</span>
-            <input name="image5" type="file">
-          </div>
-          <div class="file-path-wrapper">
-            <input class="file-path validate" type="text"  name="image5value" value="<%= question.QuestionImage %>">
-          </div>
+   
         
-        </div>  
                   
                            <% if (question.QuestionImage != "") {%>
                           <img src="/uploads/<%= question.QuestionImage %>" width="80%">
+                          <div class="file-field input-field">
+                          <div class="btn grey">
+                              <span >تحميل صورة</span>
+                              <input name="image5" type="file">
+                            </div>
+                            <div class="file-path-wrapper">
+                              <input class="file-path validate" type="text"  name="image5value" value="<%= question.QuestionImage %>">
+                            </div>
+                          
+                          </div>  
                       <br>
                        <br>
                         <%}%>

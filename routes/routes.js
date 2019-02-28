@@ -512,14 +512,47 @@ router.get("/pub/delete/:id",function(req,res){
 })
 
 router.post("/update/question/:id", function(req,res){
+
+ 
+ 
   Question.findById({_id: req.params.id},function(err, question){
     if (!err){
+      upload(req, res, (err) => {
+        if(err){
+          res.redirect("/teacher/notvalid")
+        } else {
+       
+      if (req.body.Chapiter != question.Chapiter){
+        console.log(req.body.Chapiter)
+        question.Chapiter = req.body.Chapiter
+      }
+     
+      if (req.body.TypeOfQuestion != question.TypeOfQuestion){
+        question.TypeOfQuestion = req.body.TypeOfQuestion
+      }
+      if (req.body.Difficulty != question.Difficulty){
+        question.Difficulty = req.body.Difficulty
+      }
+      if (req.body.Question != question.Question){
+        question.Question = req.body.Question
+      }
+      
+      if (req.body.image5value != question.QuestionImage){
+        
+              console.log(req.files.image5[0].filename)
+              question.QuestionImage = req.files.image5[0].filename
+            
+            
+          
+     
+      }
       question.NotValid = false
       question.save().then(function(err, result) {
         console.log('question update');
         res.redirect("/teacher/notvalid") 
     });
-      
+  }
+});
 
       res.redirect("/teacher/notvalid") 
     }
