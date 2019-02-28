@@ -12,7 +12,7 @@
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="https://unpkg.com/pell/dist/pell.min.css">
+
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 </head>
@@ -177,7 +177,7 @@ span.psw {
 <div class="container"> 
 
 
-<form action="/action_page.php">
+
   <div class="imgcontainer">
     <% if (currentUser.Sexe === "انثى") { %>
     <img src="https://www.w3schools.com/howto/img_avatar2.png" alt="Avatar"  class="avatar">
@@ -186,53 +186,102 @@ span.psw {
     <%}%>
   </div>
 
-  <div class="container"> 
-      <div class="input-container" align="center">
-           <div class="col-md-6"> 
-              <label>اللقب </label>
-          <input class="form-control " style="margin-right: 5px;text-align: right" type="text" placeholder="<%= teachers[0].user.Firstname %>" name="Firstname" required>
-         
-        </div>
-        <div class="col-md-6"> 
-            <label>الاسم</label>
-           <input class="form-control " type="text" style="text-align: right" placeholder="<%= teachers[0].user.Lastname %>" name="Lastname" > 
-     
-        </div>
-     
-   
-          <div class="col-md-6"> 
-        <label> البريد الالكتروني</label>
-          <input class="form-control"  type="text" style="text-align: right" placeholder="<%= teachers[0].user.email %>" name="username" >
-      </div>
-      <div class="col-md-6"> 
-   <label> الجنس</label>
-          <select class="form-control" dir="rtl"  name="Sexe" required>
-              <option >ذكر</option>
-              <option >انثى</option>
-            
-            </select>
+
+<table class="table" dir="rtl" style="margin-left: 5%">
+    <thead >
+      <tr>
+        <td style="text-align: left" ><%= teachers[0].user.Firstname %></td>
+        <td ><%= teachers[0].user.Lastname %></td>
+      
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td style="text-align: left">الجنس</td>
+            <td><%= teachers[0].user.Sexe %></td>
+          
+          </tr>
+      <tr>
+        <td style="text-align: left">رقم الجوال</td>
+        <td><%= teachers[0].user.Phone %></td>
+      
+      </tr>
+      
+      <tr>
+         <td style="text-align: left">البريد الالكتروني</td>
+        <td><%= teachers[0].user.email %></td>
+       
+      </tr>
+    </tbody>
+  </table>
+  <div style="text-align: center"> 
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="width: 50%">
+      Launch demo modal
+    </button>
+  </div>
   
-  </div>
-  <div class="col-md-6"> 
-      <label> رقم الجوال</label>
-      <input class="form-control" style="text-align: right"  type="text" placeholder="<%= teachers[0].user.Phone %>" name="Phone">
- </div>
-
- <div class="col-md-6"> 
-    <label> ikhtisas </label>
-    <input class="form-control" style="text-align: right"  type="text" placeholder="<%= teachers[0].Speciality %>" name="Phone">
-
-  </div>
-</form>
-</div>
-<br><br><br><br><br><br><br><br><br><br>
-  <%= teachers[0].user.Firstname %><br>
-<%= currentUser._id%>
-
+<br><br>
     </div>
       
 
+      
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content" dir="rtl">
+            <div class="modal-header">
+            
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+          
+                    <form >
+                    <div class="input-container" align="center">
+                         <div class="col-md-6"> 
+                            <label>اللقب </label>
+                        <input class="form-control " style="margin-right: 5px;text-align: right" type="text" value="<%= teachers[0].user.Firstname %>" name="Firstname" required>
+                       
+                      </div>
+                      <div class="col-md-6"> 
+                          <label>الاسم</label>
+                         <input class="form-control " type="text" style="text-align: right" value="<%= teachers[0].user.Lastname %>" name="Lastname" > 
+                   
+                      </div>
+                   
+                 
+                        <div class="col-md-6"> 
+                      <label> البريد الالكتروني</label>
+                        <input class="form-control"  type="text" style="text-align: right" value="<%= teachers[0].user.email %>" name="username" >
+                    </div>
+                    <div class="col-md-6"> 
+                 <label> الجنس</label>
+                        <select class="form-control" dir="rtl"  name="Sexe" required>
+                            <option >ذكر</option>
+                            <option >انثى</option>
+                          
+                          </select>
+                
+                </div>
+                <div class="col-md-6"> 
+                    <label> رقم الجوال</label>
+                    <input class="form-control" style="text-align: right"  type="text" value="<%= teachers[0].user.Phone %>" name="Phone">
+               </div>
+              
+              
+              </form>
+          
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
+   
     <script>
       function myFunction() {
         var x = document.getElementById("myTopnav");
@@ -243,8 +292,6 @@ span.psw {
         }
       }
       </script>
-
- 
 
       <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.22/vue.js"></script>
     
