@@ -132,10 +132,17 @@ user.post("/signup", function(req, res) {
 		
 				});
 				newStudent.save();
+<<<<<<< HEAD
 
 				
 			} else if ( ( newUser.Role === "Teacher")) {
 
+=======
+				
+
+				console.log(newStudent)
+			} else if (newUser.Role === "Teacher") {
+>>>>>>> 067075b7f5b7ace240051be14adb240281af5ef3
 				var newTeacher = new Teacher({
 					Speciality: req.body.Speciality,
 					phase: req.body.Phase,
@@ -169,11 +176,17 @@ user.post("/signup", function(req, res) {
 	failureRedirect: "/signup",
 	failureFlash: true
  }));
+<<<<<<< HEAD
 
 
 
 
  user.get("/logout", function(req, res) {
+=======
+})
+
+user.get("/logout", function(req, res) {
+>>>>>>> 067075b7f5b7ace240051be14adb240281af5ef3
 	req.logout();
 	res.redirect("/");
  });

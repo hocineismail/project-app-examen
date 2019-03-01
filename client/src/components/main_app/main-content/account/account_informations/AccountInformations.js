@@ -10,6 +10,10 @@ import PersonalInformations from './personal-informations/PersonalInformations'
 class AccountInformations extends Component {
   render() {
     let Birthdate = new Date(this.props.userData.Birthday)
+    let month =
+      Birthdate.getMonth() + 1 < 10
+        ? '0' + (Birthdate.getMonth() + 1)
+        : Birthdate.getMonth() + 1
     return (
       <div className="account-informations card">
         <img
@@ -29,11 +33,7 @@ class AccountInformations extends Component {
           <PersonalInformations
             prop="تاريخ الميلاد"
             propValue={
-              Birthdate.getDate() +
-              '/' +
-              Birthdate.getMonth() +
-              '/' +
-              Birthdate.getFullYear()
+              Birthdate.getDate() + '/' + month + '/' + Birthdate.getFullYear()
             }
           />
           <PersonalInformations

@@ -87,8 +87,6 @@ app.post('/:id', (req, res) => {
     'password'
   ])
   let bodyStudent = _.pick(req.body, ['Phase', 'Level', 'semster'])
-  console.log(bodyUser)
-  console.log(bodyStudent)
   updateUser(id, bodyUser)
     .then(userQueryResult => {
       if (bodyUser.Birthday) {
@@ -100,28 +98,23 @@ app.post('/:id', (req, res) => {
           dataBack.save()
         })
       }
-      Semster.findOne(
-        {
-          Semster: bodyStudent.semster
-        },
-        (err, sem) => {
-          bodyStudent.semster = sem._id
-          Level.findOne(
-            {
-              Level: bodyStudent.Level
-            },
-            (err, lvl) => {
-              console.log(err)
-              console.log(lvl)
-              bodyStudent.Level = lvl._id
-
-              Phase.findOne(
-                {
-                  Phase: bodyStudent.Phase
-                },
-                (err, phase) => {
-                  bodyStudent.Phase = phase._id
-
+      Phase.findOne({
+        Phase: bodyStudent.Phase
+      })
+        .then(phase => {
+          bodyStudent.Phase = phase._id
+          Level.findOne({
+            Level: bodyStudent.Level,
+            phase: bodyStudent.Phase
+          })
+            .then(level => {
+              bodyStudent.Level = level._id
+              Semster.findOne({
+                level: bodyStudent.Level,
+                Semster: bodyStudent.semster
+              })
+                .then(semster => {
+                  bodyStudent.semster = semster._id
                   updateStudent(id, bodyStudent)
                     .then(studentQueryResult => {
                       return res.json('User updated successfully')
@@ -131,12 +124,12 @@ app.post('/:id', (req, res) => {
                         return returnErrorMessage(res, err, 400)
                       }
                     })
-                }
-              )
-            }
-          )
-        }
-      )
+                })
+                .catch(err => {})
+            })
+            .catch(err => {})
+        })
+        .catch(err => {})
     })
     .catch(err => {
       if (err) {
@@ -300,11 +293,9 @@ app.post('/exam/getresult/:id', async (req, res) => {
   let numberOfQuestions = req.body.questionNumber
   let score = 0
   let correctResponses = []
-  console.log('POST Student')
   Promise.all(
     responses.responses.map(async response => {
       let selectedResponse = await Response.findById(response)
-      console.log('RESPONSE')
       if (selectedResponse.IsCorrect) {
         score++
       }
@@ -314,8 +305,6 @@ app.post('/exam/getresult/:id', async (req, res) => {
       Exam: examId.examId,
       Grade: (score * 100) / numberOfQuestions
     }
-    console.log('OUTPUT')
-    console.log(studentExamOutput)
     Student.updateOne(
       { user: id },
       {
@@ -337,7 +326,6 @@ app.post('/exam/getresult/:id', async (req, res) => {
             }
             Promise.all(
               questions.map((question, k) => {
-                console.log('GRADE')
                 correctResponses.push({
                   questionNumber: k,
                   correctResponse: question.Response
