@@ -20,12 +20,64 @@ crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="css/signup.css">
 <style>
+<<<<<<< HEAD
+=======
+
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+.input-container {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.icon {
+  padding: 10px;
+  background: dodgerblue;
+  color: white;
+  min-width: 80px;
+  text-align: center;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  outline: none;
+}
+
+.input-field:focus {
+  border: 2px solid dodgerblue;
+}
+
+/* Set a style for the submit button */
+.btn {
+  background-color: dodgerblue;
+  color: white;
+  padding: 15px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.btn:hover {
+  opacity: 1;
+}
+
+
+>>>>>>> project
 </style>
 </head>
 <body style="  font-family: 'Cairo', sans-serif;">
         <div class="mobile">
                 <div class="container" style="padding-top: 2%;width: 350px;">
+<<<<<<< HEAD
                 <h2 style="text-align: center ">انشاء حساب الادمن
+=======
+                <h2 style="text-align: center ">انشاء حساب جديد
+>>>>>>> project
                   </h2><br><br>
               
                 <% errors.forEach(function(error) { %>
@@ -39,7 +91,11 @@ crossorigin="anonymous"></script>
                 </div>
                 <% }) %>
 
+<<<<<<< HEAD
                    
+=======
+                
+>>>>>>> project
                 <div id="app"> 
   <form action="/signup" method="post">
  
@@ -68,7 +124,11 @@ crossorigin="anonymous"></script>
               </div>   
 
           <div class="input-container" dir="rtl" required>
+<<<<<<< HEAD
                 <label > <input type="radio" value="Admin" name="Role" checked>&nbsp;Admin  &nbsp; &nbsp;&nbsp; </label>
+=======
+                <label > <input type="radio" value="Admin" name="Role" checked >&nbsp;Admin  &nbsp; &nbsp;&nbsp; </label>
+>>>>>>> project
               
          </div>    
 
