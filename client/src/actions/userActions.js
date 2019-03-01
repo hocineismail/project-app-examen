@@ -28,7 +28,6 @@ export function fetchUserData(id) {
 }
 
 export function postUserData(id, userData) {
-  console.log(userData)
   let body = JSON.stringify(userData)
   return function(dispatch) {
     fetch(fetchInfo.apiUrl + `/${id}`, {

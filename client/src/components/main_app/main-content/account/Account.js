@@ -23,7 +23,6 @@ class Account extends Component {
 }
 
 const mapStateToProps = (state, props) => {
-  console.log(state)
   return {
     ...props,
     ...state
