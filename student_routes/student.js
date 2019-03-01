@@ -87,8 +87,6 @@ app.post('/:id', (req, res) => {
     'password'
   ])
   let bodyStudent = _.pick(req.body, ['Phase', 'Level', 'semster'])
-  console.log(bodyUser)
-  console.log(bodyStudent)
   updateUser(id, bodyUser)
     .then(userQueryResult => {
       if (bodyUser.Birthday) {
@@ -100,30 +98,29 @@ app.post('/:id', (req, res) => {
           dataBack.save()
         })
       }
-      Semster.findOne(
-        {
-          Semster: bodyStudent.semster
-        },
-        (err, sem) => {
-          bodyStudent.semster = sem._id
-          Level.findOne(
-            {
-              Level: bodyStudent.Level
-            },
-            (err, lvl) => {
-              console.log(err)
-              console.log(lvl)
-              bodyStudent.Level = lvl._id
-
-              Phase.findOne(
-                {
-                  Phase: bodyStudent.Phase
-                },
-                (err, phase) => {
-                  bodyStudent.Phase = phase._id
-
+      Phase.findOne({
+        Phase: bodyStudent.Phase
+      })
+        .then(phase => {
+          console.log("Phase : ", phase._id)
+          bodyStudent.Phase = phase._id
+          Level.findOne({
+            Level: bodyStudent.Level,
+            phase: bodyStudent.Phase
+          })
+            .then(level => {
+              console.log("Level : ", level._id)
+              bodyStudent.Level = level._id
+              Semster.findOne({
+                level: bodyStudent.Level,
+                Semster: bodyStudent.semster
+              })
+                .then(semster => {
+                  console.log("Semester : ", semster._id)
+                  bodyStudent.semster = semster._id
                   updateStudent(id, bodyStudent)
                     .then(studentQueryResult => {
+                      console.log(studentQueryResult)
                       return res.json('User updated successfully')
                     })
                     .catch(err => {
@@ -131,12 +128,37 @@ app.post('/:id', (req, res) => {
                         return returnErrorMessage(res, err, 400)
                       }
                     })
-                }
-              )
-            }
-          )
-        }
-      )
+                })
+                .catch(err => {})
+            })
+            .catch(err => {})
+        })
+        .catch(err => {})
+      // Semster.findOne(
+      //   {
+      //     Semster: bodyStudent.semster
+      //   },
+      //   (err, sem) => {
+      //     bodyStudent.semster = sem._id
+      //     Level.findOne(
+      //       {
+      //         Level: bodyStudent.Level
+      //       },
+      //       (err, lvl) => {
+      //         bodyStudent.Level = lvl._id
+
+      //         Phase.findOne(
+      //           {
+      //             Phase: bodyStudent.Phase
+      //           },
+      //           (err, phase) => {
+      //             bodyStudent.Phase = phase._id
+      //           }
+      //         )
+      //       }
+      //     )
+      //   }
+      // )
     })
     .catch(err => {
       if (err) {

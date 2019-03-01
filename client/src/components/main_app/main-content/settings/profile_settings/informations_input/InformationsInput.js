@@ -34,7 +34,7 @@ class InformationsInput extends React.Component {
         <input
           type={this.props.type}
           id={this.props.id}
-          readonly={!this.props.editable}
+          readOnly={!this.props.editable}
           className="form-control input-prop-value"
           onChange={this.onChangeInput}
           value={this.state.inputValue}
