@@ -6,7 +6,7 @@ import ExamInformations from './examInformations/ExamInformations';
 import Account from './account/Account'
 import ProfileSettings from './settings/profile_settings/ProfileSettings';
 
-import {Route} from 'react-router-dom'
+import {Route, Redirect} from 'react-router-dom'
 
 import './MainContent.css'
 
@@ -19,6 +19,7 @@ class MainContent extends Component {
                 <Route path='/studenthome/exam/:name' exact component={ExamInformations}/>
                 <Route path='/studenthome/account' exact component={Account}/>
                 <Route path='/studenthome/settings' exact render={() => <ProfileSettings userData={this.props.userData}/>}/>
+                <Redirect to="/404"/>
             </div>
         );
     }
