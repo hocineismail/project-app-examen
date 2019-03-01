@@ -42,48 +42,49 @@ user.get("/forgot",function(req,res){
     res.render("forgot")
 })
 
-
+user.get("/signup/admin",function(req, res){
+	res.render("signupAdmin")
+})
 
 user.get("/signup",function(req,res){
-var phases;
-var levels;
-	async.series([function(callback){
-      
-		Phase.find({},function(err,phase){
-				if(err) return callback(err);
-				phases = phase;
-				callback(null,phases);
-		})
-},function(callback){
-		Level.find({},function(err,level){
-				if(err) return callback(err);
-				levels = level;
-				callback(null,levels);
-		})
-}
-],function(err){
-	
-
-	res.render("signup",{levels: levels, phases: phases})
+	User.countDocuments({}, function(err, count) { 
+		if (count === 0) {
+           res.render("signupAdmin")
+		} else {
+			var phases;
+			var levels;
+				async.series([function(callback){
+				  
+					Phase.find({},function(err,phase){
+							if(err) return callback(err);
+							phases = phase;
+							callback(null,phases);
+					})
+			},function(callback){
+					Level.find({},function(err,level){
+							if(err) return callback(err);
+							levels = level;
+							callback(null,levels);
+					})
+			}
+			],function(err){
+				
+			
+				res.render("signup",{levels: levels, phases: phases})
+				})
+		 }
 	})
+
 })
 
 user.post("/signup", function(req, res) {
-	
-	User.countDocuments({}, function(err, count) {
-		var Firstname = req.body.Firstname;
+	var Firstname = req.body.Firstname;
 	var email = req.body.username;
 	var Lastname =  req.body.Lastname;
 	var Birthday = req.body.Birthday;
 	var Sexe = req.body.Sexe;
-	var Role 
-		if (count === 0){
-			var Role = "Admin";
-		} else {
-			var Role = req.body.Role;
-		}
-    console.log(Role)
-	var Address =  req.body.Address;
+	var Role = req.body.Role;
+    var Address =  req.body.Address;
 	var Phone = req.body.Phone;
 
 	var password = req.body.password;
@@ -106,23 +107,21 @@ user.post("/signup", function(req, res) {
 	password: password,  
 });
 	newUser.save({},function(err, success){
-		if (err) { console.log( "this is error")}
+		if (err) { console.log( "ay tnaket azebiii ")}
 		if (success) {
 			if ( newUser.Role === "Student"){
 				var newStudent = new Student({
 					Phase: req.body.Phase,
 					Level: req.body.Level,
-					semster: req.body.Semster,
 					user: newUser._id,
 		
-				});console.log("semster"+semster)
+				});
 				newStudent.save();
 				console.log(newStudent)
-			} else if ( ( newUser.Role === "Teacher")) {
+			} else if (newUser.Role === "Teacher") {
 				var newTeacher = new Teacher({
 					Speciality: req.body.Speciality,
-					Count: 0,
-					phase: req.body.Phase,
+					Phase: req.body.Phase,
 					user: newUser._id,
 				 });
 				 newTeacher.save();
@@ -138,7 +137,7 @@ user.post("/signup", function(req, res) {
 	successRedirect: "/",
 	failureRedirect: "/signup",
 	failureFlash: true
- }));})
+ }));
  
  user.get("/logout", function(req, res) {
 	req.logout();
