@@ -42,7 +42,7 @@ user.get("/forgot",function(req,res){
     res.render("forgot")
 })
 
-user.get("/signup/admin",function(req, res){
+user.get("/signup/admin", ensureAuthenticated ,function(req, res){
 	res.render("signupAdmin")
 })
 
@@ -128,13 +128,13 @@ user.post("/signup", function(req, res) {
 				 console.log(newTeacher)
 				
 			}
-			res.redirect("/")
+			res.redirect("/routes")
 		 }
 	});
 	});
  },passport.authenticate("login", {
 	 
-	successRedirect: "/",
+	successRedirect: "/routes",
 	failureRedirect: "/signup",
 	failureFlash: true
  }));
