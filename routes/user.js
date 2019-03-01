@@ -96,14 +96,19 @@ user.post("/signup", function(req, res) {
 	return res.redirect("/signup");
 	}
 	if (
-		 (
-			( req.body.Role === "Student") && (req.body.Phase != null)  && (req.body.Level != null)
-		 ) 
+		 (( req.body.Role === "Student") && (req.body.Phase != null)  && (req.body.Level != null)) 
+
 		 ||
-		  (
-			( req.body.Role === "Teacher") && (req.body.Phase != null) && (req.body.Speciality != null)
-		 )
-		) { 
+
+		  (( req.body.Role === "Teacher") && (req.body.Phase != null) && (req.body.Speciality != null))
+
+		 
+
+		 ||
+
+		 (( req.body.Role === "Admin") )
+
+		 ) { 
 	var newUser = new User({
 	Firstname: Firstname,
 	email: email,
@@ -130,7 +135,7 @@ user.post("/signup", function(req, res) {
 			} else if (newUser.Role === "Teacher") {
 				var newTeacher = new Teacher({
 					Speciality: req.body.Speciality,
-					Phase: req.body.Phase,
+					phase: req.body.Phase,
 					user: newUser._id,
 				 });
 				 newTeacher.save();
@@ -361,7 +366,7 @@ user.post('/forgot', function(req, res, next) {
 		Teacher.find({user: req.user._id }).
 		populate("user").
 		exec(function(err,teacher){
-		
+			if (err) { res.redirect("/routes")  }
 			
 	 res.render("teacher/teacher",{teachers: teacher})
 		})
@@ -379,6 +384,7 @@ user.post('/forgot', function(req, res, next) {
 		populate("user"). 
 		populate("phase").
 		exec(function(err,teacher){
+			if (err) { res.redirect("/routes")  }
 			console.log(teacher)
 					res.render("listTeacher",{teachers: teacher})
 		 
@@ -396,6 +402,7 @@ user.get("/list/demande",ensureAuthenticated,async  function(req,res){
 	Teacher.find({Actif: false}).
 		populate("user"). 
 		exec(function(err,teacher){
+			if (err) { res.redirect("/routes")  }
 			console.log(teacher)
 				res.render("listDemande",{
 						teachers: teacher})
@@ -914,7 +921,7 @@ user.get("/admin/exam/question/:id",async function(req,res){
 }
 })
 // this route for deversite of users
-user.get("/routes",function(req,res){
+user.get("/routes",ensureAuthenticated , function(req,res){
 	if ( req.user.Role === "Teacher" ) {
 		res.redirect("/teacher")
 
