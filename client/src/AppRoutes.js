@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route, BrowserRouter, Switch } from 'react-router-dom'
+import { Route, BrowserRouter, Switch, Redirect } from 'react-router-dom'
 import MainApp from './components/main_app/MainApp'
 import ExamApp from './components/exam_app/ExamApp'
 
@@ -9,7 +9,12 @@ import LoadingScreen from 'react-loading-screen'
 
 import { connect } from 'react-redux'
 
-import { fetchUserData, getStudentModules, getStudentExams} from './actions/userActions'
+import {
+  fetchUserData,
+  getStudentModules,
+  getStudentExams
+} from './actions/userActions'
+import Failed from './components/failed/Failed'
 
 class AppRoutes extends Component {
   constructor(props) {
@@ -26,8 +31,9 @@ class AppRoutes extends Component {
   }
 
   render() {
-
-    return  this.props.userData && this.props.studentModules && this.props.studentExams ? (
+    return this.props.userData &&
+      this.props.studentModules &&
+      this.props.studentExams ? (
       <BrowserRouter>
         <Switch>
           <Route path={'/exampage'} component={ExamApp} />
@@ -37,10 +43,12 @@ class AppRoutes extends Component {
               <MainApp
                 userData={this.props.userData}
                 modules={this.props.studentModules}
-                exams = {this.props.studentExams}
+                exams={this.props.studentExams}
               />
             )}
           />
+          <Route path={'/404'} exact render={() => <Failed />} />
+          <Redirect to="/404" />
         </Switch>
       </BrowserRouter>
     ) : (
