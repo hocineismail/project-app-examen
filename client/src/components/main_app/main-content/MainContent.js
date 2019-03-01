@@ -12,7 +12,6 @@ import './MainContent.css'
 
 class MainContent extends Component {
     render() {
-        console.log('MAIN CONTENT')
         return (
             <div className='main-content'>
                 <SidePage modules={this.props.modules} />

@@ -31,7 +31,6 @@ class Settings extends Component {
 }
 
 const mapStateToProps = (state, props) => {
-    console.log('State : ', state)
     return {
         ...props,
         ...state

@@ -12,8 +12,6 @@ class Result extends React.Component {
         <h3>{this.props.grade}</h3>
         <h3>الاجابة النموذجية</h3>
         {this.props.correctResponses.map((response, key) => {
-          console.log('Response :', response.questionNumber)
-          console.log('Correct response :', response.correctResponse)
           return (
             <React.Fragment key={key}>
               <p>

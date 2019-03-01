@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 
 import './ExamsTabel.css'
 
+import fetchInfo from '../../../../../../fetchInfo'
+
 class ExamsTable extends Component {
   constructor(props) {
     super(props)
@@ -40,7 +42,7 @@ class ExamsTable extends Component {
                   <a
                     className="btn btn-info"
                     target="__blank"
-                    href={`http://localhost:3000/certificate/${exam.examName}&${
+                    href={`${fetchInfo.certificateUrl}/${exam.examName}&${
                       this.props.userName
                     }&${day + ' - ' + month + ' - ' + date.getFullYear()}`}
                   >

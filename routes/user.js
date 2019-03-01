@@ -118,13 +118,10 @@ user.post("/signup", function(req, res) {
 		
 				});
 				newStudent.save();
-<<<<<<< HEAD
 				
-			} else if ( ( newUser.Role === "Teacher")) {
-=======
+
 				console.log(newStudent)
 			} else if (newUser.Role === "Teacher") {
->>>>>>> project
 				var newTeacher = new Teacher({
 					Speciality: req.body.Speciality,
 					Phase: req.body.Phase,
@@ -144,13 +141,9 @@ user.post("/signup", function(req, res) {
 	failureRedirect: "/signup",
 	failureFlash: true
  }));
-<<<<<<< HEAD
 })
-})
-=======
- 
->>>>>>> project
- user.get("/logout", function(req, res) {
+
+user.get("/logout", function(req, res) {
 	req.logout();
 	res.redirect("/");
  });

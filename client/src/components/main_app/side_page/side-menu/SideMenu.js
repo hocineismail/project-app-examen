@@ -8,7 +8,6 @@ const SideMenu = props => {
         <Link to="/studenthome">جميع المواد</Link>
       </li>
       {props.modules.map((module, key) => {
-        console.log(module)
         return (
           <li className="list-group-item" key={key}>
             <Link to={`/studenthome?module=${module.Module}`}>
