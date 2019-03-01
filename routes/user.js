@@ -77,6 +77,7 @@ user.get("/signup",function(req,res){
 
 })
 
+ 
 user.post("/signup", function(req, res) {
 	var Firstname = req.body.Firstname;
 	var email = req.body.username;
@@ -131,10 +132,13 @@ user.post("/signup", function(req, res) {
 		
 				});
 				newStudent.save();
-				console.log(newStudent)
-			} else if (newUser.Role === "Teacher") {
+
+				
+			} else if ( ( newUser.Role === "Teacher")) {
+
 				var newTeacher = new Teacher({
 					Speciality: req.body.Speciality,
+					Count: 0, 
 					phase: req.body.Phase,
 					user: newUser._id,
 				 });
@@ -150,13 +154,17 @@ user.post("/signup", function(req, res) {
 			req.flash('error', ' dsl mazal madernaqch site ')
 			res.redirect("/signup")
 		}	});	
+
  },passport.authenticate("login", {
 	 
 	successRedirect: "/routes",
 	failureRedirect: "/signup",
 	failureFlash: true
  }));
- 
+
+
+
+
  user.get("/logout", function(req, res) {
 	req.logout();
 	res.redirect("/");
@@ -361,14 +369,15 @@ user.post('/forgot', function(req, res, next) {
 
 // this url for interface teacher
    user.get("/teacher",ensureAuthenticated,function(req,res){
-
 	   if (req.user.Role === "Teacher" ) {
 		Teacher.find({user: req.user._id }).
 		populate("user").
 		exec(function(err,teacher){
+
 			if (err) { res.redirect("/routes")  }
 			
 	 res.render("teacher/teacher",{teachers: teacher})
+
 		})
 	   } else {
 		   //this link will do edit 
@@ -926,7 +935,8 @@ user.get("/routes",ensureAuthenticated , function(req,res){
 		res.redirect("/teacher")
 
 	} else if ( req.user.Role === "Student" ) {
-  // this route will be change 
+		//this route for student
+		res.redirect("/siginstudent")
 	} else if ( req.user.Role === "Admin" ) {
 		res.redirect("/admin")
 	}
