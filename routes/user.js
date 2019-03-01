@@ -95,6 +95,15 @@ user.post("/signup", function(req, res) {
 	req.flash("error", "User already exists");
 	return res.redirect("/signup");
 	}
+	if (
+		 (
+			( req.body.Role === "Student") && (req.body.Phase != null)  && (req.body.Level != null)
+		 ) 
+		 ||
+		  (
+			( req.body.Role === "Teacher") && (req.body.Phase != null) && (req.body.Speciality != null)
+		 )
+		) { 
 	var newUser = new User({
 	Firstname: Firstname,
 	email: email,
@@ -130,8 +139,12 @@ user.post("/signup", function(req, res) {
 			}
 			res.redirect("/routes")
 		 }
-	});
-	});
+	
+			});
+		} else {
+			req.flash('error', ' dsl mazal madernaqch site ')
+			res.redirect("/signup")
+		}	});	
  },passport.authenticate("login", {
 	 
 	successRedirect: "/routes",
