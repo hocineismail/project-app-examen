@@ -1,75 +1,45 @@
 <!DOCTYPE html>
 <html>
-<title>Admin</title><head> 
+<head>
+
+<title>نسجيل الادمن</title>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="icon" href="http://seu32.com/img/favIcon.png" type="image/gif">
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-<link href="https://fonts.googleapis.com/css?family=Lalezar" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Cairo" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="css/admin.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="css/signup.css"> 
-</head>
-
-<body style="background-color:rgb(243, 242, 242)">
-  <% if (currentUser) { %>
-  <div class="w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left" style="color:#fff;padding-top:3.7%;font-size: 18px;width:200px;background-color: rgb(73, 73, 73)" id="mySidebar">
-    <button   class="w3-bar-item w3-button w3-large w3-hide-large" onclick="w3_close()">الغاء &times;</button>
-    <h2 style="color: cornsilk;padding-right: 10%; text-align: right;" >القوائم</h2>
- <a href="/list/admins" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > قائمة المديرين </a>
- <a href="/list/teachers" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > قائمة المعلمين </a>
- <a href="/list/students" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > قائمة التلاميذ </a>
- <h2 style="color: cornsilk;padding-right: 10%; text-align: right;">الاحصاء</h2>
- <a href="/static/" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > صفحة الاحصاء </a>
- <h2 style="color: cornsilk;padding-right: 10%; text-align: right;">الطلبات</h2>
- <a href="/list/demande" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > صفحة الطلبات </a>
- <h2 style="color: cornsilk;padding-right: 10%; text-align: right;">الناجحين</h2>
- <a href="/list/seccus" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > قاوائم الناجحين </a>
-
-</div>
   
-  <div class="w3-main" style="margin-left:200px">
-  <div  style="color:#fff;background-color: rgb(73, 73, 73)">
-    <button class="w3-button  w3-xlarge w3-hide-large" onclick="w3_open()">&#9776;</button>
-    <div class="w3-container" >
-      <ul>
-       
-        <li class="activee" ><a href="/"><i class="fas fa-house-damage"></i> </a></li>
+<link href="https://fonts.googleapis.com/css?family=Cairo" rel="stylesheet">
+<script
+src="https://code.jquery.com/jquery-3.2.1.min.js"
+integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+crossorigin="anonymous"></script>
 
-        <li><a href="/admin"><i class="far fa-edit"></i></a></li>
-        <li class="nav-item active ">
-          <a class="nav-link" href="/Logout"><i class="fas fa-sign-out-alt icon"></i>  </a>   </li>
- </ul>
-</div>
-  </div>
-  <% } %>
-  <div class="w3-container" style="text-align: right">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="css/signup.css">
+<style>
+</style>
+</head>
+<body style="  font-family: 'Cairo', sans-serif;">
+        <div class="mobile">
+                <div class="container" style="padding-top: 2%;width: 350px;">
+                <h2 style="text-align: center ">انشاء حساب الادمن
+                  </h2><br><br>
+              
+                <% errors.forEach(function(error) { %>
+                <div class="alert alert-danger" role="alert">
+                <%= error %>
+                </div>
+                <% }) %>
+                <% infos.forEach(function(info) { %>
+                <div class="alert alert-info" role="alert">
+                <%= info %>
+                </div>
+                <% }) %>
 
-<div class="container" style="padding-top: 2%;width: 50%;">
-  <h2 style="text-align: center "> 
-     اعدادات المراحل و الصفوف
-</h2><br><br>
-  <% errors.forEach(function(error) { %>
-  <div class="alert alert-danger" style="text-align: right" role="alert">
-  <%= error %>
-  </div>
-  <% }) %>
-  <% infos.forEach(function(info) { %>
-  <div class="alert alert-info" role="alert">
-  <%= info %>
-  </div>
-  <% }) %>
-</div>
-                
+                   
                 <div id="app"> 
   <form action="/signup" method="post">
  
@@ -98,7 +68,7 @@
               </div>   
 
           <div class="input-container" dir="rtl" required>
-                <label > <input type="radio" value="Role" name="Role" >&nbsp;Admin  &nbsp; &nbsp;&nbsp; </label>
+                <label > <input type="radio" value="Admin" name="Role" checked>&nbsp;Admin  &nbsp; &nbsp;&nbsp; </label>
               
          </div>    
 

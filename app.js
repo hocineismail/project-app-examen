@@ -9,12 +9,9 @@ var session = require("express-session");
 var flash = require("connect-flash"); 
 var passport = require("passport");
 
-<<<<<<< HEAD
-mongoose.connect("mongodb://localhost:27017/projectexams");
 
-=======
-mongoose.connect("mongodb://localhost:27017/databssnnnnnnnnnnss");
->>>>>>> project
+mongoose.connect("mongodb://localhost:27017/databssfnnnss");
+
 
 // routes
 var routes = require("./routes/routes");
