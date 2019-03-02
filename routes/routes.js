@@ -456,7 +456,7 @@ router.post("/invalid/question/:id",ensureAuthenticated, function(req,res){
         }
       })
     
- dsd
+
 
   })
 } else {
@@ -561,62 +561,36 @@ router.post("/update/question/:id",async function(req,res){
           console.log(response[0].ResponseText)
               
           if ((req.body.ResponseText1) != (response[0].ResponseText)){
-            response[0].ResponseText =   req.body.ResponseText1
-        
+            response[0].ResponseText =   req.body.ResponseText1 
           }
           if (req.body.ResponseText2 != response[1].ResponseText){
-            response[1].ResponseText =   req.body.ResponseText2
-            
+            response[1].ResponseText =   req.body.ResponseText2 
           }
           if (req.body.ResponseText3 != response[2].ResponseText){
-            response[2].ResponseText =   req.body.ResponseText3
-          
+            response[2].ResponseText =   req.body.ResponseText3 
           }
           if (req.body.ResponseText4 != response[3].ResponseText){
             response[3].ResponseText =   req.body.ResponseText4
+           }
            
-          }
-          console.log(req.body.image1value);
-          console.log(response[0].ResponseImage)
-
           if ( (req.body.image1value != undefined ) && ((req.body.image1value) != (response[0].ResponseImage))){
             console.log(req.files.image1[0].filename)
                  response[0].ResponseImage =   req.files.image1[0].filename
-               
-          
-   }
+          }
+         if ( (req.body.image2value != undefined ) && ((req.body.image2value) != (response[1].ResponseImage))){
+          response[1].ResponseImage =   req.files.image2[0].filename   
+          } 
 
-
-
-   if ( (req.body.image2value != undefined ) && ((req.body.image2value) != (response[1].ResponseImage))){
-    console.log(req.body.image2value )
-
-
-    response[1].ResponseImage =   req.files.image2[0].filename
-    
-}
-
-
-
-if ( (req.body.image3value != undefined ) && ( (req.body.image3value) != ( response[2].ResponseImage))){
-        
-  console.log(req.files.image3[0].filename)
-  response[2].ResponseImage =   req.files.image3[0].filename
-  
-}
-
-
-
-if ( (req.body.image4value != undefined ) && (req.body.image4value != response[3].ResponseImage)){
-        
-  console.log(req.files.image4[0].filename)
-  response[3].ResponseImage =   req.files.image4[0].filename
-  
-}
-response[0].save()
-response[1].save()
+         if ( (req.body.image3value != undefined ) && ( (req.body.image3value) != ( response[2].ResponseImage))){
+          response[2].ResponseImage =   req.files.image3[0].filename
+         } 
+        if ( (req.body.image4value != undefined ) && (req.body.image4value != response[3].ResponseImage)){
+          response[3].ResponseImage =   req.files.image4[0].filename
+        }
+ response[0].save()
+ response[1].save()
 response[2].save()
-response[3].save()
+ response[3].save()
   })
         res.redirect("/teacher/notvalid") 
     });

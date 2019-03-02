@@ -132,23 +132,9 @@ user.post("/signup", function(req, res) {
 		
 				});
 				newStudent.save();
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> project
 
-				
-			} else if ( ( newUser.Role === "Teacher")) {
-
-<<<<<<< HEAD
-=======
-				
-
-				console.log(newStudent)
 			} else if (newUser.Role === "Teacher") {
->>>>>>> 067075b7f5b7ace240051be14adb240281af5ef3
-=======
->>>>>>> project
+
 				var newTeacher = new Teacher({
 					Speciality: req.body.Speciality,
 					Count: 0, 
@@ -156,17 +142,7 @@ user.post("/signup", function(req, res) {
 					user: newUser._id,
 				 });
 				 newTeacher.save();
-				 console.log(newTeacher)
-<<<<<<< HEAD
 
-		 }
-		 res.redirect("/")
-
-		}
-	})
-})
-=======
-				
 			}
 			res.redirect("/routes")
 		 }
@@ -176,31 +152,19 @@ user.post("/signup", function(req, res) {
 			req.flash('error', ' dsl mazal madernaqch site ')
 			res.redirect("/signup")
 		}	});	
-<<<<<<< HEAD
->>>>>>> project
-=======
 
->>>>>>> project
  },passport.authenticate("login", {
 	 
 	successRedirect: "/routes",
 	failureRedirect: "/signup",
 	failureFlash: true
  }));
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> project
 
 
 
-
- user.get("/logout", function(req, res) {
-=======
-})
 
 user.get("/logout", function(req, res) {
->>>>>>> 067075b7f5b7ace240051be14adb240281af5ef3
+
 	req.logout();
 	res.redirect("/");
  });
@@ -408,21 +372,11 @@ user.post('/forgot', function(req, res, next) {
 		Teacher.find({user: req.user._id }).
 		populate("user").
 		exec(function(err,teacher){
-<<<<<<< HEAD
-<<<<<<< HEAD
-		 res.render("teacher/teacher",{teachers: teacher})
-=======
-			if (err) { res.redirect("/routes")  }
-			
-	 res.render("teacher/teacher",{teachers: teacher})
->>>>>>> project
-=======
 
 			if (err) { res.redirect("/routes")  }
 			
 	 res.render("teacher/teacher",{teachers: teacher})
 
->>>>>>> project
 		})
 	   } else {
 		   //this link will do edit 

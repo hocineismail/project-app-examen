@@ -328,7 +328,7 @@ li a:hover {
                           
                           </div>  
                       <br>
-                       <br>
+                       <br>  
                         <%}%>
                    </div>
               </div>        <div class="col-md-12" > 
@@ -361,7 +361,18 @@ li a:hover {
                           <input class="file-path validate" type="text" name="image<%= i %>value" value="<%= response.ResponseImage %>">
                         </div>
                       </div>
-                  <%}%>
+                  <%} else { %>
+                  
+                    <div class="file-field input-field">
+                        <div class="btn grey">
+                          <span>تحميل صورة</span>
+                          <input name="image<%= i %>" type="file">
+                        </div>
+                        <div class="file-path-wrapper">
+                          <input class="file-path validate" type="text" name="image<%= i %>value" value="">
+                        </div>
+                      </div>
+                    <%  }%>
                   <%if  (response.ResponseText != "") {%>
                     <textarea style="text-align:right" name="ResponseText<%= i %>" > <%= response.ResponseText %></textarea>
                
