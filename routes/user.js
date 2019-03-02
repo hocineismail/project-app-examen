@@ -133,8 +133,7 @@ user.post("/signup", function(req, res) {
 				});
 				newStudent.save();
 
-				
-			} else if ( ( newUser.Role === "Teacher")) {
+			} else if (newUser.Role === "Teacher") {
 
 				var newTeacher = new Teacher({
 					Speciality: req.body.Speciality,
@@ -144,7 +143,9 @@ user.post("/signup", function(req, res) {
 				 });
 				 newTeacher.save();
 				 console.log(newTeacher)
-				
+
+
+					
 			}
 			res.redirect("/routes")
 		 }
@@ -163,9 +164,8 @@ user.post("/signup", function(req, res) {
  }));
 
 
+user.get("/logout", function(req, res) {
 
-
- user.get("/logout", function(req, res) {
 	req.logout();
 	res.redirect("/");
  });
