@@ -441,6 +441,8 @@ router.get("/valid/question/:id",ensureAuthenticated, function(req,res){
   res.redirect("/routes")
  }
 })
+
+
 //this routes for delete question 
 router.get("/delete/question/:id",ensureAuthenticated, (req , res) => {
   Question.findOne( { _id: req.params.id } , function(err, questions) { 
@@ -502,7 +504,7 @@ router.get("/delete/question/:id",ensureAuthenticated, (req , res) => {
   
                      } else {
                      req.flash("error", "تم الحدف");
-                     res.redirect("/admin/exam/" +  req.params.id)
+                     res.redirect("/admin/exam/" +  exam.module)
                     }
                    }
             })
@@ -514,7 +516,7 @@ router.get("/delete/question/:id",ensureAuthenticated, (req , res) => {
   
             } else {
               req.flash("error", "تم الحدف");
-              res.redirect("/admin/exam/" + req.params.id)
+              res.redirect("/admin/exam/" + exam.module)
             }
 
           }
@@ -532,6 +534,8 @@ router.get("/delete/question/:id",ensureAuthenticated, (req , res) => {
   })
 
 })
+
+//QUESTION VQLID
 router.post("/invalid/question/:id",ensureAuthenticated, function(req,res){
   if ( req.user.Role === "Teacher") { 
   Question.findById({_id: req.params.id},function(err , question){
