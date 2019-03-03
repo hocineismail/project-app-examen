@@ -553,18 +553,127 @@ user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, nex
 
 
 
-		user.get("/admin/deletelevel/:_id",ensureAuthenticated,   function(req, res, next) {
+		user.get("/admin/deletelevel/:_id",ensureAuthenticated,async   function(req, res, next) {
 			if (  req.user.Role === "Admin") {
-	
-			Level.findOneAndRemove( { _id: req.params._id } , function(err, level) {
-					if (err) { return next(err); }
-					if (!level) { return next(404); }
-			 
+				let semster = await Semster.find({level: req.params._id})
+
+
+				//LOOPS FIND ALL SEMSTER
+                for (let i = 0 ; i < semster.length; i++) {
+					let modules = await Module.find({semster: semster[i]._id}) 
+					if (modules) { 
+
+
+					//LOOPS FIND ALL MODULE REF SEMSETER
+					for (let j = 0 ; j < modules.length; j++) {
+						let exams = await Exam.find({module: modules[j]._id})
+
+
+						//LOOPS FIND ALL EXAM REF MODULE
+						for (let h = 0; h < exams.length ;h++){
+							let question = await Question.findOne({exam: exams[h]._id}) 
+							if (question) { 
+							await Response.find({question: question._id}, (err , responseimages) => {
+   
+							   if (err) { req.flash("error", " nbdelha arabe beli kayn probleme hme berk");
+							   res.redirect('/admin/phase/' + req.params.level ) 
+							   }
+   
+							   for (let t = 0 ; t < responseimages.length ; t++ ) {
+								   if (responseimages[t].ResponseImage != '' ){
+									 console.log(responseimages[t].ResponseImage)
+									var responseImage = "public/uploads/" + responseimages[t].ResponseImage
+									fs.unlink(responseImage,function(err){
+									  if(err) return console.log(err);
+									  console.log('file deleted successfully');
+									});
+								   }
+								   
+								   }//END LOOPS FOR 
+								   // THIS CONDITION FOR DELETE QUESTIONIMAGE
+								   if (question.QuestionImage != '' ){
+								   var questionImage = "public/uploads/" + question.QuestionImage
+									fs.unlink(questionImage,function(err){
+									  if(err) return console.log(err);
+									  console.log('file question deleted successfully');
+									});
+								   }
+   
+								   
+   
+							   })
+						   
+							   
+							   await   Response.deleteMany({question: question._id} , (err , success) => {
+								   if (err) {
+									   req.flash("error", " nbdelha arabe beli kayn probleme hme berk");
+									   res.redirect('/admin/phase/' + req.params.level ) 
+							   }
+							   })
+						   }
+							   var L = h + 1
+							   if (exams.length === L ){
+								   for (let k = 0; k < exams.length ;k++){
+									   await Question.deleteMany({exam: exams[k]._id},(err,success) => { 
+										   if (err){ console.log("error q zebi fi delete question la fin")}
+										   if (success) {console.log("the question has bed deletd")}
+									   })
+   
+								   }
+								   
+   
+							   }
+						   
+					   }//END FOR EXAMS
+					   var L = j + 1 ;
+					   if (modules.length === L ){
+						   for (let k = 0 ; k < modules.length; k++){
+                            await Exam.deleteMany({module: modules[k]._id},(err,success) => { 
+								if (err){ console.log("error q zebi fi delete question la fin")}
+								if (success) {console.log("the exam has bed deletd")}
+							})
+						   }
+					   }
+					   
+					}
+					var L = i + 1 ;
+					if (semster.length === L ){
+						for (let k = 0 ; k < semster.length; k++){
+						 await Module.deleteMany({semster: semster[k]._id},(err,success) => { 
+							 if (err){ console.log("error q zebi fi delete question la fin")}
+							 if (success) {console.log("the module has bed deletd")}
+						 })
+						}
+					}
+				}
+				   }//END FOR SEMSTER
+				   await Semster.deleteMany({level: req.params._id},(err,success) => { 
+					if (err){ console.log("error q zebi fi delete question la fin")}
+					if (success) {console.log("all exam has ben  has bed deletd")}
+				})
+
+				await Level.findOneAndRemove( { _id: req.params._id } , (err,modules) => {
+					if (err) {
+						req.flash("error", " nbdelha arabe beli kayn probleme hme berk");
+						res.redirect("/admin")
+					 }
+
+					if (modules){console.log('exam deleted successfully');
 					req.flash("error", "تم الحدف");
 					res.redirect("/admin")
-					
-				 
+				  }
 				})
+
+
+
+		//	Level.findOneAndRemove( { _id: req.params._id } , function(err, level) {
+		//			if (err) { return next(err); }
+			//		if (!level) { return next(404); }
+			 
+			//		req.flash("error", "تم الحدف");
+			//		res.redirect("/admin")
+       
+           //})
 			
 			} else {
 				res.redirect("/routes")
