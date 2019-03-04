@@ -27,11 +27,16 @@ admin.get("/teacherValidation/:_id",ensureAuthenticated, function(req,res){
   Teacher.findOne({_id: req.params._id},function(err,teacher){
     if(err) {return res.redirect("/admin")}
     if (teacher) {
-      teacher.Actif = true;
+      if (teacher.Actif === true) {
+        teacher.Actif = false;
+      } else {
+        teacher.Actif = true;
+      }
+    
    
       teacher.save(function (err, update) {
-        if (err){ return res.redirect("/list/demande")}
-        if (update) { return res.redirect("/list/demande")}
+        if (err){ return res.redirect("/list/teachers")}
+        if (update) { return res.redirect("/list/teachers")}
     });
   }
 })
@@ -316,13 +321,5 @@ admin.post("/admin/addphase",ensureAuthenticated, function(req,res,next){
                     res.redirect("/");
                     }
                    }
-       admin.post("/update/question/:id", function(req,res){
-         Question.find({_id: req.params.id},function(err, question){
-           if (!err){
-             question.NotValid = false
-             question.save()
-             res.redirect("/teacher/notvalid") 
-           }
-         })
-         res.redirect("/teacher/notvalid")     })                       
+                         
 module.exports = admin;
