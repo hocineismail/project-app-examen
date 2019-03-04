@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import { Route, BrowserRouter, Switch, Redirect } from 'react-router-dom'
+
 import MainApp from './components/main_app/MainApp'
 import ExamApp from './components/exam_app/ExamApp'
+import Login from './components/login/Login'
+import Failed from './components/failed/Failed'
 
 import _ from 'lodash'
 
@@ -14,7 +17,6 @@ import {
   getStudentModules,
   getStudentExams
 } from './actions/userActions'
-import Failed from './components/failed/Failed'
 
 class AppRoutes extends Component {
   constructor(props) {
@@ -47,6 +49,7 @@ class AppRoutes extends Component {
               />
             )}
           />
+          <Route path={'/siginstudent/:id'} exact render={() => <Login />} />
           <Route path={'/404'} exact render={() => <Failed />} />
           <Redirect to="/404" />
         </Switch>
