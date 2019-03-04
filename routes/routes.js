@@ -14,7 +14,7 @@ var Module = require("../models/module");
 var Exam = require("../models/exam")
 const multer = require("multer");
 const path = require('path');
-
+var fs = require('fs');
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
   next();
@@ -170,9 +170,10 @@ function checkFileType(file, cb){
             var image3
             var image4
             var image5
-            if (req.body.image5value === "") {
+            if (req.body.image1value === "") {
               image1 = req.body.image1value
             } else if (req.files.image1 != null) {
+          
             image1 = req.files.image1[0].filename
                  }
                  if (req.body.image2value === "") {
@@ -236,6 +237,7 @@ function checkFileType(file, cb){
                 } else {
                   var IsCorrect4 = false                  
                 }
+                console.log(image1)
               var newResponse1 = new Response({
                 ResponseText: req.body.ResponseText1,
                 IsCorrect: IsCorrect1,
@@ -440,6 +442,100 @@ router.get("/valid/question/:id",ensureAuthenticated, function(req,res){
  }
 })
 
+
+//this routes for delete question 
+router.get("/delete/question/:id",ensureAuthenticated, (req , res) => {
+  Question.findOne( { _id: req.params.id } , function(err, questions) { 
+    if (err){
+      if ( req.user.Role === "Teacher"){
+        req.flash("error", "erroooorم الحدف");
+        res.redirect("/teacher/notvalid")
+    
+      } else {
+        req.flash("error", "تم الحدف");
+        res.redirect("/admin/exam/" + exam.module)
+      }
+     }
+
+  Question.findOneAndRemove( { _id: req.params.id } , function(err, question) {
+    if (err) { 
+      console.log("erro ta3saving question")
+       }
+    if (!question) {  }
+    console.log("re,ove question ")
+    //Delete image fil from uplauds
+    Response.find({ question: req.params.id}, function(err,responseimages){
+     for (let i = 0 ; i < responseimages.length ; i++ ) {
+       if (responseimages[i].ResponseImage != '' ){
+         console.log(responseimages[i].ResponseImage)
+        var image = "public/uploads/" + responseimages[i].ResponseImage
+        fs.unlink(image,function(err){
+          if(err) return console.log(err);
+          console.log('file deleted successfully');
+        });
+       }
+     
+  
+
+     }
+     
+    })
+    Response.deleteMany({ question: req.params.id } , function(err, response) {
+      if (err) { 
+        console.log("erro ta3saving reponse")
+         }
+      if (!response) {  }
+      if (response){
+        console.log("re,ove response ")
+
+
+        Exam.findOne({_id: questions.exam}, (err ,exam ) => {
+          if (exam.EtatFinal === true){
+            exam.EtatFinal = false
+            exam.save(function(err , success){
+              if (err){
+                    console.log("erro ta3saving exam")
+              }
+              if (success){
+                console.log(",atbadltch")
+                      if ( req.user.Role === "Teacher"){
+                     req.flash("error", "تم الحدف");
+                     res.redirect("/teacher/notvalid")
+  
+                     } else {
+                     req.flash("error", "تم الحدف");
+                     res.redirect("/admin/exam/" +  exam.module)
+                    }
+                   }
+            })
+          } else {
+            console.log("change etat  response ")
+            if ( req.user.Role === "Teacher"){
+              req.flash("error", "تم الحدف");
+              res.redirect("/teacher/notvalid")
+  
+            } else {
+              req.flash("error", "تم الحدف");
+              res.redirect("/admin/exam/" + exam.module)
+            }
+
+          }
+        })
+
+      }
+     
+      
+     
+    })
+    })
+
+    
+   
+  })
+
+})
+
+//QUESTION VQLID
 router.post("/invalid/question/:id",ensureAuthenticated, function(req,res){
   if ( req.user.Role === "Teacher") { 
   Question.findById({_id: req.params.id},function(err , question){

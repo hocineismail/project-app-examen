@@ -185,7 +185,7 @@ li a:hover {
                 <p style="color: red">الجواب <%= i  %></p>
                 <% } %>
                   <% if (response.ResponseImage != "") {%>
-                   
+                    <%= response.ResponseImage %>
                     <img src="/uploads/<%= response.ResponseImage %>" width="80%">  
                   <%}%>
                   <%if  (response.ResponseText != "") {%>
@@ -243,6 +243,7 @@ li a:hover {
                         <h5></h5>
                         <% } %>
                 </div> </div></div>
+                <a href="/delete/question/<%= question._id%>" class="btn btn-danger"> delete this question</a>
               <p class="card-text" style="text-align: center"><small class="text-muted"><%= question.createdAt %></small></p>
             </div> </div>
             <hr>

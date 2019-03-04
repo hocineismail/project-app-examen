@@ -86,6 +86,9 @@ app.get('/studenthome/*', (req, res) => {
 app.get('/exampage/*', (req, res) => {
   res.sendFile(__dirname + '/client/build/index.html')
 })
+app.get('/siginstudent/*', (req, res) => {
+  res.sendFile(__dirname + '/client/build/index.html')
+})
 app.listen(3000, () => {
   console.log('Server listing on 3000')
 })

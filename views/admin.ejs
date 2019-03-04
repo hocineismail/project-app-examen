@@ -73,6 +73,9 @@
   <button type="button" class="btn btn-default" data-toggle="modal" data-target="#pubexampleModalCenter">
       اعلان في الصفحة الرئسية
     </button>
+    <button type="button" class="btn btn-default" id="getExcel">
+telecharger
+    </button>
     
     <!-- Modal -->
     <div class="modal fade" id="pubexampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -244,12 +247,17 @@
                           </div>
                           
                           <div class="modal-body">
+                              <div class="alert alert-danger" role="alert">
+                                  <h3>حذاري.....</h3>
+                                  <p>اذ قمت بحذف  هذه  المرحلة سيتم حذف كل الفصول و المواد و الامتحنات و الاسئلة المتعلقة بها</p>
+                              </div>
                               <i class="fa fa-trash" aria-hidden="true" style="color: red; font-size: 30px;float: left"></i>
                               <p> 
                            هل انت متاكد من حذف الصف 
                           <span style="color: red">" <%= level.Level %> "</span> 
                             نهائيا
                           </p>
+                         
                           </div>
                       <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
@@ -390,6 +398,39 @@
   <!--this Model for Delete-->
   <!-- Modal -->
 
+
+
+  <script>
+    $(function() {
+        $("#getExcel").on("click", function () {
+          console.log( $("#getExcel").val());
+         
+          $.ajax({
+            type: 'get',
+            url: '/generateexcel', 
+               cache: false,
+                timeout: 5000,
+                complete: function() {
+                 
+                  console.log('processmocule complete');
+               
+                },
+                success: function(res) {
+                  
+      
+       },
+
+                error: function() {
+                 
+                  console.log('process error');
+                },
+          
+          });
+        });
+      });
+     
+
+</script>
 
 <script>
 function w3_open() {

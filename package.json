@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "client": "concurrently \"nodemon app.js\" \"cd client && npm start \" "
   },
   "author": "HOCINE ismail",
   "license": "ISC",
@@ -20,10 +21,12 @@
     "express": "^4.16.4",
     "express-flash": "0.0.2",
     "express-session": "^1.15.6",
+    "fs": "0.0.1-security",
     "helmet": "^3.15.0",
     "lodash": "^4.17.11",
     "mongoose": "^5.4.13",
     "multer": "^1.4.1",
+    "node-excel-export": "^1.4.4",
     "nodemailer": "^5.1.1",
     "nodemailer-smtp-transport": "^2.7.4",
     "passport": "^0.4.0",
