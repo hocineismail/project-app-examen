@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 var express = require('express');
 var app = express();
@@ -13,18 +12,7 @@ var passport = require("passport");
 
 mongoose.connect("mongodb://localhost:27017/projectfina");
 
-var express = require('express')
-var app = express()
-var mongoose = require('mongoose')
-var path = require('path')
-var bodyParser = require('body-parser')
-var cookieParser = require('cookie-parser')
-var session = require('express-session')
-var flash = require('connect-flash')
-var passport = require('passport')
 
-mongoose.connect('mongodb://localhost:27017/projectexams')
->>>>>>> 3026f318eba00a15c2f59529eb3fba91eea6ce42
 // routes
 var routes = require('./routes/routes')
 var user = require('./routes/user')
