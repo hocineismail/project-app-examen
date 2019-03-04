@@ -230,12 +230,25 @@ li a:hover {
             </button>
           </div>
           <div class="modal-body">
-            ...
+          <p>  هل انت متاكد من حذف الفصل 
+                          <span style="color: red">" <%= semster.Semster  %> "</span> 
+                            نهائيا
+                          </p>
+                          <% if (modules != '') {  %>
+                          <div class="alert alert-danger" role="alert">
+                             لا يمكنك حذفالفصل بعد اضافة المواد عليك بحذف المواد اولا ثم حذف القصل
+                            </div>
+                            <% } %>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
-            <a href="/admin/<%= semster.level%>/deletesemster/<%= semster._id %> " class="btn btn-danger" >
-              حفظ</a>
+            <% if (modules != '') {  %>
+          
+             
+          <% } else { %>
+            <a href="/admin/<%= semster.level%>/deletesemster/<%= semster._id %> " class="btn btn-danger" >حفظ</a>
+          
+            <% } %>
           </div>
         </div>
       </div>
@@ -266,7 +279,14 @@ li a:hover {
                           </button>
                         </div>
                         <div class="modal-body">
-                          ...
+                         <div class="alert alert-danger" role="alert">
+                                  <h3>حذاري.....</h3>
+                                  <p>اذ قمت بحذف  هذه المادة سيتم حذف  كل الامتحنات و الاسئلة المتعلقة بها</p>
+                              </div>
+                              <p>  هل انت متاكد من حذف المادة 
+                                  <span style="color: red">" <%= module.Module  %> "</span> 
+                                    نهائيا
+                                  </p>
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>

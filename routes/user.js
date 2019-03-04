@@ -16,7 +16,7 @@ var Pub = require("../models/pub");
  var Response = require("../models/response");
  var Student = require("../models/student");
 var crypto = require("crypto");
-
+var fs = require('fs');
 user.use(function(req, res, next) {
     res.locals.currentUser = req.user;
     res.locals.errors = req.flash("error");
@@ -379,7 +379,7 @@ user.post('/forgot', function(req, res, next) {
 
 		})
 	   } else {
-		   //this link will do edit 
+		   //this link will do edit  
 		res.redirect("/routes")  
 
 	   }
@@ -532,7 +532,7 @@ user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, nex
 			}
 			});
 		
-				user.post("/admin/updatelevel/:_id",ensureAuthenticated,   function(req, res, next) {
+				user.post("/admin/updatelevel/:_id",ensureAuthenticated, function(req, res, next) {
 					if (  req.user.Role === "Admin") {
 					Level.findOne({ _id: req.params._id } , function(err, level) {
 							if (err) { return next(err); }
@@ -550,35 +550,210 @@ user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, nex
 						res.redirect("/routes")
 					}
 				});
-		user.get("/admin/deletelevel/:_id",ensureAuthenticated,   function(req, res, next) {
+
+
+
+		user.get("/admin/deletelevel/:_id",ensureAuthenticated,async   function(req, res, next) {
 			if (  req.user.Role === "Admin") {
-	
-			Level.findOneAndRemove( { _id: req.params._id } , function(err, level) {
-					if (err) { return next(err); }
-					if (!level) { return next(404); }
-			 
+				let semster = await Semster.find({level: req.params._id})
+
+
+				//LOOPS FIND ALL SEMSTER
+                for (let i = 0 ; i < semster.length; i++) {
+					let modules = await Module.find({semster: semster[i]._id}) 
+					if (modules) { 
+
+
+					//LOOPS FIND ALL MODULE REF SEMSETER
+					for (let j = 0 ; j < modules.length; j++) {
+						let exams = await Exam.find({module: modules[j]._id})
+
+
+						//LOOPS FIND ALL EXAM REF MODULE
+						for (let h = 0; h < exams.length ;h++){
+							let question = await Question.findOne({exam: exams[h]._id}) 
+							if (question) { 
+							await Response.find({question: question._id}, (err , responseimages) => {
+   
+							   if (err) { req.flash("error", " nbdelha arabe beli kayn probleme hme berk");
+							   res.redirect('/admin/phase/' + req.params.level ) 
+							   }
+   
+							   for (let t = 0 ; t < responseimages.length ; t++ ) {
+								   if (responseimages[t].ResponseImage != '' ){
+									 console.log(responseimages[t].ResponseImage)
+									var responseImage = "public/uploads/" + responseimages[t].ResponseImage
+									fs.unlink(responseImage,function(err){
+									  if(err) return console.log(err);
+									  console.log('file deleted successfully');
+									});
+								   }
+								   
+								   }//END LOOPS FOR 
+								   // THIS CONDITION FOR DELETE QUESTIONIMAGE
+								   if (question.QuestionImage != '' ){
+								   var questionImage = "public/uploads/" + question.QuestionImage
+									fs.unlink(questionImage,function(err){
+									  if(err) return console.log(err);
+									  console.log('file question deleted successfully');
+									});
+								   }
+   
+								   
+   
+							   })
+						   
+							   
+							   await   Response.deleteMany({question: question._id} , (err , success) => {
+								   if (err) {
+									   req.flash("error", " nbdelha arabe beli kayn probleme hme berk");
+									   res.redirect('/admin/phase/' + req.params.level ) 
+							   }
+							   })
+						   }
+							   var L = h + 1
+							   if (exams.length === L ){
+								   for (let k = 0; k < exams.length ;k++){
+									   await Question.deleteMany({exam: exams[k]._id},(err,success) => { 
+										   if (err){ console.log("error q zebi fi delete question la fin")}
+										   if (success) {console.log("the question has bed deletd")}
+									   })
+   
+								   }
+								   
+   
+							   }
+						   
+					   }//END FOR EXAMS
+					   var L = j + 1 ;
+					   if (modules.length === L ){
+						   for (let k = 0 ; k < modules.length; k++){
+                            await Exam.deleteMany({module: modules[k]._id},(err,success) => { 
+								if (err){ console.log("error q zebi fi delete question la fin")}
+								if (success) {console.log("the exam has bed deletd")}
+							})
+						   }
+					   }
+					   
+					}
+					var L = i + 1 ;
+					if (semster.length === L ){
+						for (let k = 0 ; k < semster.length; k++){
+						 await Module.deleteMany({semster: semster[k]._id},(err,success) => { 
+							 if (err){ console.log("error q zebi fi delete question la fin")}
+							 if (success) {console.log("the module has bed deletd")}
+						 })
+						}
+					}
+				}
+				   }//END FOR SEMSTER
+				   await Semster.deleteMany({level: req.params._id},(err,success) => { 
+					if (err){ console.log("error q zebi fi delete question la fin")}
+					if (success) {console.log("all exam has ben  has bed deletd")}
+				})
+
+				await Level.findOneAndRemove( { _id: req.params._id } , (err,modules) => {
+					if (err) {
+						req.flash("error", " nbdelha arabe beli kayn probleme hme berk");
+						res.redirect("/admin")
+					 }
+
+					if (modules){console.log('exam deleted successfully');
 					req.flash("error", "تم الحدف");
 					res.redirect("/admin")
-					
-				 
+				  }
 				})
+
+
+
+		//	Level.findOneAndRemove( { _id: req.params._id } , function(err, level) {
+		//			if (err) { return next(err); }
+			//		if (!level) { return next(404); }
+			 
+			//		req.flash("error", "تم الحدف");
+			//		res.redirect("/admin")
+       
+           //})
 			
 			} else {
 				res.redirect("/routes")
 			}
 		});
-				
-				user.get("/admin/:module/deleteexam/:id",ensureAuthenticated,   function(req, res, next) {
+				//THIS REQ FIR DELETE EXAM 
+				user.get("/admin/:module/deleteexam/:id",ensureAuthenticated, async  function(req, res, next) {
 					if (  req.user.Role === "Admin") {
-					Exam.findOneAndRemove( { _id: req.params.id } , function(err, exam) {
-							if (err) { return next(err); }
-							if (!exam) { return next(404); }
-					 
-							req.flash("error", "تم الحدف");
-							res.redirect("/admin/exam/" + req.params.module)
+
+							 let question = await Question.find({exam: req.params.id})
+							 
+					    for ( let i = 0; i < question.length; i++){
+
+							    await Response.find({question: question[i]._id}, (err , responseimages) => {
+								if (err) { req.flash("error", " nbdelha arabe beli kayn probleme hme berk");
+								res.redirect("/admin/exam/" + req.params.module)
+								}
+
+								for (let j = 0 ; j < responseimages.length ; j++ ) {
+									if (responseimages[j].ResponseImage != '' ){
+									  console.log(responseimages[j].ResponseImage)
+									 var responseImage = "public/uploads/" + responseimages[j].ResponseImage
+									 fs.unlink(responseImage,function(err){
+									   if(err) return console.log(err);
+									   console.log('file deleted successfully');
+									 });
+									}
+									
+									}//END LOOPS FOR 
+									// THIS CONDITION FOR DELETE QUESTIONIMAGE
+									if (question[i].QuestionImage != '' ){
+									var questionImage = "public/uploads/" + question[i].QuestionImage
+									 fs.unlink(questionImage,function(err){
+									   if(err) return console.log(err);
+									   console.log('file question deleted successfully');
+									 });
+									}
+
+								})
+								
+                            await   Response.deleteMany({question: question[i]._id} , (err , success) => {
+								if (err) {
+									req.flash("error", " nbdelha arabe beli kayn probleme hme berk");
+								res.redirect("/admin/exam/" + req.params.module)
+							}
+							})
+						}//END OF FOR
+                          
+                         await Question.deleteMany({exam: req.params.id},(err,success) => {
+							  if (err){ 
+								  req.flash("error", " nbdelha arabe beli kayn probleme hme berk");
+							      res.redirect("/admin/exam/" + req.params.module) 
+						       	}
+							  if (success) { console.log('question deleted successfully');
 							
-						 
-						})
+							    Exam.findOneAndDelete({_id: req.params.id}, (err,DeleteExam) => {
+                                    if (err) {
+										req.flash("error", " nbdelha arabe beli kayn probleme hme berk");
+										res.redirect("/admin/exam/" + req.params.module) 
+									 }
+
+									if (DeleteExam){console.log('exam deleted successfully');
+						            req.flash("error", "تم الحدف");
+					          		res.redirect("/admin/exam/" + req.params.module)
+					              }
+								})
+							}
+						 })
+
+
+
+
+					//Exam.findOneAndRemove( { _id: req.params.id } , function(err, exam) {
+						//	if (err) { return next(err); }
+						//	if (!exam) { return next(404); }
+					 
+						//	req.flash("error", "تم الحدف");
+						//	res.redirect("/admin/exam/" + req.params.module)
+ 
+					//	})
 					
 					} else {
 						res.redirect("/routes")
@@ -790,21 +965,100 @@ user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 
 	});
 
-			user.get("/admin/:level/deletemodule/:_id",ensureAuthenticated,   function(req, res, next) {
+			user.get("/admin/:level/deletemodule/:_id",ensureAuthenticated,async function(req, res, next) {
 				if (  req.user.Role === "Admin") {
-				Module.findOneAndRemove( { _id: req.params._id } , function(err, modules) {
-						if (err) { return next(err); }
-						if (!modules) { return next(404); }
-				 
-						req.flash("error", "تم الحدف");
-						return  res.redirect('/admin/phase/' + req.params.level ) 
+		         	let exams = await Exam.find({module: req.params._id})
+			      for (let i = 0; i < exams.length ;i++){
+						 let question = await Question.findOne({exam: exams[i]._id}) 
+						 if (question) { 
+                         await Response.find({question: question._id}, (err , responseimages) => {
+
+							if (err) { req.flash("error", " nbdelha arabe beli kayn probleme hme berk");
+							res.redirect('/admin/phase/' + req.params.level ) 
+							}
+
+							for (let j = 0 ; j < responseimages.length ; j++ ) {
+								if (responseimages[j].ResponseImage != '' ){
+								  console.log(responseimages[j].ResponseImage)
+								 var responseImage = "public/uploads/" + responseimages[j].ResponseImage
+								 fs.unlink(responseImage,function(err){
+								   if(err) return console.log(err);
+								   console.log('file deleted successfully');
+								 });
+								}
+								
+								}//END LOOPS FOR 
+								// THIS CONDITION FOR DELETE QUESTIONIMAGE
+								if (question.QuestionImage != '' ){
+								var questionImage = "public/uploads/" + question.QuestionImage
+								 fs.unlink(questionImage,function(err){
+								   if(err) return console.log(err);
+								   console.log('file question deleted successfully');
+								 });
+								}
+
+								
+
+							})
 						
-					 
+							
+							await   Response.deleteMany({question: question._id} , (err , success) => {
+								if (err) {
+									req.flash("error", " nbdelha arabe beli kayn probleme hme berk");
+									res.redirect('/admin/phase/' + req.params.level ) 
+							}
+							})
+						}
+							var L = i + 1
+							if (exams.length === L ){
+								for (let k = 0; k < exams.length ;k++){
+									await Question.deleteMany({exam: exams[k]._id},(err,success) => { 
+										if (err){ console.log("error q zebi fi delete question la fin")}
+										if (success) {console.log("the question has bed deletd")}
+									})
+
+								}
+								
+
+							}
+						
+					}//END FOR EXAMS
+			
+
+					await Exam.deleteMany({module: req.params._id},(err,success) => { 
+						if (err){ console.log("error q zebi fi delete question la fin")}
+						if (success) {console.log("all exam has ben  has bed deletd")}
 					})
+                   await Module.findOneAndDelete({_id: req.params._id}, (err,modules) => {
+						if (err) {
+							req.flash("error", " nbdelha arabe beli kayn probleme hme berk");
+							res.redirect("/admin/exam/" + req.params.module) 
+						 }
+
+						if (modules){console.log('exam deleted successfully');
+						req.flash("error", "تم الحدف");
+						  res.redirect("/admin/exam/" + req.params.module)
+					  }
+					})
+
+
+					res.redirect('/admin/phase/' + req.params.level ) 
+
+				//	Module.findOneAndRemove( { _id: req.params._id } , function(err, modules) {
+				//		if (err) { return next(err); }
+				//		if (!modules) { return next(404); }
+				//		req.flash("error", "تم الحدف");
+				//		return  res.redirect('/admin/phase/' + req.params.level ) 
+            	//	})
 				} else {
 					res.redirect("/routes")
 				}
 			});
+
+
+
+
+
 			function ensureAuthenticated(req, res, next) {
 				if (req.isAuthenticated()) {
 				next();
