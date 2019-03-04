@@ -73,6 +73,9 @@
   <button type="button" class="btn btn-default" data-toggle="modal" data-target="#pubexampleModalCenter">
       اعلان في الصفحة الرئسية
     </button>
+    <button type="button" class="btn btn-default" id="getExcel">
+telecharger
+    </button>
     
     <!-- Modal -->
     <div class="modal fade" id="pubexampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -408,6 +411,39 @@
   <!--this Model for Delete-->
   <!-- Modal -->
 
+
+
+  <script>
+    $(function() {
+        $("#getExcel").on("click", function () {
+          console.log( $("#getExcel").val());
+         
+          $.ajax({
+            type: 'get',
+            url: '/generateexcel', 
+               cache: false,
+                timeout: 5000,
+                complete: function() {
+                 
+                  console.log('processmocule complete');
+               
+                },
+                success: function(res) {
+                  
+      
+       },
+
+                error: function() {
+                 
+                  console.log('process error');
+                },
+          
+          });
+        });
+      });
+     
+
+</script>
 
 <script>
 function w3_open() {

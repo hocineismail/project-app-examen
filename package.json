@@ -25,6 +25,7 @@
     "lodash": "^4.17.11",
     "mongoose": "^5.4.13",
     "multer": "^1.4.1",
+    "node-excel-export": "^1.4.4",
     "nodemailer": "^5.1.1",
     "nodemailer-smtp-transport": "^2.7.4",
     "passport": "^0.4.0",
