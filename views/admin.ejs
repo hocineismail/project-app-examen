@@ -68,14 +68,18 @@
 </div>
 
 
+  <script language="JavaScript" type="text/javascript">
+   
+      window.setTimeout("window.close();",20)
+    
+  </script>
  <!-- model for public -->
   <!-- Button trigger modal -->
   <button type="button" class="btn btn-default" data-toggle="modal" data-target="#pubexampleModalCenter">
       اعلان في الصفحة الرئسية
     </button>
-    <button type="button" class="btn btn-default" id="getExcel">
-telecharger
-    </button>
+    <a href="/generateexcel" target="_blank"  class="btn btn-default">تحميل جميع الاسئلة</a>
+
     
     <!-- Modal -->
     <div class="modal fade" id="pubexampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -413,38 +417,7 @@ telecharger
 
 
 
-  <script>
-    $(function() {
-        $("#getExcel").on("click", function () {
-          console.log( $("#getExcel").val());
-         
-          $.ajax({
-            type: 'get',
-            url: '/generateexcel', 
-               cache: false,
-                timeout: 5000,
-                complete: function() {
-                 
-                  console.log('processmocule complete');
-               
-                },
-                success: function(res) {
-                  
-      
-       },
-
-                error: function() {
-                 
-                  console.log('process error');
-                },
-          
-          });
-        });
-      });
-     
-
-</script>
-
+  
 <script>
 function w3_open() {
   document.getElementById("mySidebar").style.display = "block";
@@ -454,16 +427,15 @@ function w3_close() {
   document.getElementById("mySidebar").style.display = "none";
 }
 </script>
-     <script
-     src="https://code.jquery.com/jquery-3.2.1.min.js"
-     integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-     crossorigin="anonymous"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>  
+<script language='javascript'>
 
- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.22/vue.js"></script>
-    
-     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  self.close()
+  </script>
+    <script
+    src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>  
+
 </body>
 </html>

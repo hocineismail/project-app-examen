@@ -403,7 +403,7 @@ user.post('/forgot', function(req, res, next) {
 	});
 
 
-
+	
 
 user.get("/list/demande",ensureAuthenticated,async  function(req,res){
 	if (  req.user.Role === "Admin") {
@@ -567,7 +567,7 @@ user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, nex
 					//LOOPS FIND ALL MODULE REF SEMSETER
 					for (let j = 0 ; j < modules.length; j++) {
 						let exams = await Exam.find({module: modules[j]._id})
-
+                        if (exams) { 
 
 						//LOOPS FIND ALL EXAM REF MODULE
 						for (let h = 0; h < exams.length ;h++){
@@ -634,7 +634,7 @@ user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, nex
 							})
 						   }
 					   }
-					   
+					}
 					}
 					var L = i + 1 ;
 					if (semster.length === L ){
@@ -1140,10 +1140,14 @@ user.post("/admin/update/:link/exam/:id",function(req,res){
 	Exam.findOne({_id: req.params.id},function(err,exam){
 		if (err){console.log("error bitchj ")}
 		if (exam){
+			if (exam.NumberOfExam < req.body.NumberOfExam){
+				exam.EtatFinal = false
+			}
+			
 			exam.Exam = req.body.Exam,
 			exam.NumberOfExam = req.body.NumberOfExam,
 			exam.IsOfficial = req.body.IsOfficial,
-			exam.Time = req.body.Time
+			exam.Time = req.body.Time,
             exam.save()
 			
 			res.redirect("/admin/exam/" + req.params.link)
