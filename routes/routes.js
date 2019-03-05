@@ -2,7 +2,8 @@ var express = require("express");
 var router = express.Router();
 var async =  require("async");
 var User = require("../models/user");
-
+const excel = require('node-excel-export');
+var fs =  require('fs')
 var Pub = require("../models/pub");
 var Phase = require("../models/phase");
 var Teacher = require("../models/teacher");
@@ -15,6 +16,7 @@ var Exam = require("../models/exam")
 const multer = require("multer");
 const path = require('path');
 var fs = require('fs');
+var striptags = require('striptags');
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
   next();
@@ -695,4 +697,316 @@ response[2].save()
     }
   })
      })    
+
+
+                           
+ router.get("/generateexcel",async (req,res) => {
+
+// You can define styles as json object
+const styles = {
+ headerDark: {
+   fill: {
+     fgColor: {
+       rgb: 'FF000000'
+     }
+   },
+   font: {
+     color: {
+       rgb: 'FFFFFFFF'
+     },
+     sz: 14,
+     bold: true,
+     underline: true
+   }
+ },
+ cellPink: {
+   fill: {
+     fgColor: {
+       rgb: 'FFFFCCFF'
+     }
+   }
+ },
+ cellGreen: {
+   fill: {
+     fgColor: {
+       rgb: 'FF00FF00'
+     }
+   }
+ }
+};
+
+//Array of objects representing heading rows (very top)
+const heading = [
+ [{value: 'a1', style: styles.headerDark}, {value: 'b1', style: styles.headerDark}, {value: 'c1', style: styles.headerDark}],
+ ['a2', 'b2', 'c2'] // <-- It can be only values
+];
+
+//Here you specify the export structure
+const specification = {
+ customer_name: { // <- the key should match the actual data key
+   displayName: 'Customer', // <- Here you specify the column header
+   headerStyle: styles.headerDark, // <- Header style
+   cellStyle: function(value, row) { // <- style renderer function
+     // if the status is 1 then color in green else color in red
+     // Notice how we use another cell value to style the current one
+     return (row.status_id == 1) ? styles.cellGreen : {fill: {fgColor: {rgb: 'FFFF0000'}}}; // <- Inline cell style is possible 
+   },
+   width: 20 // <- width in pixels
+ },
+
+phase: {
+   displayName: 'المرحلة',
+   headerStyle: styles.headerDark,
+
+   width: 220 // <- width in pixels
+ },
+level: {
+   displayName: 'المستوى',
+   headerStyle: styles.headerDark,
+
+   width: 220 // <- width in pixels
+ },
+ semster: {
+   displayName: 'الفصل',
+   headerStyle: styles.headerDark,
+
+   width: 220 // <- width in pixels
+  },
+module: {
+   displayName: 'المادة',
+   headerStyle: styles.headerDark,
+
+   width: 220 // <- width in pixels
+ 
+ },
+ Chapiter: {
+  displayName: 'الوحد',
+  headerStyle: styles.headerDark,
+
+  width: 220 // <- width in pixels
+
+},
+NameOfCourse: {
+  displayName: 'عنوان الدرس',
+  headerStyle: styles.headerDark,
+
+  width: 220 // <- width in pixels
+
+},
+TypeOfQuestion: {
+  displayName: 'نوع السؤال',
+  headerStyle: styles.headerDark,
+
+  width: 220 // <- width in pixels
+
+},
+Difficulty: {
+  displayName: 'درجة السؤال',
+  headerStyle: styles.headerDark,
+
+  width: 220 // <- width in pixels
+
+},
+question: {
+   displayName: 'السؤال',
+   headerStyle: styles.headerDark,
+
+   width: 300 // <- width in pixels
+ },
+ questionImage: {
+  displayName: 'صورة السؤال',
+  headerStyle: styles.headerDark,
+
+  width: 220 // <- width in pixels
+},
+ responseOne: {
+  displayName: 'الجواب الاول',
+  headerStyle: styles.headerDark,
+
+  width: 220 // <- width in pixels
+
+},
+responseOneImage: {
+  displayName: 'صورة الجواب الاول',
+  headerStyle: styles.headerDark,
+
+  width: 220 // <- width in pixels
+
+},
+responseTwo: {
+  displayName: 'الجواب الثاني ',
+  headerStyle: styles.headerDark,
+
+  width: 220 // <- width in pixels
+
+},
+responseTwoImage: {
+  displayName: 'صورة الجواب الثاني',
+  headerStyle: styles.headerDark,
+
+  width: 220 // <- width in pixels
+
+},
+responseThree: {
+  displayName: 'الجواب الثالث',
+  headerStyle: styles.headerDark,
+
+  width: 220 // <- width in pixels
+
+},
+responseThreeImage: {
+  displayName: 'صورة الجواب الثالث',
+  headerStyle: styles.headerDark,
+
+  width: 220 // <- width in pixels
+
+},
+responseFour: {
+  displayName: 'الجواب الرابع',
+  headerStyle: styles.headerDark,
+
+  width: 220 // <- width in pixels
+
+},
+responseFourImage: {
+  displayName: 'صورة الجواب الرابع',
+  headerStyle: styles.headerDark,
+
+  width: 220 // <- width in pixels
+
+},
+response: {
+  displayName: 'الاجابة النموذجية',
+  headerStyle: styles.headerDark,
+
+  width: 300 // <- width in pixels
+
+},
+
+
+
+}
+
+// The data set should have the following shape (Array of Objects)
+// The order of the keys is irrelevant, it is also irrelevant if the
+// dataset contains more fields as the report is build based on the
+// specification provided above. But you should have all the fields
+// that are listed in the report specification
+const phase = await Phase.find({})
+var dataset = []
+
+console.log("coinsole lawla")
+for (let a = 0; a < phase.length; a++ ){
+  let level = await Level.find({phase: phase[a]._id})
+  if (level) { 
+  
+  for (let b = 0; b < level.length; b++){
+    let semster = await Semster.find({level: level[b]._id})
+
+    if (semster) { 
+    for (let c = 0;c < semster.length; c++){
+      let modules = await Module.find({semster: semster[c]._id})
+     
+      if(modules) { 
+      for (let d = 0; d < modules.length; d++){
+        let exam = await Exam.find({module: modules[d]._id})
+      
+        if (exam) { 
+        for (let e = 0; e < exam.length; e++ ){
+          let question = await Question.find({exam: exam[e]._id})
+        
+          if (question) { 
+          for(let f = 0;f < question.length; f++){
+            let response = await Response.find({question: question[f]._id})
+           
+            if (response) { 
+       
+          var questionString = await striptags(question[f].Question)
+        
+          var responses = await striptags(question[e].Response)
+          var responseOneString = response[0].ResponseText 
+          var responseTwoString =  response[1].ResponseText 
+          var responseThreeString =  response[2].ResponseText 
+          var responseFourString =  response[3].ResponseText 
+          var questionimage = '/uploads/' + question[e].QuestionImage 
+          var responseoneimage = '/uploads/' + response[0].ResponseImage 
+          var responsetwoimage = '/uploads/' + response[1].ResponseImage  
+          var responsethreeimage = '/uploads/' + response[2].ResponseImage 
+          var responsefourimage = '/uploads/' + response[3].RResponseImage 
+          
+
+              var datase = [
+                {customer_name: a ,
+                  
+                    phase:  phase[a].Phase ,
+                     level: level[b].Level ,
+                     semster: semster[c].Semster,
+                     module: modules[d].Module,
+                     Chapiter: question[e].Chapiter, 
+                     TypeOfQuestion: question[e].TypeOfQuestion,
+                     Difficulty: question[e].Difficulty,
+                     NameOfCourse: question[e].NameOfCourse,
+
+                     question:  questionString,
+                     questionImage: questionimage,
+
+                     responseOne:  responseOneString,
+                     responseOneImage: responseoneimage,
+                   
+                     responseTwo: responseTwoString,
+                     responseTwoImage: responsetwoimage,
+                     
+                     responseThree: responseThreeString,
+                     responseThreeImage: responsethreeimage,
+
+                     responseFour: responseFourString,
+                     responseFourImage: responsefourimage,
+                    response: responses },
+              ]
+              console.log(datase)
+              dataset.push(...datase)
+            
+          }}
+        }}
+      }}
+    }}
+  }}
+}
+}
+
+
+
+
+// Define an array of merges. 1-1 = A:1
+// The merges are independent of the data.
+// A merge will overwrite all data _not_ in the top-left cell.
+const merges = [
+ { start: { row: 2, column: 1 }, end: { row: 2, column: 5 } },
+ { start: { row: 2, column: 6 }, end: { row: 2, column: 10 } }
+]
+
+// Create the excel report.
+// This function will return Buffer
+const report = excel.buildExport(
+ [ // <- Notice that this is an array. Pass multiple sheets to create multi sheet report
+   {
+     name: 'Report', // <- Specify sheet name (optional)
+     heading: heading, // <- Raw heading array (optional)
+     merges: merges, // <- Merge cell ranges
+     specification: specification, // <- Report specification
+     data: dataset // <-- Report data
+   }
+ ]
+);
+console.log("heklk")
+// You can then return this straight
+console.log(report)
+res.attachment('report.xlsx');
+
+// This is sails.js specific (in general you need to set headers)
+
+return res.send(report);
+
+
+})       
 module.exports = router;

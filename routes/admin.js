@@ -11,7 +11,9 @@ var Semster = require("../models/semster");
 var Level = require("../models/level");
 var Module = require("../models/module");
 var Exam = require("../models/exam")
+
 const excel = require('node-excel-export');
+var fs =  require('fs')
 var crypto = require("crypto");
 
 admin.use(function(req, res, next) {
@@ -323,6 +325,7 @@ admin.post("/admin/addphase",ensureAuthenticated, function(req,res,next){
                    }
                       
  admin.get("/generateexcel", (req,res) => {
+   console.log("pas de probleə ")
 // You can define styles as json object
 const styles = {
   headerDark: {
@@ -372,22 +375,43 @@ const specification = {
       // Notice how we use another cell value to style the current one
       return (row.status_id == 1) ? styles.cellGreen : {fill: {fgColor: {rgb: 'FFFF0000'}}}; // <- Inline cell style is possible 
     },
-    width: 120 // <- width in pixels
+    width: 20 // <- width in pixels
   },
-  status_id: {
-    displayName: 'Status',
+ 
+  dat: {
+    displayName: 'المرحلة',
     headerStyle: styles.headerDark,
-    cellFormat: function(value, row) { // <- Renderer function, you can access also any row.property
-      return (value == 1) ? 'Active' : 'Inactive';
-    },
-    width: '10' // <- width in chars (when the number is passed as string)
+
+    width: 220 // <- width in pixels
   },
-  note: {
-    displayName: 'Description',
+  dat1: {
+    displayName: 'المستوى',
     headerStyle: styles.headerDark,
-    cellStyle: styles.cellPink, // <- Cell style
+
+    width: 220 // <- width in pixels
+  },
+  dat2: {
+    displayName: 'الفصل',
+    headerStyle: styles.headerDark,
+
+    width: 220 // <- width in pixels
+   },
+  dat3: {
+    displayName: 'المادة',
+    headerStyle: styles.headerDark,
+
+    width: 220 // <- width in pixels
+  
+  },
+  dat4: {
+    displayName: 'السؤال',
+    headerStyle: styles.headerDark,
+
     width: 220 // <- width in pixels
   }
+
+
+
 }
  
 // The data set should have the following shape (Array of Objects)
@@ -395,11 +419,16 @@ const specification = {
 // dataset contains more fields as the report is build based on the
 // specification provided above. But you should have all the fields
 // that are listed in the report specification
-const dataset = [
-  {customer_name: 'IBM', status_id: 1, note: 'some note', misc: 'not shown'},
-  {customer_name: 'HP', status_id: 0, note: 'some note'},
-  {customer_name: 'MS', status_id: 0, note: 'some note', misc: 'not shown'}
+var dataset = []
+for (let i = 0; i < 10 ;i++ ) {
+var datase = [
+
+  {customer_name: i, status_id: 1, dat: 'المرحلة ', dat1: 'المستوى' ,dat2: 'المستوى',dat3: 'المستوى' },
+
+  
 ]
+dataset.push(...datase)
+}
  
 // Define an array of merges. 1-1 = A:1
 // The merges are independent of the data.
@@ -423,9 +452,15 @@ const report = excel.buildExport(
     }
   ]
 );
- 
+console.log("heklk")
 // You can then return this straight
-res.attachment('report.xlsx'); // This is sails.js specific (in general you need to set headers)
-return res.send(report);
+console.log(report)
+res.attachment('report.xlsx');
+
+ // This is sails.js specific (in general you need to set headers)
+
+ return res.send(report);
+
+
  })                  
 module.exports = admin;
