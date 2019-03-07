@@ -15,16 +15,16 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="css/reset.css">
+<link rel="stylesheet" type="text/css" href="/css/reset.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body>
+<body dir="rtl">
 
 <div class="container" style="padding-top: 2%;width: 30%;">
   <div class="row"> 
     <div class="col-md-12">
       <div class="mobile"> 
-  <h2 style="text-align: center ">New password</h2><br><br>
+  <h2 style="text-align: center ">استرجاع الحساب </h2><br><br>
   <% errors.forEach(function(error) { %>
   <div class="alert alert-danger" role="alert">
   <%= error %>
@@ -43,13 +43,13 @@
  
   <div class="input-container">
     <i class="fa fa-key icon"></i>
-    <input class="form-control"  type="password" placeholder="Password" id="password" name="password" required>
+    <input class="form-control"  type="password" placeholder="كلمة السر الجديدة" id="password" name="password" required>
   </div>
   <div class="input-container">
     <i class="fa fa-key icon"></i>
-    <input class="form-control " type="password" placeholder="Confirm Password" id="confirm_password" required>
+    <input class="form-control " type="password" placeholder="اعادة كتابة كلمة السر " id="confirm_password" required>
   </div>
-  <button type="submit" class="btn ">update password</button>
+  <button type="submit" class="btn ">تحديث الحساب</button>
 
 </form>
 </div></div></div></div>

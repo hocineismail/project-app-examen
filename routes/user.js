@@ -93,7 +93,7 @@ user.post("/signup", function(req, res) {
 	User.findOne({ email: email }, function(err, user) {
 	if (err) { return next(err); }
 	if (user) {
-	req.flash("error", "User already exists");
+	req.flash("error", "الحساب موجود من قبل");
 	return res.redirect("/signup");
 	}
 	if (
@@ -150,7 +150,7 @@ user.post("/signup", function(req, res) {
 	
 			});
 		} else {
-			req.flash('error', ' dsl mazal madernaqch site ')
+			req.flash('error', 'نعتتذر... الموقع ليس جاهز للاستخدام حاليا ')
 			res.redirect("/signup")
 		}	});	
 
@@ -276,11 +276,11 @@ user.post('/forgot', function(req, res, next) {
 		  from: 'maelrolland03@gmail.com',
 		  subject: 'تم تغيير كلمة السر الخاصة بك',
 		  text: 'مرحبا,\n\n' +
-			'هذا تأكيد على أن كلمة المرور لحسابك ' + user.email + ' تم تغييره للتو.\n'
-		};
+			' تم تغييرها للتو ' + user.email + ' هذه الرسالة لتاكيد على أن كلمة المرور لحسابك.\n'
+		}; 
 		smtpTransport.sendMail(mailOptions, function(err) {
 		  req.flash('success', ' تم تغيير كلمة السر الخاصة بك.');
-		  res.redirect('/signup');
+		  res.redirect('/');
 		  done(err);
 		});
 	  }
