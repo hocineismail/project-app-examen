@@ -276,7 +276,7 @@ user.post('/forgot', function(req, res, next) {
 		  from: 'maelrolland03@gmail.com',
 		  subject: 'تم تغيير كلمة السر الخاصة بك',
 		  text: 'مرحبا,\n\n' +
-			' تم تغييرها للتو ' + user.email + ' هذه الرسالة لتاكيد على أن كلمة المرور لحسابك.\n'
+			'  ' + user.email + ' هذه الرسالة لتاكيد على أن كلمة المرور لحسابك تم تغييرها .\n'
 		}; 
 		smtpTransport.sendMail(mailOptions, function(err) {
 		  req.flash('success', ' تم تغيير كلمة السر الخاصة بك.');
@@ -831,8 +831,13 @@ user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, nex
 	user.get("/admin/phase/:level",ensureAuthenticated,async function(req,res){
 		if (  req.user.Role === "Admin") {
 		try{
-			const onelevel = await Level.findOne({_id: req.params.level});
-			const semster = await Semster.find({level: onelevel._id});
+			const onelevel = await Level.findOne({_id: req.params.level},(err,success) => {
+				if (err) { return res.redirect("/admin")}
+			});
+		
+			const semster = await Semster.find({level: onelevel._id},(err,success) => {
+				if (err) { return res.redirect("/admin")}
+			});
 			let modules = [];
 
 
@@ -881,6 +886,11 @@ user.post("/admin/:level/:_id/updatemodule",ensureAuthenticated, function(req,re
 	var  modulee = req.body.Module;
 	var  numberOfModule = req.body.NumberOfModule;
 Module.findOne({_id: req.params._id},function(err,modules){
+	if (err) {
+		req.flash("error", "حدث خلل اثناء اجراء العملية");
+			
+		return  res.redirect('/admin/phase/' + req.params.level ) 
+	}
 	modules.Module =  modulee
 	modules.NumberOfModule =   numberOfModule
 
@@ -915,6 +925,11 @@ user.post("/admin/:level/:_id/updatesemster",ensureAuthenticated, function(req,r
 	var  semster = req.body.Semster;
 	var  numberOfSemster= req.body.NumberOfSemster;
 Semster.findOne({_id: req.params._id},function(err,semsters){
+	if (err) {
+		req.flash("error", "حدث خلل اثناء اجراء العملية");
+			
+		return  res.redirect('/admin/phase/' + req.params.level ) 
+	}
 	semsters.Semster =  semster
 	semsters.NumberOfSemster =   numberOfSemster
 
@@ -986,13 +1001,25 @@ user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 
 			user.get("/admin/:level/deletemodule/:_id",ensureAuthenticated,async function(req, res, next) {
 				if (  req.user.Role === "Admin") {
-		         	let exams = await Exam.find({module: req.params._id})
+		         	let exams = await Exam.find({module: req.params._id},(err,success) => {
+								if (err) {
+									req.flash("error", "حدث خلل اثناء اجراء العملية");
+										
+									return  res.redirect('/admin/phase/' + req.params.level ) 
+								}
+							 })
 			      for (let i = 0; i < exams.length ;i++){
-						 let question = await Question.findOne({exam: exams[i]._id}) 
+						 let question = await Question.findOne({exam: exams[i]._id},(err,success) => {
+							if (err) {
+								req.flash("error", "حدث خلل اثناء اجراء العملية");
+									
+								return  res.redirect('/admin/phase/' + req.params.level ) 
+							}
+						 }) 
 						 if (question) { 
                          await Response.find({question: question._id}, (err , responseimages) => {
 
-							if (err) { req.flash("error", " nbdelha arabe beli kayn probleme hme berk");
+							if (err) { 	req.flash("error", "حدث خلل اثناء اجراء العملية");
 							res.redirect('/admin/phase/' + req.params.level ) 
 							}
 
@@ -1023,7 +1050,7 @@ user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 							
 							await   Response.deleteMany({question: question._id} , (err , success) => {
 								if (err) {
-									req.flash("error", " nbdelha arabe beli kayn probleme hme berk");
+									req.flash("error", "حدث خلل اثناء اجراء العملية");
 									res.redirect('/admin/phase/' + req.params.level ) 
 							}
 							})
@@ -1032,7 +1059,8 @@ user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 							if (exams.length === L ){
 								for (let k = 0; k < exams.length ;k++){
 									await Question.deleteMany({exam: exams[k]._id},(err,success) => { 
-										if (err){ console.log("error q zebi fi delete question la fin")}
+										if (err){	req.flash("error", "حدث خلل اثناء اجراء العملية");
+										res.redirect('/admin/phase/' + req.params.level ) }
 										if (success) {console.log("the question has bed deletd")}
 									})
 
@@ -1045,30 +1073,25 @@ user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 			
 
 					await Exam.deleteMany({module: req.params._id},(err,success) => { 
-						if (err){ console.log("error q zebi fi delete question la fin")}
+						if (err){	req.flash("error", "حدث خلل اثناء اجراء العملية");
+						res.redirect('/admin/phase/' + req.params.level )}
 						if (success) {console.log("all exam has ben  has bed deletd")}
 					})
                    await Module.findOneAndDelete({_id: req.params._id}, (err,modules) => {
 						if (err) {
-							req.flash("error", " nbdelha arabe beli kayn probleme hme berk");
+							req.flash("error", "حدث خلل اثناء اجراء العملية");
 							res.redirect("/admin/exam/" + req.params.module) 
 						 }
 
 						if (modules){console.log('exam deleted successfully');
 						req.flash("error", "تم الحدف");
-						  res.redirect("/admin/exam/" + req.params.module)
+						 return res.redirect("/admin/exam/" + req.params.module)
 					  }
 					})
 
 
 					res.redirect('/admin/phase/' + req.params.level ) 
 
-				//	Module.findOneAndRemove( { _id: req.params._id } , function(err, modules) {
-				//		if (err) { return next(err); }
-				//		if (!modules) { return next(404); }
-				//		req.flash("error", "تم الحدف");
-				//		return  res.redirect('/admin/phase/' + req.params.level ) 
-            	//	})
 				} else {
 					res.redirect("/routes")
 				}
@@ -1144,7 +1167,9 @@ user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 user.get("/exam/update/:link/etat/:id",function(req,res){
 	if (  req.user.Role === "Admin") {
 	Exam.findOne({_id: req.params.id},function(err,exam){
-		if (err){	res.redirect("/admin/exam/" + req.params.link)}
+		if (err){
+			req.flash("error", "حدث خلل اثناء اجراء العملية");
+			return	res.redirect("/admin/exam/" + req.params.link)}
 		if (exam){
 			if (exam.Etat === true){
 				exam.Etat = false
@@ -1165,7 +1190,9 @@ user.get("/exam/update/:link/etat/:id",function(req,res){
 user.post("/admin/update/:link/exam/:id",function(req,res){
 	if (  req.user.Role === "Admin") {
 	Exam.findOne({_id: req.params.id},function(err,exam){
-		if (err){console.log("error bitchj ")}
+		if (err){		
+			req.flash("error", "حدث خلل اثناء اجراء العملية");
+		return 	res.redirect("/admin/exam/" + req.params.link)}
 		if (exam){
 			if (exam.NumberOfExam < req.body.NumberOfExam){
 				exam.EtatFinal = false
@@ -1175,9 +1202,15 @@ user.post("/admin/update/:link/exam/:id",function(req,res){
 			exam.NumberOfExam = req.body.NumberOfExam,
 			exam.IsOfficial = req.body.IsOfficial,
 			exam.Time = req.body.Time,
-            exam.save()
+            exam.save((err,success) => {
+							if (err){req.flash("error", "حدث خلل اثناء اجراء العملية");
+							return 	res.redirect("/admin/exam/" + req.params.link)}
+							if (success) {req.flash("info", "تم التعديل ");
+               return res.redirect("/admin/exam/" + req.params.link)
+							}
+						})
 			
-			res.redirect("/admin/exam/" + req.params.link)
+			
 		}
 	})
 } else {
@@ -1189,7 +1222,10 @@ user.post("/admin/update/:link/exam/:id",function(req,res){
 user.get("/admin/exam/question/:id",async function(req,res){
 	if (  req.user.Role === "Admin") {
 	try{
-	
+		await Question.find({exam: req.params.id},(err,success)=>{
+			if (err){req.flash("error", "حدث خلل اثناء اجراء العملية");
+			 return 	res.redirect("/admin")}
+		})
 		const question = await Question.find({exam: req.params.id}).populate("Author").populate("TeacherOne").populate("TeacherTwo").populate("TeacherFinal");
 		let responses = [];
 
