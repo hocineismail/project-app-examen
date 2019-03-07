@@ -371,6 +371,7 @@ user.post('/forgot', function(req, res, next) {
 	   if (req.user.Role === "Teacher" ) {
 		Teacher.find({user: req.user._id }).
 		populate("user").
+		populate("phase").
 		exec(function(err,teacher){
 
 			if (err) { res.redirect("/routes")  }
@@ -505,7 +506,7 @@ user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, nex
 			if (!phase) { return next(404); }
 	 
 			req.flash("error", "تم الحدف");
-			res.redirect("/admin")
+
 			
 		 
 		})
@@ -520,10 +521,17 @@ user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, nex
 					if (!phase) { return next(404); }
 					
 					phase.Phase = req.body.Phase
-					phase.save();
+					phase.save((err,success)=> {
+						if (err){
+							req.flash("error", "حدث خلل اثناء التحديث");
+							res.redirect("/admin")
+						}else {
 
-					req.flash("error", "update ");
+					req.flash("info", "تم التحديث");
 					res.redirect("/admin")
+						}
+							
+					});
 					
 				 
 				})
@@ -539,10 +547,18 @@ user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, nex
 							if (!level) { return next(404); }
 							
 							level.Level = req.body.Level
-							level.save();
-		
-							req.flash("error", "update ");
+							level.save((err,success)=> {
+								if (err){
+									req.flash("error", "حدث خلل اثناء التحديث");
+									res.redirect("/admin")
+								}else {
+
+							req.flash("info", "تم التحديث");
 							res.redirect("/admin")
+								}
+									
+							});
+		
 					
 						 
 						})
@@ -1073,10 +1089,13 @@ user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 			if (req.body.Phase != undefined) { 
 				console.log(req.body.Phase);
 				Phase.findOne({Phase: req.body.Phase}, function(err, phase){
+					if (!err) {
 					Level.find({phase:  phase._id},function(err , data){
-					
+						if (!err) {
 							res.send(data);
+						}
 					})
+				}
 				})
 			}
 			 
@@ -1088,10 +1107,13 @@ user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 			if (req.body.Phase != undefined) { 
 				console.log(req.body.Phase);
 				Phase.findOne({_id: req.body.Phase}, function(err, phase){
+					if (!err) {
 					Level.find({phase:  phase._id},function(err , data){
-					
+						if (!err) {
 							res.send(data);
+						}
 					})
+				}
 				})
 			}
 			 
@@ -1105,8 +1127,10 @@ user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 					if (!err) {
 					console.log(level)
 					Semster.find({level:  level._id},function(err , data){
-					
-							res.send(data);
+					if (!err) {
+						res.send(data);
+					}
+						
 					}) }
 				})
 			}
@@ -1117,7 +1141,7 @@ user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 user.get("/exam/update/:link/etat/:id",function(req,res){
 	if (  req.user.Role === "Admin") {
 	Exam.findOne({_id: req.params.id},function(err,exam){
-		if (err){console.log("error bitchj ")}
+		if (err){	res.redirect("/admin/exam/" + req.params.link)}
 		if (exam){
 			if (exam.Etat === true){
 				exam.Etat = false

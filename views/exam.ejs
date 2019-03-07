@@ -157,10 +157,10 @@ li a:hover {
                  </div>
                   <label>طبعية الامتحان  </label>
                   <div class="radio">
-                      <label><input type="radio" name="IsOfficial" value="true" checked >&nbsp;  &nbsp; &nbsp;  انتحان رسمي </label>
+                      <label><input type="radio" name="IsOfficial" value="false" checked>&nbsp;  &nbsp; &nbsp; امتحان غير رسمي</label>
                     </div>
-                    <div class="radio">
-                      <label><input type="radio" name="IsOfficial" value="false">&nbsp;  &nbsp; &nbsp; امتتحان غير رسمي</label>
+                  <div class="radio">
+                      <label><input type="radio" name="IsOfficial" value="true"  >&nbsp;  &nbsp; &nbsp;  امتحان رسمي </label>
                     </div>
                     <div class="alert alert-warning" role="alert">
                      ملاحظة ... 
@@ -218,7 +218,7 @@ li a:hover {
           <td><%= i %></td>
           <td > <a href="/admin/exam/question/<%= exam._id  %>"> <%= exam.Exam %> </a></td>
           <td><%= exam.NumberOfExam %></td>
-          <% if  (exam.Etat === true ) {%>
+          <% if  (exam.IsOfficial === true ) {%>
           <td>رسمي</td>
           <% } else {%>
             <td>ليس رسمي </td>
@@ -281,11 +281,12 @@ li a:hover {
                      </div>
                       <label>طبعية الامتحان  </label>
                       <div class="radio">
-                          <label><input type="radio" name="IsOfficial" value="true" checked >&nbsp;  &nbsp; &nbsp;  انتحان رسمي </label>
+                          <label><input type="radio" name="IsOfficial" value="false" checked>&nbsp;  &nbsp; &nbsp; امتحان غير رسمي</label>
                         </div>
-                        <div class="radio">
-                          <label><input type="radio" name="IsOfficial" value="false">&nbsp;  &nbsp; &nbsp; امتتحان غير رسمي</label>
+                      <div class="radio">
+                          <label><input type="radio" name="IsOfficial" value="true"  >&nbsp;  &nbsp; &nbsp;  امتحان رسمي </label>
                         </div>
+                       
                         <div class="alert alert-warning" role="alert">
                          ملاحظة ... سيتم تسجيل اسماء الناجحين في الامتحان الرسمي لتسليم الجوائز
                                </div>
