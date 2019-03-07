@@ -13,11 +13,27 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/forgot.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+<link href="https://fonts.googleapis.com/css?family=Cairo" rel="stylesheet">
 </head>
+<style>
+body {
+  margin-top: 8%;
+
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.637)), url("https://www.hafryat.com/sites/default/files/%D8%A5%D8%AD%D8%B5%D8%A7%D8%A1%20%D8%B1%D8%B3%D9%85%D9%8A%2C%20%D8%A7%D9%84%D8%A3%D8%AF%D8%A8%2C%20%D8%A7%D9%84%D8%AB%D9%82%D8%A7%D9%81%D8%A9%20%D9%88%D8%A7%D9%84%D8%A3%D8%AF%D8%A8%2C%20%D8%A7%D9%84%D8%B9%D9%84%D9%88%D9%85%20%D8%A7%D9%84%D8%AA%D8%B7%D8%A8%D9%8A%D9%82%D9%8A%D8%A9%2C%20%D8%A7%D9%84%D9%81%D9%86%D9%88%D9%86%2C%20%D8%A7%D9%84%D9%83%D8%AA%D8%A8%20%D8%A7%D9%84%D9%85%D9%86%D8%B4%D9%88%D8%B1%D8%A9%2C%20%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%2C%20%D8%B3%D8%A7%D9%85%D8%AD%20%D9%81%D8%A7%D9%8A%D8%B2%2C%20%D8%B5%D9%86%D8%A7%D8%B9%D8%A9%20%D8%A7%D9%84%D9%83%D8%AA%D8%A7%D8%A8.jpg");
+  height: 90%;
+  
+position: relative;
+}
+</style>
 <body dir="rtl">
- <div class="container" style="padding-top: 2%;width: 310px;">
-    <h2 style="text-align: center ">استعادة حسابك </h2><br><br>
+ 
+ <div class="container" style="padding-top: 2%;width: 400px;  font-family: 'Cairo', sans-serif;">
+    <div style="background-color: #fff;padding:15%">
+    <h2 style="text-align: center; ">استعادة حسابك </h2><br><br>
     <% errors.forEach(function(error) { %>
     <div class="alert alert-danger" role="alert">
     <%= error %>
@@ -45,6 +61,6 @@
 </form>
 <a href="/">الصفحة الرئيسية</a>
   </div>
-
+</div>
 </body>
 </html>
