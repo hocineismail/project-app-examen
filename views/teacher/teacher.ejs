@@ -15,10 +15,45 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-</head>
+
 </head>
 <style>
-body {
+  .card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+}
+
+.title {
+  color: grey;
+  font-size: 18px;
+}
+
+button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+a {
+  text-decoration: none;
+  font-size: 22px;
+  color: black;
+}
+
+button:hover, a:hover {
+  opacity: 0.7;
+}
+body {  background-color: rgb(240, 240, 240);
     font-family: 'Cairo', sans-serif;
   }
 table {
@@ -122,7 +157,7 @@ button:hover {
 }
 
 img.avatar {
-  width: 25%;
+  width: 80%;
   border-radius: 50%;
 }
 
@@ -161,7 +196,7 @@ span.psw {
 
 <div class="container" style="padding-top: 2%;width: 50%;">
   <h2 style="text-align: center;  font-family: 'Cairo', sans-serif; "> 
-حسابي
+معلوماتي الشخصية
 </h2><br><br>
   <% errors.forEach(function(error) { %>
   <div class="alert alert-danger" style="text-align: right" role="alert">
@@ -175,112 +210,41 @@ span.psw {
   <% }) %>
 </div>
 
-<div class="container"> 
+<div class="container" dir="rtl"> 
 
 
+    <div class="card">
+        <div class="imgcontainer">
+            <% if (currentUser.Sexe === "انثى") { %>
+            <img src="https://www.w3schools.com/howto/img_avatar2.png" alt="Avatar"  class="avatar">
+            <% } else {  %>
+            <img src="https://www.w3schools.com/w3css/img_avatar3.png" alt="Avatar"  class="avatar">
+            <%}%>
+          </div>
+        <h1 style=" font-family: 'Cairo', sans-serif;"> <%= teachers[0].user.Firstname + " "  %>
+          <%= teachers[0].user.Lastname %></h1>
+          <p  style=" font-family: 'Cairo', sans-serif;"> الجنس
+              <%= teachers[0].user.Sexe %></p>
+        <p  style=" font-family: 'Cairo', sans-serif;"> معلم
+       <%= teachers[0].phase.Phase %></p>
 
-  <div class="imgcontainer">
-    <% if (currentUser.Sexe === "انثى") { %>
-    <img src="https://www.w3schools.com/howto/img_avatar2.png" alt="Avatar"  class="avatar">
-    <% } else {  %>
-    <img src="https://www.w3schools.com/w3css/img_avatar3.png" alt="Avatar"  class="avatar">
-    <%}%>
-  </div>
+       <p  style=" font-family: 'Cairo', sans-serif;"> الاختصاص
+          <%= teachers[0].Speciality %></p>
+          <p  style=" font-family: 'Cairo', sans-serif;"> العنوان
+              <%= teachers[0].user.Address %></p>
+              
+                  <p  style=" font-family: 'Cairo', sans-serif;"> رقم الهاتف
+                      <%= teachers[0].user.Phone %></p>
+                      
+                      <p  style=" font-family: 'Cairo', sans-serif;"> البريد
+                          <%= teachers[0].user.email %></p>
+   
+      </div>
 
-
-<table class="table" dir="rtl" style="margin-left: 5%">
-    <thead >
-      <tr>
-        <td style="text-align: left" ><%= teachers[0].user.Firstname %></td>
-        <td ><%= teachers[0].user.Lastname %></td>
-      
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td style="text-align: left">الجنس</td>
-            <td><%= teachers[0].user.Sexe %></td>
-          
-          </tr>
-      <tr>
-        <td style="text-align: left">رقم الجوال</td>
-        <td><%= teachers[0].user.Phone %></td>
-      
-      </tr>
-      
-      <tr>
-         <td style="text-align: left">البريد الالكتروني</td>
-        <td><%= teachers[0].user.email %></td>
-       
-      </tr>
-    </tbody>
-  </table>
-  <div style="text-align: center"> 
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="width: 50%">
-      Launch demo modal
-    </button>
-  </div>
   
-<br><br>
+
     </div>
       
-
-      
-      <!-- Modal -->
-      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content" dir="rtl">
-            <div class="modal-header">
-            
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-          
-                    <form >
-                    <div class="input-container" align="center">
-                         <div class="col-md-6"> 
-                            <label>اللقب </label>
-                        <input class="form-control " style="margin-right: 5px;text-align: right" type="text" value="<%= teachers[0].user.Firstname %>" name="Firstname" required>
-                       
-                      </div>
-                      <div class="col-md-6"> 
-                          <label>الاسم</label>
-                         <input class="form-control " type="text" style="text-align: right" value="<%= teachers[0].user.Lastname %>" name="Lastname" > 
-                   
-                      </div>
-                   
-                 
-                        <div class="col-md-6"> 
-                      <label> البريد الالكتروني</label>
-                        <input class="form-control"  type="text" style="text-align: right" value="<%= teachers[0].user.email %>" name="username" >
-                    </div>
-                    <div class="col-md-6"> 
-                 <label> الجنس</label>
-                        <select class="form-control" dir="rtl"  name="Sexe" required>
-                            <option >ذكر</option>
-                            <option >انثى</option>
-                          
-                          </select>
-                
-                </div>
-                <div class="col-md-6"> 
-                    <label> رقم الجوال</label>
-                    <input class="form-control" style="text-align: right"  type="text" value="<%= teachers[0].user.Phone %>" name="Phone">
-               </div>
-              
-              
-              </form>
-          
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-          </div>
-        </div>
-      </div>
 
    
     <script>
