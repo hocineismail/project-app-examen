@@ -90,9 +90,14 @@ app.get('/exampage/*', (req, res) => {
   res.sendFile(__dirname + '/client/build/index.html')
 })
 
+app.get("/404",(req,res) => {
+  console.log("page no found")
+  res.render("404")
+})
 app.get('*', function(req, res){
-  res.redirect("/")
+  res.redirect("/404")
 });
+
 app.listen(3000, () => {
   console.log('Server listing on 3000')
 })
