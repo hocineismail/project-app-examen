@@ -51,7 +51,7 @@ class AppRoutes extends Component {
           />
           <Route path={'/siginstudent/:id'} exact render={() => <Login />} />
           <Route path={'/404'} exact render={() => <Failed />} />
-          <Redirect to="/404" />
+          <Redirect exact to="/404" />
         </Switch>
       </BrowserRouter>
     ) : (
