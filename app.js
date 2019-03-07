@@ -89,6 +89,10 @@ app.get('/studenthome/*', (req, res) => {
 app.get('/exampage/*', (req, res) => {
   res.sendFile(__dirname + '/client/build/index.html')
 })
+
+app.get('*', function(req, res){
+  res.redirect("/")
+});
 app.listen(3000, () => {
   console.log('Server listing on 3000')
 })
