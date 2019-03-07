@@ -1251,13 +1251,34 @@ user.get("/admin/exam/question/:id",async function(req,res){
 })
 
 //Delete User
-user.get("/admin/deleteUser/:_id",(req,res)=>{
-	User.findOneAndRemove( { _id: req.params._id } , function(err, del) {
-		if (err) { 	req.flash("error", "حدث خلل اثناء اجراء العملية");
+user.get("/admin/deleteUser/:_id",async (req,res)=>{
+await User.findOne({_id: req.params._id},(err,user)=> {
+	if (user.Role === "Student"){
+		Student.findOneAndRemove({user: user._id}, (err,success)=> {
+			console.log("wi raho mouchklel bitch ")
+			if (err) { 	req.flash("error", "حدث خلل اثناء اجراء العملية");
+
 			return 	res.redirect("/list/admins")}
-		req.flash("error", "تم الحدف");
-		res.redirect("/list/admins")
-	})
+			if (success){
+					User.findOneAndRemove( { _id: req.params._id } , function(err, del) {
+					if (err) { 	req.flash("error", "حدث خلل اثناء اجراء العملية");
+					console.log(del)
+						return 	res.redirect("/list/students")}
+					req.flash("error", "تم الحدف");
+					res.redirect("/list/students")
+				})
+			}
+		})
+	} else {
+			User.findOneAndRemove( { _id: req.params._id } , function(err, del) {
+			if (err) { 	req.flash("error", "حدث خلل اثناء اجراء العملية");
+			console.log(del)
+				return 	res.redirect("/list/admins")}
+			req.flash("error", "تم الحدف");
+			res.redirect("/list/admins")
+		})	}	
+})
+
 
 })
 // this route for deversite of users
