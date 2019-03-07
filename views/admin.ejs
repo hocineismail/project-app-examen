@@ -18,7 +18,7 @@
 <link rel="stylesheet" type="text/css" href="css/admin.css">
 </head>
 
-<body style="background-color:rgb(243, 242, 242)">
+<body >
 
   <div class="w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left" style="color:#fff;padding-top:3.7%;font-size: 18px;width:200px;background-color: rgb(73, 73, 73)" id="mySidebar">
     <button   class="w3-bar-item w3-button w3-large w3-hide-large" onclick="w3_close()">الغاء &times;</button>
@@ -28,8 +28,6 @@
  <a href="/list/students" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > قائمة التلاميذ </a>
  <h2 style="color: cornsilk;padding-right: 10%; text-align: right;">الاحصاء</h2>
  <a href="/static/" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > صفحة الاحصاء </a>
- <h2 style="color: cornsilk;padding-right: 10%; text-align: right;">الطلبات</h2>
- <a href="/list/demande" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > صفحة الطلبات </a>
  <h2 style="color: cornsilk;padding-right: 10%; text-align: right;">الناجحين</h2>
  <a href="/list/seccus" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > قاوائم الناجحين </a>
  </div>
@@ -73,7 +71,7 @@
       window.setTimeout("window.close();",20)
     
   </script>
- <!-- model for public -->
+<!-- model for public -->         
   <!-- Button trigger modal -->
   <button type="button" class="btn btn-default" data-toggle="modal" data-target="#pubexampleModalCenter">
       اعلان في الصفحة الرئسية
@@ -142,10 +140,10 @@
 
 
                 <label>ادخل المرحلة</label>
-                  <input class="form-control" style="margin-right: 5px;text-align: right" type="text"  placeholder="phase" name="Phase">
+                  <input class="form-control" style="margin-right: 5px;text-align: right" type="text"  placeholder="المرحلة" name="Phase" required>
                   <label>ادخل رقم المرحلة</label>
 
-                  <input class="form-control" type="number" style="text-align: right" placeholder="NumberOfPhase" name="NumberOfPhase">
+                  <input class="form-control" type="number" style="text-align: right" placeholder="رقم المرحلة" name="NumberOfPhase" required>
                   
               </div>
          
@@ -285,11 +283,11 @@
                       
                        
                             <div class="input-container">
-                                <label> تعديل الصف</label>
-                                <input class="form-control" style="margin-right: 5px;text-align: right" type="text"  value="<%= level.Level %>" name="Level">
+                                <label  > تعديل الصف</label>
+                                <input class="form-control" style="margin-right: 5px;text-align: right" type="text"  value="<%= level.Level %>" name="Level" required>
                                 <label> تعديل رقم الصف</label>
 
-                                <input class="form-control" type="number" style="text-align: right" value="<%= level.NumberOfLevel %>" name="NumberOfLevel">
+                                <input class="form-control" type="number" style="text-align: right" value="<%= level.NumberOfLevel %>" name="NumberOfLevel" required>
                                 
                             </div>
                        
@@ -323,9 +321,9 @@
                           <div class="input-container">
                               <label>ادخل الصف</label>
 
-                              <input class="form-control" style="margin-right: 5px;text-align: right" type="text"  placeholder="Level" name="Level">
+                              <input class="form-control" style="margin-right: 5px;text-align: right" type="text"  placeholder="الصف" name="Level" required>
                               <label>ادخل رقم الصف</label>
-                              <input class="form-control" type="number" style="text-align: right" placeholder="NumberOfLevel" name="NumberOfLevel">
+                              <input class="form-control" type="number" style="text-align: right" placeholder="رقم الصف" name="NumberOfLevel" required>
                               
                           </div>
 
@@ -404,7 +402,7 @@
 
 
 
-<<<<<<< HEAD
+
   <script>
     $(function() {
         $("#getExcel").on("click", function () {
@@ -442,9 +440,7 @@
     crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>  
 
-=======
-  
->>>>>>> project
+
 <script>
 function w3_open() {
   document.getElementById("mySidebar").style.display = "block";
@@ -454,19 +450,7 @@ function w3_close() {
   document.getElementById("mySidebar").style.display = "none";
 }
 </script>
-<<<<<<< HEAD
+
       </body>
-=======
-<script language='javascript'>
 
-  self.close()
-  </script>
-    <script
-    src="https://code.jquery.com/jquery-3.2.1.min.js"
-    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-    crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>  
-
-</body>
->>>>>>> project
 </html>
