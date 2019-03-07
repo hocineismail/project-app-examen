@@ -1249,6 +1249,17 @@ user.get("/admin/exam/question/:id",async function(req,res){
 	res.redirect("/routes")
 }
 })
+
+//Delete User
+user.get("/admin/deleteUser/:_id",(req,res)=>{
+	User.findOneAndRemove( { _id: req.params._id } , function(err, del) {
+		if (err) { 	req.flash("error", "حدث خلل اثناء اجراء العملية");
+			return 	res.redirect("/list/admins")}
+		req.flash("error", "تم الحدف");
+		res.redirect("/list/admins")
+	})
+
+})
 // this route for deversite of users
 user.get("/routes",ensureAuthenticated , function(req,res){
 	if ( req.user.Role === "Teacher" ) {

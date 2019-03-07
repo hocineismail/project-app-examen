@@ -148,8 +148,38 @@ li a:hover {
       <td> <%= admin.Phone %></td>
       <td> <%= admin.Address %></td>
       <td> <%= admin.email %></td>
-     
-     
+      <td> <% if ( JSON.stringify(currentUser._id) != JSON.stringify(admin._id) ) { %>
+          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenterdelete<%= admin._id%>">
+              <i class="fa fa-trash" aria-hidden="true"></i>
+            </button>
+            <% }  %>    
+      </td>
+      <div class="modal fade" id="exampleModalCenterdelete<%= admin._id%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content" dir="rtl">
+                  <div class="modal-header">
+                    
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left" >
+                      <span aria-hidden="true">&times;  الغاء</span>
+                    </button>
+                
+                  </div>
+                  
+                  <div class="modal-body">
+                      <i class="fa fa-trash" aria-hidden="true" style="color: red; font-size: 30px;float: left"></i>
+                      <p> 
+                   هل انت متاكد من حذف المدير 
+                  <span style="color: red">" <%= admin.Firstname  + " " + admin.Lastname %>"</span> 
+                    نهائيا
+                  </p>
+                  </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
+                <a href="/admin/deleteuser/<%= admin._id%>" class="btn  btn-danger"> حذف</a>
+              </div>
+            </div>
+          </div>
+        </div>
     </tr>
     <%})%>
   
