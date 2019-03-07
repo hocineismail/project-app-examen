@@ -128,6 +128,7 @@ user.post("/signup", function(req, res) {
 				var newStudent = new Student({
 					Phase: req.body.Phase,
 					Level: req.body.Level,
+					semster: req.body.Semster,
 					user: newUser._id,
 		
 				});
@@ -188,7 +189,7 @@ user.post('/forgot', function(req, res, next) {
 	  function(token, done) {
 		User.findOne({ email: req.body.email }, function(err, user) {
 		  if (!user) {
-			req.flash('error', 'No account with that email address exists.');
+			req.flash('error', 'لا يوجد حساب يهذا البريد الإلكتروني  ');
 			return res.redirect('/forgot');
 		  }
   
@@ -211,14 +212,14 @@ user.post('/forgot', function(req, res, next) {
 		var mailOptions = {
 		  to: user.email,
 		  from: 'maelrolland@gmail.com',
-		  subject: 'Node.js Password Reset',
-		  text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
-			'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+		  subject: 'استرجاع الحساب',
+		  text: 'أنت تتلقى هذا لأنك (أو شخصًا آخر) طلب إعادة تعيين كلمة المرور لحسابك.\n\n' +
+			'الرجاء النقر فوق الرابط التالي  لإكمال العملية:\n\n' +
 			'http://' + req.headers.host + '/reset/' + token + '\n\n' +
-			'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+			'إذا لم تطلب ذلك ، فيرجى تجاهل هذا البريد الإلكتروني وستظل كلمة المرور الخاصة بك دون تغيير.\n'
 		};
 		smtpTransport.sendMail(mailOptions, function(err) {
-		  req.flash('info', 'An e-mail has been sent to ' + user.email + ' with further instructions.');
+		  req.flash('info', 'تم إرسال رسالة إلكترونية إلى ' + user.email + ' مع مزيد من التعليمات.');
 		  done(err, 'done');
 		});
 	  }
@@ -235,7 +236,7 @@ user.post('/forgot', function(req, res, next) {
   user.get('/reset/:token', function(req, res) {
 	User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
 	  if (!user) {
-		req.flash('error', 'Password reset token is invalid or has expired.');
+		req.flash('error', 'رمز إعادة تعيين كلمة المرور غير صالح أو انتهت صلاحيته.');
 		return res.redirect('/forgot');
 	  }
 	  res.render('reset', {token: req.params.token
@@ -247,7 +248,7 @@ user.post('/forgot', function(req, res, next) {
 	  function(done) {
 		User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
 		  if (!user) {
-			req.flash('error', 'Password reset token is invalid or has expired.');
+			req.flash('error', 'رمز إعادة تعيين كلمة المرور غير صالح أو انتهت صلاحيته.');
 			return res.redirect('back');
 		  }
           console.log(req.body.password)
@@ -273,12 +274,12 @@ user.post('/forgot', function(req, res, next) {
 		var mailOptions = {
 		  to: user.email,
 		  from: 'maelrolland03@gmail.com',
-		  subject: 'Your password has been changed',
-		  text: 'Hello,\n\n' +
-			'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
+		  subject: 'تم تغيير كلمة السر الخاصة بك',
+		  text: 'مرحبا,\n\n' +
+			'هذا تأكيد على أن كلمة المرور لحسابك ' + user.email + ' تم تغييره للتو.\n'
 		};
 		smtpTransport.sendMail(mailOptions, function(err) {
-		  req.flash('success', 'Success! Your password has been changed.');
+		  req.flash('success', ' تم تغيير كلمة السر الخاصة بك.');
 		  res.redirect('/signup');
 		  done(err);
 		});
@@ -732,7 +733,7 @@ user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, nex
 								
                             await   Response.deleteMany({question: question[i]._id} , (err , success) => {
 								if (err) {
-									req.flash("error", " nbdelha arabe beli kayn probleme hme berk");
+									req.flash("error", " حدث مشكل اثناء اجراء العملية ان تكرر المشكل اتصل بمطور مواقع");
 								res.redirect("/admin/exam/" + req.params.module)
 							}
 							})
@@ -740,14 +741,14 @@ user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, nex
                           
                          await Question.deleteMany({exam: req.params.id},(err,success) => {
 							  if (err){ 
-								  req.flash("error", " nbdelha arabe beli kayn probleme hme berk");
+									req.flash("error", " حدث مشكل اثناء اجراء العملية ان تكرر المشكل اتصل بمطور مواقع");
 							      res.redirect("/admin/exam/" + req.params.module) 
 						       	}
 							  if (success) { console.log('question deleted successfully');
 							
 							    Exam.findOneAndDelete({_id: req.params.id}, (err,DeleteExam) => {
                                     if (err) {
-										req.flash("error", " nbdelha arabe beli kayn probleme hme berk");
+										req.flash("error", " حدث مشكل اثناء اجراء العملية ان تكرر المشكل اتصل بمطور مواقع");
 										res.redirect("/admin/exam/" + req.params.module) 
 									 }
 
@@ -948,7 +949,9 @@ user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 		Module.findOne({_id: req.params.id},function(err,onemodule){
 			if (!onemodule) {return res.redirect("/admin")}
                  Exam.find({module: onemodule._id},function(err,exam){
-			
+			     if (err) {
+						        req.flash("error","حدث خلل اثناء اجراء العملية" )
+						 return res.redirect("/admin")}
 					res.render("exam",{exams: exam,onemodules: onemodule}) 
 				
 			
