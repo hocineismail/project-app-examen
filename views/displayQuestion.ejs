@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html>   
 <html >
 <title>Admin</title><head> 
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,7 +21,7 @@
 <link href="https://fonts.googleapis.com/css?family=Cairo" rel="stylesheet">
 </head>
 <style>
-  body {
+body {
     font-family: 'Cairo', sans-serif;
   }
 table {
@@ -36,7 +36,7 @@ th, td {
   text-align: right;  padding: 8px;
 
 }
-tr:nth-child(even){background-color: #f2f2f2}
+
 
 ul {
   list-style-type: none;
@@ -69,49 +69,33 @@ li a:hover {
   color: #f2f2f2;
   text-decoration: none
 }
-
 </style>
 <body>
 
   <body style="background-color:rgb(243, 242, 242)">
 
-    <div class="w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left" style="color:#fff;padding-top:3.7%;font-size: 18px;width:200px;background-color: rgb(73, 73, 73)" id="mySidebar">
-      <button   class="w3-bar-item w3-button w3-large w3-hide-large" onclick="w3_close()">الغاء &times;</button>
-      <h2 style="color: cornsilk;padding-right: 10%; text-align: right;" >القوائم</h2>
-   <a href="/list/admins" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > قائمة المديرين </a>
-   <a href="/list/teachers" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > قائمة المعلمين </a>
-   <a href="/list/students" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > قائمة التلاميذ </a>
-   <h2 style="color: cornsilk;padding-right: 10%; text-align: right;">الاحصاء</h2>
-   <a href="/static/" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > صفحة الاحصاء </a>
-   <h2 style="color: cornsilk;padding-right: 10%; text-align: right;">الطلبات</h2>
-   <a href="/list/demande" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > صفحة الطلبات </a>
-   <h2 style="color: cornsilk;padding-right: 10%; text-align: right;">الناجحين</h2>
-   <a href="/list/seccus" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > قاوائم الناجحين </a>
-   </div>
+   
   
-  <div class="w3-main" style="margin-left:200px">
+  <div class="w3-main" >
   <div  style="color:#fff;background-color: rgb(73, 73, 73)">
     <button class="w3-button  w3-xlarge w3-hide-large" onclick="w3_open()">&#9776;</button>
-    <div class="w3-container">
+    <div class="w3-container" >
       <ul>
        
-        <li><a class="activee" href="/"><i class="fas fa-house-damage"></i> </a></li>
+        <li class="activee" ><a href="/"><i class="fas fa-house-damage"></i> </a></li>
 
         <li><a href="/admin"><i class="far fa-edit"></i></a></li>
         <li class="nav-item active "> <% if (currentUser) { %>
-          <a class="nav-link" href="/Logout"><i class="fas fa-sign-out-alt icon"></i>    </a>  <% }  %>  </li>
-        
-      
-      </ul>
-      
-    </div>
+          <a  href="/Logout"><i class="fas fa-sign-out-alt icon"></i>  </a>   </li> <% }  %>
+ </ul>
+</div>
   </div>
   
   <div class="w3-container" style="text-align: right">
 
 <div class="container" style="padding-top: 2%;width: 50%;">
   <h2 style="text-align: center ">
-  اعدادات الامتحانات و الدورات
+  الاسئلة
      
 </h2><br><br>
   <% errors.forEach(function(error) { %>
@@ -132,7 +116,7 @@ li a:hover {
 
 
 
-<div class="container"  >
+<div class="container" >
 
     <% questions.forEach(function(question) {%>
       <div class="card-deck" style="padding-bottom: 3%;" >
@@ -243,7 +227,7 @@ li a:hover {
                         <h5></h5>
                         <% } %>
                 </div> </div></div>
-                <a href="/delete/question/<%= question._id%>" class="btn btn-danger"> delete this question</a>
+                <a href="/delete/question/<%= question._id%>" class="btn btn-danger">حذف </a>
               <p class="card-text" style="text-align: center"><small class="text-muted"><%= question.createdAt %></small></p>
             </div> </div>
             <hr>

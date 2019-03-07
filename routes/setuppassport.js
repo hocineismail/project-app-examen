@@ -21,7 +21,7 @@ passport.use("login", new LocalStrategy(
      if (err) { return done(err); }
      if (!user) {
      return done(null, false,
-      { message: "No user has that email!" });
+      { message: "هذا حساب غير مسجل" });
      }
      user.checkPassword(password, function(err, isMatch) {
      if (err) { return done(err); }
@@ -30,7 +30,7 @@ passport.use("login", new LocalStrategy(
      return done(null, user);
      } else {
      return done(null, false,
-     { message: "Invalid password." });
+     { message: " كلمة المرور غير صحيحة." });
      }
      });
      });

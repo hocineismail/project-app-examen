@@ -93,7 +93,7 @@ user.post("/signup", function(req, res) {
 	User.findOne({ email: email }, function(err, user) {
 	if (err) { return next(err); }
 	if (user) {
-	req.flash("error", "User already exists");
+	req.flash("error", "الحساب موجود من قبل");
 	return res.redirect("/signup");
 	}
 	if (
@@ -128,6 +128,7 @@ user.post("/signup", function(req, res) {
 				var newStudent = new Student({
 					Phase: req.body.Phase,
 					Level: req.body.Level,
+					semster: req.body.Semster,
 					user: newUser._id,
 		
 				});
@@ -149,7 +150,7 @@ user.post("/signup", function(req, res) {
 	
 			});
 		} else {
-			req.flash('error', ' dsl mazal madernaqch site ')
+			req.flash('error', 'نعتتذر... الموقع ليس جاهز للاستخدام حاليا ')
 			res.redirect("/signup")
 		}	});	
 
@@ -188,7 +189,7 @@ user.post('/forgot', function(req, res, next) {
 	  function(token, done) {
 		User.findOne({ email: req.body.email }, function(err, user) {
 		  if (!user) {
-			req.flash('error', 'No account with that email address exists.');
+			req.flash('error', 'لا يوجد حساب يهذا البريد الإلكتروني  ');
 			return res.redirect('/forgot');
 		  }
   
@@ -211,14 +212,14 @@ user.post('/forgot', function(req, res, next) {
 		var mailOptions = {
 		  to: user.email,
 		  from: 'maelrolland@gmail.com',
-		  subject: 'Node.js Password Reset',
-		  text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
-			'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+		  subject: 'استرجاع الحساب',
+		  text: 'أنت تتلقى هذا لأنك (أو شخصًا آخر) طلب إعادة تعيين كلمة المرور لحسابك.\n\n' +
+			'الرجاء النقر فوق الرابط التالي  لإكمال العملية:\n\n' +
 			'http://' + req.headers.host + '/reset/' + token + '\n\n' +
-			'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+			'إذا لم تطلب ذلك ، فيرجى تجاهل هذا البريد الإلكتروني وستظل كلمة المرور الخاصة بك دون تغيير.\n'
 		};
 		smtpTransport.sendMail(mailOptions, function(err) {
-		  req.flash('info', 'An e-mail has been sent to ' + user.email + ' with further instructions.');
+		  req.flash('info', 'تم إرسال رسالة إلكترونية إلى ' + user.email + ' مع مزيد من التعليمات.');
 		  done(err, 'done');
 		});
 	  }
@@ -235,7 +236,7 @@ user.post('/forgot', function(req, res, next) {
   user.get('/reset/:token', function(req, res) {
 	User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
 	  if (!user) {
-		req.flash('error', 'Password reset token is invalid or has expired.');
+		req.flash('error', 'رمز إعادة تعيين كلمة المرور غير صالح أو انتهت صلاحيته.');
 		return res.redirect('/forgot');
 	  }
 	  res.render('reset', {token: req.params.token
@@ -247,7 +248,7 @@ user.post('/forgot', function(req, res, next) {
 	  function(done) {
 		User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
 		  if (!user) {
-			req.flash('error', 'Password reset token is invalid or has expired.');
+			req.flash('error', 'رمز إعادة تعيين كلمة المرور غير صالح أو انتهت صلاحيته.');
 			return res.redirect('back');
 		  }
           console.log(req.body.password)
@@ -273,13 +274,13 @@ user.post('/forgot', function(req, res, next) {
 		var mailOptions = {
 		  to: user.email,
 		  from: 'maelrolland03@gmail.com',
-		  subject: 'Your password has been changed',
-		  text: 'Hello,\n\n' +
-			'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
-		};
+		  subject: 'تم تغيير كلمة السر الخاصة بك',
+		  text: 'مرحبا,\n\n' +
+			'  ' + user.email + ' هذه الرسالة لتاكيد على أن كلمة المرور لحسابك تم تغييرها .\n'
+		}; 
 		smtpTransport.sendMail(mailOptions, function(err) {
-		  req.flash('success', 'Success! Your password has been changed.');
-		  res.redirect('/signup');
+		  req.flash('success', ' تم تغيير كلمة السر الخاصة بك.');
+		  res.redirect('/');
 		  done(err);
 		});
 	  }
@@ -371,6 +372,7 @@ user.post('/forgot', function(req, res, next) {
 	   if (req.user.Role === "Teacher" ) {
 		Teacher.find({user: req.user._id }).
 		populate("user").
+		populate("phase").
 		exec(function(err,teacher){
 
 			if (err) { res.redirect("/routes")  }
@@ -403,7 +405,7 @@ user.post('/forgot', function(req, res, next) {
 	});
 
 
-
+	
 
 user.get("/list/demande",ensureAuthenticated,async  function(req,res){
 	if (  req.user.Role === "Admin") {
@@ -505,7 +507,7 @@ user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, nex
 			if (!phase) { return next(404); }
 	 
 			req.flash("error", "تم الحدف");
-			res.redirect("/admin")
+
 			
 		 
 		})
@@ -520,10 +522,17 @@ user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, nex
 					if (!phase) { return next(404); }
 					
 					phase.Phase = req.body.Phase
-					phase.save();
+					phase.save((err,success)=> {
+						if (err){
+							req.flash("error", "حدث خلل اثناء التحديث");
+							res.redirect("/admin")
+						}else {
 
-					req.flash("error", "update ");
+					req.flash("info", "تم التحديث");
 					res.redirect("/admin")
+						}
+							
+					});
 					
 				 
 				})
@@ -539,10 +548,18 @@ user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, nex
 							if (!level) { return next(404); }
 							
 							level.Level = req.body.Level
-							level.save();
-		
-							req.flash("error", "update ");
+							level.save((err,success)=> {
+								if (err){
+									req.flash("error", "حدث خلل اثناء التحديث");
+									res.redirect("/admin")
+								}else {
+
+							req.flash("info", "تم التحديث");
 							res.redirect("/admin")
+								}
+									
+							});
+		
 					
 						 
 						})
@@ -567,7 +584,7 @@ user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, nex
 					//LOOPS FIND ALL MODULE REF SEMSETER
 					for (let j = 0 ; j < modules.length; j++) {
 						let exams = await Exam.find({module: modules[j]._id})
-
+                        if (exams) { 
 
 						//LOOPS FIND ALL EXAM REF MODULE
 						for (let h = 0; h < exams.length ;h++){
@@ -634,7 +651,7 @@ user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, nex
 							})
 						   }
 					   }
-					   
+					}
 					}
 					var L = i + 1 ;
 					if (semster.length === L ){
@@ -716,7 +733,7 @@ user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, nex
 								
                             await   Response.deleteMany({question: question[i]._id} , (err , success) => {
 								if (err) {
-									req.flash("error", " nbdelha arabe beli kayn probleme hme berk");
+									req.flash("error", " حدث مشكل اثناء اجراء العملية ان تكرر المشكل اتصل بمطور مواقع");
 								res.redirect("/admin/exam/" + req.params.module)
 							}
 							})
@@ -724,14 +741,14 @@ user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, nex
                           
                          await Question.deleteMany({exam: req.params.id},(err,success) => {
 							  if (err){ 
-								  req.flash("error", " nbdelha arabe beli kayn probleme hme berk");
+									req.flash("error", " حدث مشكل اثناء اجراء العملية ان تكرر المشكل اتصل بمطور مواقع");
 							      res.redirect("/admin/exam/" + req.params.module) 
 						       	}
 							  if (success) { console.log('question deleted successfully');
 							
 							    Exam.findOneAndDelete({_id: req.params.id}, (err,DeleteExam) => {
                                     if (err) {
-										req.flash("error", " nbdelha arabe beli kayn probleme hme berk");
+										req.flash("error", " حدث مشكل اثناء اجراء العملية ان تكرر المشكل اتصل بمطور مواقع");
 										res.redirect("/admin/exam/" + req.params.module) 
 									 }
 
@@ -814,8 +831,13 @@ user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, nex
 	user.get("/admin/phase/:level",ensureAuthenticated,async function(req,res){
 		if (  req.user.Role === "Admin") {
 		try{
-			const onelevel = await Level.findOne({_id: req.params.level});
-			const semster = await Semster.find({level: onelevel._id});
+			const onelevel = await Level.findOne({_id: req.params.level},(err,success) => {
+				if (err) { return res.redirect("/admin")}
+			});
+		
+			const semster = await Semster.find({level: onelevel._id},(err,success) => {
+				if (err) { return res.redirect("/admin")}
+			});
 			let modules = [];
 
 
@@ -864,6 +886,11 @@ user.post("/admin/:level/:_id/updatemodule",ensureAuthenticated, function(req,re
 	var  modulee = req.body.Module;
 	var  numberOfModule = req.body.NumberOfModule;
 Module.findOne({_id: req.params._id},function(err,modules){
+	if (err) {
+		req.flash("error", "حدث خلل اثناء اجراء العملية");
+			
+		return  res.redirect('/admin/phase/' + req.params.level ) 
+	}
 	modules.Module =  modulee
 	modules.NumberOfModule =   numberOfModule
 
@@ -898,6 +925,11 @@ user.post("/admin/:level/:_id/updatesemster",ensureAuthenticated, function(req,r
 	var  semster = req.body.Semster;
 	var  numberOfSemster= req.body.NumberOfSemster;
 Semster.findOne({_id: req.params._id},function(err,semsters){
+	if (err) {
+		req.flash("error", "حدث خلل اثناء اجراء العملية");
+			
+		return  res.redirect('/admin/phase/' + req.params.level ) 
+	}
 	semsters.Semster =  semster
 	semsters.NumberOfSemster =   numberOfSemster
 
@@ -932,7 +964,9 @@ user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 		Module.findOne({_id: req.params.id},function(err,onemodule){
 			if (!onemodule) {return res.redirect("/admin")}
                  Exam.find({module: onemodule._id},function(err,exam){
-			
+			     if (err) {
+						        req.flash("error","حدث خلل اثناء اجراء العملية" )
+						 return res.redirect("/admin")}
 					res.render("exam",{exams: exam,onemodules: onemodule}) 
 				
 			
@@ -967,13 +1001,25 @@ user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 
 			user.get("/admin/:level/deletemodule/:_id",ensureAuthenticated,async function(req, res, next) {
 				if (  req.user.Role === "Admin") {
-		         	let exams = await Exam.find({module: req.params._id})
+		         	let exams = await Exam.find({module: req.params._id},(err,success) => {
+								if (err) {
+									req.flash("error", "حدث خلل اثناء اجراء العملية");
+										
+									return  res.redirect('/admin/phase/' + req.params.level ) 
+								}
+							 })
 			      for (let i = 0; i < exams.length ;i++){
-						 let question = await Question.findOne({exam: exams[i]._id}) 
+						 let question = await Question.findOne({exam: exams[i]._id},(err,success) => {
+							if (err) {
+								req.flash("error", "حدث خلل اثناء اجراء العملية");
+									
+								return  res.redirect('/admin/phase/' + req.params.level ) 
+							}
+						 }) 
 						 if (question) { 
                          await Response.find({question: question._id}, (err , responseimages) => {
 
-							if (err) { req.flash("error", " nbdelha arabe beli kayn probleme hme berk");
+							if (err) { 	req.flash("error", "حدث خلل اثناء اجراء العملية");
 							res.redirect('/admin/phase/' + req.params.level ) 
 							}
 
@@ -1004,7 +1050,7 @@ user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 							
 							await   Response.deleteMany({question: question._id} , (err , success) => {
 								if (err) {
-									req.flash("error", " nbdelha arabe beli kayn probleme hme berk");
+									req.flash("error", "حدث خلل اثناء اجراء العملية");
 									res.redirect('/admin/phase/' + req.params.level ) 
 							}
 							})
@@ -1013,7 +1059,8 @@ user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 							if (exams.length === L ){
 								for (let k = 0; k < exams.length ;k++){
 									await Question.deleteMany({exam: exams[k]._id},(err,success) => { 
-										if (err){ console.log("error q zebi fi delete question la fin")}
+										if (err){	req.flash("error", "حدث خلل اثناء اجراء العملية");
+										res.redirect('/admin/phase/' + req.params.level ) }
 										if (success) {console.log("the question has bed deletd")}
 									})
 
@@ -1026,30 +1073,25 @@ user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 			
 
 					await Exam.deleteMany({module: req.params._id},(err,success) => { 
-						if (err){ console.log("error q zebi fi delete question la fin")}
+						if (err){	req.flash("error", "حدث خلل اثناء اجراء العملية");
+						res.redirect('/admin/phase/' + req.params.level )}
 						if (success) {console.log("all exam has ben  has bed deletd")}
 					})
                    await Module.findOneAndDelete({_id: req.params._id}, (err,modules) => {
 						if (err) {
-							req.flash("error", " nbdelha arabe beli kayn probleme hme berk");
+							req.flash("error", "حدث خلل اثناء اجراء العملية");
 							res.redirect("/admin/exam/" + req.params.module) 
 						 }
 
 						if (modules){console.log('exam deleted successfully');
 						req.flash("error", "تم الحدف");
-						  res.redirect("/admin/exam/" + req.params.module)
+						 return res.redirect("/admin/exam/" + req.params.module)
 					  }
 					})
 
 
 					res.redirect('/admin/phase/' + req.params.level ) 
 
-				//	Module.findOneAndRemove( { _id: req.params._id } , function(err, modules) {
-				//		if (err) { return next(err); }
-				//		if (!modules) { return next(404); }
-				//		req.flash("error", "تم الحدف");
-				//		return  res.redirect('/admin/phase/' + req.params.level ) 
-            	//	})
 				} else {
 					res.redirect("/routes")
 				}
@@ -1073,10 +1115,13 @@ user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 			if (req.body.Phase != undefined) { 
 				console.log(req.body.Phase);
 				Phase.findOne({Phase: req.body.Phase}, function(err, phase){
+					if (!err) {
 					Level.find({phase:  phase._id},function(err , data){
-					
+						if (!err) {
 							res.send(data);
+						}
 					})
+				}
 				})
 			}
 			 
@@ -1088,10 +1133,13 @@ user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 			if (req.body.Phase != undefined) { 
 				console.log(req.body.Phase);
 				Phase.findOne({_id: req.body.Phase}, function(err, phase){
+					if (!err) {
 					Level.find({phase:  phase._id},function(err , data){
-					
+						if (!err) {
 							res.send(data);
+						}
 					})
+				}
 				})
 			}
 			 
@@ -1105,8 +1153,10 @@ user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 					if (!err) {
 					console.log(level)
 					Semster.find({level:  level._id},function(err , data){
-					
-							res.send(data);
+					if (!err) {
+						res.send(data);
+					}
+						
 					}) }
 				})
 			}
@@ -1117,7 +1167,9 @@ user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 user.get("/exam/update/:link/etat/:id",function(req,res){
 	if (  req.user.Role === "Admin") {
 	Exam.findOne({_id: req.params.id},function(err,exam){
-		if (err){console.log("error bitchj ")}
+		if (err){
+			req.flash("error", "حدث خلل اثناء اجراء العملية");
+			return	res.redirect("/admin/exam/" + req.params.link)}
 		if (exam){
 			if (exam.Etat === true){
 				exam.Etat = false
@@ -1138,15 +1190,27 @@ user.get("/exam/update/:link/etat/:id",function(req,res){
 user.post("/admin/update/:link/exam/:id",function(req,res){
 	if (  req.user.Role === "Admin") {
 	Exam.findOne({_id: req.params.id},function(err,exam){
-		if (err){console.log("error bitchj ")}
+		if (err){		
+			req.flash("error", "حدث خلل اثناء اجراء العملية");
+		return 	res.redirect("/admin/exam/" + req.params.link)}
 		if (exam){
+			if (exam.NumberOfExam < req.body.NumberOfExam){
+				exam.EtatFinal = false
+			}
+			
 			exam.Exam = req.body.Exam,
 			exam.NumberOfExam = req.body.NumberOfExam,
 			exam.IsOfficial = req.body.IsOfficial,
-			exam.Time = req.body.Time
-            exam.save()
+			exam.Time = req.body.Time,
+            exam.save((err,success) => {
+							if (err){req.flash("error", "حدث خلل اثناء اجراء العملية");
+							return 	res.redirect("/admin/exam/" + req.params.link)}
+							if (success) {req.flash("info", "تم التعديل ");
+               return res.redirect("/admin/exam/" + req.params.link)
+							}
+						})
 			
-			res.redirect("/admin/exam/" + req.params.link)
+			
 		}
 	})
 } else {
@@ -1158,7 +1222,10 @@ user.post("/admin/update/:link/exam/:id",function(req,res){
 user.get("/admin/exam/question/:id",async function(req,res){
 	if (  req.user.Role === "Admin") {
 	try{
-	
+		await Question.find({exam: req.params.id},(err,success)=>{
+			if (err){req.flash("error", "حدث خلل اثناء اجراء العملية");
+			 return 	res.redirect("/admin")}
+		})
 		const question = await Question.find({exam: req.params.id}).populate("Author").populate("TeacherOne").populate("TeacherTwo").populate("TeacherFinal");
 		let responses = [];
 
@@ -1181,6 +1248,38 @@ user.get("/admin/exam/question/:id",async function(req,res){
 } else {
 	res.redirect("/routes")
 }
+})
+
+//Delete User
+user.get("/admin/deleteUser/:_id",async (req,res)=>{
+await User.findOne({_id: req.params._id},(err,user)=> {
+	if (user.Role === "Student"){
+		Student.findOneAndRemove({user: user._id}, (err,success)=> {
+			console.log("wi raho mouchklel bitch ")
+			if (err) { 	req.flash("error", "حدث خلل اثناء اجراء العملية");
+
+			return 	res.redirect("/list/admins")}
+			if (success){
+					User.findOneAndRemove( { _id: req.params._id } , function(err, del) {
+					if (err) { 	req.flash("error", "حدث خلل اثناء اجراء العملية");
+					console.log(del)
+						return 	res.redirect("/list/students")}
+					req.flash("error", "تم الحدف");
+					res.redirect("/list/students")
+				})
+			}
+		})
+	} else {
+			User.findOneAndRemove( { _id: req.params._id } , function(err, del) {
+			if (err) { 	req.flash("error", "حدث خلل اثناء اجراء العملية");
+			console.log(del)
+				return 	res.redirect("/list/admins")}
+			req.flash("error", "تم الحدف");
+			res.redirect("/list/admins")
+		})	}	
+})
+
+
 })
 // this route for deversite of users
 user.get("/routes",ensureAuthenticated , function(req,res){

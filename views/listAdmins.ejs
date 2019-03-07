@@ -76,8 +76,7 @@ li a:hover {
  <a href="/list/students" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > قائمة التلاميذ </a>
  <h2 style="color: cornsilk;padding-right: 10%; text-align: right;">الاحصاء</h2>
  <a href="/static/" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > صفحة الاحصاء </a>
- <h2 style="color: cornsilk;padding-right: 10%; text-align: right;">الطلبات</h2>
- <a href="/list/demande" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > صفحة الطلبات </a>
+
  <h2 style="color: cornsilk;padding-right: 10%; text-align: right;">الناجحين</h2>
  <a href="/list/seccus" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > قاوائم الناجحين </a>
  </div>
@@ -88,11 +87,11 @@ li a:hover {
     <div class="w3-container">
       <ul>
        
-        <li><a class="activee" href="/"><i class="fas fa-house-damage"></i>الصقحة الرئسية</a></li>
+        <li><a class="activee" href="/"><i class="fas fa-house-damage"></i> </a></li>
 
-        <li><a href="/admin"><i class="far fa-edit"></i>اعدادات</a></li>
+        <li><a href="/admin"><i class="far fa-edit"></i></a></li>
         <li class="nav-item active "> <% if (currentUser) { %>
-          <a class="nav-link" href="/Logout"><i class="fas fa-sign-out-alt icon"></i>تسجيل الخروج   </a>  <% }  %>  </li>
+          <a class="nav-link" href="/Logout"><i class="fas fa-sign-out-alt icon"></i>    </a>  <% }  %>  </li>
  </ul>
 </div>
   </div>
@@ -117,7 +116,7 @@ li a:hover {
 
 
 <tr> 
-    <td><a href="/signup/admin" class="btn btn-primary" target="_blank">ajouter admin</a></td>
+    <td><a href="/signup/admin" class="btn btn-primary" target="_blank">اضافة مدير للموقع</a></td>
     </tr>
 
 
@@ -132,7 +131,9 @@ li a:hover {
       <th scope="col">الاسم</th>
       <th scope="col">الجنس</th>
       <th scope="col">رقم الهاتف</th>
+      <th scope="col"> العنوان</th>
       <th scope="col">البريد</th>
+      <th scope="col">حذف</th>
       <th></th>
       
     </tr>
@@ -145,9 +146,40 @@ li a:hover {
       <td><%= admin.Lastname %></td>
       <td><%= admin.Sexe %></td>
       <td> <%= admin.Phone %></td>
+      <td> <%= admin.Address %></td>
       <td> <%= admin.email %></td>
-     
-     
+      <td> <% if ( JSON.stringify(currentUser._id) != JSON.stringify(admin._id) ) { %>
+          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenterdelete<%= admin._id%>">
+              <i class="fa fa-trash" aria-hidden="true"></i>
+            </button>
+            <% }  %>    
+      </td>
+      <div class="modal fade" id="exampleModalCenterdelete<%= admin._id%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content" dir="rtl">
+                  <div class="modal-header">
+                    
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left" >
+                      <span aria-hidden="true">&times;  الغاء</span>
+                    </button>
+                
+                  </div>
+                  
+                  <div class="modal-body">
+                      <i class="fa fa-trash" aria-hidden="true" style="color: red; font-size: 30px;float: left"></i>
+                      <p> 
+                   هل انت متاكد من حذف المدير 
+                  <span style="color: red">" <%= admin.Firstname  + " " + admin.Lastname %>"</span> 
+                    نهائيا
+                  </p>
+                  </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
+                <a href="/admin/deleteuser/<%= admin._id%>" class="btn  btn-danger"> حذف</a>
+              </div>
+            </div>
+          </div>
+        </div>
     </tr>
     <%})%>
   

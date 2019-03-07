@@ -3,7 +3,7 @@
 <head>
 
   <!-- Add icon library -->
-  <title> موقع الاختبارات</title>
+  <title > الصفحة غير موجودة </title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -91,71 +91,61 @@ position: relative;
   opacity: 1;
   background-color: rgb(164, 248, 185);
 }
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 800px;
+  margin: auto;
+  padding-top: 10%;
+  padding-bottom: 10%;
+  text-align: center;
+  font-family: arial;
+}
 
+.title {
+  color: grey;
+  font-size: 18px;
+}
+
+button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+a {
+  text-decoration: none;
+  font-size: 22px;
+  color: black;
+}
+
+button:hover, a:hover {
+  opacity: 0.7;
+}
+p {
+    font-family: 'Cairo', sans-serif;
+  }
+  a {
+    font-family: 'Cairo', sans-serif;
+  }
 </style>
 </head>
 <body dir="rtl">
-  <div class="container">
-  <div class="row">
-   
 
-    <div class="col-md-5">
-        <div class="mobile" style="background-color: #fff;padding-top: 20%;padding-bottom: 20% ">
-            <div class="container" style="padding-top: 2%;width: 80%;">
-          
-          
-            <% errors.forEach(function(error) { %>
-            <div class="alert alert-danger" role="alert" style="text-align:right">
-            <%= error %>
-            </div>
-            <% }) %>
-            <% infos.forEach(function(info) { %>
-            <div class="alert alert-info" role="alert" style="text-align:right">
-            <%= info %>
-            </div>
-            <% }) %>
-          <form action="/login" method="post">
-            <div class="input-container"  >
-                <i class="fa fa-envelope icon"></i>
-           <input name="username" type="text" class="input-field"
-            placeholder="البريد " required autofocus  dir="ltr" style="text-align:right"> 
-          </div>
+        <div class="card">
               
-          <div class="input-container" >
-              <i class="fa fa-key icon"></i>
-           <input name="password" type="password" class="input-field"
-            placeholder="كلمة المرور" required> 
-            </div>
-           <input type="submit" value="تسجيل الدخول" class="btn btn-default">
-          </form>
-          
-          <a href="/forgot" >فقدت كلمة المرور
-          </a>
-          <h1 style="text-align: center">او</h1><br>
-          <div class="input-container" > 
-          <a href="/signup" class="btn1 btn-default" style="text-align: center"> حساب جديد
-         </a></div>
-          </div>
-          </div>
-            
-           </div>
+                <h1 style="font-size: 60px">404</h1>
+              
+                <p>نعتذر صفحة الرابط غبر موجودة </p>
+                
+                <a href="/">العودة الى الصفحة الرئيسية</a>
+              </div>
 
-
-           <div class="col-md-7" style="margin-bottom: 5%">
-       <% pub.forEach(function(pub) { %>
-       
-              <div class="card text-white bg-success ">
-                  <div class="card-header" style="text-align:right"> <h1 >اعلان</h1></div>
-                  <div class="card-body">
-                  
-                    <p style="text-align:right ; font-size: 18px"><%= pub.Pub %></p>
-                  </div>
-                </div>
-                  
-            
-          </div>
-          <% }) %>
-  </div>
-</div>
 </body>
 </html>
