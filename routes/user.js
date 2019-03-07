@@ -404,6 +404,16 @@ user.post('/forgot', function(req, res, next) {
 		}	
 	});
 
+	user.get("/list/success",ensureAuthenticated,async  function(req,res){
+		if (  req.user.Role === "Admin") {	
+	
+		 
+			
+		} else {
+			res.redirect("/routes")
+		}	
+	});
+
 
 	
 
@@ -862,22 +872,6 @@ user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, nex
 }
 } );
 
-
-// this code will be delete
-
-//user.get("/admin/laevel/:id", function(req,res){
-//console.log("dakhel hena ya namiiii")
-//	Semster.findOne({_id: req.params.id},function(err,onesemster){
-	//	if (!onesemster) {return res.redirect("/admin")}
-	// console.log(onesemster)
-	//	Module.find({semster: onesemster._id},function(err,module){
-	//		console.log(module)
-	//			res.render("module",{modules: module,onesemsters: onesemster}) 
-			
-		
-	////		})			})
-
-//});
 
 	
 
