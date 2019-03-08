@@ -158,7 +158,7 @@ li a:hover {
 
 <div class="container" style="padding-top: 2%;width: 50%;">
   <h2 style="text-align: center;  font-family: 'Cairo', sans-serif; "> 
-صفحةة مراجعة الاسئلة
+صفحة مراجعة الاسئلة
 </h2><br><br>
   <% errors.forEach(function(error) { %>
   <div class="alert alert-danger" style="text-align: right" role="alert">
@@ -215,129 +215,137 @@ li a:hover {
               <div class="row" dir="rtl"> 
               <div class="col-md-12" >
               
-                <% modules.forEach(function(module) {%>
-                  <% if (  JSON.stringify(question.exam.module) == JSON.stringify(module._id) ) {  %>
-                
-                <%= module.Module %><br>
-                <% semsters.forEach(function(semster) {%>
-                  <% if (  JSON.stringify(module.semster) == JSON.stringify(semster._id) ) {  %>
-                  <br>
-                <%= semster.Semster %><br>
-                     <% levels.forEach(function(level) {%>
-                  <% if (  JSON.stringify(semster.level) == JSON.stringify(level._id) ) {  %>
-                  <br>
-                <%= level.Level %><br>
-                
-             <% } %>
-                <% } )%>
-                 
-             <% } %>
-                <% } )%>
-             <% } %>
-                <% } )%>
-                     <div class="col-md-6"> 
-                          <h4><span style="border-bottom: 2px solid black">عنوان الدرس</span> :  <%= question.NameOfCourse %>   </h4>
-                        <h4 >  <span style="border-bottom: 2px solid black">نوع السؤال</span> : <%= question.TypeOfQuestion %> </h4>
-                    </div>
+             
+                <div class="row">
+                    <% modules.forEach(function(module) {%>
+                      <% if (  JSON.stringify(question.exam.module) == JSON.stringify(module._id) ) {  %>
+                       
+                    <% semsters.forEach(function(semster) {%>
+                      <% if (  JSON.stringify(module.semster) == JSON.stringify(semster._id) ) {  %>
+                      <br>
+                   
+                         <% levels.forEach(function(level) {%>
+                      <% if (  JSON.stringify(semster.level) == JSON.stringify(level._id) ) {  %>
+                        <% phases.forEach(function(phase) {%>
+                          <% if (  JSON.stringify(level.phase) == JSON.stringify(phase._id) ) {  %>
+
+                            <div class="col-md-3"> 
+                                <h4><span style="border-bottom: 2px solid black">المرحلة </span> : <%= phase.Phase %><br></h4>
+                      </div>
+                        <div class="col-md-3"> 
+                            <h4><span style="border-bottom: 2px solid black">الصف </span> : <%= level.Level %><br></h4>
+                  </div>
+                  <div class="col-md-3"> 
+                      <h4><span style="border-bottom: 2px solid black">الفصل </span>   <%= semster.Semster %></h4></div>
+                  <div class="col-md-3"> 
+                      <h4><span style="border-bottom: 2px solid black">المادة </span>  <%= module.Module %></h4> </div>
+                 <% } %>
+                    <% } )%>
+                    <% } %>
+                    <% } )%>
+                     
+                 <% } %>
+                    <% } )%>
+                 <% } %>
+                    <% } )%>
                     <div class="col-md-6"> 
                         <h4><span style="border-bottom: 2px solid black">الوحد </span> :  <%= question.Chapiter %> </h4>
-                        <h4 >  <span style="border-bottom: 2px solid black">درجة السؤال</span> : <%= question.Difficulty %></h4>
-                     </div>
-             
+                      
+                           <h4 >  <span style="border-bottom: 2px solid black">نوع السؤال</span> : <%= question.TypeOfQuestion %> </h4>
+                   </div>
+                   <div class="col-md-6"> 
+                      <h4><span style="border-bottom: 2px solid black">عنوان الدرس</span> :  <%= question.NameOfCourse %>   </h4>
+                    
+                     <h4 >  <span style="border-bottom: 2px solid black">درجة السؤال</span> : <%= question.Difficulty %></h4>
+                    </div>
+                   </div>
             
               
               </div>
              
               <% i = 0 %>
               <div class="col-md-12"> 
-                      <h4> السؤال  :  </h4>
-                   <div style="  border:1px solid black;   border-radius: 8px; margin: 2%;padding: 2%"> 
-               
-                        <h5> <%- question.Question %></h5>
-                           <% if (question.QuestionImage != "") {%>
-                          <img src="/uploads/<%= question.QuestionImage %>" width="80%">
-                      <br>
-                       <br>
-                        <%}%>
-                   </div>
-              </div>
+                  <h4> السؤال  :  </h4>
+                  <div style=" background-color: rgb(242, 255, 239);   border-radius: 8px; margin: 2%;padding: 2%">
+           
+                    <h5> <%- question.Question %></h5>
+                       <% if (question.QuestionImage != "") {%>
+                      <img src="/uploads/<%= question.QuestionImage %>" width="80%">
+                  <br>
+                   <br>
+                    <%}%>
+               </div>
+          </div>
               <% responses.forEach(function(response) {%>
                
                 <% if (JSON.stringify(question._id) == JSON.stringify(response.question)) {%>
-                  
-              <div class="col-md-6" > 
-                
-            <div style="  border:1px solid black;
-            border-radius: 8px; margin: 2%;padding: 2%"> 
-                <% i = i +1 %>
-                <% if (response.IsCorrect === true ) { %>
-              <p style="color: green">الجواب <%= i  %> </p>
-              <% } else { %>
-                <p style="color: red">الجواب <%= i  %></p>
-                <% } %>
-                  <% if (response.ResponseImage != "") {%>
+                  <div class="col-md-6" > 
+                      <div style=" background-color: rgb(242, 255, 239);   border-radius: 8px; margin: 2%;padding: 2%">
+                           <% i = i +1 %>
+                           <% if (response.IsCorrect === true ) { %>
+                         <p style="color: green">الجواب <%= i  %> </p>
+                         <% } else { %>
+                           <p style="color: red">الجواب <%= i  %></p>
+                           <% } %>
+                             <% if (response.ResponseImage != "") {%>
+                               <%= response.ResponseImage %>
+                               <img src="/uploads/<%= response.ResponseImage %>" width="80%">  
+                             <%}%>
+                             <%if  (response.ResponseText != "") {%>
+                           <p>  <%= response.ResponseText  %>  </p> 
+                             <%}%>
+                           </div>
+                         </div>
+                           <%}%>
+                          
+                       
+                     <%})%> 
+                     
                    
-                    <img src="/uploads/<%= response.ResponseImage %>" width="80%">  
-                  <%}%>
-                  <%if  (response.ResponseText != "") {%>
-                <p>  <%= response.ResponseText  %>  </p> 
-                  <%}%>
-                </div>
-              </div>
-                <%}%>
-               
-            
-          <%})%> 
-          
-        
-            <div class="col-md-12" > 
-                <h4> الاجابة النموذجية:  </h4>
-                <div style="  border:1px solid black;
-                border-radius: 8px; margin: 2%;padding: 2%"> 
-             
-                  <h5> <%- question.Response %></h5>
-              
-            </div>
-            
-            <div class="col-md-12" > 
-                <div class="col-md-3" > 
-                    <h4> اسم المعلم المدخل:  </h4>
-                    <div style="  border:1px solid black;
-                    border-radius: 8px; margin: 2%;padding: 2%"> 
-                 
-                      <h5> <%= question.Author.Firstname +" " +  question.Author.Lastname  %></h5>
-                  
-                </div> </div>
-                <div class="col-md-3" > 
-                    <h4> اسم المعلم المراقب الاول:  </h4>
-                    <div style="  border:1px solid black;
-                    border-radius: 8px; margin: 2%;padding: 2%"> 
-                    <% if ( question.TeacherOne != null) { %>
-                      <h5><%= question.TeacherOne.Firstname +" " + question.TeacherOne.Lastname %></h5>
-                   <% } else { %>
-                   <h5></h5>
-                   <% } %>
-                </div> </div>
-                <div class="col-md-3" > 
-                    <h4> اسم المعلم المراقل الثاني:  </h4>
-                    <div style="  border:1px solid black;
-                    border-radius: 8px; margin: 2%;padding: 2%"> 
-                  <% if ( question.TeacherTwo != null) { %>
-                      <h5> <%= question.TeacherTwo.Firstname +" " + question.TeacherTwo.Lastname  %></h5>
-                      <% } else { %>
-                        <h5></h5>
-                        <% } %>
-                </div> </div>
-                <div class="col-md-3" > 
-                    <h4> اسم المعلم المدقق:  </h4>
-                    <div style="  border:1px solid black;
-                    border-radius: 8px; margin: 2%;padding: 2%"> 
-                    <% if ( question.TeacherFinal != null) { %>
-                      <h5> <%= question.TeacherFinal.Firstname +" " + question.TeacherFinal.Lastname  %></h5>
-                      <% } else { %>
-                        <h5></h5>
-                        <% } %>
-                </div> </div>
+                       <div class="col-md-12" > 
+                           <h4> الاجابة النموذجية:  </h4>
+                           <div style=" background-color: rgb(242, 255, 239);   border-radius: 8px; margin: 2%;padding: 2%">
+                        
+                             <h5> <%- question.Response %></h5>
+                         
+                       </div>
+                       
+                       <div class="col-md-12" > 
+                         <div class="row">
+                           <div class="col-md-3" > 
+                               <h4> اسم المعلم المدخل:  </h4>
+                               <div style=" background-color: rgb(242, 255, 239);   border-radius: 8px; margin: 2%;padding: 2%;height: 50px">
+                            
+                                 <h5> <%= question.Author.Firstname +" " +  question.Author.Lastname  %></h5>
+                             
+                           </div> </div>
+                           <div class="col-md-3" > 
+                               <h4> اسم  المراقب الاول:  </h4>
+                               <div style=" background-color: rgb(242, 255, 239);   border-radius: 8px; margin: 2%;padding: 2%; height: 50px">
+                               <% if ( question.TeacherOne != null) { %>
+                                 <h5><%= question.TeacherOne.Firstname +" " + question.TeacherOne.Lastname %></h5>
+                              <% } else { %>
+                              <h5></h5>
+                              <% } %>
+                           </div> </div>
+                           <div class="col-md-3" > 
+                               <h4> اسم  المراقب الثاني:  </h4>
+                               <div style=" background-color: rgb(242, 255, 239);   border-radius: 8px; margin: 2%;padding: 2%; height: 50px"> 
+                             <% if ( question.TeacherTwo != null) { %>
+                                 <h5> <%= question.TeacherTwo.Firstname +" " + question.TeacherTwo.Lastname  %></h5>
+                                 <% } else { %>
+                                   <h5></h5>
+                                   <% } %>
+                           </div> </div>
+                           <div class="col-md-3" > 
+                               <h4> اسم  المدقق:  </h4>
+                               <div style=" background-color: rgb(242, 255, 239);   border-radius: 8px; margin: 2%;padding: 2%;height: 50px">
+                               <% if ( question.TeacherFinal != null) { %>
+                                 <h5> <%= question.TeacherFinal.Firstname +" " + question.TeacherFinal.Lastname  %></h5>
+                                 <% } else { %>
+                                   <h5></h5>
+                                   <% } %>
+                                  </div> </div></div>
               <p class="card-text" style="text-align: center"><small class="text-muted"><%= question.createdAt %></small></p>
             </div> </div>
             <hr>
@@ -345,8 +353,8 @@ li a:hover {
           </div>
           <div style="margin: 20px"> 
            
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#<%= question._id %>exampleModal">
-                Launch demo modal
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#<%= question._id %>exampleModal">
+                اشعار بوجود خطأ
               </button>
               
               <!-- Modal -->
@@ -355,24 +363,24 @@ li a:hover {
                     <div class="modal-content" >
                         <div class="modal-header">
                           
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left" >
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float: right" >
                             <span aria-hidden="true">&times;  الغاء</span>
                           </button>
                     </div><form action="/invalid/question/<%= question._id %>" method="post">
-                    <div class="modal-body">
-                        
+                    <div class="modal-body" dir="rtl">
+                        <label>صف الخطأ </label>
                           <textarea name="message" class="form-control" style="text-align: right"></textarea>
                         
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button type="submit" class="btn btn-primary">Save changes</button>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
+                      <button type="submit" class="btn btn-primary">ارسال </button>
                     </div></form>
                   </div>
                 </div>
               </div>
                      
-          <a href="/valid/question/<%= question._id %>" class="btn  btn-success" style="width: 100px" > validi </a>
+          <a href="/valid/question/<%= question._id %>" class="btn  btn-success" style="width: 100px" > لا يوجد خطأ </a>
         </div>
         </div>       
       </div>

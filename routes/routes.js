@@ -319,16 +319,29 @@ router.get("/teacher/valid",async function(req,res){
   if ( req.user.Role === "Teacher") { 
   
     try{
+      var user = await Teacher.findOne({user: req.user._id})
      const phases =  await Phase.find({});
      const levels =  await Level.find({});
      const semsters =  await Semster.find({});
      const modules =  await Module.find({});
-      const question = await Question.find({IsValidFinal: false,NotValid: false}).
+     if (user.Speciality === "معلم") {
+      var question = await Question.find({IsValidFinal: false,NotValid: false}).
       populate("Author").
       populate("exam").
-      populate("teacherOne").
+      populate("TeacherOne").
       populate("TeacherTwo").
-      populate("TeacherFinal");;
+      populate("TeacherFinal").
+      limit(30);
+     } else if(user.Speciality === "خبير") {
+      var question = await Question.find({IsValidOne: true, IsValidTwo: true,IsValidFinal: false,NotValid: false}).
+      populate("Author").
+      populate("exam").
+      populate("TeacherOne").
+      populate("TeacherTwo").
+      populate("TeacherFinal").
+      limit(30);
+     }
+     
       let responses = [];
    
     
@@ -450,7 +463,7 @@ router.get("/delete/question/:id",ensureAuthenticated, (req , res) => {
   Question.findOne( { _id: req.params.id } , function(err, questions) { 
     if (err){
       if ( req.user.Role === "Teacher"){
-        req.flash("error", "erroooorم الحدف");
+        req.flash("error", "تم الحذف");
         res.redirect("/teacher/notvalid")
     
       } else {
