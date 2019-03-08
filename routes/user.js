@@ -1282,7 +1282,7 @@ user.get("/routes",ensureAuthenticated , function(req,res){
 
 	} else if ( req.user.Role === "Student" ) {
 		//this route for student
-		res.redirect("/siginstudent")
+		res.redirect(`/siginstudent/${req.user._id}`)
 	} else if ( req.user.Role === "Admin" ) {
 		res.redirect("/admin")
 	}

@@ -5,11 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-<<<<<<< HEAD
+    "start": "nodemon app.js",
     "client": "concurrently \"nodemon app.js\" \"cd client && npm start \" "
-=======
-    "client": "concurrently \"node app.js\" \"cd client && npm start \" "
->>>>>>> project
   },
   "author": "HOCINE ismail",
   "license": "ISC",
@@ -35,11 +32,7 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
-<<<<<<< HEAD
-    "python-shell": "^1.0.7"
-=======
     "striptags": "^3.1.1"
->>>>>>> project
   },
   "devDependencies": {
     "concurrently": "^4.1.0"
