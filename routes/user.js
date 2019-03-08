@@ -407,7 +407,10 @@ user.post('/forgot', function(req, res, next) {
 	user.get("/list/success",ensureAuthenticated,async  function(req,res){
 		if (  req.user.Role === "Admin") {	
 	
-		 
+		 Student.find({exams: {$elemMatch: { Grade: { $gt: 50, $lt: 100 }}}  }, (err,student) => {
+	 console.log(student)
+	 res.render("listSuccess")
+		 })
 			
 		} else {
 			res.redirect("/routes")
