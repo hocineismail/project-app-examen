@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Lalezar" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Cairo" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="css/admin.css">
+<link rel="stylesheet" type="text/css" href="/css/admin.css">
 </head>
 <style>
 body {
@@ -71,7 +71,13 @@ li a:hover {
   <div class="w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left" style="color:#fff;padding-top:3.7%;font-size: 18px;width:200px;background-color: rgb(73, 73, 73)" id="mySidebar">
     <button   class="w3-bar-item w3-button w3-large w3-hide-large" onclick="w3_close()">Close &times;</button>
     <h2 style="color: cornsilk;padding-right: 10%; text-align: right;" >القوائم</h2>
-
+ <a href="/list/admins" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > قائمة المديرين </a>
+ <a href="/list/teachers" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > قائمة المعلمين </a>
+ <a href="/list/students" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > قائمة التلاميذ </a>
+ <h2 style="color: cornsilk;padding-right: 10%; text-align: right;">الاحصاء</h2>
+ <a href="/static/" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > صفحة الاحصاء </a>
+ <h2 style="color: cornsilk;padding-right: 10%; text-align: right;">الناجحين</h2>
+ <a href="/list/seccuss" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > قاوائم الناجحين </a>
  </div>
   
   <div class="w3-main" style="margin-left:200px">
@@ -80,11 +86,11 @@ li a:hover {
     <div class="w3-container">
       <ul>
        
-        <li><a class="activee" href="/"><i class="fas fa-house-damage"></i>الصقحة الرئسية</a></li>
+        <li><a class="activee" href="/"><i class="fas fa-house-damage"></i> </a></li>
 
-        <li><a href="/admin"><i class="far fa-edit"></i>اعدادات</a></li>
+        <li><a href="/admin"><i class="far fa-edit"></i></a></li>
         <li class="nav-item active "> <% if (currentUser) { %>
-          <a class="nav-link" href="/Logout"><i class="fas fa-sign-out-alt icon"></i>تسجيل الخروج   </a>  <% }  %>  </li>
+          <a class="nav-link" href="/Logout"><i class="fas fa-sign-out-alt icon"></i>    </a>  <% }  %>  </li>
  </ul>
 </div>
   </div>
@@ -93,7 +99,7 @@ li a:hover {
 
 <div class="container" style="padding-top: 2%;width: 50%;">
   <h2 style="text-align: center "> 
-    قائمة المديرين
+ الامتحانات الرسمية
 </h2><br><br>
   <% errors.forEach(function(error) { %>
   <div class="alert alert-danger" style="text-align: right" role="alert">
@@ -108,11 +114,35 @@ li a:hover {
 </div>
 
 
-<% teachers.forEach(function(teacher){ %>
-  <%= teacher.Phase %><br>
-  <%= teacher.user.Firstname %>
-  <%})%>
 
+
+
+<table class="table" dir="rtl">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">الدورة</th>
+ 
+      <th></th>
+      
+    </tr>
+  </thead>
+  <tbody><% i = 0 %>
+    <% exam.forEach(function(exam) {%>
+    <tr><% i = i + 1 %>
+      <th scope="row"><%= i %></th>
+      <td> <a href="/list/success/exam/<%= exam._id%>"> <%= exam.Exam %></a> </td>
+     
+     
+    </tr>
+    <%})%>
+  
+  </tbody>
+</table>
+ 
+
+
+      
     </div>
       
 

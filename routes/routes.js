@@ -114,7 +114,7 @@ const storage = multer.diskStorage({
 });
 
 // Init Upload
-const upload = multer({storage: storage,limits:{fileSize: 1000000},
+const upload = multer({storage: storage, limits: { fileSize: 50000000 },
   fileFilter: function(req, file, cb){
     checkFileType(file, cb);
   }}).fields([
@@ -471,7 +471,14 @@ router.get("/delete/question/:id",ensureAuthenticated, (req , res) => {
         res.redirect("/admin/exam/" + exam.module)
       }
      }
-
+     if (questions.QuestionImage != '') {
+      var image = "public/uploads/" + questions.QuestionImage
+      fs.unlink(image,function(err){
+        if(err) return console.log(err);
+        console.log('file deleted successfully');
+      });
+     }
+    
   Question.findOneAndRemove( { _id: req.params.id } , function(err, question) {
     if (err) { 
       console.log("erro ta3saving question")
@@ -493,6 +500,7 @@ router.get("/delete/question/:id",ensureAuthenticated, (req , res) => {
   
 
      }
+   
      
     })
     Response.deleteMany({ question: req.params.id } , function(err, response) {
