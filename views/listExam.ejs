@@ -117,24 +117,25 @@ li a:hover {
 
 
 
-
 <table class="table" dir="rtl">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">اللقب</th>
-        <th scope="col">الاسم</th>
-        <th scope="col">الجنس</th>
-        <th scope="col">رقم الهاتف</th>
-        <th scope="col"> العنوان</th>
-        <th scope="col">البريد</th>
-        <th scope="col">النقطة</th>
-        <th></th>
-        
-      </tr>
-    </thead>
-  <tbody><% i = 0 %>
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">الدورة</th>
  
+      <th></th>
+      
+    </tr>
+  </thead>
+  <tbody><% i = 0 %>
+    <% exam.forEach(function(exam) {%>
+    <tr><% i = i + 1 %>
+      <th scope="row"><%= i %></th>
+      <td> <a href="/list/success/exam/<%= exam._id%>"> <%= exam.Exam %></a> </td>
+     
+     
+    </tr>
+    <%})%>
   
   </tbody>
 </table>
