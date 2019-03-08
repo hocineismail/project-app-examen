@@ -80,6 +80,9 @@ app.post(
   })
 )
 app.use(express.static(__dirname + '/client/build'))
+app.get('/studenthome', (req, res) => {
+  res.sendFile(__dirname + '/client/build/index.html')
+})
 app.get('/studenthome/*', (req, res) => {
   res.sendFile(__dirname + '/client/build/index.html')
 })
