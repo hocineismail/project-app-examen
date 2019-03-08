@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> b55e7f8ee3f8e647f17bc2e27002690c7446c578
 var express = require('express');
 var app = express();
 var mongoose = require("mongoose");
@@ -12,13 +8,7 @@ var session = require("express-session");
 var flash = require("connect-flash"); 
 var passport = require("passport");
 
-<<<<<<< HEAD
 mongoose.connect("mongodb://localhost:27017/projectexams");
-=======
-
-mongoose.connect("mongodb://localhost:27017/database2");
-
->>>>>>> b55e7f8ee3f8e647f17bc2e27002690c7446c578
 
 // routes
 var routes = require('./routes/routes')
@@ -93,6 +83,9 @@ app.use(express.static(__dirname + '/client/build'))
 app.get('/studenthome/*', (req, res) => {
   res.sendFile(__dirname + '/client/build/index.html')
 })
+app.get('/siginstudent/*', (req, res) => {
+  res.sendFile(__dirname + '/client/build/index.html')
+})
 app.get('/exampage/*', (req, res) => {
   res.sendFile(__dirname + '/client/build/index.html')
 })
@@ -101,9 +94,9 @@ app.get("/404",(req,res) => {
   console.log("page no found")
   res.render("404")
 })
-app.get('*', function(req, res){
-  res.redirect("/404")
-});
+// app.get('*', function(req, res){
+//   res.redirect("/404")
+// });
 
 app.listen(3000, () => {
   console.log('Server listing on 3000')

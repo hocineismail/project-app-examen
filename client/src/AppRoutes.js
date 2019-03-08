@@ -49,7 +49,7 @@ class AppRoutes extends Component {
               />
             )}
           />
-          <Route path={'/siginstudent/:id'} exact render={() => <Login />} />
+          <Route path={'/siginstudent/:id'} component={Login} />
           <Route path={'/404'} exact render={() => <Failed />} />
           <Redirect exact to="/404" />
         </Switch>
