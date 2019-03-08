@@ -78,7 +78,7 @@ li a:hover {
  <a href="/static/" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > صفحة الاحصاء </a>
 
  <h2 style="color: cornsilk;padding-right: 10%; text-align: right;">الناجحين</h2>
- <a href="/list/seccus" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > قاوائم الناجحين </a>
+ <a href="/list/seccuss" style="border-top: 1px solid #fff; padding-right: 20%; text-align: right;" class="w3-bar-item w3-button" > قاوائم الناجحين </a>
  </div>
   
   <div class="w3-main" style="margin-left:200px">
@@ -132,7 +132,7 @@ li a:hover {
         <th scope="col">الاختصاص</th>
         <th scope="col"> الاسئلة المدخلة</th>
         <th scope="col"> الحساب</th>
-        <th scope="col"> حذف</th>
+      
         
       </tr>
     </thead>
@@ -157,11 +157,7 @@ li a:hover {
           <td style="color: red">  <a href="/teacherValidation/<%= teacher._id %>" class="btn btn-danger"> غير مفعل</a> </td>
         <% } %>
 
-        <td>
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenterdelete<%= teacher.user._id%>">
-                <i class="fa fa-trash" aria-hidden="true"></i>
-              </button>
-        </td>
+   
         
        
       </tr>
