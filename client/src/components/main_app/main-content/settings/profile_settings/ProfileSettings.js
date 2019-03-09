@@ -11,42 +11,78 @@ import Submit from './submit/Submit'
 class ProfileSettings extends Component {
   constructor(props) {
     super(props)
-    let level = [
-      'الصف الاول',
-      'الصف الثاني',
-      'الصف الثالث',
-      'الصف الرابع',
-      'الصف الخامس'
-    ]
 
-    if (props.userData.Phase.Phase === 'المتوسطة') {
-      level = ['الصف الاول', 'الصف الثاني', 'الصف الثالث', 'الصف الرابع']
-    } else if (props.userData.Phase.Phase === 'الثانوية') {
-      level = ['الصف الاول', 'الصف الثاني', 'الصف الثالث']
+    let phases = []
+    let levels = []
+    let semster = []
+    console.log(props.choices)
+    for (let i = 0; i < props.choices.length; i++){
+      phases.push(props.choices[i].Phase)
+      if(props.choices[i].Phase === props.userData.Phase.Phase){
+       for(let j = 0; j < props.choices[i].Levels.length; j++){
+         levels.push(props.choices[i].Levels[j].Level)
+          if(props.choices[i].Levels[j].Level === props.userData.Level.Level){
+            for (let k = 0; k < props.choices[i].Levels[j].Semsters.length; k++){
+              semster.push(props.choices[i].Levels[j].Semsters[k].Semster)
+            }
+          }
+       } 
+      }
     }
+
     this.state = {
-      Semster: ['الثلاثي الاول', 'الثلاثي الثاني', 'الثلاثي الثالث'],
-      level
+      phases: phases,
+      Semster: semster,
+      level : levels,
+      selectedPhase : props.userData.Phase.Phase,
+      selectedLevel: props.userData.Level.Level
     }
     this.onPhaseChanges = this.onPhaseChanges.bind(this)
+    this.onLevelChange = this.onLevelChange.bind(this)
   }
 
   onPhaseChanges(e) {
     let phase = e.target.value
-    if (phase === 'المتوسطة') {
-      this.setState({
-        level: ['الصف الاول', 'الصف الثاني', 'الصف الثالث', 'الصف الرابع']
-      })
-    } else if (phase === 'الثانوية') {
-      this.setState({
-        level: ['الصف الاول', 'الصف الثاني', 'الصف الثالث']
-      })
-    }else {
-      this.setState({
-        level: ['الصف الاول', 'الصف الثاني', 'الصف الثالث', 'الصف الرابع', 'الصف الخامس']
-      })
+    let levels = []
+    let semster = []
+    for(let i = 0 ; i < this.props.choices.length; i++){
+      console.log('CHANGE')
+      console.log(this.props.choices)
+      if (phase === this.props.choices[i].Phase){
+        for (let j = 0; j < this.props.choices[i].Levels.length; j++){
+          levels.push(this.props.choices[i].Levels[j].Level)
+        }
+        for (let j = 0; j< this.props.choices[i].Levels[0].Semsters.length;j++){
+          semster.push(this.props.choices[i].Levels[0].Semsters[j].Semster)
+        }
+      }
     }
+    this.setState({
+      Semster: semster,
+      level : levels,
+      selectedPhase: phase
+    })
   }
+  onLevelChange(e) {
+    let level = e.target.value
+    let semster = []
+    for(let i = 0 ; i < this.props.choices.length; i++){
+      if (this.props.choices[i].Phase === this.state.selectedPhase){
+        for (let j = 0; j < this.props.choices[i].Levels.length; j++){
+          if(this.props.choices[i].Levels[j].Level === level){
+            for (let k = 0; k < this.props.choices[i].Levels[j].Semsters.length; k++){
+              semster.push(this.props.choices[i].Levels[j].Semsters[k].Semster)
+            }
+          }
+        }
+      }
+    }
+    this.setState({
+      Semster: semster 
+    })
+  
+  }
+
 
   render() {
     let birthdate = new Date(this.props.userData.Birthday)
@@ -130,7 +166,7 @@ class ProfileSettings extends Component {
           type="choicebox"
           editable={true}
           id="Phase"
-          choices={['الابتدائية', 'المتوسطة', 'الثانوية']}
+          choices={this.state.phases}
           onChange={this.onPhaseChanges}
         />
         <InformationsInput
@@ -140,6 +176,7 @@ class ProfileSettings extends Component {
           editable={true}
           id="Level"
           choices={this.state.level}
+          onChange={this.onLevelChange}
         />
         <InformationsInput
           prop="الثلاثي"

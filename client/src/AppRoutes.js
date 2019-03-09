@@ -15,7 +15,8 @@ import { connect } from 'react-redux'
 import {
   fetchUserData,
   getStudentModules,
-  getStudentExams
+  getStudentExams,
+  getChoicesParam
 } from './actions/userActions'
 
 class AppRoutes extends Component {
@@ -30,24 +31,31 @@ class AppRoutes extends Component {
     this.props.fetchUserData(window.localStorage.getItem('_id'))
     this.props.getStudentModules(window.localStorage.getItem('_id'))
     this.props.getStudentExams(window.localStorage.getItem('_id'))
+    this.props.getChoicesParam()
   }
 
   render() {
     return this.props.userData &&
       this.props.studentModules &&
+      this.props.choices &&
       this.props.studentExams ? (
       <BrowserRouter>
         <Switch>
           <Route path={'/exampage'} component={ExamApp} />
           <Route
             path={'/studenthome'}
-            render={() => (
-              <MainApp
-                userData={this.props.userData}
-                modules={this.props.studentModules}
-                exams={this.props.studentExams}
-              />
-            )}
+            render={() => {
+              console.log('CHOICES')
+              console.log(this.props.choices)
+              return (
+                <MainApp
+                  userData={this.props.userData}
+                  modules={this.props.studentModules}
+                  exams={this.props.studentExams}
+                  choices={this.props.choices}
+                />
+              )
+            }}
           />
           <Route path={'/siginstudent/:id'} component={Login} />
           <Route path={'/studenterror/404'} exact component={Failed} />
@@ -76,7 +84,8 @@ const mapStateToProps = (state, props) => {
 const mapActionsToProps = {
   fetchUserData,
   getStudentModules,
-  getStudentExams
+  getStudentExams,
+  getChoicesParam
 }
 
 export default connect(

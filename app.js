@@ -80,27 +80,37 @@ app.post(
   })
 )
 app.use(express.static(__dirname + '/client/build'))
-app.get('/studenthome', (req, res) => {
+app.get('/studenthome', ensureAuthenticated,(req, res) => {
   res.sendFile(__dirname + '/client/build/index.html')
 })
-app.get('/studenthome/*', (req, res) => {
+app.get('/studenthome/*', ensureAuthenticated,(req, res) => {
   res.sendFile(__dirname + '/client/build/index.html')
 })
-app.get('/siginstudent/*', (req, res) => {
+app.get('/siginstudent/*', ensureAuthenticated,(req, res) => {
   res.sendFile(__dirname + '/client/build/index.html')
 })
-app.get('/exampage/*', (req, res) => {
+app.get('/exampage', ensureAuthenticated,(req, res) => {
   res.sendFile(__dirname + '/client/build/index.html')
 })
-
-app.get("/404",(req,res) => {
-  console.log("page no found")
+app.get('/exampage/*', ensureAuthenticated,(req, res) => {
+  res.sendFile(__dirname + '/client/build/index.html')
+})
+app.get("/404", (req,res) => {
   res.render("404")
 })
-// app.get('*', function(req, res){
-//   res.redirect("/404")
-// });
 
+app.get('*', function(req, res){
+  res.redirect("/404")
+});
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+  next();
+  } else {
+ 
+  res.redirect("/");
+  }
+ }
 app.listen(3000, () => {
   console.log('Server listing on 3000')
 })

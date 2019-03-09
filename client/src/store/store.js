@@ -3,15 +3,9 @@ import thunk from 'redux-thunk'
 
 import userReducer from '../reducers/userReducer'
 
-let reduxMiddlewareExtension = compose(
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-)
-
 const store = createStore(
   userReducer,
-
-    applyMiddleware(thunk)
-  
+  applyMiddleware(thunk)
 )
 
 export default store

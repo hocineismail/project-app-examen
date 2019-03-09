@@ -19,7 +19,7 @@ class MainContent extends Component {
                 <Route path='/studenthome' exact render={() => <ExamWrapper exams = {this.props.exams}/>}/>
                 <Route path='/studenthome/exam/:name' exact component={ExamInformations}/>
                 <Route path='/studenthome/account' exact component={Account}/>
-                <Route path='/studenthome/settings' exact render={() => <ProfileSettings userData={this.props.userData}/>}/>
+                <Route path='/studenthome/settings' exact render={() => <ProfileSettings choices={this.props.choices} userData={this.props.userData}/>}/>
                 <Redirect to='/studenterror/404'/>
                 </Switch>
             </div>
