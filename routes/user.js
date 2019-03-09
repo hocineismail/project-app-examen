@@ -1204,6 +1204,8 @@ user.post("/admin/update/:link/exam/:id",function(req,res){
 		if (exam){
 			if (exam.NumberOfExam < req.body.NumberOfExam){
 				exam.EtatFinal = false
+				exam.Etat = false
+				exam.IsValid = false
 			}
 			
 			exam.Exam = req.body.Exam,
