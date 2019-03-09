@@ -288,6 +288,9 @@ function checkFileType(file, cb){
                  Exam.findById({_id: req.body.Exam},function(err, success){
                    if ( count === success.NumberOfExam){
                     success.EtatFinal = true
+                    if (success.IsOfficial != true) {
+                      success.Etat  = true
+                    }
                     success.save()
                    }
                 }) 
@@ -315,7 +318,7 @@ function checkFileType(file, cb){
 });
 
 
-router.get("/teacher/valid",async function(req,res){
+router.get("/teacher/valid",ensureAuthenticated , async function(req,res){
   if ( req.user.Role === "Teacher") { 
   
     try{
@@ -419,11 +422,16 @@ router.get("/teacher/valid",async function(req,res){
        }
  })
 
-router.get("/valid/question/:id",ensureAuthenticated, function(req,res){
+router.get("/valid/question/:id",ensureAuthenticated,async function(req,res){
   if ( req.user.Role === "Teacher") { 
   Question.findById({_id: req.params.id},function(err , question){
+    Teacher.findOne({user: req.user._id},(err,userRole)=> {
+
+   
     var user = req.user._id 
-    if ( (user != question.TeacherOne)  && (user != question.TeacherTwo)  && (user != question.TeacherFinal)) { 
+   console.log(userRole.Speciality)
+   console.log(req.user._id)
+    if ( (user != question.TeacherOne)  && (user != question.TeacherTwo) && (userRole.Speciality === "معلم") ) { 
     if(question.IsValidOne != true) {
       question.IsValidOne = true,
       question.TeacherOne = req.user._id  ;
@@ -437,13 +445,37 @@ router.get("/valid/question/:id",ensureAuthenticated, function(req,res){
       question.save(function(err, success){
         if (err){console.log("il ya une error ")}
       })
-    } else {
-      question.IsValidFinal = true
+    
+    } 
+    res.redirect("/teacher/valid")
+   }
+     else if (( question.IsValidFinal != true) && (userRole.Speciality === "خبير")) {
+    question.IsValidFinal = true
      question.TeacherFinal = req.user._id  ;
      question.save(function(err, success){
        if (err){console.log("il ya une error ")}
+       if (success){
+       Question.find({exam: question.exam},(err,questions)=>{
+           var IsValid = true
+           for (let i = 0 ; i < questions.length; i++){
+           if (questions[i].IsValidFinal === false ){
+             IsValid = false
+           }
+
+           }
+           console.log(IsValid)
+           if (IsValid === true) {
+            Exam.findOne({_id: question.exam}, (err,exam)=> {
+                   exam.IsValid = IsValid
+                   exam.save()
+             })
+           }
+
+         })
+        
+       }
      })
-    }
+    
     console.log(question)
     res.redirect("/teacher/valid")
   } else {
@@ -451,7 +483,7 @@ router.get("/valid/question/:id",ensureAuthenticated, function(req,res){
     res.redirect("/teacher/valid")
   }
 
-  })
+  })}) 
 } else {
   res.redirect("/routes")
  }
@@ -564,8 +596,9 @@ router.post("/invalid/question/:id",ensureAuthenticated, function(req,res){
   Question.findById({_id: req.params.id},function(err , question){
    
     question.IsValidOne = false;
-    question.IsValidTwo = false;
-    
+    question.TeacherOne = ""
+    question.IsValidTwo = false; 
+    question.TeacherTwo = ""
     question.NotValid = true;
     question.ErrorMessage = req.body.message;
       question.save(function(err, success){
@@ -642,7 +675,7 @@ router.get("/pub/delete/:id",function(req,res){
  
 })
 
-router.post("/update/question/:id",async function(req,res){
+router.post("/update/question/:id",ensureAuthenticated,async function(req,res){
   Question.findById({_id: req.params.id},function(err, question){
     if (!err){
       upload(req, res, (err) => {

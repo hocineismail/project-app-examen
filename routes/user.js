@@ -31,7 +31,7 @@ user.use(function(req, res, next) {
 	Pub.find({},function(err, pub){
 	if (err){console.log("this is error ")}
 	if (pub){ 
-		console.log(" makan walo ",pub)
+	
 		res.render("login",{pub: pub})}
 	})
    
@@ -1204,6 +1204,8 @@ user.post("/admin/update/:link/exam/:id",function(req,res){
 		if (exam){
 			if (exam.NumberOfExam < req.body.NumberOfExam){
 				exam.EtatFinal = false
+				exam.Etat = false
+				exam.IsValid = false
 			}
 			
 			exam.Exam = req.body.Exam,

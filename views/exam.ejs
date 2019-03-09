@@ -209,6 +209,7 @@ li a:hover {
             <th>الامتحان</th>
             <th>عدد الاسئلة</th>
             <th>امتحان</th>
+            <th>كل الاسئلة مجازة</th>
               <th style="text-align: left">اعدادات</th>
            </tr>
           <tr>  <% exams.forEach(function(exam) { %>
@@ -223,7 +224,11 @@ li a:hover {
           <% } else {%>
             <td>ليس رسمي </td>
             <% } %>
-       
+            <% if (exam.IsValid === true ){ %>
+            <td><i class="far fa-check-circle" style="color:green"></i></td>
+            <% } else { %>
+              <td><i class="fas fa-times" style="color:red"></i></td>
+              <% } %>
             <td style="text-align: left">
 
                 <% if (exam.Etat === true ){ %>
