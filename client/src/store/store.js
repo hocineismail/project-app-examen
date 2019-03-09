@@ -9,7 +9,9 @@ let reduxMiddlewareExtension = compose(
 
 const store = createStore(
   userReducer,
-  applyMiddleware(thunk),
+
+    applyMiddleware(thunk)
+  
 )
 
 export default store

@@ -20,7 +20,7 @@ function returnErrorMessage(res, err, statusCode) {
   })
 }
 
-app.get('/:id', (req, res) => {
+app.get('/:id',ensureAuthenticated, (req, res) => {
   let id = _.pick(req.params, ['id']).id
   User.findById(id, (err, user) => {
     if (err) {
@@ -75,7 +75,7 @@ app.get('/:id', (req, res) => {
   })
 })
 
-app.post('/:id', (req, res) => {
+app.post('/:id',ensureAuthenticated,  (req, res) => {
   let id = req.params.id
   let bodyUser = _.pick(req.body, [
     'Firstname',
@@ -174,7 +174,7 @@ function updateStudent(id, data) {
   })
 }
 
-app.get('/modules/:id', (req, res) => {
+app.get('/modules/:id',ensureAuthenticated,  (req, res) => {
   let id = req.params.id
 
   Student.findOne({ user: id })
@@ -198,7 +198,7 @@ app.get('/modules/:id', (req, res) => {
     })
 })
 
-app.get('/exams/:id', (req, res) => {
+app.get('/exams/:id',ensureAuthenticated,  (req, res) => {
   let id = req.params.id
   let examsTable
 
@@ -228,7 +228,7 @@ app.get('/exams/:id', (req, res) => {
     })
 })
 
-app.get('/exam/:id', (req, res) => {
+app.get('/exam/:id',ensureAuthenticated,  (req, res) => {
   let id = req.params.id
 
   Exam.findById(id, (err, exam) => {
@@ -239,7 +239,7 @@ app.get('/exam/:id', (req, res) => {
   })
 })
 
-app.get('/examquestions/:id', (req, res) => {
+app.get('/examquestions/:id',ensureAuthenticated,  (req, res) => {
   let id = req.params.id
   Exam.findOne(
     {
@@ -286,7 +286,7 @@ app.get('/examquestions/:id', (req, res) => {
   )
 })
 
-app.post('/exam/getresult/:id', async (req, res) => {
+app.post('/exam/getresult/:id',ensureAuthenticated,  async (req, res) => {
   let id = req.params.id
   let responses = _.pick(req.body, ['responses'])
   let examId = _.pick(req.body, ['examId'])
@@ -359,5 +359,12 @@ const getAllExamsOfStudent = (modules, previousExams) => {
     })
   }))
 }
-
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+  next();
+  } else {
+ 
+  res.redirect("/");
+  }
+ }
 module.exports = app
