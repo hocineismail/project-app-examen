@@ -6,6 +6,11 @@ class Failed extends Component {
             <div className="failed">
                 <div className="card failed-msg">
                     <h1>404! الصفحة المطلوبة غبر متوفرة</h1>
+                    <button className="btn btn-primary" onClick = {
+                        () => {
+                            window.location.href = '/'
+                        }
+                    }>العودة الى الصفحة الرئيسية</button>
                 </div>
             </div>
         );

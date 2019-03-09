@@ -47,7 +47,7 @@ const NavBar = props => {
                 تعديل الحساب
               </a>
               <div className="dropdown-divider" />
-              <a className="dropdown-item" href="/studenthome/logout">
+              <a className="dropdown-item" href="/logout">
                 تسجيل الخروج
               </a>
             </div>
