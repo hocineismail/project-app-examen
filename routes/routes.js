@@ -422,8 +422,10 @@ router.get("/teacher/valid",async function(req,res){
 router.get("/valid/question/:id",ensureAuthenticated, function(req,res){
   if ( req.user.Role === "Teacher") { 
   Question.findById({_id: req.params.id},function(err , question){
+    var userRole = await Teacher.find({user: req.user._id}) 
     var user = req.user._id 
-    if ( (user != question.TeacherOne)  && (user != question.TeacherTwo)  && (user != question.TeacherFinal)) { 
+   
+    if ( (user != question.TeacherOne)  && (user != question.TeacherTwo) && (userRole === "معلم") ) { 
     if(question.IsValidOne != true) {
       question.IsValidOne = true,
       question.TeacherOne = req.user._id  ;
@@ -437,13 +439,15 @@ router.get("/valid/question/:id",ensureAuthenticated, function(req,res){
       question.save(function(err, success){
         if (err){console.log("il ya une error ")}
       })
-    } else {
-      question.IsValidFinal = true
+    
+    }  }
+     else if (( question.IsValidFinal != true) && (userRole === "خبير")) {
+    question.IsValidFinal = true
      question.TeacherFinal = req.user._id  ;
      question.save(function(err, success){
        if (err){console.log("il ya une error ")}
      })
-    }
+    
     console.log(question)
     res.redirect("/teacher/valid")
   } else {
@@ -564,8 +568,8 @@ router.post("/invalid/question/:id",ensureAuthenticated, function(req,res){
   Question.findById({_id: req.params.id},function(err , question){
    
     question.IsValidOne = false;
-    question.IsValidTwo = false;
     
+    question.IsValidTwo = false; 
     question.NotValid = true;
     question.ErrorMessage = req.body.message;
       question.save(function(err, success){
