@@ -419,13 +419,16 @@ router.get("/teacher/valid",async function(req,res){
        }
  })
 
-router.get("/valid/question/:id",ensureAuthenticated, function(req,res){
+router.get("/valid/question/:id",async function(req,res){
   if ( req.user.Role === "Teacher") { 
   Question.findById({_id: req.params.id},function(err , question){
-    var userRole = await Teacher.find({user: req.user._id}) 
-    var user = req.user._id 
+    Teacher.findOne({user: req.user._id},(err,userRole)=> {
+
    
-    if ( (user != question.TeacherOne)  && (user != question.TeacherTwo) && (userRole === "معلم") ) { 
+    var user = req.user._id 
+   console.log(userRole.Speciality)
+   console.log(req.user._id)
+    if ( (user != question.TeacherOne)  && (user != question.TeacherTwo) && (userRole.Speciality === "معلم") ) { 
     if(question.IsValidOne != true) {
       question.IsValidOne = true,
       question.TeacherOne = req.user._id  ;
@@ -440,23 +443,26 @@ router.get("/valid/question/:id",ensureAuthenticated, function(req,res){
         if (err){console.log("il ya une error ")}
       })
     
-    }  }
-     else if (( question.IsValidFinal != true) && (userRole === "خبير")) {
+    } 
+    res.redirect("/teacher/valid")
+   }
+     else if (( question.IsValidFinal != true) && (userRole.Speciality === "خبير")) {
     question.IsValidFinal = true
      question.TeacherFinal = req.user._id  ;
      question.save(function(err, success){
        if (err){console.log("il ya une error ")}
        if (success){
-      await  Question.find({exam: question.exam},(err,questions)=>{
-           var IsValid 
+       Question.find({exam: question.exam},(err,questions)=>{
+           var IsValid = true
            for (let i = 0 ; i < questions.length; i++){
-           if (question[i].IsValidFinal === false ){
+           if (questions[i].IsValidFinal === false ){
              IsValid = false
            }
 
            }
+           console.log(IsValid)
            if (IsValid === true) {
-            await Exam.findOne({_id: auqestion.exam}, (err,exam)=> {
+            Exam.findOne({_id: question.exam}, (err,exam)=> {
                    exam.IsValid = IsValid
                    exam.save()
              })
@@ -474,7 +480,7 @@ router.get("/valid/question/:id",ensureAuthenticated, function(req,res){
     res.redirect("/teacher/valid")
   }
 
-  })
+  })}) 
 } else {
   res.redirect("/routes")
  }
