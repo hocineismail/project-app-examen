@@ -288,6 +288,9 @@ function checkFileType(file, cb){
                  Exam.findById({_id: req.body.Exam},function(err, success){
                    if ( count === success.NumberOfExam){
                     success.EtatFinal = true
+                    if (success.IsOfficial != true) {
+                      success.Etat  = true
+                    }
                     success.save()
                    }
                 }) 
@@ -315,7 +318,7 @@ function checkFileType(file, cb){
 });
 
 
-router.get("/teacher/valid",async function(req,res){
+router.get("/teacher/valid",ensureAuthenticated , async function(req,res){
   if ( req.user.Role === "Teacher") { 
   
     try{
@@ -419,7 +422,7 @@ router.get("/teacher/valid",async function(req,res){
        }
  })
 
-router.get("/valid/question/:id",async function(req,res){
+router.get("/valid/question/:id",ensureAuthenticated,async function(req,res){
   if ( req.user.Role === "Teacher") { 
   Question.findById({_id: req.params.id},function(err , question){
     Teacher.findOne({user: req.user._id},(err,userRole)=> {
@@ -672,7 +675,7 @@ router.get("/pub/delete/:id",function(req,res){
  
 })
 
-router.post("/update/question/:id",async function(req,res){
+router.post("/update/question/:id",ensureAuthenticated,async function(req,res){
   Question.findById({_id: req.params.id},function(err, question){
     if (!err){
       upload(req, res, (err) => {
