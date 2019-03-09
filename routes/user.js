@@ -31,7 +31,7 @@ user.use(function(req, res, next) {
 	Pub.find({},function(err, pub){
 	if (err){console.log("this is error ")}
 	if (pub){ 
-		console.log(" makan walo ",pub)
+	
 		res.render("login",{pub: pub})}
 	})
    
