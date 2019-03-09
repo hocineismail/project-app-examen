@@ -47,7 +47,13 @@ const NavBar = props => {
                 تعديل الحساب
               </a>
               <div className="dropdown-divider" />
-              <a className="dropdown-item" href="/logout">
+              <a
+                className="dropdown-item"
+                onClick={e => {
+                  window.localStorage.removeItem('_id')
+                  window.location.href = '/logout'
+                }}
+              >
                 تسجيل الخروج
               </a>
             </div>

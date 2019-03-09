@@ -11,7 +11,7 @@ class MainApp extends Component {
     return (
         <div className="main">
           <Header />
-          <MainContent userData={this.props.userData} modules={this.props.modules} exams = {this.props.exams}/>
+          <MainContent choices = {this.props.choices} userData={this.props.userData} modules={this.props.modules} exams = {this.props.exams}/>
           <Footer />
         </div>
     )

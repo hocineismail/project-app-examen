@@ -8,7 +8,7 @@ class Failed extends Component {
                     <h1>404! الصفحة المطلوبة غبر متوفرة</h1>
                     <button className="btn btn-primary" onClick = {
                         () => {
-                            window.location.href = '/'
+                            window.location.href = '/studenthome'
                         }
                     }>العودة الى الصفحة الرئيسية</button>
                 </div>

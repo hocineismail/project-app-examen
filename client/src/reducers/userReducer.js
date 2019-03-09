@@ -14,7 +14,8 @@ const initialState = {
   onExamInformation: null,
   postedGrade: null,
   grade: null,
-  correctResponses: null
+  correctResponses: null,
+  choices: null
 }
 
 export default function userReducer(state = initialState, action) {
@@ -89,6 +90,11 @@ export default function userReducer(state = initialState, action) {
         postedGrade: false,
         grade: null,
         correctResponses: null
+      }
+    case types.getChoices:
+      return {
+        ...state,
+        choices: action.payload
       }
     default:
       return state

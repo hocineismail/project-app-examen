@@ -167,6 +167,17 @@ export function postExamGrade(id, body) {
   }
 }
 
+export function getChoicesParam(){
+  return function(dispatch){
+    fetch(`${fetchInfo.apiUrl}/params/choices`).then(res => res.json()).then(res => {
+      return dispatch({
+        type: types.getChoices,
+        payload: res
+      })
+    })
+  }
+}
+
 export function deleteGradeInformation(){
   return {
     type: types.deleteGradeInformation
