@@ -446,6 +446,25 @@ router.get("/valid/question/:id",ensureAuthenticated, function(req,res){
      question.TeacherFinal = req.user._id  ;
      question.save(function(err, success){
        if (err){console.log("il ya une error ")}
+       if (success){
+      await  Question.find({exam: question.exam},(err,questions)=>{
+           var IsValid 
+           for (let i = 0 ; i < questions.length; i++){
+           if (question[i].IsValidFinal === false ){
+             IsValid = false
+           }
+
+           }
+           if (IsValid === true) {
+            await Exam.findOne({_id: auqestion.exam}, (err,exam)=> {
+                   exam.IsValid = IsValid
+                   exam.save()
+             })
+           }
+
+         })
+        
+       }
      })
     
     console.log(question)
@@ -568,8 +587,9 @@ router.post("/invalid/question/:id",ensureAuthenticated, function(req,res){
   Question.findById({_id: req.params.id},function(err , question){
    
     question.IsValidOne = false;
-    
+    question.TeacherOne = ""
     question.IsValidTwo = false; 
+    question.TeacherTwo = ""
     question.NotValid = true;
     question.ErrorMessage = req.body.message;
       question.save(function(err, success){
