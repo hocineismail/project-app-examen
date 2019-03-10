@@ -121,8 +121,11 @@ li a:hover {
   <thead>
     <tr>
       <th scope="col">#</th>
+      <th scope="col">المرحلة</th>
+      <th scope="col">الصف</th>
+      <th scope="col">المادة</th>
+      <th scope="col">الفصل</th>
       <th scope="col">الدورة</th>
- 
       <th></th>
       
     </tr>
@@ -131,7 +134,47 @@ li a:hover {
     <% exam.forEach(function(exam) {%>
     <tr><% i = i + 1 %>
       <th scope="row"><%= i %></th>
-      <td> <a href="/list/success/exam/<%= exam._id%>"> <%= exam.Exam %></a> </td>
+      <% module.forEach(function(module) {   %>
+        <% if (JSON.stringify(module._id) == JSON.stringify(exam.module) )  { %>
+      
+          <% semster.forEach(function(semster) {   %>
+            
+            <% if (JSON.stringify(semster._id) == JSON.stringify(module.semster) )  { %>
+ 
+              <% level.forEach(function(level) {   %>
+                <% if (JSON.stringify(level._id) == JSON.stringify(semster.level) )  { %>
+            
+                  <% phase.forEach(function(phase) {%>
+                    <% if (JSON.stringify(phase._id) == JSON.stringify(level.phase) )  { %>
+                      <td> <%= phase.Phase %></td>
+                      <td> <%= level.Level %></td>
+          
+                      <td> <%= module.Module %></td>
+                      <td> <%= semster.Semster %></td>
+            
+            
+            
+            
+                      <% } %>
+                    <%})%>
+                  <% } %>
+            
+                  <%})%>
+              <% } %>
+            <%})%>
+          <% } %>
+       
+         
+
+
+
+      
+          
+    
+             
+     
+    <%})%>
+      <td> <a href="/list/success/exam/<%= exam._id%>" class="btn btn-success"> <%= exam.Exam %></a> </td>
      
      
     </tr>
