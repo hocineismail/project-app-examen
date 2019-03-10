@@ -5,7 +5,9 @@ import './Module.css'
 
 class Module extends Component {
   render() {
-    let bodyComponent = <div className="module">
+    let bodyComponent
+    if(this.props.moduleExams){
+    bodyComponent = <div className="module">
     <h4>{this.props.moduleExams.Module}</h4>
     <div className="dropdown-divider" />
     <div className="module-exams">
@@ -18,6 +20,9 @@ class Module extends Component {
       ))}
     </div>
   </div>
+  }else {
+    bodyComponent = <div></div>
+  }
     return bodyComponent
   }
 }
