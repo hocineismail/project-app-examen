@@ -861,6 +861,12 @@ Difficulty: {
   width: 220 // <- width in pixels
 
 },
+QuestionNumber: {
+  displayName: 'رقم السؤال',
+  headerStyle: styles.headerDark,
+
+  width: 300 // <- width in pixels
+},
 question: {
    displayName: 'السؤال',
    headerStyle: styles.headerDark,
@@ -982,11 +988,44 @@ for (let a = 0; a < phase.length; a++ ){
           var responseTwoString =  response[1].ResponseText 
           var responseThreeString =  response[2].ResponseText 
           var responseFourString =  response[3].ResponseText 
-          var questionimage = '/uploads/' + question[e].QuestionImage 
-          var responseoneimage = '/uploads/' + response[0].ResponseImage 
+          if (question[e].QuestionImage  === undefined ) {
+           var questionimage = "لا توجد صورة"
+          }else {
+            var questionimage = '/uploads/' + question[e].QuestionImage 
+          }
+
+
+          if (question[e].QuestionImage  === undefined ) {
+            var responseoneimage = "لا توجد صورة"
+           }else {
+            var responseoneimage = '/uploads/' + response[0].ResponseImage 
+           }
+
+
+           if (question[e].QuestionImage  === undefined ) {
+            var responsetwoimage = "لا توجد صورة"
+           }else {
+            
           var responsetwoimage = '/uploads/' + response[1].ResponseImage  
-          var responsethreeimage = '/uploads/' + response[2].ResponseImage 
-          var responsefourimage = '/uploads/' + response[3].RResponseImage 
+           }
+
+
+           if (question[e].QuestionImage  === undefined ) {
+            var responsethreeimage = "لا توجد صورة"
+           }else {
+              var responsethreeimage = '/uploads/' + response[2].ResponseImage 
+           }
+
+
+           if (question[e].QuestionImage  === undefined ) {
+            var responsefourimage = "لا توجد صورة"
+           }else {
+            var responsefourimage = '/uploads/' + response[3].RResponseImage 
+           }
+          
+        
+        
+         
           
 
               var datase = [
@@ -1000,7 +1039,7 @@ for (let a = 0; a < phase.length; a++ ){
                      TypeOfQuestion: question[e].TypeOfQuestion,
                      Difficulty: question[e].Difficulty,
                      NameOfCourse: question[e].NameOfCourse,
-
+                     QuestionNumber: question[e]._id,
                      question:  questionString,
                      questionImage: questionimage,
 

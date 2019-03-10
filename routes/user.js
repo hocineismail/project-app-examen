@@ -407,10 +407,12 @@ user.post('/forgot', function(req, res, next) {
 	user.get("/list/success",ensureAuthenticated,async  function(req,res){
 		if (  req.user.Role === "Admin") {	
 	console.log("page list")
-		 Exam.find({IsOfficial: true  }, (err,exam) => {
-	 console.log(exam)
-	 res.render("listExam",{exam: exam})
-		 })
+	const phase = await Phase.find({})
+	const level = await Level.find({})
+	const semster = await Semster.find({})
+  const modules = await Module.find()
+	const exam = await	 Exam.find({IsOfficial: true  })
+	res.render("listExam",{phase: phase,level: level,semster: semster,module: modules,exam: exam,})
 			
 		} else {
 			res.redirect("/routes")
