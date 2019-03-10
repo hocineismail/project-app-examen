@@ -20,7 +20,7 @@ function returnErrorMessage(res, err, statusCode) {
   })
 }
 
-app.get('/:id', ensureAuthenticated,(req, res) => {
+app.get('/:id', ensureAuthenticated, (req, res) => {
   let id = _.pick(req.params, ['id']).id
   User.findById(id, (err, user) => {
     if (err) {
@@ -75,7 +75,7 @@ app.get('/:id', ensureAuthenticated,(req, res) => {
   })
 })
 
-app.post('/:id', ensureAuthenticated,(req, res) => {
+app.post('/:id', ensureAuthenticated, (req, res) => {
   let id = req.params.id
   let bodyUser = _.pick(req.body, [
     'Firstname',
@@ -228,7 +228,7 @@ app.get('/exams/:id', ensureAuthenticated, (req, res) => {
     })
 })
 
-app.get('/exam/:id',ensureAuthenticated, (req, res) => {
+app.get('/exam/:id', ensureAuthenticated, (req, res) => {
   let id = req.params.id
 
   Exam.findById(id, (err, exam) => {
@@ -380,19 +380,21 @@ app.get('/params/choices', ensureAuthenticated, (req, res) => {
 const getAllExamsOfStudent = async (modules, previousExams) => {
   let previousExamsId = []
 
-  previousExams.map(exam => {
-    previousExamsId.push(exam.Exam)
-  })
+  for (let i = 0; i < previousExams.length; i++) {
+    previousExamsId.push(previousExams[i].Exam)
+  }
 
-  return modules.map(async module => ({
-    Module: module.Module,
-    Exams: await Exam.find({
-      module: module._id,
-      Etat: true,
-      IsValid: true,
-      _id: { $nin: previousExamsId }
-    })
-  }))
+  return Promise.all(
+    modules.map(async module => ({
+      Module: module.Module,
+      Exams: await Exam.find({
+        module: module._id,
+        Etat: true,
+        IsValid: true,
+        _id: { $nin: previousExamsId }
+      })
+    }))
+  )
 
   // return new Promise(resolve => {
   //   returnedValue = modules.map(async module => ({
