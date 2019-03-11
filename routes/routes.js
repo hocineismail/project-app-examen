@@ -596,9 +596,7 @@ router.post("/invalid/question/:id",ensureAuthenticated, function(req,res){
   Question.findById({_id: req.params.id},function(err , question){
    
     question.IsValidOne = false;
-
     question.IsValidTwo = false; 
-
     question.NotValid = true;
     question.ErrorMessage = req.body.message;
       question.save(function(err, success){
@@ -810,128 +808,134 @@ const specification = {
 
 phase: {
    displayName: 'المرحلة',
-   headerStyle: styles.headerDark,
+   headerStyle: styles.cellGreen,
 
    width: 220 // <- width in pixels
  },
 level: {
    displayName: 'المستوى',
-   headerStyle: styles.headerDark,
+   headerStyle: styles.cellGreen,
 
    width: 220 // <- width in pixels
  },
  semster: {
    displayName: 'الفصل',
-   headerStyle: styles.headerDark,
+   headerStyle: styles.cellGreen,
 
    width: 220 // <- width in pixels
   },
 module: {
    displayName: 'المادة',
-   headerStyle: styles.headerDark,
+   headerStyle: styles.cellGreen,
 
    width: 220 // <- width in pixels
  
  },
  Chapiter: {
   displayName: 'الوحد',
-  headerStyle: styles.headerDark,
+  headerStyle: styles.cellGreen,
 
   width: 220 // <- width in pixels
 
 },
 NameOfCourse: {
   displayName: 'عنوان الدرس',
-  headerStyle: styles.headerDark,
+  headerStyle: styles.cellGreen,
 
   width: 220 // <- width in pixels
 
 },
 TypeOfQuestion: {
   displayName: 'نوع السؤال',
-  headerStyle: styles.headerDark,
+  headerStyle: styles.cellGreen,
 
   width: 220 // <- width in pixels
 
 },
 Difficulty: {
   displayName: 'درجة السؤال',
-  headerStyle: styles.headerDark,
+  headerStyle: styles.cellGreen,
 
   width: 220 // <- width in pixels
 
 },
+Code: {
+  displayName: 'كود السؤال',
+  headerStyle: styles.cellGreen,
+
+  width: 300 
+},
 question: {
    displayName: 'السؤال',
-   headerStyle: styles.headerDark,
+   headerStyle: styles.cellGreen,
 
    width: 300 // <- width in pixels
  },
  questionImage: {
   displayName: 'صورة السؤال',
-  headerStyle: styles.headerDark,
+  headerStyle: styles.cellGreen,
 
   width: 220 // <- width in pixels
 },
  responseOne: {
   displayName: 'الجواب الاول',
-  headerStyle: styles.headerDark,
+  headerStyle: styles.cellGreen,
 
   width: 220 // <- width in pixels
 
 },
 responseOneImage: {
   displayName: 'صورة الجواب الاول',
-  headerStyle: styles.headerDark,
+  headerStyle: styles.cellGreen,
 
   width: 220 // <- width in pixels
 
 },
 responseTwo: {
   displayName: 'الجواب الثاني ',
-  headerStyle: styles.headerDark,
+  headerStyle: styles.cellGreen,
 
   width: 220 // <- width in pixels
 
 },
 responseTwoImage: {
   displayName: 'صورة الجواب الثاني',
-  headerStyle: styles.headerDark,
+  headerStyle: styles.cellGreen,
 
   width: 220 // <- width in pixels
 
 },
 responseThree: {
   displayName: 'الجواب الثالث',
-  headerStyle: styles.headerDark,
+  headerStyle: styles.cellGreen,
 
   width: 220 // <- width in pixels
 
 },
 responseThreeImage: {
   displayName: 'صورة الجواب الثالث',
-  headerStyle: styles.headerDark,
+  headerStyle: styles.cellGreen,
 
   width: 220 // <- width in pixels
 
 },
 responseFour: {
   displayName: 'الجواب الرابع',
-  headerStyle: styles.headerDark,
+  headerStyle: styles.cellGreen,
 
   width: 220 // <- width in pixels
 
 },
 responseFourImage: {
   displayName: 'صورة الجواب الرابع',
-  headerStyle: styles.headerDark,
+  headerStyle: styles.cellGreen,
 
   width: 220 // <- width in pixels
 
 },
 response: {
   displayName: 'الاجابة النموذجية',
-  headerStyle: styles.headerDark,
+  headerStyle: styles.cellGreen,
 
   width: 300 // <- width in pixels
 
@@ -982,11 +986,47 @@ for (let a = 0; a < phase.length; a++ ){
           var responseTwoString =  response[1].ResponseText 
           var responseThreeString =  response[2].ResponseText 
           var responseFourString =  response[3].ResponseText 
-          var questionimage = '/uploads/' + question[e].QuestionImage 
-          var responseoneimage = '/uploads/' + response[0].ResponseImage 
-          var responsetwoimage = '/uploads/' + response[1].ResponseImage  
-          var responsethreeimage = '/uploads/' + response[2].ResponseImage 
-          var responsefourimage = '/uploads/' + response[3].RResponseImage 
+          if ( question[e].QuestionImage === "" ) {
+            var questionimage = "لا توجد صورة"
+          } else {
+            var questionimage = '/uploads/' + question[e].QuestionImage 
+          }
+
+
+
+  console.log(response[0].ResponseImage)
+          if ( response[0].ResponseImage  === "" ) {
+           var responseoneimage = "لا توجد صورة"
+          } else {
+            var responseoneimage = '/uploads/' + response[0].ResponseImage 
+          }
+        
+
+          if ( response[1].ResponseImage  === "" ) {
+            var responsetwoimage = "لا توجد صورة"
+          } else {
+            var responsetwoimage = '/uploads/' + response[1].ResponseImage 
+          }
+        
+
+          if ( response[2].ResponseImage  === "" ) {
+            var responsethreeimage = "لا توجد صورة"
+          } else {
+            var responsethreeimage = '/uploads/' + response[2].ResponseImage 
+          }
+        
+
+          if ( response[3].ResponseImage  === "" ) {
+            var responsefourimage = "لا توجد صورة"
+          } else {
+            var responsefourimage = '/uploads/' + response[3].ResponseImage 
+          }
+        
+        
+
+          
+          
+        
           
 
               var datase = [
@@ -1000,6 +1040,7 @@ for (let a = 0; a < phase.length; a++ ){
                      TypeOfQuestion: question[e].TypeOfQuestion,
                      Difficulty: question[e].Difficulty,
                      NameOfCourse: question[e].NameOfCourse,
+                     Code: question[e]._id,
 
                      question:  questionString,
                      questionImage: questionimage,
@@ -1035,7 +1076,9 @@ for (let a = 0; a < phase.length; a++ ){
 // The merges are independent of the data.
 // A merge will overwrite all data _not_ in the top-left cell.
 const merges = [
- { start: { row: 1, column: 6 }, end: { row: 1, column: 10 } }
+
+  { start: { row: 2, column: 1 }, end: { row: 2, column: 1 } },
+ 
 ]
 
 // Create the excel report.
@@ -1044,7 +1087,7 @@ const report = excel.buildExport(
  [ // <- Notice that this is an array. Pass multiple sheets to create multi sheet report
    {
      name: 'Report', // <- Specify sheet name (optional)
-    
+     heading: heading, // <- Raw heading array (optional)
      merges: merges, // <- Merge cell ranges
      specification: specification, // <- Report specification
      data: dataset // <-- Report data
