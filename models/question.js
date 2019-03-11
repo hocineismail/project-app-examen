@@ -3,7 +3,7 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema
 var questionSchema = Schema({
  Question: { type: String},
- Response: { type: String, required: true},
+ Response: { type: String, },
  QuestionImage: { type: String},
  NameOfCourse:  { type: String, required: true  },
  TypeOfQuestion:  { type: String, required: true  },
