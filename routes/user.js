@@ -1023,13 +1023,10 @@ user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 									return  res.redirect('/admin/phase/' + req.params.level ) 
 								}
 							 })
+							 if (exams) {
 			      for (let i = 0; i < exams.length ;i++){
 						 let question = await Question.findOne({exam: exams[i]._id},(err,success) => {
-							if (err) {
-								req.flash("error", "حدث خلل اثناء اجراء العملية");
-									
-								return  res.redirect('/admin/phase/' + req.params.level ) 
-							}
+						
 						 }) 
 						 if (question) { 
                          await Response.find({question: question._id}, (err , responseimages) => {
@@ -1084,7 +1081,7 @@ user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 
 							}
 						
-					}//END FOR EXAMS
+				}	}//END FOR EXAMS
 			
 
 					await Exam.deleteMany({module: req.params._id},(err,success) => { 
@@ -1095,17 +1092,17 @@ user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
                    await Module.findOneAndDelete({_id: req.params._id}, (err,modules) => {
 						if (err) {
 							req.flash("error", "حدث خلل اثناء اجراء العملية");
-							res.redirect("/admin/exam/" + req.params.module) 
+							res.redirect("/admin/phase/" + req.params.module) 
 						 }
 
 						if (modules){console.log('exam deleted successfully');
 						req.flash("error", "تم الحدف");
-						 return res.redirect("/admin/exam/" + req.params.module)
+						 return res.redirect("/admin/phase/" + req.params.level)
 					  }
 					})
 
 
-					res.redirect('/admin/phase/' + req.params.level ) 
+			
 
 				} else {
 					res.redirect("/routes")

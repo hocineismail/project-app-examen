@@ -240,13 +240,11 @@ li a:hover {
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
-            <% if (modules != '') {  %>
+   
+              <a href="/admin/<%= semster.level%>/deletesemster/<%= semster._id %> " class="btn btn-danger" >حذف</a>
           
-             
-          <% } else { %>
-            <a href="/admin/<%= semster.level%>/deletesemster/<%= semster._id %> " class="btn btn-danger" >حفظ</a>
-          
-            <% } %>
+           
+         
           </div>
         </div>
       </div>
