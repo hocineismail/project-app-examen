@@ -538,7 +538,7 @@ user.get("/admin/deletephase/:_id",ensureAuthenticated,   function(req, res, nex
 			if (!phase) { return next(404); }
 	 
 			req.flash("error", "تم الحدف");
-
+     res.redirect("/admin")
 			
 		 
 		})
@@ -1176,7 +1176,7 @@ user.get("/admin/exam/:id",ensureAuthenticated, function(req,res){
 		})	
 
 //this req for etat exam
-user.get("/exam/update/:link/etat/:id",function(req,res){
+user.get("/exam/update/:link/etat/:id",ensureAuthenticated, function(req,res){
 	if (  req.user.Role === "Admin") {
 	Exam.findOne({_id: req.params.id},function(err,exam){
 		if (err){
@@ -1199,7 +1199,7 @@ user.get("/exam/update/:link/etat/:id",function(req,res){
 })			
 //This req for updqte exam 
 	 
-user.post("/admin/update/:link/exam/:id",function(req,res){
+user.post("/admin/update/:link/exam/:id",ensureAuthenticated,function(req,res){
 	if (  req.user.Role === "Admin") {
 	Exam.findOne({_id: req.params.id},function(err,exam){
 		if (err){		
@@ -1233,7 +1233,7 @@ user.post("/admin/update/:link/exam/:id",function(req,res){
 })	
 
 //This route for interface  exam display all question ref exam
-user.get("/admin/exam/question/:id",async function(req,res){
+user.get("/admin/exam/question/:id",ensureAuthenticated, async function(req,res){
 	if (  req.user.Role === "Admin") {
 	try{
 		await Question.find({exam: req.params.id},(err,success)=>{
@@ -1265,7 +1265,7 @@ user.get("/admin/exam/question/:id",async function(req,res){
 })
 
 //Delete User
-user.get("/admin/deleteUser/:_id",async (req,res)=>{
+user.get("/admin/deleteUser/:_id",ensureAuthenticated, async (req,res)=>{
 await User.findOne({_id: req.params._id},(err,user)=> {
 	if (user.Role === "Student"){
 		Student.findOneAndRemove({user: user._id}, (err,success)=> {

@@ -54,7 +54,7 @@ router.get("/teacher/validation",ensureAuthenticated, function(req,res){
    }
   }) 
 
-router.post("/searchsemster",function(req, res){
+router.post("/searchsemster",ensureAuthenticated, function(req, res){
 
   if ( req.user.Role === "Teacher") { 
     if (req.body.Level != undefined) { 
@@ -70,7 +70,7 @@ router.post("/searchsemster",function(req, res){
    }
 })
 
-router.post("/searchmodule",function(req, res){
+router.post("/searchmodule",ensureAuthenticated,function(req, res){
   if ( req.user.Role === "Teacher") { 
     if (req.body.Semster != undefined) { 
     Semster.findOne({_id: req.body.Semster}, function(err, semster){
@@ -752,7 +752,7 @@ response[2].save()
 
 
                            
- router.get("/generateexcel",async (req,res) => {
+ router.get("/generateexcel",ensureAuthenticated, async (req,res) => {
 
 // You can define styles as json object
 const styles = {

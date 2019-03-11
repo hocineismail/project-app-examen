@@ -228,22 +228,36 @@ li a:hover {
             </button>
           </div>
           <div class="modal-body">
-          <p>  هل انت متاكد من حذف الفصل 
-                          <span style="color: red">" <%= semster.Semster  %> "</span> 
-                            نهائيا
-                          </p>
-                          <% if (modules != '') {  %>
+    
+                          
+                          <% var reslta = false %>
+                          <% for (let x =  0;x < modules.length; x++) { %>
+                            <% if (JSON.stringify(semster._id) == JSON.stringify(modules[x].semster)) {%>
+                            <% reslta = true %>
+                        
+                            
+                            <% break %>    
+                            <% } %> 
+                             <% }%>
+              
+                             <% if (reslta != false ) { %>
                           <div class="alert alert-danger" role="alert">
-                             لا يمكنك حذفالفصل بعد اضافة المواد عليك بحذف المواد اولا ثم حذف القصل
+                             لا يمكنك حذف الفصل بعد اضافة المواد عليك بحذف المواد اولا ثم حذف القصل
                             </div>
+                            <% } else  {  %>
+                              <p>  هل انت متاكد من حذف الفصل 
+                              <span style="color: red">" <%= semster.Semster  %> "</span> 
+                              نهائيا
+                            </p>
                             <% } %>
-          </div>
+                            </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
-   
-              <a href="/admin/<%= semster.level%>/deletesemster/<%= semster._id %> " class="btn btn-danger" >حذف</a>
-          
            
+
+               <% if (reslta === false ) { %>
+                <a href="/admin/<%= semster.level%>/deletesemster/<%= semster._id %> " class="btn btn-danger" >حذف</a>
+                <% }%>
          
           </div>
         </div>
