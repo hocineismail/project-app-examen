@@ -205,13 +205,13 @@ user.post('/forgot', function(req, res, next) {
 		var smtpTransport = nodemailer.createTransport({
 		  service: 'Gmail',
 		  auth: {
-			user: 'maelrolland03@gmail.com',
-			pass: 'fuck1love'
+			user: 'YOUREMAIL',
+			pass: 'YOURPASSWORD'
 		  }
 		});
 		var mailOptions = {
 		  to: user.email,
-		  from: 'maelrolland@gmail.com',
+		  from: 'YOUREMAIL',
 		  subject: 'استرجاع الحساب',
 		  text: 'أنت تتلقى هذا لأنك (أو شخصًا آخر) طلب إعادة تعيين كلمة المرور لحسابك.\n\n' +
 			'الرجاء النقر فوق الرابط التالي  لإكمال العملية:\n\n' +
@@ -267,13 +267,13 @@ user.post('/forgot', function(req, res, next) {
 		var smtpTransport = nodemailer.createTransport({
 		  service: 'Gmail',
 		  auth: {
-			user: 'maelrolland03@gmail.com',
-			pass: 'fuck1love'
+			user: 'YOUREMAIL',
+			pass: 'YOURPASSWORD'
 		  }
 		});
 		var mailOptions = {
 		  to: user.email,
-		  from: 'maelrolland03@gmail.com',
+		  from: 'YOUREMAIL',
 		  subject: 'تم تغيير كلمة السر الخاصة بك',
 		  text: 'مرحبا,\n\n' +
 			'  ' + user.email + ' هذه الرسالة لتاكيد على أن كلمة المرور لحسابك تم تغييرها .\n'
@@ -423,7 +423,13 @@ user.post('/forgot', function(req, res, next) {
 			if (  req.user.Role === "Admin") {	
 		
 				Student.find({exams: {$elemMatch: { Grade: { $gt: 49, $lt: 120}, Exam: req.params._id}}  }).populate("user").exec( (err,student) => {
-							 res.render("listSuccess",{student: student})
+					if (err) {
+						req.flash('error', 'القائمة المطلوبة غير موجودة.');
+					return	res.redirect("/list/success")
+
+
+					} else { 
+							 res.render("listSuccess",{student: student}) } 
 			 })
 				
 			} else {
