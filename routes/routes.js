@@ -791,8 +791,8 @@ const styles = {
 
 //Array of objects representing heading rows (very top)
 const heading = [
- [{value: 'a1', style: styles.headerDark}, {value: 'b1', style: styles.headerDark}, {value: 'c1', style: styles.headerDark}],
- ['a2', 'b2', 'c2'] // <-- It can be only values
+
+ // <-- It can be only values
 ];
 
 //Here you specify the export structure
@@ -1035,8 +1035,7 @@ for (let a = 0; a < phase.length; a++ ){
 // The merges are independent of the data.
 // A merge will overwrite all data _not_ in the top-left cell.
 const merges = [
- { start: { row: 2, column: 1 }, end: { row: 2, column: 5 } },
- { start: { row: 2, column: 6 }, end: { row: 2, column: 10 } }
+ { start: { row: 1, column: 6 }, end: { row: 1, column: 10 } }
 ]
 
 // Create the excel report.
@@ -1045,7 +1044,7 @@ const report = excel.buildExport(
  [ // <- Notice that this is an array. Pass multiple sheets to create multi sheet report
    {
      name: 'Report', // <- Specify sheet name (optional)
-     heading: heading, // <- Raw heading array (optional)
+    
      merges: merges, // <- Merge cell ranges
      specification: specification, // <- Report specification
      data: dataset // <-- Report data

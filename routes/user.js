@@ -407,10 +407,12 @@ user.post('/forgot', function(req, res, next) {
 	user.get("/list/success",ensureAuthenticated,async  function(req,res){
 		if (  req.user.Role === "Admin") {	
 	console.log("page list")
-		 Exam.find({IsOfficial: true  }, (err,exam) => {
-	 console.log(exam)
-	 res.render("listExam",{exam: exam})
-		 })
+	const phase = await Phase.find({})
+	const level = await Level.find({})
+	const semster = await Semster.find({})
+  const modules = await Module.find()
+	const exam = await	 Exam.find({IsOfficial: true  })
+	res.render("listExam",{phase: phase,level: level,semster: semster,module: modules,exam: exam,})
 			
 		} else {
 			res.redirect("/routes")
@@ -420,9 +422,8 @@ user.post('/forgot', function(req, res, next) {
 		user.get("/list/success/exam/:_id",ensureAuthenticated,async  function(req,res){
 			if (  req.user.Role === "Admin") {	
 		
-				Student.find({exams: {$elemMatch: { Grade: { $gt: 50, $lt: 100 }, Exam: req.params._id}}  }, (err,student) => {
-					console.log(student)
-		 res.render("listSuccess",{student: student})
+				Student.find({exams: {$elemMatch: { Grade: { $gt: 49, $lt: 120}, Exam: req.params._id}}  }).populate("user").exec( (err,student) => {
+							 res.render("listSuccess",{student: student})
 			 })
 				
 			} else {
