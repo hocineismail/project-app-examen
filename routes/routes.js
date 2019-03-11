@@ -596,9 +596,9 @@ router.post("/invalid/question/:id",ensureAuthenticated, function(req,res){
   Question.findById({_id: req.params.id},function(err , question){
    
     question.IsValidOne = false;
-    question.TeacherOne = ""
+
     question.IsValidTwo = false; 
-    question.TeacherTwo = ""
+
     question.NotValid = true;
     question.ErrorMessage = req.body.message;
       question.save(function(err, success){
