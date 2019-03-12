@@ -1,13 +1,13 @@
-var express = require('express');
-var app = express();
-var mongoose = require("mongoose");
-var path = require("path");
-var bodyParser = require("body-parser");
-var cookieParser = require("cookie-parser");
-var session = require("express-session");
-var flash = require("connect-flash"); 
-var passport = require("passport");
-
+const express = require('express');
+const app = express();
+const mongoose = require("mongoose");
+const path = require("path");
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const session = require("express-session");
+const flash = require("connect-flash"); 
+const passport = require("passport");
+const helmet = require('helmet')
 mongoose.connect("mongodb://localhost:27017/projectexams");
 
 // routes
@@ -18,7 +18,7 @@ var setUpPassport = require('./routes/setuppassport')
 
 let student = require('./student_routes/student')
 let certificate = require('./student_routes/certificate')
-
+app.use(helmet())
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*')
 
