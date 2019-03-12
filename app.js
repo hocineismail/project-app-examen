@@ -7,9 +7,9 @@ const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const flash = require("connect-flash"); 
 const passport = require("passport");
-const helmet = require('helmet')
-mongoose.connect("mongodb://localhost:27017/projectexams");
 
+mongoose.connect("mongodb://localhost:27017/projectexams");
+var helmet = require('helmet');
 // routes
 var routes = require('./routes/routes')
 var user = require('./routes/user')
@@ -51,7 +51,10 @@ app.use(
   session({
     secret: 'TKRv0IJs=HYqrvagQ#&!F!%V]Ww/4KiVs$s,<<MX',
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+
+          
+
   })
 )
 app.use(passport.initialize())
