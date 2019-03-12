@@ -102,7 +102,7 @@ crossorigin="anonymous"></script>
   
      <div   v-show="student"  class="input-container" >
       <select name="Level" id="level"  class="form-control"  dir="rtl" >
-        </select><i class="fas  icon"> Level</i>
+        </select><i class="fas  icon"> الصف</i>
      </div>
      <div id="semster"  v-show="student"  class="input-container" >
 
@@ -247,7 +247,7 @@ confirm_password.onkeyup = validatePassword;
           html += '<option value ="'+ resu[i]._id + '">' + resu[i].Semster +  '</option>';
         
       }
-      html += '</select><i class="fas  icon"> Semster</i>'
+      html += '</select><i class="fas  icon"> الفصل</i>'
        
        $('#semster').html(html);
      },
