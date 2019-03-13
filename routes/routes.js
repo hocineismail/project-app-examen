@@ -796,7 +796,7 @@ const heading = [
 //Here you specify the export structure
 const specification = {
  customer_name: { // <- the key should match the actual data key
-   displayName: 'Customer', // <- Here you specify the column header
+   displayName: 'الرقم', // <- Here you specify the column header
    headerStyle: styles.headerDark, // <- Header style
    cellStyle: function(value, row) { // <- style renderer function
      // if the status is 1 then color in green else color in red
@@ -952,8 +952,8 @@ response: {
 // that are listed in the report specification
 const phase = await Phase.find({})
 var dataset = []
+var NumberOfCase = 0 ;
 
-console.log("coinsole lawla")
 for (let a = 0; a < phase.length; a++ ){
   let level = await Level.find({phase: phase[a]._id})
   if (level) { 
@@ -981,7 +981,7 @@ for (let a = 0; a < phase.length; a++ ){
        
           var questionString = await striptags(question[f].Question)
         
-          var responses = await striptags(question[e].Response)
+          var responses = await striptags(question[f].Response)
           var responseOneString = response[0].ResponseText 
           var responseTwoString =  response[1].ResponseText 
           var responseThreeString =  response[2].ResponseText 
@@ -989,7 +989,7 @@ for (let a = 0; a < phase.length; a++ ){
           if ( question[e].QuestionImage === "" ) {
             var questionimage = "لا توجد صورة"
           } else {
-            var questionimage = '/uploads/' + question[e].QuestionImage 
+            var questionimage = '/uploads/' + question[f].QuestionImage 
           }
 
 
@@ -1030,17 +1030,17 @@ for (let a = 0; a < phase.length; a++ ){
           
 
               var datase = [
-                {customer_name: a ,
+                {customer_name: NumberOfCase + 1 ,
                   
                     phase:  phase[a].Phase ,
                      level: level[b].Level ,
                      semster: semster[c].Semster,
                      module: modules[d].Module,
-                     Chapiter: question[e].Chapiter, 
-                     TypeOfQuestion: question[e].TypeOfQuestion,
-                     Difficulty: question[e].Difficulty,
-                     NameOfCourse: question[e].NameOfCourse,
-                     Code: question[e]._id,
+                     Chapiter: question[f].Chapiter, 
+                     TypeOfQuestion: question[f].TypeOfQuestion,
+                     Difficulty: question[f].Difficulty,
+                     NameOfCourse: question[f].NameOfCourse,
+                     Code: question[f]._id,
 
                      question:  questionString,
                      questionImage: questionimage,

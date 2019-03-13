@@ -27,14 +27,16 @@ user.use(function(req, res, next) {
 	
 
    user.get("/",function(req,res){
-   
+   if (!req.user) { 
 	Pub.find({},function(err, pub){
 	if (err){console.log("this is error ")}
 	if (pub){ 
 	
 		res.render("login",{pub: pub})}
 	})
-   
+   } else {
+   	res.redirect("/routes")
+   }
 })
 
 
