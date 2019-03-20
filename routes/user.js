@@ -207,13 +207,13 @@ user.post('/forgot', function(req, res, next) {
 		var smtpTransport = nodemailer.createTransport({
 		  service: 'Gmail',
 		  auth: {
-			user: 'YOUREMAIL',
-			pass: 'YOURPASSWORD'
+			user: 'alamaconsultancyinfo@gmail.com',
+			pass: 'fuck1love'
 		  }
 		});
 		var mailOptions = {
 		  to: user.email,
-		  from: 'YOUREMAIL',
+		  from: 'alamaconsultancyinfo@gmail.com',
 		  subject: 'استرجاع الحساب',
 		  text: 'أنت تتلقى هذا لأنك (أو شخصًا آخر) طلب إعادة تعيين كلمة المرور لحسابك.\n\n' +
 			'الرجاء النقر فوق الرابط التالي  لإكمال العملية:\n\n' +
@@ -269,13 +269,13 @@ user.post('/forgot', function(req, res, next) {
 		var smtpTransport = nodemailer.createTransport({
 		  service: 'Gmail',
 		  auth: {
-			user: 'YOUREMAIL',
-			pass: 'YOURPASSWORD'
+			user: 'alamaconsultancyinfo@gmail.com',
+			pass: 'fuck1love'
 		  }
 		});
 		var mailOptions = {
 		  to: user.email,
-		  from: 'YOUREMAIL',
+		  from: 'alamaconsultancyinfo@gmail.com',
 		  subject: 'تم تغيير كلمة السر الخاصة بك',
 		  text: 'مرحبا,\n\n' +
 			'  ' + user.email + ' هذه الرسالة لتاكيد على أن كلمة المرور لحسابك تم تغييرها .\n'

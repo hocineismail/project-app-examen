@@ -989,7 +989,7 @@ for (let a = 0; a < phase.length; a++ ){
           if ( question[e].QuestionImage === "" ) {
             var questionimage = "لا توجد صورة"
           } else {
-            var questionimage = '/uploads/' + question[f].QuestionImage 
+            var questionimage = 'https://alamaconsultancy.com/uploads/' + question[f].QuestionImage 
           }
 
 
@@ -998,28 +998,28 @@ for (let a = 0; a < phase.length; a++ ){
           if ( response[0].ResponseImage  === "" ) {
            var responseoneimage = "لا توجد صورة"
           } else {
-            var responseoneimage = '/uploads/' + response[0].ResponseImage 
+            var responseoneimage = 'https://alamaconsultancy.com/uploads/' + response[0].ResponseImage 
           }
         
 
           if ( response[1].ResponseImage  === "" ) {
             var responsetwoimage = "لا توجد صورة"
           } else {
-            var responsetwoimage = '/uploads/' + response[1].ResponseImage 
+            var responsetwoimage = 'https://alamaconsultancy.com/uploads/' + response[1].ResponseImage 
           }
         
 
           if ( response[2].ResponseImage  === "" ) {
             var responsethreeimage = "لا توجد صورة"
           } else {
-            var responsethreeimage = '/uploads/' + response[2].ResponseImage 
+            var responsethreeimage = 'https://alamaconsultancy.com/uploads/' + response[2].ResponseImage 
           }
         
 
           if ( response[3].ResponseImage  === "" ) {
             var responsefourimage = "لا توجد صورة"
           } else {
-            var responsefourimage = '/uploads/' + response[3].ResponseImage 
+            var responsefourimage = 'https://alamaconsultancy.com/uploads/' + response[3].ResponseImage 
           }
         
         
