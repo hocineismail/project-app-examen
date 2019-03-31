@@ -145,15 +145,15 @@ function checkFileType(file, cb){
   router.post('/upload', ensureAuthenticated , (req, res) => {
     if ( req.user.Role === "Teacher") { 
    if ( 
-     (req.body.Level != "") && 
-     (req.body.Phase != "")  && 
-     (req.body.Module != "")  && 
-     (req.body.Semster != "")  && 
-     (req.body.Exam != "")  && 
-     (req.body.NameOfCourse != "")  && 
-     (req.body.Chapiter != "")  && 
-     (req.body.TypeOfQuestion != "")  && 
-     (req.body.Difficulty != "")   )
+     (req.body.Level != null) && 
+     (req.body.Phase != null)  && 
+     (req.body.Module != null)  && 
+     (req.body.Semster != null)  && 
+     (req.body.Exam != null)  && 
+     (req.body.NameOfCourse != null)  && 
+     (req.body.Chapiter != null)  && 
+     (req.body.TypeOfQuestion != null)  && 
+     (req.body.Difficulty != null)   )
    {
 
      upload(req, res, function(err){
@@ -308,9 +308,10 @@ function checkFileType(file, cb){
           }
         })
     } else {
+      console.log("hena errroror bitch")
       req.flash("error", "لم يتم ادخال كل البيانات");
                       
-      return  res.redirect('/teacher/qauestion') 
+      res.redirect("/teacher/question")
     }
   } else {
     res.redirect("/routes")
