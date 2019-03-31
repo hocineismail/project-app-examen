@@ -176,8 +176,9 @@ li a:hover {
     <% students.forEach(function(student) {%>
     <tr><% i = i + 1 %>
       <th scope="row"><%= i %></th>
-      <td> <%= student.user.Firstname %></td>
       <td><%= student.user.Lastname %></td>
+      <td> <%= student.user.Firstname %></td>
+
       <td><%= student.user.Sexe %></td>
       <td> <%= student.user.Phone %></td>
       <td> <%= student.user.Address %></td>
