@@ -63,7 +63,7 @@ ul {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color:  rgb(73, 73, 73);
+  background-color:  #00008B;
 }
 
 li {
@@ -85,7 +85,7 @@ li a:hover {
   text-decoration: none
 }
 .activee  {
-  background-color: rgb(73, 73, 73);
+  background-color: #00008B;
   color: #f2f2f2;
   text-decoration: none
 }
