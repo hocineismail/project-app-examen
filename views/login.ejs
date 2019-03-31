@@ -26,7 +26,7 @@ body {
  
   background-repeat: no-repeat;
   background-size: cover;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.637)), url("https://www.hafryat.com/sites/default/files/%D8%A5%D8%AD%D8%B5%D8%A7%D8%A1%20%D8%B1%D8%B3%D9%85%D9%8A%2C%20%D8%A7%D9%84%D8%A3%D8%AF%D8%A8%2C%20%D8%A7%D9%84%D8%AB%D9%82%D8%A7%D9%81%D8%A9%20%D9%88%D8%A7%D9%84%D8%A3%D8%AF%D8%A8%2C%20%D8%A7%D9%84%D8%B9%D9%84%D9%88%D9%85%20%D8%A7%D9%84%D8%AA%D8%B7%D8%A8%D9%8A%D9%82%D9%8A%D8%A9%2C%20%D8%A7%D9%84%D9%81%D9%86%D9%88%D9%86%2C%20%D8%A7%D9%84%D9%83%D8%AA%D8%A8%20%D8%A7%D9%84%D9%85%D9%86%D8%B4%D9%88%D8%B1%D8%A9%2C%20%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%2C%20%D8%B3%D8%A7%D9%85%D8%AD%20%D9%81%D8%A7%D9%8A%D8%B2%2C%20%D8%B5%D9%86%D8%A7%D8%B9%D8%A9%20%D8%A7%D9%84%D9%83%D8%AA%D8%A7%D8%A8.jpg");
+  background-image:  url("bg.jpg");
 
   
 position: relative;
@@ -149,15 +149,16 @@ body {position: relative;
 </style>
 </head>
 <body dir="rtl">
-  <div class="container">
+  <div class="container" style="margin-top: 7% ">
   <div class="row">
    
 
-    <div class="col-md-5">
-        <div class="mobile" style="background-color: #fff;padding-top: 20%;padding-bottom: 20% ">
-            <div class="container" style="padding-top: 2%;width: 80%;">
+    <div class="col-md-5" style="height: 150%">
+        <div class="mobile" style="background-color: #fff;padding-bottom: 20% ">
+            <div class="container card" style="padding-top: 2%;width: 80%; box-shadow: 1px 1px 8px #555;">
           
-          
+            <br>
+             <br>
             <% errors.forEach(function(error) { %>
             <div class="alert alert-danger" role="alert" style="text-align:right">
             <%= error %>
@@ -168,7 +169,13 @@ body {position: relative;
             <%= info %>
             </div>
             <% }) %>
+              <br>
+             <br>
+             <h1 style="text-align: center;">تسجيل الدخول</h1>
+             <br>
+             <br>
           <form action="/login" method="post">
+
             <div class="input-container"  >
                 <i class="fa fa-envelope icon"></i>
            <input name="username" type="text" class="input-field"
@@ -195,7 +202,7 @@ body {position: relative;
            </div>
 
 
-           <div class="col-md-7" style="margin-bottom: 5%">
+           <div class="col-md-7" style="margin-bottom: 5%; height: 100%">
        <% pub.forEach(function(pub) { %>
        
               <div class="card text-white bg-success ">
@@ -211,10 +218,7 @@ body {position: relative;
           <% }) %>
            
  </div> 
-    
-<div class="footer"> copyright  © 2019 .  All rights reserved. Designed & Developed by <strong><a href="https://mostaql.com/u/Hocineismail">HOCINE ISMAIL</a> </strong>.</div>
-
-
+ 
 
 
 </div>

@@ -170,6 +170,8 @@ th, td {
                <div class="col">
                   <label style="font-size: 20px"> اختر المرحلة </label>
                   <select class="form-control" dir="rtl"  id="phase" required>
+              
+                     
                       <% phases.forEach(function(phase) {%>
                           
                          <option><%= phase.Phase %> </option> 
@@ -177,7 +179,7 @@ th, td {
                </div>
                <div class="col">
                   <label style="font-size: 20px">اختر المستوى  </label>
-                    <select name="Level" id="level"  class="form-control"  dir="rtl" >
+                    <select name="Level" id="level"  class="form-control"  dir="rtl"  required>
                       <option value="" disabled selected>المستوى </option>
                       </select>
                   </div>
@@ -186,14 +188,14 @@ th, td {
         <div class="row">
             <div class="col">
                 <label style="font-size: 20px"> اختر الفصل الدراسي </label>
-                <select name="Semster" id="semster"  class="form-control"  dir="rtl" >
+                <select name="Semster" id="semster"  class="form-control"  dir="rtl" required >
                   <option value="" disabled selected>الفصل الدراسي</option>
                   </select>
             </div>
             <div class="col">
            
               <label style="font-size: 20px"> اختر المادة </label>
-   <select name="Module" id="module"  class="form-control"  dir="rtl" placeholder=" اختر المادة ">
+   <select name="Module" id="module"  class="form-control"  dir="rtl" placeholder=" اختر المادة " required>
     <option value="" disabled selected>المادة</option>
     </select>
              </div>
@@ -202,7 +204,7 @@ th, td {
      <hr>
   
      <label style="font-size: 20px"> اختر  الاختبار  </label>
-    <select name="Exam" id="exam"  class="form-control"  dir="rtl">
+    <select name="Exam" id="exam"  class="form-control"  dir="rtl"  required>
         
       </select> <hr>
 <label></label>

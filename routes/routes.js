@@ -142,180 +142,187 @@ function checkFileType(file, cb){
   }
 }
 
-  router.post('/upload', ensureAuthenticated , (req, res) => {
-    if ( req.user.Role === "Teacher") { 
-   if ( 
-     (req.body.Level != null) && 
-     (req.body.Phase != null)  && 
-     (req.body.Module != null)  && 
-     (req.body.Semster != null)  && 
-     (req.body.Exam != null)  && 
-     (req.body.NameOfCourse != null)  && 
-     (req.body.Chapiter != null)  && 
-     (req.body.TypeOfQuestion != null)  && 
-     (req.body.Difficulty != null)   )
-   {
+router.post('/upload', ensureAuthenticated , (req, res) => {
 
-     upload(req, res, function(err){
-       //this code for conditioon of req image 
-      
-      //end
-         if (err){
-           console.log("rtoooooottttt")
-      req.flash("error", "حدث خلل اثناء ادخال البيانات الصور...تاكد من الصور التي تريد ادخاها");
-                      
-      return  res.redirect('/teacher/question') 
-          } else {
-            
-            var image1
-            var image2
-            var image3
-            var image4
-            var image5
-            if (req.body.image1value === "") {
-              image1 = req.body.image1value
-            } else if (req.files.image1 != null) {
+  if ( req.user.Role === "Teacher") { 
+ if ( req.user)
+ {
+
+   upload(req, res, function(err){
+     //this code for conditioon of req image 
+    
+    //end
+     if ( 
+
+   ((req.body.Level === "") || (req.body.Level === null ) || (req.body.Level === undefined)) || 
+
+  ( (req.body.Module === "")  || (req.body.Module === null ) || (req.body.Module === undefined) )  || 
+ (  (req.body.Semster === "") || (req.body.Semster === null ) || (req.body.Semster === undefined) )  || 
+   ((req.body.Exam === "") || (req.body.Exam === null ) || (req.body.Exam === undefined) )  || 
+  ( (req.body.NameOfCourse === "")  || (req.body.NameOfCourse === null ) || (req.body.NameOfCourse === undefined) )  || 
+  ( (req.body.Chapiter === "")  || (req.body.Chapiter === null ) || (req.body.Chapiter === undefined) )  || 
+  ( (req.body.TypeOfQuestion === "") || (req.body.TypeOfQuestion === null ) || (req.body.TypeOfQuestion === undefined) )  || 
+  ( (req.body.Difficulty === "")  || (req.body.Difficulty === null ) || (req.body.Difficulty === undefined) ) 
+   )
+ {console.log("error")
+  req.flash("error", "حدث خلل اثناء ادخال البيانات الصور...تاكد من الصور التي تريد ادخاها");   
+    return  res.redirect('/teacher/question') 
+     }
+       else if (err){
+         console.log("rtoooooottttt")
+    req.flash("error", "حدث خلل اثناء ادخال البيانات الصور...تاكد من الصور التي تريد ادخاها");
+                    
+    return  res.redirect('/teacher/question') 
+        } else {
           
-            image1 = req.files.image1[0].filename
-                 }
-                 if (req.body.image2value === "") {
-                  image2 = req.body.image2value
-                } else if (req.files.image2 != null) {
-                image2 = req.files.image2[0].filename
-                     }
-              if (req.body.image3value === "") {
-              image3 = req.body.image3value
-            } else if (req.files.image3 != null) {
-            image3 = req.files.image3[0].filename
-                 }
-                 if (req.body.image4value === "") {
-              image4 = req.body.image4value
-            } else if (req.files.image4 != null) {
-            image4 = req.files.image4[0].filename
-                 }
-                 if (req.body.image5value === "") {
-              image5 = req.body.image5value
-            } else if (req.files.image5 != null) {
-            image5 = req.files.image5[0].filename
-                 }   
-                 console.log("hena pas d erreur")   
-                 var Author = req.user._id  ;  
-          var  newQuestion = new Question ({
-              Question: req.body.Question,
-              Response: req.body.Response,
-              QuestionImage: image5,
-              NameOfCourse: req.body.NameOfCourse,
-              TypeOfQuestion: req.body.TypeOfQuestion,
-              Chapiter: req.body.Chapiter,
-              Difficulty: req.body.Difficulty,
-              exam:  req.body.Exam,
-              Author: Author,
-            });newQuestion.save(function(err,success){
-              if (err){
-                      
-                       req.flash("error", "لم يتم ادخال كل البيانات");
-                       return  res.redirect('/teacher/qauestion') 
-                      }
-              if (success){
-                if (req.body.IsCorrect === "One" ) {
-                      var IsCorrect1 = true
-                } else {
-                  var IsCorrect1 = false
-                }
-                if (req.body.IsCorrect === "Two" ) {
-                  var IsCorrect2 = true
-                } else {
-                  var IsCorrect2 = false
-                  
-                }
-                if (req.body.IsCorrect === "Three" ) {
-                  var IsCorrect3 = true
-                } else {
-                  var IsCorrect3 = false
-                  
-                }
-                if (req.body.IsCorrect === "Four" ) {
-                  var IsCorrect4 = true
-                } else {
-                  var IsCorrect4 = false                  
-                }
-                console.log(image1)
-              var newResponse1 = new Response({
-                ResponseText: req.body.ResponseText1,
-                IsCorrect: IsCorrect1,
-                ResponseImage: image1,
-                question: newQuestion._id
-              });newResponse1.save(function(err,succcess){
-                if (err){ console.log("response 1 pas d error");
-                return  res.redirect('/teacher/qauestion') 
+          var image1
+          var image2
+          var image3
+          var image4
+          var image5 
+          if (req.body.image1value === "") {
+            image1 = req.body.image1value
+          } else if (req.files.image1 != null) {
+        
+          image1 = req.files.image1[0].filename
                }
-              })
-              var newResponse2 = new Response({
-                ResponseText: req.body.ResponseText2,
-                IsCorrect: IsCorrect2,
-                ResponseImage: image2,
-                question: newQuestion._id
-              });newResponse2.save(function(err,succcess){
-                if (err){ console.log("response 2 pas d error");
-                return  res.redirect('/teacher/qauestion') 
-               }
-              })
-              var newResponse3 = new Response({
-                ResponseText: req.body.ResponseText3,
-                IsCorrect: IsCorrect3,
-                ResponseImage: image3,
-                question: newQuestion._id
-              });newResponse3.save(function(err,succcess){
-                if (err){ console.log("response 3 pas d error");
-                return  res.redirect('/teacher/qauestion') 
-               }
-              })
-              var newResponse4 = new Response({
-                ResponseText: req.body.ResponseText4,
-                IsCorrect: IsCorrect4,
-                ResponseImage: image4,
-                question: newQuestion._id
-              });newResponse4.save(function(err,succcess){
-                if (err){ console.log("response 4 pas d error");
-                return  res.redirect('/teacher/qauestion') 
-               }
-               if (succcess){
-                 Teacher.findOne({user: req.user._id},function(err,user) {
-                 user.Count =  user.Count + 1
-                 console.log(user.Count)
-                 user.save()
-                 Question.countDocuments({exam: req.body.Exam},function(err, count){
-                 Exam.findById({_id: req.body.Exam},function(err, success){
-                   if ( count === success.NumberOfExam){
-                    success.EtatFinal = true
-                    if (success.IsOfficial != true) {
-                      success.Etat  = true
-                    }
-                    success.save()
+               if (req.body.image2value === "") {
+                image2 = req.body.image2value
+              } else if (req.files.image2 != null) {
+              image2 = req.files.image2[0].filename
                    }
-                }) 
-               })
-               })
-
+            if (req.body.image3value === "") {
+            image3 = req.body.image3value
+          } else if (req.files.image3 != null) {
+          image3 = req.files.image3[0].filename
                }
-              })
-            }
-          })
-           
-            res.redirect("/teacher/question")
-           
-           
+               if (req.body.image4value === "") {
+            image4 = req.body.image4value
+          } else if (req.files.image4 != null) {
+          image4 = req.files.image4[0].filename
+               }
+               if (req.body.image5value === "") {
+            image5 = req.body.image5value
+          } else if (req.files.image5 != null) {
+          image5 = req.files.image5[0].filename
+               }   
+               console.log("hena pas d erreur")   
+               var Author = req.user._id  ;  
+        var  newQuestion = new Question ({
+            Question: req.body.Question,
+            Response: req.body.Response,
+            QuestionImage: image5,
+            NameOfCourse: req.body.NameOfCourse,
+            TypeOfQuestion: req.body.TypeOfQuestion,
+            Chapiter: req.body.Chapiter,
+            Difficulty: req.body.Difficulty,
+            exam:  req.body.Exam,
+            Author: Author,
+          });newQuestion.save(function(err,success){
+            if (err){
+                    
+                     req.flash("error", "لم يتم ادخال كل البيانات");
+                     return  res.redirect('/teacher/qauestion') 
+                    }
+            if (success){
+              if (req.body.IsCorrect === "One" ) {
+                    var IsCorrect1 = true
+              } else {
+                var IsCorrect1 = false
+              }
+              if (req.body.IsCorrect === "Two" ) {
+                var IsCorrect2 = true
+              } else {
+                var IsCorrect2 = false
+                
+              }
+              if (req.body.IsCorrect === "Three" ) {
+                var IsCorrect3 = true
+              } else {
+                var IsCorrect3 = false
+                
+              }
+              if (req.body.IsCorrect === "Four" ) {
+                var IsCorrect4 = true
+              } else {
+                var IsCorrect4 = false                  
+              }
+              console.log(image1)
+            var newResponse1 = new Response({
+              ResponseText: req.body.ResponseText1,
+              IsCorrect: IsCorrect1,
+              ResponseImage: image1,
+              question: newQuestion._id
+            });newResponse1.save(function(err,succcess){
+              if (err){ console.log("response 1 pas d error");
+              return  res.redirect('/teacher/qauestion') 
+             }
+            })
+            var newResponse2 = new Response({
+              ResponseText: req.body.ResponseText2,
+              IsCorrect: IsCorrect2,
+              ResponseImage: image2,
+              question: newQuestion._id
+            });newResponse2.save(function(err,succcess){
+              if (err){ console.log("response 2 pas d error");
+              return  res.redirect('/teacher/qauestion') 
+             }
+            })
+            var newResponse3 = new Response({
+              ResponseText: req.body.ResponseText3,
+              IsCorrect: IsCorrect3,
+              ResponseImage: image3,
+              question: newQuestion._id
+            });newResponse3.save(function(err,succcess){
+              if (err){ console.log("response 3 pas d error");
+              return  res.redirect('/teacher/qauestion') 
+             }
+            })
+            var newResponse4 = new Response({
+              ResponseText: req.body.ResponseText4,
+              IsCorrect: IsCorrect4,
+              ResponseImage: image4,
+              question: newQuestion._id
+            });newResponse4.save(function(err,succcess){
+              if (err){ console.log("response 4 pas d error");
+              return  res.redirect('/teacher/qauestion') 
+             }
+             if (succcess){
+               Teacher.findOne({user: req.user._id},function(err,user) {
+               user.Count =  user.Count + 1
+               console.log(user.Count)
+               user.save()
+               Question.countDocuments({exam: req.body.Exam},function(err, count){
+               Exam.findById({_id: req.body.Exam},function(err, success){
+                 if ( count === success.NumberOfExam){
+                  success.EtatFinal = true
+                  if (success.IsOfficial != true) {
+                    success.Etat  = true
+                  }
+                  success.save()
+                 }
+              }) 
+             })
+             })
+
+             }
+            })
           }
         })
-    } else {
-      console.log("hena errroror bitch")
-      req.flash("error", "لم يتم ادخال كل البيانات");
-                      
-      res.redirect("/teacher/question")
-    }
+         
+          res.redirect("/teacher/question")
+         
+         
+        }
+      })
   } else {
-    res.redirect("/routes")
-   }
+    req.flash("error", "لم يتم ادخال كل البيانات");
+                    
+    return  res.redirect('/teacher/qauestion') 
+  }
+} else {
+  res.redirect("/routes")
+ }
 });
 
 
