@@ -295,11 +295,15 @@ router.post('/upload', ensureAuthenticated , (req, res) => {
                Question.countDocuments({exam: req.body.Exam},function(err, count){
                Exam.findById({_id: req.body.Exam},function(err, success){
                  if ( count === success.NumberOfExam){
+                 if (success.IsValid === true ) {
+                   succcess.IsValid = false
+                 }
                   success.EtatFinal = true
                   if (success.IsOfficial != true) {
                     success.Etat  = true
                   }
                   success.save()
+
                  }
               }) 
              })
@@ -1145,5 +1149,22 @@ res.attachment('report.xlsx');
 return res.send(report);
 
 
-})       
+})  
+
+//Routes Delete User Teacher 
+router.get("/DeleteTeacher/:id", (req,res) => {
+  console.log(req.params.id)
+  User.findOneAndRemove( { _id: req.params.id } , (err,success) => {
+    if (err) {
+        req.flash("error", "لم يتم ادخال كل البيانات")
+        return res.redirect("/list/teachers")
+        }          
+    Teacher.findOneAndRemove( {user: req.params.id } , (err,success) => {
+      if (success) {
+        req.flash("info", "Deleted");
+        return res.redirect("/list/teachers")
+      }
+    })
+  })
+})
 module.exports = router;

@@ -175,6 +175,7 @@ li a:hover {
         <th scope="col">الاختصاص</th>
         <th scope="col"> الاسئلة المدخلة</th>
         <th scope="col"> الحساب</th>
+        <th scope="col"> حذف</th>
       
         
       </tr>
@@ -200,7 +201,7 @@ li a:hover {
           <td style="color: red">  <a href="/teacherValidation/<%= teacher._id %>" class="btn btn-danger"> غير مفعل</a> </td>
         <% } %>
 
-   
+        <td style="color: red">  <a href="/DeleteTeacher/<%= teacher.user._id %>" class="btn btn-danger"> حذف</a> </td>
         
        
       </tr>

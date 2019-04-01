@@ -170,6 +170,11 @@ li a:hover {
             
               <div class="row" dir="rtl"> 
                   <div class="col-md-12">
+                    <% if (question.IsValidFinal === true) { %>
+                      <h4 style=" text-align: right;color: green "> <span class="span">مراجع من طرف كل المعلمين</span> </h4>
+                      <% } else  {%>
+                        <h4 style=" text-align: right;color: red "> <span class="span"> غير مراجع من طرف كل المعلمين  </span> </h4>
+                        <% } %>
                       <h4 style=" text-align: center; border-bottom: 1px solid black"> <span class="span">رقم  السؤال</span> : <%= question._id %></h4>
                     </div>
               <div class="col-md-12" >
