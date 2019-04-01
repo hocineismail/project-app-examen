@@ -295,9 +295,7 @@ router.post('/upload', ensureAuthenticated , (req, res) => {
                Question.countDocuments({exam: req.body.Exam},function(err, count){
                Exam.findById({_id: req.body.Exam},function(err, success){
                  if ( count === success.NumberOfExam){
-                 if (success.IsValid === true ) {
-                   succcess.IsValid = false
-                 }
+                   
                   success.EtatFinal = true
                   if (success.IsOfficial != true) {
                     success.Etat  = true
@@ -306,7 +304,20 @@ router.post('/upload', ensureAuthenticated , (req, res) => {
 
                  }
               }) 
-             })
+               
+
+             
+             }).then(  Exam.findById({_id: req.body.Exam},function(err, exam){
+               console.log("makan walo hena ????")
+               console.log(exam)
+              if (exam.IsValid === true ) {
+                exam.IsValid = false
+                exam.Etat = false
+                exam.save()
+                console.log(exam)
+              }
+           }) 
+)
              })
 
              }
