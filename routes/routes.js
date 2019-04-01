@@ -892,6 +892,7 @@ question: {
   width: 220 // <- width in pixels
 
 },
+
 responseOneImage: {
   displayName: 'صورة الجواب الاول',
   headerStyle: styles.cellGreen,
@@ -941,6 +942,13 @@ responseFourImage: {
   width: 220 // <- width in pixels
 
 },
+ResponseTrue: {
+  displayName: ' الاجابة الصحيحة',
+  headerStyle: styles.cellGreen,
+
+  width: 220 // <- width in pixels
+
+},
 response: {
   displayName: 'الاجابة النموذجية',
   headerStyle: styles.cellGreen,
@@ -958,9 +966,10 @@ response: {
 // dataset contains more fields as the report is build based on the
 // specification provided above. But you should have all the fields
 // that are listed in the report specification
+var NumberOfCase = 0 ;
 const phase = await Phase.find({})
 var dataset = []
-var NumberOfCase = 0 ;
+
 
 for (let a = 0; a < phase.length; a++ ){
   let level = await Level.find({phase: phase[a]._id})
@@ -994,44 +1003,67 @@ for (let a = 0; a < phase.length; a++ ){
           var responseTwoString =  response[1].ResponseText 
           var responseThreeString =  response[2].ResponseText 
           var responseFourString =  response[3].ResponseText 
-          if ( question[e].QuestionImage === "" ) {
+          if ( question[f].QuestionImage === "" ) {
             var questionimage = "لا توجد صورة"
           } else {
-            var questionimage = 'https://alamaconsultancy.com/uploads/' + question[f].QuestionImage 
+            var questionimage = 'http://alamaconsultancy.com/uploads/' + question[f].QuestionImage 
           }
 
 
 
-  console.log(response[0].ResponseImage)
+
           if ( response[0].ResponseImage  === "" ) {
            var responseoneimage = "لا توجد صورة"
           } else {
-            var responseoneimage = 'https://alamaconsultancy.com/uploads/' + response[0].ResponseImage 
+            var responseoneimage = 'http://alamaconsultancy.com/uploads/' + response[0].ResponseImage 
           }
         
 
           if ( response[1].ResponseImage  === "" ) {
             var responsetwoimage = "لا توجد صورة"
           } else {
-            var responsetwoimage = 'https://alamaconsultancy.com/uploads/' + response[1].ResponseImage 
+            var responsetwoimage = 'http://alamaconsultancy.com/uploads/' + response[1].ResponseImage 
           }
         
 
           if ( response[2].ResponseImage  === "" ) {
             var responsethreeimage = "لا توجد صورة"
           } else {
-            var responsethreeimage = 'https://alamaconsultancy.com/uploads/' + response[2].ResponseImage 
+            var responsethreeimage = 'http://alamaconsultancy.com/uploads/' + response[2].ResponseImage 
           }
         
 
           if ( response[3].ResponseImage  === "" ) {
             var responsefourimage = "لا توجد صورة"
           } else {
-            var responsefourimage = 'https://alamaconsultancy.com/uploads/' + response[3].ResponseImage 
+            var responsefourimage = 'http://alamaconsultancy.com/uploads/' + response[3].ResponseImage 
           }
         
-        
+        var responseTrue
+     for (let i = 0; i < 4; i++){
+       if (response[i].IsCorrect === true) {
+         switch (i) {
+          case 0:
+           responseTrue = "الاجابة الاولى"
+          break;
 
+          case 1:
+            responseTrue = "الاجابة الثانية"
+          break;
+
+          case 2:
+            responseTrue = "الاجابة التالثة"
+          break;
+
+          case 3:
+            responseTrue = "الاجابة الرابعة"
+           break;
+
+        default:
+            responseTrue = "حدث خطا"
+         }
+       }
+     }
           
           
         
@@ -1064,6 +1096,7 @@ for (let a = 0; a < phase.length; a++ ){
 
                      responseFour: responseFourString,
                      responseFourImage: responsefourimage,
+                     ResponseTrue: responseTrue,
                     response: responses },
               ]
               console.log(datase)
