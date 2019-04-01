@@ -1163,7 +1163,7 @@ return res.send(report);
 })  
 
 //Routes Delete User Teacher 
-router.get("/DeleteTeacher/:id", (req,res) => {
+router.get("/DeleteTeacher/:id", ensureAuthenticated , (req,res) => {
   console.log(req.params.id)
   User.findOneAndRemove( { _id: req.params.id } , (err,success) => {
     if (err) {
