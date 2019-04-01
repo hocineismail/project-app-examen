@@ -776,7 +776,7 @@ response[2].save()
 
                            
  router.get("/generateexcel",ensureAuthenticated, async (req,res) => {
-
+  var NumberOfCase = 0 ;
 // You can define styles as json object
 const styles = {
  headerDark: {
@@ -818,7 +818,16 @@ const heading = [
 
 //Here you specify the export structure
 const specification = {
-
+ customer_name: { // <- the key should match the actual data key
+   displayName: 'الرقم', // <- Here you specify the column header
+   headerStyle: styles.headerDark, // <- Header style
+   cellStyle: function(value, row) { // <- style renderer function
+     // if the status is 1 then color in green else color in red
+     // Notice how we use another cell value to style the current one
+     return (row.status_id == 1) ? styles.cellGreen : {fill: {fgColor: {rgb: 'FFFF0000'}}}; // <- Inline cell style is possible 
+   },
+   width: 30 // <- width in pixels
+ },
 
 phase: {
    displayName: 'المرحلة',
@@ -949,7 +958,7 @@ responseFourImage: {
 
 },
 ResponseTrue: {
-  displayName: 'الاجابة الصحيحة',
+  displayName: ' الاجابة الصحيحة',
   headerStyle: styles.cellGreen,
 
   width: 220 // <- width in pixels
@@ -972,7 +981,7 @@ response: {
 // dataset contains more fields as the report is build based on the
 // specification provided above. But you should have all the fields
 // that are listed in the report specification
-var NumberOfCase = 0 ;
+
 const phase = await Phase.find({})
 var dataset = []
 
@@ -1074,9 +1083,9 @@ for (let a = 0; a < phase.length; a++ ){
           
         
           
-
+     NumberOfCase = NumberOfCase + 1
               var datase = [
-                {
+                {customer_name: NumberOfCase ,
                   
                     phase:  phase[a].Phase ,
                      level: level[b].Level ,
