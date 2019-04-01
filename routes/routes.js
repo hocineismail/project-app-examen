@@ -650,9 +650,9 @@ router.post("/addpub",function(req,res){
                 // i will edit this message
                 if(err){
                   console.log("this error ")
-                  req.flash("error", "errros");
+                  req.flash("error", "حدث خلل ما اثناء العملية");
                   return res.redirect("/admin")}
-                if (success){req.flash("info", "updating");
+                if (success){req.flash("info", "تم النشر");
                 return res.redirect("/admin")} 
               })
              } else {
@@ -665,9 +665,9 @@ router.post("/addpub",function(req,res){
                     // i will edit this message
                     if(err){
                       console.log("this error ")
-                      req.flash("error", "errros");
+                      req.flash("error", "حدث خلل ما اثناء العملية");
                       return res.redirect("/admin")}
-                    if (success){req.flash("info", "updating");
+                    if (success){req.flash("info", "تم التحديث");
                     return res.redirect("/admin")} 
                   })
                  }
@@ -686,7 +686,7 @@ router.get("/pub/delete/:id",function(req,res){
   Pub.findOneAndRemove( { _id: req.params.id } , function(err, pyb) {
     if (err) { return next(err); }
     if (!pyb) { return next(404); }
-    req.flash("info", "pub bien suprin2");
+    req.flash("error", "تم الحذف ");
                   
   res.redirect("/admin")
   }) 
@@ -1164,18 +1164,22 @@ return res.send(report);
 
 //Routes Delete User Teacher 
 router.get("/DeleteTeacher/:id", ensureAuthenticated , (req,res) => {
-  console.log(req.params.id)
+
+ if (req.user.Role === "Admin") {
   User.findOneAndRemove( { _id: req.params.id } , (err,success) => {
     if (err) {
-        req.flash("error", "لم يتم ادخال كل البيانات")
+        req.flash("error", "العملية لم تنجح")
         return res.redirect("/list/teachers")
         }          
     Teacher.findOneAndRemove( {user: req.params.id } , (err,success) => {
       if (success) {
-        req.flash("info", "Deleted");
+        req.flash("info", "تم الحذف");
         return res.redirect("/list/teachers")
       }
     })
   })
+} else {
+  res.redirect("/routes")
+} Pub
 })
 module.exports = router;
